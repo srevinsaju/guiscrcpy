@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>Dialog</class>
+    <widget class="QDialog" name="Dialog">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>342</width>
+                <height>300</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Dialog</string>
+        </property>
+        <widget class="QPushButton" name="pushButton">
+            <property name="geometry">
+                <rect>
+                    <x>130</x>
+                    <y>70</y>
+                    <width>89</width>
+                    <height>81</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>PushButton</string>
+            </property>
+            <property name="icon">
+                <iconset theme="name"/>
+            </property>
+        </widget>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>

@@ -1,5 +1,6 @@
 import sys
-from PyQt4 import QtCore, QtGui, uic
+
+from PyQt4 import QtGui, uic
 
 qtCreatorFile = "mainwindow.ui"  # Enter file here.
 

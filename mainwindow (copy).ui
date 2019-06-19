@@ -248,9 +248,9 @@
             <widget class="QDial" name="dial">
                 <property name="geometry">
                     <rect>
-                        <x>10</x>
-                        <y>210</y>
-                        <width>91</width>
+                        <x>0</x>
+                        <y>220</y>
+                        <width>101</width>
                         <height>111</height>
                     </rect>
                 </property>
@@ -398,17 +398,14 @@
                     <string>Keep display off on start-up (experimental)</string>
                 </property>
             </widget>
-            <widget class="QToolButton" name="runningNot">
+            <widget class="QGraphicsView" name="graphicsView">
                 <property name="geometry">
                     <rect>
-                        <x>20</x>
-                        <y>170</y>
-                        <width>481</width>
-                        <height>31</height>
+                        <x>400</x>
+                        <y>60</y>
+                        <width>101</width>
+                        <height>71</height>
                     </rect>
-                </property>
-                <property name="text">
-                    <string/>
                 </property>
             </widget>
         </widget>

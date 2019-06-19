@@ -9,7 +9,7 @@ import sys
 
 from PyQt4 import QtGui, uic
 
-build = 2.0
+build = 2.1
 qtCreatorFile = "mainwindow.ui"  # Enter file here.
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
@@ -24,12 +24,11 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         QtGui.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
+        # self.menuAbout.itemPressed.connect(self.menu_about)
 
         # CONNECT DIMENSION CHECK BOX TO STATE CHANGE
         self.dimensionDefaultCheckbox.stateChanged.connect(self.dimensionChange)
-
-        # CHECK BOX GROUP CONNECT
-        self.
+        self.build_label.setText("Build " + str(build))
 
         # DIAL CTRL GRP
         self.dial.sliderMoved.connect(self.dial_text_refresh)
@@ -38,6 +37,11 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 
         # MAIN EXECUTE ACTION
         self.executeaction.clicked.connect(self.start_act)
+
+    def menu_about(self):
+        self.terminal.setText("GUISCRCPY :: Build " + str(build) +
+                              "\nCREDITS :\nromv1 for scrcpy c++ "
+                              "engine\nsrevinsaju for scrcpy GUI integration")
 
     def dimensionChange(self):
 
@@ -94,6 +98,17 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
             options = " -m " + str(dimension)
         else:
             options = " "
+
+        # CHECK BOX GROUP CONNECT
+        if self.aotop.isChecked():
+            options += " -T "
+        if self.fullscreen.isChecked():
+            options += " -f "
+        if self.keepdisplayRO.isChecked():
+            options += " -n "
+        if self.showTouches.isChecked():
+            options += " -t "
+
         backup = subprocess.Popen("scrcpy" + str(options),
                                   shell=True,
                                   stdout=subprocess.PIPE,

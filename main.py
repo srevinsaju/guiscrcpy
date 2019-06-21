@@ -192,7 +192,6 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 
         full = []
 
-        toolkit.window.show()
         backup = subprocess.Popen("scrcpy" + str(options),
                                   shell=True,
                                   stdin=subprocess.PIPE,

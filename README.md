@@ -5,10 +5,12 @@ screen mirroring system -- `scrcpy`
 located on `https://github.com/genymobile/scrcpy/`
 by [@rom1v](https://github.com/rom1v)
 
+![image of GUIscrcpy](/screen.png)
+
 GUIScrcPy is a Python 3.7 based script (haven't tested compatibility issues
 so far, but it does not work on Python 3.8 because of incombatibility og PyAutoGUI module)
 
-![image of GUIscrcpy](/screen.png)
+
 
 **Why GUIscrcPy?**
 

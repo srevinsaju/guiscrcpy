@@ -2,18 +2,54 @@
 """
 GUISCRCPY by srevinsaju
 Get it on : https://github.com/sevinsaju/guiscrcpy
+Licensed under GNU Public License
 
+Build 1.9.2
+
+CHANGELOG:
+1.9.2
+* Added GUIScrcpy icon
+* Added pixmap icons
+* Added check scrcpy process running or not
+* Added GUIScrcpy Toolkit Experimental Support
+
+1.9.1
+* Initial Build :)
+
+
+Syntax for the config file
+ln1:: dial value
+ln2:: dimensionCheckBox
+ln3:: dimension value
+ln4:: fullScreen
+ln5:: showTouches
 """
+
 import subprocess
 import sys
+import time
 
 import psutil
 from PyQt4 import QtGui, uic
 
-build = 2.1
+#
+
+#
+
+build = "1.9.1"
 qtCreatorFile = "mainwindow.ui"  # Enter file here.
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
+
+try:
+    cfg = open("usercfgGUISCRCPY.cfg", "r")
+    fileExist = False
+except FileNotFoundError or FileExistsError:
+    cfg = open("usercfgGUISCRCPY.cfg", "w+")
+    fileExist = True
+    cfg.close()
+
+
 
 
 def checkProcessRunning(processName):
@@ -43,6 +79,10 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 
         if checkProcessRunning("scrcpy"):
             print("SCRCPY RUNNING")
+            self.runningNot.setText("SCRCPY SERVER RUNNING")
+        else:
+            print("SCRCPY SERVER IS INACTIVE")
+            self.runningNot.setText("SCRCPY SERVER NOT RUNNING")
 
         # CONNECT DIMENSION CHECK BOX TO STATE CHANGE
         self.dimensionDefaultCheckbox.stateChanged.connect(self.dimensionChange)
@@ -55,6 +95,10 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 
         # MAIN EXECUTE ACTION
         self.executeaction.clicked.connect(self.start_act)
+        self.quit.clicked.connect(self.quitAct)
+
+    def quitAct(self):
+        sys.exit()
 
     def menu_about(self):
         self.terminal.setText("GUISCRCPY :: Build " + str(build) +
@@ -86,6 +130,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         pass
 
     def start_act(self):
+
 
         # check if the defaultDimension is checked or not for giving signal
         if self.dimensionDefaultCheckbox.isChecked():
@@ -129,11 +174,30 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         if self.displayForceOn.isChecked():
             options += " -S "
 
+        # implies program not idle
+        value = 0
+        for i in range(0, 100):
+            time.sleep(0.01)
+
+            value += i * 1
+            self.progressBar.setValue(value)
+        """
+        if(value == 91):
+            print("DEVICE NOT DETECTED [ERROR]")
+            self.runningNot.setText("DEVICE NOT DETECTED")
+        else:
+            print("DEVICE DETECTED")
+            self.runningNot.setText("SCRCPY CONNECTED")
+        """
+
+        full = []
+
+        toolkit.window.show()
         backup = subprocess.Popen("scrcpy" + str(options),
                                   shell=True,
+                                  stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.STDOUT)
-        full = []
 
         # this block is for instantaneous reading the output
         for line in iter(backup.stdout.readline, b''):
@@ -143,6 +207,12 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 
         output = '\n'.join(full)
         # block ends out
+        if checkProcessRunning("scrcpy"):
+            print("SCRCPY RUNNING")
+            self.runningNot.setText("SCRCPY SERVER RUNNING")
+        else:
+            print("SCRCPY SERVER IS INACTIVE")
+            self.runningNot.setText("SCRCPY SERVER NOT RUNNING")
 
         self.terminal.setText(str(output))  # set text to terminal
 

@@ -1,12 +1,20 @@
 # GUIscrcPy
-A full fledged GUI integration for the most award winning open-source android screen mirroring system -- `scrcpy` located on `https://github.com/genymobile/scrcpy/`
+A full fledged GUI integration for the 
+most award winning open-source android 
+screen mirroring system -- `scrcpy` 
+located on `https://github.com/genymobile/scrcpy/`
+by [@rom1v](https://github.com/rom1v)
+
 
 ## Dependencies
-* `pyside2` 
+* `pyside2` (required) 
 * `pyqt5` 
 * `psutil` 
-* `pyautogui`
+* `pyautogui` (for toolkit, required for Windows)
 
-For linux operating systems, if python raises `Xlib>>ModuleNotFoundError`, then run
 
-`sudo apt install python3-xlib` 
+For Linux operating systems, if python raises `Xlib>>ModuleNotFoundError`, then run
+`sudo apt install python3-xlib`
+
+To use toolkit (on Linux only), run:
+`sudo apt install wmctrl xdotool` 

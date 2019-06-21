@@ -124,7 +124,7 @@ def fullscreen():
         os.system("wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+f")
 
 
-class MyApp(QtGui.QMainWindow, Ui_MainWindow):
+class MyAppv(QtGui.QMainWindow, Ui_MainWindow):
     def __init__(self):
         QtGui.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
@@ -139,8 +139,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         self.fullscreenUI.released.connect(fullscreen)
 
 
-if __name__ == "__main__":
-    app = QtGui.QApplication(sys.argv)
-    window = MyApp()
-    window.show()
-    sys.exit(app.exec_())
+appo = QtGui.QApplication(sys.argv)
+window = MyAppv()
+window.show()
+sys.exit(appo.exec_())

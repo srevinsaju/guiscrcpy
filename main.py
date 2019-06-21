@@ -24,7 +24,9 @@ ln3:: dimension value
 ln4:: fullScreen
 ln5:: showTouches
 """
-
+import multiprocessing
+import os
+import platform
 import subprocess
 import sys
 import time
@@ -220,4 +222,23 @@ if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     window = MyApp()
     window.show()
-    sys.exit(app.exec_())
+
+
+    def launchmain():
+        sys.exit(app.exec_())
+
+
+    def launchtoolkit():
+        if platform.system() == "Windows":
+            p = subprocess.Popen("python " + str(os.getcwd()) + r"\toolkit.py", shell=True)
+        if platform.system() == "Linux":
+            p = subprocess.Popen("python3 " + str(os.getcwd()) + r"/toolkit.py", shell=True)
+        if platform.system() == "MacOS":
+            print("Hmm.. I don't know Mac stuff, please contribute on https://github.com/srevinsaju/guiscrcpy")
+
+
+    ltk = multiprocessing.Process(target=launchtoolkit)
+    main1 = multiprocessing.Process(target=launchmain)
+    main1.start()
+    time.sleep(1)
+    ltk.start()

@@ -26,6 +26,9 @@ it is the UI system that executes the fixed command to scrcpy engine. These are 
 It is the UI controller, which gives commands to the Scrcpy window to execute certain actions. <p> Read **Issues** and **Future Releases** , before proceeding
 ## Building from Source
 Fortunately or Unfortunately, GUIscrcPy has to be built from source. But that's easy again!
+
+Before everything, make sure you have scrcpy on your path. You can Google it out, on how to do it, next build will have a automated build.
+Only Scrcpy 1.9
 1. (Also called Step 0). Put a star on my repo. Gives support to #opensource!!
 2. Install python3. If you don't have it install it using 
 Python Software Website or on Linux by <p>`sudo apt install python3.7`

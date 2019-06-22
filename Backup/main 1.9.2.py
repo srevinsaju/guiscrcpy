@@ -33,7 +33,6 @@ import time
 
 import psutil
 from PyQt4 import QtGui, uic
-from PyQt4.QtCore import QThread, SIGNAL
 
 #
 
@@ -63,40 +62,6 @@ def checkProcessRunning(processName):
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
     return False
-
-
-class StartScrcpy(QThread):
-    def __init__(self):
-        QThread.__init__(self)
-        backup = subprocess.Popen("scrcpy",
-                                  shell=True,
-                                  stdin=subprocess.PIPE,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.STDOUT)
-
-    def __del__(self):
-        self.wait()
-
-    def startSact(self):
-        MyApp()
-        # TODO FIX OPTIONS
-        # this block is for instantaneous reading the output
-        # block ends out
-        if checkProcessRunning("scrcpy"):
-            print("SCRCPY RUNNING")
-            # self.runningNot.setText("SCRCPY SERVER RUNNING")
-        else:
-            print("SCRCPY SERVER IS INACTIVE")
-            # self.runningNot.setText("SCRCPY SERVER NOT RUNNING")
-
-    def run(self):
-        full = []
-        for line in iter(self.backup.stdout.readline, b''):  # TODO NOT IMPLEMENTED
-            line = line.rstrip().decode('utf8')
-            print(">>>", line)
-            full.append(line)
-            self.emit(SIGNAL("line"), line)
-            print("EMITTED :", line)
 
 
 class MyApp(QtGui.QMainWindow, Ui_MainWindow):
@@ -189,24 +154,24 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 
         # process dimension
         if dimension is None:
-            self.options = " "
+            options = " "
             pass
         elif dimension is not None:
-            self.options = " -m " + str(dimension)
+            options = " -m " + str(dimension)
         else:
-            self.options = " "
+            options = " "
 
         # CHECK BOX GROUP CONNECT
         if self.aotop.isChecked():
-            self.options += " -T "
+            options += " -T "
         if self.fullscreen.isChecked():
-            self.options += " -f "
+            options += " -f "
         if self.keepdisplayRO.isChecked():
-            self.options += " -n "
+            options += " -n "
         if self.showTouches.isChecked():
-            self.options += " -t "
+            options += " -t "
         if self.displayForceOn.isChecked():
-            self.options += " -S "
+            options += " -S "
 
         # implies program not idle
         value = 0
@@ -223,26 +188,44 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
             print("DEVICE DETECTED")
             self.runningNot.setText("SCRCPY CONNECTED")
         """
-        # TODO
-        self.myLine = StartScrcpy()
-        self.connect(self.myLine, SIGNAL("update_terminal(QString)"), self.update_terminal)
-        print("RECEIVED")
-        """
-        for line in iter(backup.stdout.readline, b''): # TODO NOT IMPLEMENTED
-            line = line.rstrip().decode('utf8')
-            print(">>>", line)
-            full.append(line)
-            output = '\n'.join(full)
-            self.terminal.setText(str(output))
-        """
 
-    def update_terminal(self, list_of_line):
-        self.new_thread = StartScrcpy()
-        self.connect(self.new_thread, SIGNAL("line"), self.show_variable)
-        self.new_thread.start()
+        full = []
 
-    def show_variable(self, data):
-        self.terminal.append(data)
+        def startscrcpyEngine():
+            backup = subprocess.Popen("scrcpy" + str(options),
+                                      shell=True,
+                                      stdin=subprocess.PIPE,
+                                      stdout=subprocess.PIPE,
+                                      stderr=subprocess.STDOUT)
+            return backup
+
+        def readTerminal():
+            for line in iter(startscrcpyEngine().stdout.readline, b''):
+                line = line.rstrip().decode('utf8')
+                print(">>>", line)
+                full.append(line)
+                output = '\n'.join(full)
+                self.terminal.setText(str(output))
+
+        p2 = multiprocessing.Process(target=startscrcpyEngine)
+        p3 = multiprocessing.Process(target=readTerminal)
+
+        p2.start()
+        p3.start()
+
+        p2.join()
+        p3.join()
+        # this block is for instantaneous reading the output
+
+        # block ends out
+        if checkProcessRunning("scrcpy"):
+            print("SCRCPY RUNNING")
+            self.runningNot.setText("SCRCPY SERVER RUNNING")
+        else:
+            print("SCRCPY SERVER IS INACTIVE")
+            self.runningNot.setText("SCRCPY SERVER NOT RUNNING")
+
+        # set text to terminal
 
 
 if __name__ == "__main__":
@@ -252,7 +235,7 @@ if __name__ == "__main__":
 
 
     def launchmain():
-        app.exec_()
+        sys.exit(app.exec_())
 
 
     def launchtoolkit():
@@ -269,5 +252,3 @@ if __name__ == "__main__":
     main1.start()
     time.sleep(1)
     ltk.start()
-    main1.join()
-    ltk.join(50)

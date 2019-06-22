@@ -43,8 +43,10 @@ If your OS is Linux-based, to use Toolkit, you need to install `wmctrl` and `xdo
 * `pyautogui` (for toolkit, required for Windows)
 
 
-For Linux operating systems, if python raises `Xlib>>ModuleNotFoundError`, then run
-`sudo apt install python3-xlib`
+For Linux operating systems, if python raises `Xlib>>ModuleNotFoundError`, then run <p>
+`sudo apt install python3-xlib` <p>
+`sudo apt install python3-qt4`
+
 
 To use toolkit (on Linux only), run:
 `sudo apt install wmctrl xdotool` 
@@ -66,3 +68,17 @@ I am on Linux, so i can't test them out, except WINE
 
 ## Support me!
 Share your ideas, issues with me on github and email [srevin03@gmail.com](srevin03@gmail.com)!!
+
+##Changelog
+###Build 1.9.3 
+23062019 1948 GMT+3
+* Fixed GUI hang (issue reported by @rom1v)
+(code has been restructured. the old code is placed in `/backup/` folder as `main 1.9.2.py`
+###Build 1.9.2 
+21062019 2000 GMT+3
+* Added GUIScrcpy icon
+* Added pixmap icons
+* Added check scrcpy process running or not
+* Added GUIScrcpy Toolkit Experimental Support
+###1.9.1
+* Initial Build :)

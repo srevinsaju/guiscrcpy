@@ -73,10 +73,17 @@ I am on Linux, so i can't test them out, except WINE
 Share your ideas, issues with me on github and email [srevin03@gmail.com](srevin03@gmail.com)!!
 
 ##Changelog
+
+###Build 1.9.4
+23062018 1615 GMT+300
+* Dumped terminal QTextEdit for multiprocessing to prevent QThread hang.
+* Restructured StartScrcpy Class as two threads.
 ###Build 1.9.3 
-23062019 1948 GMT+3
+22062019 1948 GMT+3
 * Fixed GUI hang (issue reported by @rom1v)
-(code has been restructured. the old code is placed in `/backup/` folder as `main 1.9.2.py`
+(code has been restructured. the old code is placed in `/backup/` folder as `main 1.9.2.py`. But however, terminal ui QTextEdit
+is not functional.
+
 ###Build 1.9.2 
 21062019 2000 GMT+3
 * Added GUIScrcpy icon

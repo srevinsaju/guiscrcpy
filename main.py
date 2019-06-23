@@ -33,13 +33,13 @@ import time
 
 import psutil
 from PyQt4 import QtGui, uic
-from PyQt4.QtCore import QThread, SIGNAL
+from PyQt4.QtCore import QThread
 
 #
 
 #
 
-build = "1.9.1"
+build = "1.9.4"
 qtCreatorFile = "mainwindow.ui"  # Enter file here.
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
@@ -53,22 +53,25 @@ except FileNotFoundError or FileExistsError:
     cfg.close()
 
 
-def checkProcessRunning(processName):
-    # Iterate over the all the running process
-    for proc in psutil.process_iter():
-        try:
-            # Check if process name contains the given name string.
-            if processName.lower() in proc.name().lower():
-                return True
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-            pass
-    return False
+def update_terminal():
+    """
+    self.new_thread = Terminal()
+    self.connect(self.new_thread, SIGNAL("line"), self.show_variable)
+    self.new_thread.start()
+    """
+    tmpTerminal = open("usercfgGUISCRCPY.cfg", "r")
+    tmpRead = tmpTerminal.read()
+    return tmpRead
 
 
 class StartScrcpy(QThread):
-    def __init__(self):
+    print("Hello")
+
+    def __init__(self, options):
         QThread.__init__(self)
-        backup = subprocess.Popen("scrcpy",
+        print("SCRCPY launch")
+
+        backup = subprocess.Popen("scrcpy" + str(options),
                                   shell=True,
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
@@ -78,7 +81,7 @@ class StartScrcpy(QThread):
         self.wait()
 
     def startSact(self):
-        MyApp()
+
         # TODO FIX OPTIONS
         # this block is for instantaneous reading the output
         # block ends out
@@ -90,13 +93,47 @@ class StartScrcpy(QThread):
             # self.runningNot.setText("SCRCPY SERVER NOT RUNNING")
 
     def run(self):
-        full = []
-        for line in iter(self.backup.stdout.readline, b''):  # TODO NOT IMPLEMENTED
-            line = line.rstrip().decode('utf8')
-            print(">>>", line)
-            full.append(line)
-            self.emit(SIGNAL("line"), line)
-            print("EMITTED :", line)
+        pass
+
+
+def readThreadStdOut():
+    someFile = open("user.history", "w+")
+    out, err = StartScrcpy.backup.stdout, StartScrcpy.backup.stderr
+    out_decoded = out.decode("utf-8")
+    someFile.write(str(out_decoded))
+    someFile.flush()
+
+
+runme = True
+full = []
+
+"""
+def loop():
+    for line in iter(StartScrcpy.backup.stdout.readline, b''):  # TODO NOT IMPLEMENTED
+        line = line.rstrip().decode('utf8')
+        print(">>>", line)
+        full.append(line)
+        output = '\n'.join(full)
+
+
+loopprocess = multiprocessing.Process(target=loop)
+loopprocess.start()
+loopprocess.join()
+print("Scrcpy proceed")
+print(StartScrcpy.backup.stdout)
+"""""
+
+
+def checkProcessRunning(processName):
+    # Iterate over the all the running process
+    for proc in psutil.process_iter():
+        try:
+            # Check if process name contains the given name string.
+            if processName.lower() in proc.name().lower():
+                return True
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
+    return False
 
 
 class MyApp(QtGui.QMainWindow, Ui_MainWindow):
@@ -194,19 +231,22 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         elif dimension is not None:
             self.options = " -m " + str(dimension)
         else:
-            self.options = " "
+            self.options = ""
 
         # CHECK BOX GROUP CONNECT
         if self.aotop.isChecked():
-            self.options += " -T "
+            self.options += " --always-on-top"
         if self.fullscreen.isChecked():
-            self.options += " -f "
+            self.options += " -f"
+        """
         if self.keepdisplayRO.isChecked():
-            self.options += " -n "
+            self.options += " --no-control"
+        """
         if self.showTouches.isChecked():
-            self.options += " -t "
-        if self.displayForceOn.isChecked():
-            self.options += " -S "
+            self.options += " --show-touches"
+        if self.keepdisplayRO.isChecked():
+            self.options += " --turn-screen-off"
+        self.options += " -b " + str(int(self.dial.value())) + "K"
 
         # implies program not idle
         value = 0
@@ -224,8 +264,8 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
             self.runningNot.setText("SCRCPY CONNECTED")
         """
         # TODO
-        self.myLine = StartScrcpy()
-        self.connect(self.myLine, SIGNAL("update_terminal(QString)"), self.update_terminal)
+        # self.myLine = startScrcpy(self.options)
+        # self.connect(self.myLine, SIGNAL("update_terminal(QString)"), self.update_terminal)
         print("RECEIVED")
         """
         for line in iter(backup.stdout.readline, b''): # TODO NOT IMPLEMENTED
@@ -235,14 +275,16 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
             output = '\n'.join(full)
             self.terminal.setText(str(output))
         """
+        print(self.options)
+        StartScrcpy(options=self.options)
 
-    def update_terminal(self, list_of_line):
-        self.new_thread = StartScrcpy()
-        self.connect(self.new_thread, SIGNAL("line"), self.show_variable)
-        self.new_thread.start()
+        # self.terminal.setText(full)
 
-    def show_variable(self, data):
-        self.terminal.append(data)
+    """
+    p5 = multiprocessing.Process(target=update_terminal)
+    p5.start()
+    p5.join()
+    """
 
 
 if __name__ == "__main__":

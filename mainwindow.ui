@@ -7,7 +7,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>506</width>
-                <height>632</height>
+                <height>507</height>
             </rect>
         </property>
         <property name="windowTitle">
@@ -121,8 +121,6 @@
                         &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:24pt;
                         font-weight:400; font-style:normal;&quot;&gt;
                         &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
-                        -qt-block-indent:0; text-indent:0px;&quot;&gt; &lt;/p&gt;
-                        &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
                         -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;DEFAULT&lt;/span&gt;
                         &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
                     </string>
@@ -196,8 +194,6 @@
                         p, li { white-space: pre-wrap; }
                         &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:24pt;
                         font-weight:600; font-style:normal;&quot;&gt;
-                        &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
-                        -qt-block-indent:0; text-indent:0px;&quot;&gt; &lt;/p&gt;
                         &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
                         -qt-block-indent:0; text-indent:0px;&quot;&gt;8000 KB/s &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
                     </string>
@@ -307,27 +303,6 @@
                 </property>
                 <property name="notchesVisible">
                     <bool>true</bool>
-                </property>
-            </widget>
-            <widget class="QTextEdit" name="terminal">
-                <property name="enabled">
-                    <bool>true</bool>
-                </property>
-                <property name="geometry">
-                    <rect>
-                        <x>20</x>
-                        <y>460</y>
-                        <width>481</width>
-                        <height>121</height>
-                    </rect>
-                </property>
-                <property name="font">
-                    <font>
-                        <family>Courier 10 Pitch</family>
-                    </font>
-                </property>
-                <property name="verticalScrollBarPolicy">
-                    <enum>Qt::ScrollBarAlwaysOn</enum>
                 </property>
             </widget>
             <widget class="QCheckBox" name="keepdisplayRO">

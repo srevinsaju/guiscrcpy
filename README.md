@@ -53,7 +53,7 @@ If your OS is Linux-based, to use Toolkit, you need to install `wmctrl` and `xdo
 
 For Linux operating systems, if python raises `Xlib>>ModuleNotFoundError`, then run <p>
 `sudo apt install python3-xlib` <p>
-`sudo apt install python3-qt4`
+`sudo apt install python3-qt5`
 
 
 To use toolkit (on Linux only), run:

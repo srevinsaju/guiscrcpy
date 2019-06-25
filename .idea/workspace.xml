@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/toolkit.py" line="143" />
+    <bookmark url="file://$PROJECT_DIR$/toolkit.py" line="144" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="698c6adf-57bc-494c-b6e1-82e2606a2670" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mainui.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/toolUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolkit.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolkit.py" afterDir="false" />
-    </list>
+    <list default="true" id="698c6adf-57bc-494c-b6e1-82e2606a2670" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,18 +18,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="103">
               <caret line="23" selection-start-line="23" selection-end-line="23" />
-              <folding>
-                <element signature="e#438#460#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mainui.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="20">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
             </state>
           </provider>
         </entry>
@@ -62,12 +52,12 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="233">
-                <caret line="102" lean-forward="true" selection-start-line="83" selection-start-column="5" selection-end-line="102" />
+              <first_editor relative-caret-position="253">
+                <caret line="91" lean-forward="true" selection-start-line="83" selection-start-column="4" selection-end-line="91" />
               </first_editor>
               <second_editor />
             </state>
@@ -78,10 +68,7 @@
         <entry file="file://$PROJECT_DIR$/toolkit.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="480">
-              <caret line="25" selection-start-line="25" selection-end-line="140" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
+              <caret line="26" selection-start-line="26" selection-end-line="141" />
             </state>
           </provider>
         </entry>
@@ -133,8 +120,8 @@
         <option value="$PROJECT_DIR$/mainui.py" />
         <option value="$PROJECT_DIR$/toolUI.py" />
         <option value="$PROJECT_DIR$/toolkit.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -384,7 +371,14 @@
       <option name="project" value="LOCAL" />
       <updated>1561474154623</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Build 1.9.5&#10;25062019 2159&#10;* MEGA CHANGE :: Migrated from `PyQt4` to `PyQt5` due to late realization that PyQt4 support&#10;for Windows is unfortunately discontinued. &#10;* `mainwindow.ui` &gt;&gt; xml parsed file loaded in uic loader has been compiled to `mainui.py` as UI &#10;* toolkit.py is deprecated. toolkit class is restructured into mainwindow class with multiprocesing. &#10;* After `PyQt5` update, GTK-LTK-KDE no longer raises pixmap errors&#10;* Unreleased *.ui files for Build. Only dependencies for release are png pixmap files">
+      <created>1561493020301</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1561493020301</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView">
@@ -397,7 +391,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1366" height="741" extended-state="7" />
+    <frame x="0" y="27" width="1366" height="741" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.1833085" />
@@ -449,7 +443,8 @@
     <MESSAGE value="build 1.9.2" />
     <MESSAGE value="Build 1.9.3&#10;23062019 1948 GMT+3&#10;* Fixed GUI hang (issue reported by @rom1v)&#10;(code has been restructured. the old code is placed in `/backup/` folder as `main 1.9.2.py`" />
     <MESSAGE value="Build 1.9.4&#10;23062018 1615 GMT+300&#10;* Dumped terminal QTextEdit for multiprocessing to prevent QThread hang.&#10;* Restructured StartScrcpy Class as two threads." />
-    <option name="LAST_COMMIT_MESSAGE" value="Build 1.9.4&#10;23062018 1615 GMT+300&#10;* Dumped terminal QTextEdit for multiprocessing to prevent QThread hang.&#10;* Restructured StartScrcpy Class as two threads." />
+    <MESSAGE value="Build 1.9.5&#10;25062019 2159&#10;* MEGA CHANGE :: Migrated from `PyQt4` to `PyQt5` due to late realization that PyQt4 support&#10;for Windows is unfortunately discontinued. &#10;* `mainwindow.ui` &gt;&gt; xml parsed file loaded in uic loader has been compiled to `mainui.py` as UI &#10;* toolkit.py is deprecated. toolkit class is restructured into mainwindow class with multiprocesing. &#10;* After `PyQt5` update, GTK-LTK-KDE no longer raises pixmap errors&#10;* Unreleased *.ui files for Build. Only dependencies for release are png pixmap files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Build 1.9.5&#10;25062019 2159&#10;* MEGA CHANGE :: Migrated from `PyQt4` to `PyQt5` due to late realization that PyQt4 support&#10;for Windows is unfortunately discontinued. &#10;* `mainwindow.ui` &gt;&gt; xml parsed file loaded in uic loader has been compiled to `mainui.py` as UI &#10;* toolkit.py is deprecated. toolkit class is restructured into mainwindow class with multiprocesing. &#10;* After `PyQt5` update, GTK-LTK-KDE no longer raises pixmap errors&#10;* Unreleased *.ui files for Build. Only dependencies for release are png pixmap files" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -517,10 +512,7 @@
     <entry file="file://$PROJECT_DIR$/toolkit.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
-          <caret line="25" selection-start-line="25" selection-end-line="140" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+          <caret line="26" selection-start-line="26" selection-end-line="141" />
         </state>
       </provider>
     </entry>
@@ -531,30 +523,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="233">
-            <caret line="102" lean-forward="true" selection-start-line="83" selection-start-column="5" selection-end-line="102" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="103">
           <caret line="23" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="e#438#460#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mainui.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="253">
+            <caret line="91" lean-forward="true" selection-start-line="83" selection-start-column="4" selection-end-line="91" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

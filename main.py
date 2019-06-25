@@ -337,14 +337,15 @@ class MyApp(Ui_MainWindow):
         # MAIN EXECUTE ACTION
         self.executeaction.clicked.connect(self.start_act)
         self.quit.clicked.connect(self.quitAct)
+        self.dimensionText.setText("DEFAULT")
+        bit_rate = int(self.dial.value())
+        self.bitrateText.setText(str(bit_rate) + "KB/s")
 
     def quitAct(self):
         sys.exit()
 
     def menu_about(self):
-        self.terminal.setText("GUISCRCPY :: Build " + str(build) +
-                              "\nCREDITS :\nromv1 for scrcpy c++ "
-                              "engine\nsrevinsaju for scrcpy GUI integration")
+        pass
 
     def dimensionChange(self):
 

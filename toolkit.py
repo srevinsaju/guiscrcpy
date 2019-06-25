@@ -43,7 +43,7 @@ def power():
         # os.system("wmctrl -x -a scrcpy && xdotool keydown --clearmodifiers ctrl+h sleep 0.1 keyup ctrl+h")
         # os.system("xdotool key --clearmodifiers ctrl+h")
         time.sleep(0.1)
-        os.system("xdotool key --clearmodifiers BackSpace")
+        os.system("xdotool key --clearmodifiers ctrl+p")
 
 
 def menu():

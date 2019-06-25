@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="698c6adf-57bc-494c-b6e1-82e2606a2670" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backup/config.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_backup.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_threading.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/mainwindow.ui" beforeDir="false" afterPath="$PROJECT_DIR$/mainwindow.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/read_config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/runningAccu.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolkit.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolkit.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,37 +18,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="41" column="14" selection-start-line="41" selection-start-column="14" selection-end-line="41" selection-end-column="14" />
+            <state relative-caret-position="164">
+              <caret line="69" column="32" selection-start-line="69" selection-start-column="32" selection-end-line="69" selection-end-column="32" />
               <folding>
                 <element signature="e#2#437#1" />
-                <element signature="e#614#615#0" />
-                <element signature="e#758#819#0" />
-                <element signature="e#869#946#0" />
-                <element signature="e#1707#1718#0" />
-                <element signature="e#1754#2127#0" />
-                <element signature="e#1754#1772#0" />
-                <element signature="e#1913#1999#0" />
-                <element signature="e#2026#2127#0" />
-                <element signature="e#2156#2160#0" />
-                <element signature="e#3464#3517#0" />
-                <element signature="e#3643#3727#0" />
-                <element signature="e#3754#3853#0" />
-                <element signature="e#4206#4221#0" />
-                <element signature="e#4497#4507#0" />
-                <element signature="e#4543#4747#0" />
-                <element signature="e#4632#4746#0" />
-                <element signature="e#4789#5310#0" />
-                <element signature="e#4847#4964#0" />
-                <element signature="e#4992#5310#0" />
-                <element signature="e#5355#5471#0" />
-                <element signature="e#5514#5617#0" />
-                <element signature="e#6542#6577#0" />
-                <element signature="e#7221#7310#0" />
-                <element signature="e#7319#7574#1" />
-                <element signature="e#8302#9067#0" />
-                <element signature="e#8408#8419#0" />
-                <element signature="e#8455#8868#0" />
               </folding>
             </state>
           </provider>
@@ -62,8 +30,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/toolkit.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1532">
-              <caret line="140" selection-start-line="140" selection-end-line="140" />
+            <state relative-caret-position="-2082">
+              <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -74,17 +45,8 @@
             <state relative-caret-position="340">
               <caret line="17" selection-start-line="17" selection-end-line="17" />
               <folding>
-                <element signature="e#1#11#0" expanded="true" />
+                <element signature="e#0#10#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/LICENSE">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="20">
-              <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -93,8 +55,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="233">
-                <caret line="79" column="48" selection-start-line="79" selection-start-column="48" selection-end-line="79" selection-end-column="48" />
+              <first_editor relative-caret-position="398">
+                <caret line="95" column="8" selection-start-line="95" selection-start-column="8" selection-end-line="95" selection-end-column="8" />
               </first_editor>
               <second_editor />
             </state>
@@ -137,7 +99,6 @@
         <option value="$PROJECT_DIR$/LICENSE" />
         <option value="$PROJECT_DIR$/read_config.py" />
         <option value="$PROJECT_DIR$/runningAccu.py" />
-        <option value="$PROJECT_DIR$/toolkit.py" />
         <option value="$PROJECT_DIR$/ss.py" />
         <option value="$PROJECT_DIR$/ssss.py" />
         <option value="$PROJECT_DIR$/main_threading.py" />
@@ -146,6 +107,8 @@
         <option value="$PROJECT_DIR$/usercfgGUISCRCPY.cfg" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/toolkit.py" />
+        <option value="$PROJECT_DIR$/Backup/config.cfg" />
       </list>
     </option>
   </component>
@@ -165,6 +128,21 @@
             <path>
               <item name="guiscrcpy" type="b2602c69:ProjectViewProjectNode" />
               <item name="guiscrcpy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="guiscrcpy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="guiscrcpy" type="462c0819:PsiDirectoryNode" />
+              <item name="Backup" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="guiscrcpy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="guiscrcpy" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="guiscrcpy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="guiscrcpy" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -352,7 +330,28 @@
       <option name="project" value="LOCAL" />
       <updated>1561222310574</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Build 1.9.3&#10;23062019 1948 GMT+3&#10;* Fixed GUI hang (issue reported by @rom1v)&#10;(code has been restructured. the old code is placed in `/backup/` folder as `main 1.9.2.py`">
+      <created>1561296067833</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1561296067833</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Build 1.9.3&#10;23062019 1948 GMT+3&#10;* Fixed GUI hang (issue reported by @rom1v)&#10;(code has been restructured. the old code is placed in `/backup/` folder as `main 1.9.2.py`">
+      <created>1561296097561</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1561296097561</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Build 1.9.3&#10;23062019 1948 GMT+3&#10;* Fixed GUI hang (issue reported by @rom1v)&#10;(code has been restructured. the old code is placed in `/backup/` folder as `main 1.9.2.py`">
+      <created>1561296429484</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1561296429484</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView">
@@ -368,7 +367,7 @@
     <frame x="0" y="27" width="1366" height="741" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1833085" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1833085" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -391,6 +390,7 @@
     <option name="UPDATE_COPYRIGHT" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="build 2.0" />
     <MESSAGE value="build 2.1" />
     <MESSAGE value="build 1.9" />
@@ -399,6 +399,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="Build 1.9.3&#10;23062019 1948 GMT+3&#10;* Fixed GUI hang (issue reported by @rom1v)&#10;(code has been restructured. the old code is placed in `/backup/` folder as `main 1.9.2.py`" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -428,107 +429,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ss.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ssss.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runningAccu.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="75" selection-start-line="20" selection-start-column="75" selection-end-line="20" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/read_config.py">
+    <entry file="file://$PROJECT_DIR$/ss.py" />
+    <entry file="file://$PROJECT_DIR$/ssss.py" />
+    <entry file="file://$PROJECT_DIR$/runningAccu.py" />
+    <entry file="file://$PROJECT_DIR$/read_config.py" />
+    <entry file="file://$PROJECT_DIR$/main_threading.py" />
+    <entry file="file://$PROJECT_DIR$/usercfgGUISCRCPY.cfg">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/LICENSE">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+        <state relative-caret-position="297">
+          <caret line="666" column="32" lean-forward="true" selection-start-line="666" selection-end-line="667" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main_threading.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4380">
-          <caret line="228" column="25" selection-end-line="273" />
+        <state relative-caret-position="164">
+          <caret line="69" column="32" selection-start-line="69" selection-start-column="32" selection-end-line="69" selection-end-column="32" />
           <folding>
-            <element signature="e#438#460#0" expanded="true" />
-            <element signature="e#991#1356#0" />
+            <element signature="e#2#437#1" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/toolkit.py">
+    <entry file="file://$PROJECT_DIR$/Backup/config.cfg">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1532">
-          <caret line="140" selection-start-line="140" selection-end-line="140" />
+        <state>
+          <caret column="560" selection-start-column="560" selection-end-column="560" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usercfgGUISCRCPY.cfg">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/terminal.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="17" selection-start-line="17" selection-end-line="17" />
           <folding>
-            <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/toolkit.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="41" column="14" selection-start-line="41" selection-start-column="14" selection-end-line="41" selection-end-column="14" />
+        <state relative-caret-position="-2082">
+          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
           <folding>
-            <element signature="e#2#437#1" />
-            <element signature="e#614#615#0" />
-            <element signature="e#758#819#0" />
-            <element signature="e#869#946#0" />
-            <element signature="e#1707#1718#0" />
-            <element signature="e#1754#2127#0" />
-            <element signature="e#1754#1772#0" />
-            <element signature="e#1913#1999#0" />
-            <element signature="e#2026#2127#0" />
-            <element signature="e#2156#2160#0" />
-            <element signature="e#3464#3517#0" />
-            <element signature="e#3643#3727#0" />
-            <element signature="e#3754#3853#0" />
-            <element signature="e#4206#4221#0" />
-            <element signature="e#4497#4507#0" />
-            <element signature="e#4543#4747#0" />
-            <element signature="e#4632#4746#0" />
-            <element signature="e#4789#5310#0" />
-            <element signature="e#4847#4964#0" />
-            <element signature="e#4992#5310#0" />
-            <element signature="e#5355#5471#0" />
-            <element signature="e#5514#5617#0" />
-            <element signature="e#6542#6577#0" />
-            <element signature="e#7221#7310#0" />
-            <element signature="e#7319#7574#1" />
-            <element signature="e#8302#9067#0" />
-            <element signature="e#8408#8419#0" />
-            <element signature="e#8455#8868#0" />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -536,8 +484,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="233">
-            <caret line="79" column="48" selection-start-line="79" selection-start-column="48" selection-end-line="79" selection-end-column="48" />
+          <first_editor relative-caret-position="398">
+            <caret line="95" column="8" selection-start-line="95" selection-start-column="8" selection-end-line="95" selection-end-column="8" />
           </first_editor>
           <second_editor />
         </state>

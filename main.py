@@ -7,6 +7,27 @@ Licensed under GNU Public License
 Build 1.9.2
 
 CHANGELOG:
+Build 1.9.5
+25062019 2159
+* MEGA CHANGE :: Migrated from `PyQt4` to `PyQt5` due to late realization that PyQt4 support
+for Windows is unfortunately discontinued.
+* `mainwindow.ui` >> xml parsed file loaded in uic loader has been compiled to `mainui.py` as UI
+* toolkit.py is deprecated. toolkit class is restructured into mainwindow class with multiprocesing.
+* After `PyQt5` update, GTK-LTK-KDE no longer raises pixmap errors
+
+
+Build 1.9.4
+23062018 1615 GMT+300
+* Dumped terminal QTextEdit for multiprocessing to prevent QThread hang.
+* Restructured StartScrcpy Class as two threads.
+
+Build 1.9.3
+22062019 1948 GMT+3
+* Fixed GUI hang (issue reported by @rom1v)
+(code has been restructured. the old code is placed in `/backup/` folder as `main 1.9.2.py`. But however, terminal ui QTextEdit
+is not functional.
+
+
 1.9.2
 * Added GUIScrcpy icon
 * Added pixmap icons
@@ -26,24 +47,46 @@ ln5:: showTouches
 """
 import multiprocessing
 import os
-import platform
 import subprocess
 import sys
 import time
 
-import psutil
-from PyQt4 import QtGui, uic
-from PyQt4.QtCore import QThread
+from toolUI import Ui_Dialog
+
+try:
+    import psutil
+except ModuleNotFoundError:
+    print("psutil is not installed in the python3 directory. "
+          "Install with $ pip3 install psutil")
+
+try:
+    from PyQt5 import QtCore, QtGui, uic, QtWidgets
+    from PyQt5.QtCore import *
+except ModuleNotFoundError:
+    print("PyQt5 is not installed. Please install it with pip install PyQt5 pyside2."
+          "Read the README.md on github.com/srevinsaju/guiscrcpy")
+try:
+    import pyautogui as auto
+except ModuleNotFoundError:
+    print("PyAutoGUI is not installed. Please install it with pip install pyautogui."
+          "Read the README.md on github.com/srevinsaju/guiscrcpy")
+try:
+    from pygetwindow import getWindowsWithTitle
+except NotImplementedError:
+    pass
+
+from mainui import Ui_MainWindow
 
 #
 
 #
 
-build = "1.9.4"
+build = "1.9.5"
 qtCreatorFile = "mainwindow.ui"  # Enter file here.
-
+"""
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
-
+Ui_Dialog = uic.loadUiType(qtCreatorFile)
+"""
 try:
     cfg = open("usercfgGUISCRCPY.cfg", "r")
     fileExist = False
@@ -51,6 +94,128 @@ except FileNotFoundError or FileExistsError:
     cfg = open("usercfgGUISCRCPY.cfg", "w+")
     fileExist = True
     cfg.close()
+
+
+# BEGIN TOOLKIT.UI
+def clipd2pc():
+    try:
+        scrcpywindow = getWindowsWithTitle("scrcpy")[0]
+        scrcpywindow.focus()
+        auto.hotkey("ctrl", "c")
+    except NameError:
+        os.system("wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+c")
+
+
+def power():
+    try:
+        scrcpywindow = getWindowsWithTitle("scrcpy")[0]
+        scrcpywindow.focus()
+        auto.hotkey("ctrl", "p")
+    except NameError:
+        os.system("wmctrl -x -a scrcpy && xdotool keydown --clearmodifiers ctrl")
+        os.system("wmctrl -x -a scrcpy && xdotool keydown ctrl+P")
+
+        # os.system("wmctrl -x -a scrcpy && xdotool keydown --clearmodifiers ctrl+h sleep 0.1 keyup ctrl+h")
+        # os.system("xdotool key --clearmodifiers ctrl+h")
+        time.sleep(0.1)
+        os.system("xdotool key --clearmodifiers ctrl+p")
+
+
+def menu():
+    try:
+        scrcpywindow = getWindowsWithTitle("scrcpy")[0]
+        scrcpywindow.focus()
+        auto.hotkey("ctrl", "m")
+    except NameError:
+        os.system("wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+m")
+
+
+def Back():
+    try:
+        scrcpywindow = getWindowsWithTitle("scrcpy")[0]
+        scrcpywindow.focus()
+        auto.hotkey("ctrl", "b")
+    except NameError:
+        os.system("wmctrl -x -a scrcpy && xdotool keydown --clearmodifiers ctrl")
+        os.system("wmctrl -x -a scrcpy && xdotool keydown ctrl+B")
+
+        # os.system("wmctrl -x -a scrcpy && xdotool keydown --clearmodifiers ctrl+h sleep 0.1 keyup ctrl+h")
+        # os.system("xdotool key --clearmodifiers ctrl+h")
+        time.sleep(0.1)
+        os.system("xdotool key --clearmodifiers BackSpace")
+
+
+def homekey():
+    try:
+        scrcpywindow = getWindowsWithTitle("scrcpy")[0]
+        scrcpywindow.focus()
+        auto.hotkey("ctrl", "h")
+    except NameError:
+        os.system("wmctrl -x -a scrcpy && xdotool keydown --clearmodifiers ctrl")
+        os.system("wmctrl -x -a scrcpy && xdotool keydown ctrl+h")
+
+        # os.system("wmctrl -x -a scrcpy && xdotool keydown --clearmodifiers ctrl+h sleep 0.1 keyup ctrl+h")
+        # os.system("xdotool key --clearmodifiers ctrl+h")
+        time.sleep(0.1)
+        os.system("wmctrl -x -a scrcpy && xdotool keyup ctrl+h")
+        os.system("xdotool key --clearmodifiers ctrl")
+
+
+def switch():
+    try:
+        scrcpywindow = getWindowsWithTitle("scrcpy")[0]
+        scrcpywindow.focus()
+        auto.hotkey("ctrl", "s")
+    except NameError:
+        os.system("wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+s")
+    except ModuleNotFoundError:
+        print("please Install the dependencies")
+
+
+def notifExpand():
+    try:
+        scrcpywindow = getWindowsWithTitle("scrcpy")[0]
+        scrcpywindow.focus()
+        auto.hotkey("ctrl", "n")
+    except NameError:
+        os.system("wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+n")
+
+
+def clippc2d():
+    try:
+        scrcpywindow = getWindowsWithTitle("scrcpy")[0]
+        scrcpywindow.focus()
+        auto.hotkey("ctrl", "shift", "c")
+    except NameError:
+        os.system("wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+shift+c")
+
+
+def fullscreen():
+    try:
+        scrcpywindow = getWindowsWithTitle("scrcpy")[0]
+        scrcpywindow.focus()
+        auto.hotkey("ctrl", "f")
+    except NameError:
+        os.system("wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+f")
+
+
+class MyAppv(Ui_Dialog):
+    def __init__(self, Dialog):
+        super(MyAppv, self).__init__()
+        Ui_Dialog.__init__(self)
+        self.setupUi(Dialog)
+        self.clipD2PC.released.connect(clipd2pc)
+        self.clipPC2D.released.connect(clippc2d)
+        self.back.released.connect(Back)
+        self.appswi.released.connect(switch)
+        self.menuUI.released.connect(menu)
+        self.home.released.connect(homekey)
+        self.notif_pull.released.connect(notifExpand)
+        self.fullscreenUI.released.connect(fullscreen)
+
+
+# END TOOLKIT
+
 
 
 def update_terminal():
@@ -136,15 +301,19 @@ def checkProcessRunning(processName):
     return False
 
 
-class MyApp(QtGui.QMainWindow, Ui_MainWindow):
-    def __init__(self):
+class MyApp(Ui_MainWindow):
+    def __init__(self, MainWindow):
+
+        super(MyApp, self).__init__()
+        # uic.loadUi(qtCreatorFile, self)
+
         tmp = ""
         dimension = None
         bit_rate = 8000  # default
 
-        QtGui.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
-        self.setupUi(self)
+        self.setupUi(MainWindow)
+        # self.setupUi(self)
         # self.menuAbout.itemPressed.connect(self.menu_about)
 
         # check if process Scrcpy is running right now in while loop
@@ -288,28 +457,29 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 
 
 if __name__ == "__main__":
-    app = QtGui.QApplication(sys.argv)
-    window = MyApp()
-    window.show()
-
-
-    def launchmain():
+    def proc8():
+        app = QtWidgets.QApplication(sys.argv)
+        # app.aboutToQuit().connect(app.deleteLater)
+        window = QtWidgets.QMainWindow()
+        prog = MyApp(window)
+        window.show()
         app.exec_()
 
 
-    def launchtoolkit():
-        if platform.system() == "Windows":
-            p = subprocess.Popen("python " + str(os.getcwd()) + r"\toolkit.py", shell=True)
-        if platform.system() == "Linux":
-            p = subprocess.Popen("python3 " + str(os.getcwd()) + r"/toolkit.py", shell=True)
-        if platform.system() == "MacOS":
-            print("Hmm.. I don't know Mac stuff, please contribute on https://github.com/srevinsaju/guiscrcpy")
+    def proc9():
+        appo = QtWidgets.QApplication(sys.argv)
+        # app.aboutToQuit().connect(app.deleteLater)
+        windoww = QtWidgets.QMainWindow()
+        progg = MyAppv(windoww)
+        windoww.show()
+        appo.exec_()
 
 
-    ltk = multiprocessing.Process(target=launchtoolkit)
-    main1 = multiprocessing.Process(target=launchmain)
-    main1.start()
-    time.sleep(1)
-    ltk.start()
-    main1.join()
-    ltk.join(50)
+    p8 = multiprocessing.Process(target=proc8)
+    p9 = multiprocessing.Process(target=proc9)
+    p8.start()
+    p9.start()
+    p8.join()
+    p9.join()
+
+    sys.exit()

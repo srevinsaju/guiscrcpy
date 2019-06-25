@@ -2,10 +2,12 @@ import os
 import sys
 import time
 
+from toolUI import Ui_Dialog
+
 try:
-    from PyQt4 import QtCore, QtGui, uic
+    from PyQt5 import QtCore, QtGui, uic, QtWidgets
 except ModuleNotFoundError:
-    print("PyQt4 is not installed. Please install it with pip install PyQt5 pyside2."
+    print("PyQt5 is not installed. Please install it with pip install PyQt5 pyside2."
           "Read the README.md on github.com/srevinsaju/guiscrcpy")
 try:
     import pyautogui as auto
@@ -16,11 +18,11 @@ try:
     from pygetwindow import getWindowsWithTitle
 except NotImplementedError:
     pass
-
+"""
 qtCreatorFile = "toolkit_ui.ui"  # Enter file here.
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
-
+"""
 
 def clipd2pc():
     try:
@@ -124,11 +126,11 @@ def fullscreen():
         os.system("wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+f")
 
 
-class MyAppv(QtGui.QMainWindow, Ui_MainWindow):
-    def __init__(self):
-        QtGui.QMainWindow.__init__(self)
-        Ui_MainWindow.__init__(self)
-        self.setupUi(self)
+class MyAppv(Ui_Dialog):
+    def __init__(self, Dialog):
+        super(MyAppv, self).__init__()
+        Ui_Dialog.__init__(self)
+        self.setupUi(Dialog)
         self.clipD2PC.released.connect(clipd2pc)
         self.clipPC2D.released.connect(clippc2d)
         self.back.released.connect(Back)
@@ -139,7 +141,10 @@ class MyAppv(QtGui.QMainWindow, Ui_MainWindow):
         self.fullscreenUI.released.connect(fullscreen)
 
 
-appo = QtGui.QApplication(sys.argv)
-window = MyAppv()
-window.show()
-sys.exit(appo.exec_())
+if __name__ == "__main__":
+    appo = QtWidgets.QApplication(sys.argv)
+    # app.aboutToQuit().connect(app.deleteLater)
+    window = QtWidgets.QMainWindow()
+    progg = MyAppv(window)
+    window.show()
+    sys.exit(appo.exec_())

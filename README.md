@@ -24,8 +24,13 @@ The package includes two codelets:
 it is the UI system that executes the fixed command to scrcpy engine. These are static.
 ##### Toolkit UI controller
 It is the UI controller, which gives commands to the Scrcpy window to execute certain actions. <p> Read **Issues** and **Future Releases** , before proceeding
+## Installation
+* Release 1.9.4 :: Linux only. A pre-build independant package is available. Checkout at Releases. 
+Only do <p> `$ sudo apt install wmctrl xdotool ` <p> The executable file is in the main file. GUIscrcpy.
+* Windows OS is not supported in 1.9.4 due to the incompatibility of PyQt4 (discontinued with Python 3.4)
+
 ## Building from Source
-Fortunately or Unfortunately, GUIscrcPy has to be built from source. But that's easy again!
+GUIscrcPy can also be built from source. But that's easy again!
 
 Before everything, make sure you have scrcpy on your path. You can Google it out, on how to do it, next build will have a automated build.
 Only Scrcpy 1.9
@@ -75,6 +80,16 @@ Share your ideas, issues with me on github and email [srevin03@gmail.com](srevin
 
 
 ## Changelog
+
+### Build 1.9.5
+25062019 2159
+* MEGA CHANGE :: Migrated from `PyQt4` to `PyQt5` due to late realization that PyQt4 support
+for Windows is unfortunately discontinued. 
+* `mainwindow.ui` >> xml parsed file loaded in uic loader has been compiled to `mainui.py` as UI 
+* toolkit.py is deprecated. toolkit class is restructured into mainwindow class with multiprocesing. 
+* After `PyQt5` update, GTK-LTK-KDE no longer raises pixmap errors
+* Unreleased *.ui files for Build. Only dependencies for release are png pixmap files
+
 
 ### Build 1.9.4
 23062018 1615 GMT+300

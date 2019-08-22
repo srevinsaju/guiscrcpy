@@ -1,0 +1,12 @@
+__pycache__
+dist
+release
+src
+venv
+build
+.idea
+
+ 
+*.dll
+*.so
+

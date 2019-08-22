@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Panel</class>
+ <widget class="QDialog" name="Panel">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>312</width>
+    <height>26</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Main Panel</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>rsrc/android_circle.png</normaloff>rsrc/android_circle.png</iconset>
+  </property>
+  <widget class="QPushButton" name="backk">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>0</y>
+     <width>81</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Back key</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(171, 171, 171)</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>rsrc/left-arrow-1.png</normaloff>rsrc/left-arrow-1.png</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="powerUII">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>0</y>
+     <width>31</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Power on/off</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(189, 189, 189);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>rsrc/power.png</normaloff>rsrc/power.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="menuUII">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>0</y>
+     <width>51</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Menu key</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(171, 171, 171)</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>rsrc/menu.png</normaloff>rsrc/menu.png</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="vupp">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>31</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Volume Up</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(171, 171, 171)</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>rsrc/volume.png</normaloff>rsrc/volume.png</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="homee">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>0</y>
+     <width>71</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Home key</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(171, 171, 171);
+border-color: rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>rsrc/home.png</normaloff>rsrc/home.png</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="vdownn">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>0</y>
+     <width>31</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(171, 171, 171)</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>rsrc/volume.png</normaloff>rsrc/volume.png</iconset>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

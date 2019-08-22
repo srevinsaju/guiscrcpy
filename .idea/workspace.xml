@@ -4,7 +4,38 @@
     <bookmark url="file://$PROJECT_DIR$/toolkit.py" line="144" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="698c6adf-57bc-494c-b6e1-82e2606a2670" name="Default Changelist" comment="" />
+    <list default="true" id="698c6adf-57bc-494c-b6e1-82e2606a2670" name="Default Changelist" comment="Build 1.9.5&#10;25062019 2159&#10;* MEGA CHANGE :: Migrated from `PyQt4` to `PyQt5` due to late realization that PyQt4 support&#10;for Windows is unfortunately discontinued. &#10;* `mainwindow.ui` &gt;&gt; xml parsed file loaded in uic loader has been compiled to `mainui.py` as UI &#10;* toolkit.py is deprecated. toolkit class is restructured into mainwindow class with multiprocesing. &#10;* After `PyQt5` update, GTK-LTK-KDE no longer raises pixmap errors&#10;* Unreleased *.ui files for Build. Only dependencies for release are png pixmap files">
+      <change afterPath="$PROJECT_DIR$/bottompanelUI.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bottompanelui.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/landscape.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notif.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notifUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/guiscrcpy.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backup/config.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/Backup/config.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.pyproject" beforeDir="false" afterPath="$PROJECT_DIR$/main.pyproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainui.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainwindow.ui" beforeDir="false" afterPath="$PROJECT_DIR$/mainwindow.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rsrc.qrc" beforeDir="false" afterPath="$PROJECT_DIR$/rsrc.qrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rsrc/padnote.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rsrc/smartphone.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/toolUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolkit_ui.ui" beforeDir="false" afterPath="$PROJECT_DIR$/toolkit_ui.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usercfgGUISCRCPY.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/activate" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/activate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/activate.csh" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/activate.csh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/activate.fish" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/activate.fish" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/bin/python" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/python" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/lib64" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/pyvenv.cfg" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,11 +44,50 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="23" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="77">
+              <caret line="67" column="9" selection-start-line="67" selection-start-column="9" selection-end-line="67" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Backup/config.cfg">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="539" selection-end-column="539" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bottompanelUI.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="339">
+              <caret line="86" selection-start-line="86" selection-end-line="86" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/notifUI.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="160">
+              <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/notif.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="549">
+              <caret line="43" selection-start-line="43" selection-end-line="43" />
+              <folding>
+                <element signature="e#0#17#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -25,8 +95,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mainui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="20">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="117">
+              <caret line="199" column="99" selection-start-line="199" selection-start-column="99" selection-end-line="199" selection-end-column="99" />
             </state>
           </provider>
         </entry>
@@ -34,8 +104,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/toolUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+            <state relative-caret-position="-4342">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
             </state>
           </provider>
         </entry>
@@ -52,12 +122,12 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="253">
-                <caret line="91" lean-forward="true" selection-start-line="83" selection-start-column="4" selection-end-line="91" />
+              <first_editor relative-caret-position="700">
+                <caret line="35" column="15" selection-start-line="35" selection-start-column="15" selection-end-line="35" selection-end-column="15" />
               </first_editor>
               <second_editor />
             </state>
@@ -67,7 +137,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/toolkit.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
+            <state relative-caret-position="440">
               <caret line="26" selection-start-line="26" selection-end-line="141" />
             </state>
           </provider>
@@ -94,6 +164,15 @@
       <find>usercfgGUISCRCPY</find>
       <find>startScrcpy</find>
       <find>setupUi</find>
+      <find>dimValues</find>
+      <find>keep</find>
+      <find>-b</find>
+      <find>multiprocess</find>
+      <find>subprocess.Popen</find>
+      <find>subprocess.</find>
+      <find>PySide2</find>
+      <find>Modal</find>
+      <find>home</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -116,25 +195,32 @@
         <option value="$PROJECT_DIR$/Backup/main 1.9.2.py" />
         <option value="$PROJECT_DIR$/terminal.py" />
         <option value="$PROJECT_DIR$/usercfgGUISCRCPY.cfg" />
+        <option value="$PROJECT_DIR$/toolkit.py" />
+        <option value="$PROJECT_DIR$/notif.py" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/guiscrcpy.cfg" />
         <option value="$PROJECT_DIR$/Backup/config.cfg" />
+        <option value="$PROJECT_DIR$/notifUI.py" />
+        <option value="$PROJECT_DIR$/ui/main.py" />
+        <option value="$PROJECT_DIR$/bottompanelUI.py" />
         <option value="$PROJECT_DIR$/mainui.py" />
         <option value="$PROJECT_DIR$/toolUI.py" />
-        <option value="$PROJECT_DIR$/toolkit.py" />
         <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="27" />
-    <option name="width" value="1366" />
-    <option name="height" value="741" />
+    <option name="x" value="-380" />
+    <option name="y" value="191" />
+    <option name="width" value="1356" />
+    <option name="height" value="734" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -150,25 +236,19 @@
             <path>
               <item name="guiscrcpy" type="b2602c69:ProjectViewProjectNode" />
               <item name="guiscrcpy" type="462c0819:PsiDirectoryNode" />
-              <item name="build" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="guiscrcpy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="guiscrcpy" type="462c0819:PsiDirectoryNode" />
-              <item name="dist" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -233,6 +313,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="notif" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="guiscrcpy" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/notif.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="toolkit" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="guiscrcpy" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -254,9 +355,16 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.main_threading" />
+      <item itemvalue="Python.notif" />
+      <item itemvalue="Python.toolkit" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.notif" />
         <item itemvalue="Python.toolkit" />
         <item itemvalue="Python.main_threading" />
       </list>
@@ -378,7 +486,14 @@
       <option name="project" value="LOCAL" />
       <updated>1561493020301</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Build 1.9.5&#10;25062019 2159&#10;* MEGA CHANGE :: Migrated from `PyQt4` to `PyQt5` due to late realization that PyQt4 support&#10;for Windows is unfortunately discontinued. &#10;* `mainwindow.ui` &gt;&gt; xml parsed file loaded in uic loader has been compiled to `mainui.py` as UI &#10;* toolkit.py is deprecated. toolkit class is restructured into mainwindow class with multiprocesing. &#10;* After `PyQt5` update, GTK-LTK-KDE no longer raises pixmap errors&#10;* Unreleased *.ui files for Build. Only dependencies for release are png pixmap files">
+      <created>1561493174923</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1561493174923</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView">
@@ -391,23 +506,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1366" height="741" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="28" width="1366" height="740" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.1833085" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18289962" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3294702" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39900663" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3286385" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49962825" weight="0.3286385" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39749607" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3294702" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3286385" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3294702" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.29139072" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.3294702" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.9159851" weight="0.48982784" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.08401487" side_tool="true" weight="0.48982784" />
+      <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49962825" weight="0.3051643" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -482,9 +596,7 @@
     <entry file="file://$PROJECT_DIR$/runningAccu.py" />
     <entry file="file://$PROJECT_DIR$/read_config.py" />
     <entry file="file://$PROJECT_DIR$/main_threading.py" />
-    <entry file="file://$PROJECT_DIR$/usercfgGUISCRCPY.cfg">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/usercfgGUISCRCPY.cfg" />
     <entry file="file://$PROJECT_DIR$/LICENSE">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
@@ -492,10 +604,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Backup/config.cfg">
+    <entry file="file://$USER_HOME$/.local/lib/python3.7/site-packages/PySide2/QtCore.pyi">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/guiscrcpy.cfg">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="560" selection-start-column="560" selection-end-column="560" />
+        <state relative-caret-position="100">
+          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -509,41 +624,72 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="700">
+            <caret line="35" column="15" selection-start-line="35" selection-start-column="15" selection-end-line="35" selection-end-column="15" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/toolkit.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
+        <state relative-caret-position="440">
           <caret line="26" selection-start-line="26" selection-end-line="141" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/toolUI.py">
+    <entry file="file://$PROJECT_DIR$/Backup/config.cfg">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+        <state>
+          <caret column="539" selection-end-column="539" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/notifUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        <state relative-caret-position="160">
+          <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/notif.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bottompanelUI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="86" selection-start-line="86" selection-end-line="86" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mainui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="117">
+          <caret line="199" column="99" selection-start-line="199" selection-start-column="99" selection-end-line="199" selection-end-column="99" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="253">
-            <caret line="91" lean-forward="true" selection-start-line="83" selection-start-column="4" selection-end-line="91" />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/toolUI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4342">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="67" column="9" selection-start-line="67" selection-start-column="9" selection-end-line="67" selection-end-column="9" />
         </state>
       </provider>
     </entry>

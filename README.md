@@ -53,13 +53,13 @@ If your OS is Linux-based, to use Toolkit, you need to install `wmctrl` and `xdo
 
 For Linux operating systems, if python raises `Xlib>>ModuleNotFoundError`, then run <p>
 `sudo apt install python3-xlib` <p>
-`sudo apt install python3-qt5`
+`sudo apt install python3-qt5vent `
 
 
 To use toolkit (on Linux only), run:
 `sudo apt install wmctrl xdotool` 
 
-##Issues
+## Issues
 There are problems with the toolkit in executing certain functions like HOME key and BACK key. I am not able to solve this on 
 Linux because of the Xlib Graphics manager. On Windows, it should work properly,
 but however, this hasn't been tested so far. I would like to know the results on [srevin03@gmail.com](srevin03@gmail.com)
@@ -72,7 +72,7 @@ a lot of advantages, but my future plans are as follows
 * Support python3.8 with PyAutoGUI support. Most of the project is based on PyAutoGUI, which is based on Windows, with less support for Linux.
 I am on Linux, so i can't test them out, except WINE
 * Add service running indicator
-* Create pre-built installer and files, Will try fbs build system, after a quite while
+* ~~Create pre-built installer and files, Will try fbs build system, after a quite while~~
 
 ## Support me!
 Share your ideas, issues with me on github and email [srevin03@gmail.com](srevin03@gmail.com)!!
@@ -80,6 +80,21 @@ Share your ideas, issues with me on github and email [srevin03@gmail.com](srevin
 
 
 ## Changelog
+
+### Build 1.9.7
+* Fixed many bugs
+* Added Orientation change command (potrait / landscape)
+* Added user configuration file write to home directory on static line system. Users now automatically save theit information into the `.cfg file`
+* Spearated main controls from subsidiary controls. Linear layout and horizontal layout are separate.
+* Users can now perform top to bottom or bottom to top swipe with notification buttons,
+* Button utility is mentioned in tooltip
+* Added Reset button to reset user config to defaults.
+* Fixed QProgressBar blocking mainthread.
+
+
+
+### Build 1.9.6
+* Minor Fixes 
 
 ### Build 1.9.5
 25062019 2159

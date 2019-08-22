@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'mainwindow.ui'
+#
+# Created by: PyQt5 UI code generator 5.12.1
+#
+# WARNING! All changes made in this file will be lost!
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -42,10 +50,10 @@ class Ui_MainWindow(object):
         self.label_2.setGeometry(QtCore.QRect(290, 270, 151, 20))
         self.label_2.setObjectName("label_2")
         self.showTouches = QtWidgets.QCheckBox(self.centralwidget)
-        self.showTouches.setGeometry(QtCore.QRect(20, 110, 251, 23))
+        self.showTouches.setGeometry(QtCore.QRect(20, 90, 251, 23))
         self.showTouches.setObjectName("showTouches")
         self.aotop = QtWidgets.QCheckBox(self.centralwidget)
-        self.aotop.setGeometry(QtCore.QRect(20, 90, 251, 23))
+        self.aotop.setGeometry(QtCore.QRect(20, 70, 251, 23))
         self.aotop.setToolTip("")
         self.aotop.setObjectName("aotop")
         self.bitrateText = QtWidgets.QTextEdit(self.centralwidget)
@@ -89,9 +97,6 @@ class Ui_MainWindow(object):
         self.dial.setNotchTarget(20.0)
         self.dial.setNotchesVisible(True)
         self.dial.setObjectName("dial")
-        self.keepdisplayRO = QtWidgets.QCheckBox(self.centralwidget)
-        self.keepdisplayRO.setGeometry(QtCore.QRect(20, 150, 261, 23))
-        self.keepdisplayRO.setObjectName("keepdisplayRO")
         self.line_2 = QtWidgets.QFrame(self.centralwidget)
         self.line_2.setGeometry(QtCore.QRect(20, 60, 481, 16))
         self.line_2.setFrameShape(QtWidgets.QFrame.HLine)
@@ -117,13 +122,14 @@ class Ui_MainWindow(object):
         self.dimensionDefaultCheckbox.setChecked(True)
         self.dimensionDefaultCheckbox.setObjectName("dimensionDefaultCheckbox")
         self.fullscreen = QtWidgets.QCheckBox(self.centralwidget)
-        self.fullscreen.setGeometry(QtCore.QRect(20, 130, 251, 23))
+        self.fullscreen.setGeometry(QtCore.QRect(20, 110, 251, 23))
         self.fullscreen.setObjectName("fullscreen")
         self.displayForceOn = QtWidgets.QCheckBox(self.centralwidget)
-        self.displayForceOn.setGeometry(QtCore.QRect(20, 170, 421, 23))
+        self.displayForceOn.setGeometry(QtCore.QRect(20, 130, 421, 23))
         self.displayForceOn.setObjectName("displayForceOn")
         self.runningNot = QtWidgets.QToolButton(self.centralwidget)
         self.runningNot.setGeometry(QtCore.QRect(20, 210, 481, 31))
+        self.runningNot.setStyleSheet("")
         self.runningNot.setText("")
         self.runningNot.setObjectName("runningNot")
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
@@ -132,9 +138,13 @@ class Ui_MainWindow(object):
         self.label_4.setPixmap(QtGui.QPixmap("ui/android_circle.png"))
         self.label_4.setScaledContents(True)
         self.label_4.setObjectName("label_4")
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(20, 390, 71, 31))
+        self.pushButton.setText("")
+        self.pushButton.setObjectName("pushButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 506, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 506, 20))
         self.menubar.setObjectName("menubar")
         self.menuGUI_ScrcPy = QtWidgets.QMenu(self.menubar)
         self.menuGUI_ScrcPy.setObjectName("menuGUI_ScrcPy")
@@ -154,46 +164,33 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "GUI Scrcpy"))
         MainWindow.setStatusTip(_translate("MainWindow", "GUI by srevinsaju, scrcpy engine by rom1v. Hosted on GitHub\n"
-                                                         "                https://github.com/srevinsaju/guiscrcpy\n"
-                                                         "            "))
+"                https://github.com/srevinsaju/guiscrcpy\n"
+"            "))
         self.progressBar.setStatusTip(_translate("MainWindow", "Progress Bar"))
-        self.dimensionText.setStatusTip(
-            _translate("MainWindow", "Uncheck \'Keep Default Dimensions\' to change values"))
-        self.dimensionText.setHtml(_translate("MainWindow",
-                                              "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-                                              "                        <html><head><meta name=\"qrichtext\" content=\"1\" /><style\n"
-                                              "                        type=\"text/css\">\n"
-                                              "                        p, li { white-space: pre-wrap; }\n"
-                                              "                        </style></head><body style=\" font-family:\'Ubuntu\'; font-size:24pt;\n"
-                                              "                        font-weight:400; font-style:normal;\">\n"
-                                              "                        <p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;\n"
-                                              "                        -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">DEFAULT</span>\n"
-                                              "                        </p></body></html>\n"
-                                              "                    "))
+        self.dimensionText.setStatusTip(_translate("MainWindow", "Uncheck \'Keep Default Dimensions\' to change values"))
+        self.dimensionText.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:24pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">                        </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">DEFAULT</span>                                            </p></body></html>"))
         self.label_2.setText(_translate("MainWindow", "Max. Dimension"))
         self.showTouches.setText(_translate("MainWindow", "Show touches"))
         self.aotop.setText(_translate("MainWindow", "Always on Top"))
-        self.bitrateText.setHtml(_translate("MainWindow",
-                                            "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-                                            "                        <html><head><meta name=\"qrichtext\" content=\"1\" /><style\n"
-                                            "                        type=\"text/css\">\n"
-                                            "                        p, li { white-space: pre-wrap; }\n"
-                                            "                        </style></head><body style=\" font-family:\'Ubuntu\'; font-size:24pt;\n"
-                                            "                        font-weight:600; font-style:normal;\">\n"
-                                            "                        <p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;\n"
-                                            "                        -qt-block-indent:0; text-indent:0px;\">8000 KB/s</p></body></html>\n"
-                                            "                    "))
+        self.bitrateText.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:24pt; font-weight:600; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">                        </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">8000 KB/s                    </p></body></html>"))
         self.build_label.setText(_translate("MainWindow", "Build"))
-        self.label_3.setStatusTip(
-            _translate("MainWindow", "GUI by srevinsaju, scrcpy engine by rom1v. Hosted on GitHub\n"
-                                     "                        https://github.com/srevinsaju/guiscrcpy\n"
-                                     "                    "))
+        self.label_3.setStatusTip(_translate("MainWindow", "GUI by srevinsaju, scrcpy engine by rom1v. Hosted on GitHub\n"
+"                        https://github.com/srevinsaju/guiscrcpy\n"
+"                    "))
         self.label_3.setText(_translate("MainWindow", "GUI ScrcPy"))
         self.dial.setStatusTip(_translate("MainWindow", "Adjust Bitrate. Leave it untouched for defualts"))
-        self.keepdisplayRO.setText(_translate("MainWindow", "Keep display read-only"))
         self.label.setText(_translate("MainWindow", "Bitrate"))
-        self.executeaction.setStatusTip(
-            _translate("MainWindow", "Start Scrcpy Executable right now. Please check if Scrcpy is added to path"))
+        self.executeaction.setStatusTip(_translate("MainWindow", "Start Scrcpy Executable right now. Please check if Scrcpy is added to path"))
         self.executeaction.setText(_translate("MainWindow", "START SCRCPY"))
         self.quit.setStatusTip(_translate("MainWindow", "quit GUI"))
         self.quit.setText(_translate("MainWindow", "QUIT"))
@@ -202,11 +199,12 @@ class Ui_MainWindow(object):
         self.displayForceOn.setText(_translate("MainWindow", "Keep display off on start-up (experimental)"))
         self.runningNot.setStatusTip(_translate("MainWindow", "Shows the status of the Scrcpy Daemon"))
         self.label_4.setToolTip(_translate("MainWindow", "GUI by srevinsaju, scrcpy engine by rom1v. Hosted on GitHub\n"
-                                                         "                        https://github.com/srevinsaju/guiscrcpy\n"
-                                                         "                    "))
-        self.label_4.setStatusTip(
-            _translate("MainWindow", "GUI by srevinsaju, scrcpy engine by rom1v. Hosted on GitHub\n"
-                                     "                        https://github.com/srevinsaju/guiscrcpy\n"
-                                     "                    "))
+"                        https://github.com/srevinsaju/guiscrcpy\n"
+"                    "))
+        self.label_4.setStatusTip(_translate("MainWindow", "GUI by srevinsaju, scrcpy engine by rom1v. Hosted on GitHub\n"
+"                        https://github.com/srevinsaju/guiscrcpy\n"
+"                    "))
         self.menuGUI_ScrcPy.setTitle(_translate("MainWindow", "GUI ScrcPy"))
         self.menuAbout.setTitle(_translate("MainWindow", "About"))
+
+

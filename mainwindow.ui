@@ -6,16 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>506</width>
-    <height>507</height>
+    <width>503</width>
+    <height>402</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>GUI Scrcpy</string>
+   <string>guiscrcpy</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>ui/android_circle.png</normaloff>ui/android_circle.png</iconset>
+   <iconset resource="rsrc.qrc">
+    <normaloff>:/res/ui/guiscrcpy_logo.png</normaloff>:/res/ui/guiscrcpy_logo.png</iconset>
   </property>
   <property name="statusTip">
    <string>GUI by srevinsaju, scrcpy engine by rom1v. Hosted on GitHub
@@ -23,49 +23,411 @@
             </string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">
+.QPushButton {
+                        
+border-radius: 10px;
+					  
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 152, 255));
+color: rgb(0, 0, 0);
+                        
+                    }
+
+QPushButton:pressed {
+border-radius: 10px;
+					  
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 152, 255));
+color: rgb(0, 0, 0);
+                        }
+QPushButton:hover {
+border-radius: 10px;
+					  
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 199, 199, 255), stop:1 rgba(0, 190, 113, 255));
+color: rgb(0, 0, 0);
+                        }
+
+
+.QPushButton#quit{
+                        background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255), stop:1 rgba(255, 155, 0, 255));
+color: rgb(0, 0, 0);
+border-radius: 10px;
+
+                        
+                    }
+
+.QPushButton#quit:hover{
+                        
+	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(172, 0, 0, 255), stop:1 rgba(175, 106, 0, 255));
+color: rgb(0, 0, 0);
+border-radius: 10px;
+
+                        
+                    }
+
+</string>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <widget class="QProgressBar" name="progressBar">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>430</y>
-      <width>481</width>
+      <y>330</y>
+      <width>471</width>
       <height>23</height>
      </rect>
     </property>
     <property name="palette">
      <palette>
       <active>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Button">
+        <brush brushstyle="LinearGradientPattern">
+         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="1.000000000000000" endy="0.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradientstop position="0.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </gradientstop>
+          <gradientstop position="1.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>0</blue>
+           </color>
+          </gradientstop>
+         </gradient>
+        </brush>
+       </colorrole>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="LinearGradientPattern">
+         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="1.000000000000000" endy="0.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradientstop position="0.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </gradientstop>
+          <gradientstop position="1.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>0</blue>
+           </color>
+          </gradientstop>
+         </gradient>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="LinearGradientPattern">
+         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="1.000000000000000" endy="0.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradientstop position="0.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </gradientstop>
+          <gradientstop position="1.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>0</blue>
+           </color>
+          </gradientstop>
+         </gradient>
+        </brush>
+       </colorrole>
        <colorrole role="Highlight">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>115</red>
-          <green>210</green>
-          <blue>22</blue>
+          <red>85</red>
+          <green>255</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="HighlightedText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>85</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
          </color>
         </brush>
        </colorrole>
       </active>
       <inactive>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Button">
+        <brush brushstyle="LinearGradientPattern">
+         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="1.000000000000000" endy="0.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradientstop position="0.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </gradientstop>
+          <gradientstop position="1.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>0</blue>
+           </color>
+          </gradientstop>
+         </gradient>
+        </brush>
+       </colorrole>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="LinearGradientPattern">
+         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="1.000000000000000" endy="0.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradientstop position="0.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </gradientstop>
+          <gradientstop position="1.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>0</blue>
+           </color>
+          </gradientstop>
+         </gradient>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="LinearGradientPattern">
+         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="1.000000000000000" endy="0.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradientstop position="0.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </gradientstop>
+          <gradientstop position="1.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>0</blue>
+           </color>
+          </gradientstop>
+         </gradient>
+        </brush>
+       </colorrole>
        <colorrole role="Highlight">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>115</red>
-          <green>210</green>
-          <blue>22</blue>
+          <red>85</red>
+          <green>255</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="HighlightedText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>85</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
          </color>
         </brush>
        </colorrole>
       </inactive>
       <disabled>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Button">
+        <brush brushstyle="LinearGradientPattern">
+         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="1.000000000000000" endy="0.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradientstop position="0.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </gradientstop>
+          <gradientstop position="1.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>0</blue>
+           </color>
+          </gradientstop>
+         </gradient>
+        </brush>
+       </colorrole>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="LinearGradientPattern">
+         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="1.000000000000000" endy="0.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradientstop position="0.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </gradientstop>
+          <gradientstop position="1.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>0</blue>
+           </color>
+          </gradientstop>
+         </gradient>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="LinearGradientPattern">
+         <gradient startx="0.000000000000000" starty="0.000000000000000" endx="1.000000000000000" endy="0.000000000000000" type="LinearGradient" spread="PadSpread" coordinatemode="ObjectBoundingMode">
+          <gradientstop position="0.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </gradientstop>
+          <gradientstop position="1.000000000000000">
+           <color alpha="255">
+            <red>0</red>
+            <green>255</green>
+            <blue>0</blue>
+           </color>
+          </gradientstop>
+         </gradient>
+        </brush>
+       </colorrole>
        <colorrole role="Highlight">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>145</red>
-          <green>145</green>
-          <blue>145</blue>
+          <red>85</red>
+          <green>255</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="HighlightedText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>85</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
          </color>
         </brush>
        </colorrole>
@@ -75,6 +437,12 @@
     <property name="statusTip">
      <string>Progress Bar</string>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 0, 255));
+color: rgb(255,255,255);
+selection-color: rgb(255, 85, 0);
+selection-background-color: rgb(85, 255, 0);</string>
+    </property>
     <property name="value">
      <number>100</number>
     </property>
@@ -83,8 +451,8 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>370</y>
-      <width>481</width>
+      <y>270</y>
+      <width>471</width>
       <height>20</height>
      </rect>
     </property>
@@ -92,59 +460,21 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QTextEdit" name="dimensionText">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>290</y>
-      <width>211</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>24</pointsize>
-     </font>
-    </property>
-    <property name="statusTip">
-     <string>Uncheck 'Keep Default Dimensions' to change values</string>
-    </property>
-    <property name="html">
-     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:24pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;                        &lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;DEFAULT&lt;/span&gt;                                            &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>270</y>
-      <width>151</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Max. Dimension</string>
-    </property>
-   </widget>
    <widget class="QCheckBox" name="showTouches">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>90</y>
-      <width>251</width>
+      <x>300</x>
+      <y>70</y>
+      <width>191</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>Show touches</string>
+    </property>
+    <property name="icon">
+     <iconset resource="rsrc.qrc">
+      <normaloff>:/icons/icons/hand-finger-pointing-down.svg</normaloff>:/icons/icons/hand-finger-pointing-down.svg</iconset>
     </property>
    </widget>
    <widget class="QCheckBox" name="aotop">
@@ -152,53 +482,35 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>20</x>
       <y>70</y>
-      <width>251</width>
+      <width>131</width>
       <height>23</height>
      </rect>
     </property>
     <property name="toolTip">
-     <string/>
+     <string>Keep display always on top of other windows</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>2</number>
     </property>
     <property name="text">
      <string>Always on Top</string>
     </property>
-   </widget>
-   <widget class="QTextEdit" name="bitrateText">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>290</y>
-      <width>181</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>24</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="html">
-     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:24pt; font-weight:600; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;                        &lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;8000 KB/s                    &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <property name="icon">
+     <iconset resource="rsrc.qrc">
+      <normaloff>:/icons/icons/fire-symbol.svg</normaloff>:/icons/icons/fire-symbol.svg</iconset>
     </property>
    </widget>
    <widget class="QLabel" name="build_label">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>30</y>
+      <x>83</x>
+      <y>44</y>
       <width>141</width>
-      <height>21</height>
+      <height>16</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>Build</string>
@@ -211,10 +523,13 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>350</y>
-      <width>211</width>
+      <y>250</y>
+      <width>201</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
     <property name="minimum">
      <number>320</number>
@@ -233,9 +548,9 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>10</y>
+      <y>5</y>
       <width>231</width>
-      <height>51</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -251,23 +566,35 @@ p, li { white-space: pre-wrap; }
                     </string>
     </property>
     <property name="text">
-     <string>GUI ScrcPy</string>
+     <string>guiscrcpy</string>
     </property>
    </widget>
    <widget class="QDial" name="dial">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>250</y>
+      <x>10</x>
+      <y>170</y>
       <width>91</width>
-      <height>111</height>
+      <height>91</height>
      </rect>
     </property>
     <property name="cursor">
      <cursorShape>SizeHorCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Changing the bitrate of the screen mirrorring. Useful to show playback at normal speed without lags</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>2</number>
+    </property>
     <property name="statusTip">
      <string>Adjust Bitrate. Leave it untouched for defualts</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(0, 255, 255);
+color: rgb(255, 0, 127);
+gridline-color: rgb(255, 0, 0);
+selection-background-color: rgb(12, 255, 0);</string>
     </property>
     <property name="minimum">
      <number>64</number>
@@ -280,6 +607,9 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="value">
      <number>8000</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
     </property>
     <property name="invertedAppearance">
      <bool>false</bool>
@@ -301,9 +631,9 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>60</y>
+      <y>64</y>
       <width>481</width>
-      <height>16</height>
+      <height>9</height>
      </rect>
     </property>
     <property name="orientation">
@@ -313,10 +643,10 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>270</y>
-      <width>111</width>
-      <height>17</height>
+      <x>110</x>
+      <y>156</y>
+      <width>101</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -327,48 +657,60 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>288</x>
-      <y>390</y>
-      <width>211</width>
+      <y>290</y>
+      <width>201</width>
       <height>31</height>
      </rect>
     </property>
     <property name="statusTip">
      <string>Start Scrcpy Executable right now. Please check if Scrcpy is added to path</string>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="text">
      <string>START SCRCPY</string>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>rsrc/lightning.png</normaloff>rsrc/lightning.png</iconset>
+     <iconset resource="rsrc.qrc">
+      <normaloff>:/icons/icons/small-rocket-ship-silhouette.svg</normaloff>:/icons/icons/small-rocket-ship-silhouette.svg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>16</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="quit">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>390</y>
-      <width>161</width>
+      <x>20</x>
+      <y>290</y>
+      <width>31</width>
       <height>31</height>
      </rect>
     </property>
     <property name="statusTip">
      <string>quit GUI</string>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="text">
-     <string>QUIT</string>
+     <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>rsrc/cancel-1.png</normaloff>rsrc/cancel-1.png</iconset>
+     <iconset resource="rsrc.qrc">
+      <normaloff>:/icons/icons/cross-mark-on-a-black-circle-background.svg</normaloff>:/icons/icons/cross-mark-on-a-black-circle-background.svg</iconset>
     </property>
    </widget>
    <widget class="QCheckBox" name="dimensionDefaultCheckbox">
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>250</y>
-      <width>211</width>
+      <y>160</y>
+      <width>201</width>
       <height>23</height>
      </rect>
     </property>
@@ -382,35 +724,49 @@ p, li { white-space: pre-wrap; }
    <widget class="QCheckBox" name="fullscreen">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>110</y>
-      <width>251</width>
+      <x>170</x>
+      <y>70</y>
+      <width>131</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>Fullscreen</string>
     </property>
+    <property name="icon">
+     <iconset resource="rsrc.qrc">
+      <normaloff>:/icons/icons/increase-size-option.svg</normaloff>:/icons/icons/increase-size-option.svg</iconset>
+    </property>
    </widget>
    <widget class="QCheckBox" name="displayForceOn">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>130</y>
-      <width>421</width>
+      <y>90</y>
+      <width>261</width>
       <height>23</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>Use your computer screen as your android device's HD Display</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>2</number>
+    </property>
     <property name="text">
-     <string>Keep display off on start-up (experimental)</string>
+     <string>Keep display off (only screen mirroring)</string>
+    </property>
+    <property name="icon">
+     <iconset resource="rsrc.qrc">
+      <normaloff>:/icons/icons/bullseye.svg</normaloff>:/icons/icons/bullseye.svg</iconset>
     </property>
    </widget>
    <widget class="QToolButton" name="runningNot">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>210</y>
-      <width>481</width>
+      <y>120</y>
+      <width>471</width>
       <height>31</height>
      </rect>
     </property>
@@ -418,7 +774,9 @@ p, li { white-space: pre-wrap; }
      <string>Shows the status of the Scrcpy Daemon</string>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 0, 255));
+border-radius: 10px;
+color: rgb(0, 0, 0)</string>
     </property>
     <property name="text">
      <string/>
@@ -447,7 +805,7 @@ p, li { white-space: pre-wrap; }
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>ui/android_circle.png</pixmap>
+     <pixmap resource="rsrc.qrc">:/res/ui/guiscrcpy_logo.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -456,14 +814,161 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>390</y>
+      <x>60</x>
+      <y>290</y>
       <width>71</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
+     <string>RESET</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="bitrateText">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>190</y>
+      <width>171</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="statusTip">
      <string/>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 0);
+border-radius: 10px;
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 0, 255));</string>
+    </property>
+    <property name="text">
+     <string>8000 KB/s</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::AutoText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="margin">
+     <number>8</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="dimensionText">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>190</y>
+      <width>201</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="toolTip">
+     <string>Change device dimensions. scrcpy has some rendering problems upon changing dimensions</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>2</number>
+    </property>
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(17, 17, 17);
+border-radius: 10px;
+</string>
+    </property>
+    <property name="text">
+     <string>DEFAULT</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::AutoText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="margin">
+     <number>8</number>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="recScui">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>90</y>
+      <width>221</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Record screen</string>
+    </property>
+    <property name="icon">
+     <iconset resource="rsrc.qrc">
+      <normaloff>:/icons/icons/facetime-button.svg</normaloff>:/icons/icons/facetime-button.svg</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="abtme">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>290</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="rsrc.qrc">
+      <normaloff>:/icons/icons/ss-branding.png</normaloff>:/icons/icons/ss-branding.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>20</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="abtgit">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>290</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="rsrc.qrc">
+      <normaloff>:/icons/icons/github.logo.svg</normaloff>:/icons/icons/github.logo.svg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>20</height>
+     </size>
     </property>
    </widget>
   </widget>
@@ -472,8 +977,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>506</width>
-     <height>20</height>
+     <width>503</width>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuGUI_ScrcPy">
@@ -491,6 +996,8 @@ p, li { white-space: pre-wrap; }
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="rsrc.qrc"/>
+ </resources>
  <connections/>
 </ui>

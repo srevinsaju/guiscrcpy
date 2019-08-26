@@ -31,5 +31,7 @@
     <file>icons/reduced-volume.svg</file>
     <file>icons/volume-up-interface-symbol.svg</file>
   </qresource>
-  <qresource prefix="font"/>
+  <qresource prefix="font">
+    <file>Ubuntu-B.ttf</file>
+  </qresource>
 </RCC>

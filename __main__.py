@@ -72,11 +72,13 @@ All rights reserved.
 
 
 # removed multiprocess modules
+
+
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtWidgets
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
-
+import qdarkstyle
 import os
 from subprocess import Popen as po, STDOUT
 from subprocess import PIPE
@@ -84,8 +86,9 @@ import sys
 import time
 from PyQt5.QtWidgets import QMessageBox
 from toolUI import Ui_Dialog
-from PyQt5.QtWidgets import QDesktopWidget
+from PyQt5.QtWidgets import QDesktopWidget, QMainWindow
 from bottompanelUI import Ui_Panel
+import breeze_resources
 try:
     import psutil
 except ModuleNotFoundError:
@@ -112,7 +115,7 @@ print("by srevinsaju")
 print("************************************")
 print("released on 24082019 GMT+0300 2048 ")
 print("************************************")
-
+bitrate0 = 8000
 try:
 	cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "r")
 	fileExist = True
@@ -360,7 +363,90 @@ class Panel(Ui_Panel):
         x_w = self.offset.x()
         y_w = self.offset.y()
         self.move(x-x_w, y-y_w)
+    """
+        def __init__(self, Dialog):
+        super(Panel, self).__init__()
 
+        Ui_Panel.__init__(self)
+        # Dialog.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        Dialog.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint)
+
+        self.setupUi(Dialog)
+        self.backk.clicked.connect(Back)
+        self.menuUII.clicked.connect(menu)
+        self.homee.clicked.connect(homekey)
+        self.powerUII.clicked.connect(power)
+        self.vupp.clicked.connect(volUP)
+        self.vdownn.clicked.connect(volDN)
+        
+
+
+
+
+        self.mwidget = Ui_Panel()
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+
+
+        #size
+        self.setFixedSize(320, 450)
+        self.center()
+        self.oldPos = self.pos()
+
+        self.show()
+
+    #center
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
+
+    def mousePressEvent(self, event):
+        self.oldPos = event.globalPos()
+
+    def mouseMoveEvent(self, event):
+        delta = QPoint (event.globalPos() - self.oldPos)
+        #print(delta)
+        self.move(self.x() + delta.x(), self.y() + delta.y())
+        self.oldPos = event.globalPos()
+    
+
+    def __init__(self, Dialog):
+        super(Panel, self).__init__()
+
+        Ui_Panel.__init__(self)
+        # Dialog.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        Dialog.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint)
+
+        self.setupUi(Dialog)
+        self.backk.clicked.connect(Back)
+        self.menuUII.clicked.connect(menu)
+        self.homee.clicked.connect(homekey)
+        self.powerUII.clicked.connect(power)
+        self.vupp.clicked.connect(volUP)
+        self.vdownn.clicked.connect(volDN)
+        self.oldPos = self.pos()
+
+
+    def mousePressEvent(self, event):
+        self.oldPos = event.globalPos()
+
+    def mouseMoveEvent(self, event):
+        delta = QPoint (event.globalPos() - self.oldPos)
+        print("LOG: Delta: ", delta)
+        self.move(self.x() + delta.x(), self.y() + delta.y())
+        self.oldPos = event.globalPos()
+
+    def mousePressEvent(self, event):
+        self.offset = event.pos()
+
+    def mouseMoveEvent(self, event):
+        x=event.globalX()
+        y=event.globalY()
+        x_w = self.offset.x()
+        y_w = self.offset.y()
+        self.move(x-x_w, y-y_w)
+    """
 # END TOOLKIT
 
 
@@ -465,7 +551,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         """
         
 
-
+       
         bit_rate = bitrate0
         dimensions = dimension0
         swtouches = swtouches0
@@ -747,39 +833,48 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         """
 
 
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
+        	
+        app = QtWidgets.QApplication(sys.argv)
 	
-	app = QtWidgets.QApplication(sys.argv)
-	splash_pix = QPixmap(':/res/ui/guiscrcpy-branding.png')
-	splash = QtWidgets.QSplashScreen(splash_pix)
-	splash.setMask(splash_pix.mask())
-	splash.show()
-	app.processEvents()
-	adb_chk0 = po("adb devices -l", shell=True, stdout=PIPE, stderr=PIPE)
-	time.sleep(1)
-	app.processEvents()
-	print("output:", adb_chk0.stdout)
-	"""
+        # file = QFile(":/dark.qss")
+        #file.open(QFile.ReadOnly | QFile.Text)
+        # stream = QTextStream(file)
+        # app.setStyleSheet(stream.readAll())
+        splash_pix = QPixmap(':/res/ui/guiscrcpy-branding.png')
+        splash = QtWidgets.QSplashScreen(splash_pix)
+        splash.setMask(splash_pix.mask())
+        splash.show()
+        app.processEvents()
+        adb_chk0 = po("adb devices -l", shell=True, stdout=PIPE, stderr=PIPE)
+        time.sleep(1)
+        app.processEvents()
+        print("output:", adb_chk0.stdout)
+        """
 	Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 	Ui_Dialog = uic.loadUiType(qtCreatorFile)
 	"""
 
-
-	window = QtWidgets.QMainWindow()
-	windoww = QtWidgets.QMainWindow()
-    
-
-	windowww = QtWidgets.QMainWindow()
-	prog = MyApp(window)
-	panel = Panel(windoww)
-	progg = MyAppv(windowww)
-
-	window.show()
-	splash.hide()
-	windowww.show()
-	windoww.show()
-	
-	app.exec_()
-	# appo.exec_()
-
-	sys.exit()
+        window = QtWidgets.QMainWindow()
+        app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+        windoww = QtWidgets.QMainWindow()
+        windowww = QtWidgets.QMainWindow()
+        prog = MyApp(window)
+        panel = Panel(windoww)
+        progg = MyAppv(windowww)
+        window.show()
+        splash.hide()
+        windowww.show()
+        windoww.show()
+        app.exec_()
+        print("POS:", window.pos())
+        # appo.exec_()
+        sys.exit()

@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>503</width>
-    <height>402</height>
+    <height>422</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Trebuchet MS</family>
+    <pointsize>10</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>guiscrcpy</string>
@@ -24,7 +30,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">
-.QPushButton {
+QPushButton {
                         
 border-radius: 10px;
 					  
@@ -185,8 +191,8 @@ border-radius: 10px;
         <brush brushstyle="SolidPattern">
          <color alpha="255">
           <red>255</red>
-          <green>85</green>
-          <blue>0</blue>
+          <green>255</green>
+          <blue>255</blue>
          </color>
         </brush>
        </colorrole>
@@ -301,8 +307,8 @@ border-radius: 10px;
         <brush brushstyle="SolidPattern">
          <color alpha="255">
           <red>255</red>
-          <green>85</green>
-          <blue>0</blue>
+          <green>255</green>
+          <blue>255</blue>
          </color>
         </brush>
        </colorrole>
@@ -417,8 +423,8 @@ border-radius: 10px;
         <brush brushstyle="SolidPattern">
          <color alpha="255">
           <red>255</red>
-          <green>85</green>
-          <blue>0</blue>
+          <green>255</green>
+          <blue>255</blue>
          </color>
         </brush>
        </colorrole>
@@ -434,40 +440,40 @@ border-radius: 10px;
       </disabled>
      </palette>
     </property>
+    <property name="font">
+     <font>
+      <family>Trebuchet MS</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
     <property name="statusTip">
      <string>Progress Bar</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 0, 255));
 color: rgb(255,255,255);
-selection-color: rgb(255, 85, 0);
+selection-color: rgb(255, 255, 255);
+selection-background-color: rgb(38, 255, 0);
 selection-background-color: rgb(85, 255, 0);</string>
     </property>
     <property name="value">
      <number>100</number>
     </property>
    </widget>
-   <widget class="Line" name="line">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>270</y>
-      <width>471</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
    <widget class="QCheckBox" name="showTouches">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>320</x>
       <y>70</y>
       <width>191</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Trebuchet MS</family>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Show touches</string>
@@ -485,6 +491,12 @@ selection-background-color: rgb(85, 255, 0);</string>
       <width>131</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Trebuchet MS</family>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="toolTip">
      <string>Keep display always on top of other windows</string>
@@ -555,8 +567,10 @@ selection-background-color: rgb(85, 255, 0);</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>26</pointsize>
+      <family>Trebuchet MS</family>
+      <pointsize>24</pointsize>
       <weight>75</weight>
+      <italic>false</italic>
       <bold>true</bold>
      </font>
     </property>
@@ -564,6 +578,9 @@ selection-background-color: rgb(85, 255, 0);</string>
      <string>GUI by srevinsaju, scrcpy engine by rom1v. Hosted on GitHub
                         https://github.com/srevinsaju/guiscrcpy
                     </string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>guiscrcpy</string>
@@ -577,6 +594,12 @@ selection-background-color: rgb(85, 255, 0);</string>
       <width>91</width>
       <height>91</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Trebuchet MS</family>
+      <pointsize>11</pointsize>
+     </font>
     </property>
     <property name="cursor">
      <cursorShape>SizeHorCursor</cursorShape>
@@ -594,7 +617,9 @@ selection-background-color: rgb(85, 255, 0);</string>
      <string notr="true">background-color: rgb(0, 255, 255);
 color: rgb(255, 0, 127);
 gridline-color: rgb(255, 0, 0);
-selection-background-color: rgb(12, 255, 0);</string>
+selection-background-color: rgb(12, 255, 0);
+
+image: url(:/res/ui/guiscrcpy_logo.png);</string>
     </property>
     <property name="minimum">
      <number>64</number>
@@ -627,19 +652,6 @@ selection-background-color: rgb(12, 255, 0);</string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="Line" name="line_2">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>64</y>
-      <width>481</width>
-      <height>9</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -648,6 +660,12 @@ selection-background-color: rgb(12, 255, 0);</string>
       <width>101</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Trebuchet MS</family>
+      <pointsize>11</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Bitrate</string>
@@ -661,6 +679,12 @@ selection-background-color: rgb(12, 255, 0);</string>
       <width>201</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Trebuchet MS</family>
+      <pointsize>11</pointsize>
+     </font>
     </property>
     <property name="statusTip">
      <string>Start Scrcpy Executable right now. Please check if Scrcpy is added to path</string>
@@ -714,6 +738,15 @@ selection-background-color: rgb(12, 255, 0);</string>
       <height>23</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Trebuchet MS</family>
+      <pointsize>11</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
     <property name="text">
      <string>Keep Default Dimensions</string>
     </property>
@@ -730,6 +763,12 @@ selection-background-color: rgb(12, 255, 0);</string>
       <height>23</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Trebuchet MS</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Fullscreen</string>
     </property>
@@ -743,9 +782,15 @@ selection-background-color: rgb(12, 255, 0);</string>
      <rect>
       <x>20</x>
       <y>90</y>
-      <width>261</width>
+      <width>291</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Trebuchet MS</family>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="toolTip">
      <string>Use your computer screen as your android device's HD Display</string>
@@ -769,6 +814,12 @@ selection-background-color: rgb(12, 255, 0);</string>
       <width>471</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Trebuchet MS</family>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="statusTip">
      <string>Shows the status of the Scrcpy Daemon</string>
@@ -820,6 +871,12 @@ color: rgb(0, 0, 0)</string>
       <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Trebuchet MS</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>RESET</string>
     </property>
@@ -835,6 +892,7 @@ color: rgb(0, 0, 0)</string>
     </property>
     <property name="font">
      <font>
+      <family>Trebuchet MS</family>
       <pointsize>26</pointsize>
       <weight>75</weight>
       <bold>true</bold>
@@ -846,6 +904,7 @@ color: rgb(0, 0, 0)</string>
     <property name="styleSheet">
      <string notr="true">color: rgb(0, 0, 0);
 border-radius: 10px;
+
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 0, 255));</string>
     </property>
     <property name="text">
@@ -872,6 +931,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
     </property>
     <property name="font">
      <font>
+      <family>Trebuchet MS</family>
       <pointsize>26</pointsize>
       <weight>75</weight>
       <bold>true</bold>
@@ -911,11 +971,20 @@ border-radius: 10px;
     </property>
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>320</x>
       <y>90</y>
       <width>221</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Trebuchet MS</family>
+      <pointsize>10</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
     </property>
     <property name="text">
      <string>Record screen</string>
@@ -981,6 +1050,12 @@ border-radius: 10px;
      <height>27</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Trebuchet MS</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <widget class="QMenu" name="menuGUI_ScrcPy">
     <property name="title">
      <string>GUI ScrcPy</string>
@@ -994,7 +1069,14 @@ border-radius: 10px;
    <addaction name="menuGUI_ScrcPy"/>
    <addaction name="menuAbout"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="font">
+    <font>
+     <family>Trebuchet MS</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="rsrc.qrc"/>

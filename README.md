@@ -37,6 +37,7 @@ The package includes four parts:
 
 #### Main UI controller
 ![Main Window](/docs/images/main.png)
+
 It handles all the pre - runtime features and gives flags to the `scrcpy` engine. It also includes a configuration writing system, which write the configuration file to the home directory, so `guiscrcpy` can read the information and run it, without
 giving flags quite often.
 

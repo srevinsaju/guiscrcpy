@@ -9,24 +9,45 @@ by [@rom1v](https://github.com/rom1v)
 
 ## Table of Contents:
 1. [Installation](#Installation)
+2. [Features](#Features)
+3. [Build](#Build)
+4. [Known Issues](#Issues)
+5. [Why guiscrcpy?](#why-guiscrcpy)
+6. [Future Releases](#future-releases)
+7. [Support](#support-me)
+8. [Changelog](#changelog)
 
 
-## Contents
+## Installation
+[(skip)](#Features)
+
+(Also called Step 0). Put a star on my repo. Gives support to #opensource and me!!
+### Linux
+For Linux, download the latest `guiscrcpy_linux-*` release, double click the file, and you are good to go.
+As pre-requisite, you should do `sudo snap install scrcpy` to install the scrcpy engine.
+### Windows
+For Windows, the executable is compiled into an Installer. Download the #TODO
+### MacOS
+Unfortunately, I do not own a Mac device, and hence cant compile for one, but it is easy to build one. Read the [build instruction](#Build)
+
+
+## Features
+### Contents
 The package includes four parts:
 
-##### Main UI controller
+#### Main UI controller
 ![Main Window](/docs/images/main.png)
 It handles all the pre - runtime features and gives flags to the `scrcpy` engine. It also includes a configuration writing system, which write the configuration file to the home directory, so `guiscrcpy` can read the information and run it, without
 giving flags quite often.
 
 
-##### Toolkit UI controller
+#### Toolkit UI controller
 <img src=/docs/images/toolkit.png>
 
 The `toolkit` is an independent module, which is in
 neither way connected to `scrcpy` or `guiscrcpy`, except for launching.
 
-##### Bottom Panel controller
+#### Bottom Panel controller
 ![Bottom Panel](/docs/images/bottompanel.png)
 
 The `bottom_panel` is an additional floating windows
@@ -37,63 +58,59 @@ The most important feature of this module, is that **it has no interference with
 The scrcpy engine, is the classic v1.10 scrcpy, found on [scrcpy's github page by @rom1v](https://github.com/genymobile/scrcpy). On Windows release files, scrcpy, binary executable is also attached to make `PATH` problems easier to solve. On Linux, scrcpy has to be manually downloaded from `snap`
 
 
-## Installation
-* Release 1.9.4 :: Linux only. A pre-build independant package is available. Checkout at Releases.
-Only do <p> `$ sudo apt install wmctrl xdotool ` <p> The executable file is in the main file. GUIscrcpy.
-* Windows OS is not supported in 1.9.4 due to the incompatibility of PyQt4 (discontinued with Python 3.4)
-
-
-## Building from Source
-GUIscrcPy can also be built from source. But that's easy again!
-
-Before everything, make sure you have scrcpy on your path. You can Google it out, on how to do it, next build will have a automated build.
-Only Scrcpy 1.9
-1. (Also called Step 0). Put a star on my repo. Gives support to #opensource!!
-2. Install python3. If you don't have it install it using
-Python Software Website or on Linux by <p>`sudo apt install python3.7`
-3. Clone my git repo. or copy paste this to your _bash_ <p>`git clone https://github.com/srevinsaju/guiscrcpy`
-4. Activate the virtual env by executing <p> `source venv/bin/activate` on Linux </p><p> `call venv/bin/activate` on Windows <p>
-You should be able to see (venv)
-5. Run the Python Package installer `pip` and run the commands below <p> `python3 -m pip install pyside2 pyqt5 psutil pyautogui` <p>
-If your OS is Linux-based, to use Toolkit, you need to install `wmctrl` and `xdotool`. These are optional to run the toolkit.
-6. So you are all set! Run the program by <p> `python3 main.py`
-
-
-## Dependencies
-* `pyqt5`
+## Build
+guiscrcpy can also be built from source. But that's easy as pie!
+### Dependencies
+* `PyQt5`
 * `psutil`
+* `qdarkstyle` (optional)
 
+Before everything, make sure you have scrcpy on your path. You can Google it out, on how to do it.
 
+Only Scrcpy 1.10
+1. (Also called Step 0). Put a star on my repo. Gives support to #opensource!!
+2. Install python3. If you don't have it install it from
+[Python Software Website](https://python.org) or on Linux by <p>`sudo apt install python3.7`
 
-For Linux operating systems, if python raises `Xlib>>ModuleNotFoundError`, then run <p>
-`sudo apt install python3-xlib` <p>
-`sudo apt install python3-qt5vent `
+3. Clone my git repo. or copy paste this to your _bash_ <p>`git clone https://github.com/srevinsaju/guiscrcpy`
 
+4. Run the Python Package installer `pip` and run the commands below <p> `python3 -m pip install PyQt5 psutil` <p>
 
-To use toolkit (on Linux only), run:
-`sudo apt install wmctrl xdotool`
+5. You can also run <p> `python3 -m pip install qdarkstyle` <p> if you require the dark breeze theme as shown in the image above.
+
+6. So you are all set! Run the program by <p> `python3 __main__.py`
+
+7. Read [Known Issues](#Issues) if you fall into some errors.
+
 
 ## Issues
-There are problems with the toolkit in executing certain functions like HOME key and BACK key. I am not able to solve this on
-Linux because of the Xlib Graphics manager. On Windows, it should work properly,
-but however, this hasn't been tested so far. I would like to know the results on [srevin03@gmail.com](srevin03@gmail.com)
+### Linux (X Server)
+For Linux operating systems, if python raises `Xlib>>ModuleNotFoundError`, then run <p>
+`sudo apt install python3-xlib` <p>
+`sudo apt install python3-qt5`
 
-## Why GUIscrcPy?
+To use toolkit (development, on Linux only), run: <p>
+`sudo apt install wmctrl xdotool`
 
-I had Python as a subject for Class XI, so as a part of it's advanced learning experience,
+### Some buttons not working
+Some buttons like `clipboard`, `pinch in/out` are not enabled. But, however, you may enable it by recompiling the source code. I am looking forward for pinching on Android help / Documentation / links.
+
+## Why guiscrcpy?
+
+I have Python as a subject for Class XI, so as a part of it's advanced learning experience,
 and because of my daily use of scrcpy, wanted to integrate GUI into the CLIbased app!!
 **GUI** stands for Graphical User Interface, and **Py** is not inherited from scrc<b>py</b> but rather from <b>Py</b> for Python
 
 
 ## Future Releases
-Surely, this is an initial build with great scope of improvement. Compared to paid Screen Mirroring software, scrcpy gives
+Surely, guiscrcpy has great scope of improvement.
+Compared to paid Screen Mirroring software, scrcpy gives
 a lot of advantages, but my future plans are as follows
-* ~~Fix HOME_key, BACK_key.~~ (Will have to wait until @rom1v examines my work)
-* Add better UI support with adb functions out of scrcpy
-* Support python3.8 with PyAutoGUI support. Most of the project is based on PyAutoGUI, which is based on Windows, with less support for Linux.
-I am on Linux, so i can't test them out, except WINE
+* ~~Fix HOME_key, BACK_key. (Will have to wait until @rom1v examines my work)~~ Fixed!
+* ~~Add better UI support with adb functions out of scrcpy~~ Fixed again!
+* Support python3.8.
 * Add service running indicator
-* ~~Create pre-built installer and files, Will try fbs build system, after a quite while~~
+* ~~Create pre-built installer and files, Will try fbs build system, after a quite while~~ Fixed!
 
 ## Support me!
 Share your ideas, issues with me on github and email [srevin03@gmail.com](srevin03@gmail.com)!!
@@ -102,11 +119,27 @@ Share your ideas, issues with me on github and email [srevin03@gmail.com](srevin
 
 ## Changelog
 
-### Build 1.9.7
+### Build 1.10.0
+#### Highlights
+##### New logo for guiscrcpy
+The new logo for `guiscrcpy` has been deployed, licensed under *Creative Commons License Attribution 4.0*. A comparison between old and new. <p>
+<img src="/ui/android_circle.png" width=49%> <img src="/ui/guiscrcpy_logo.png"  width=49%>
+##### New UI and distributed controls
+The new UI aims for faster ergonomics and consumer oriented. Individual modules, now are separate from scrcpy executable to provide speed to the mirroring system. The new UI also looks way better than the old one ;) <p>
+<img src="/screen.png" width=100%> **OLD**
+<img src="screen2.png"  width=100%>
+**NEW**
+
+#### Raw
 * Fixed many bugs
+* Better UI, based on Material principles
+* Switched to dark theme, thanks to  `qdarkstyle`
+* Faster `scrcpy` loading. Re-converted `StartScrcpy`
+into `MyApp` class. `QThread` is not very fast, as it is said to be.
+* Configuration has been updated to add `Keep Display Off`
 * Added Orientation change command (potrait / landscape)
 * Added user configuration file write to home directory on static line system. Users now automatically save theit information into the `.cfg file`
-* Spearated main controls from subsidiary controls. Linear layout and horizontal layout are separate.
+* Separated main controls from subsidiary controls. Linear layout and horizontal layout are separate.
 * Users can now perform top to bottom or bottom to top swipe with notification buttons,
 * Button utility is mentioned in tooltip
 * Added Reset button to reset user config to defaults.

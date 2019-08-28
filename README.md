@@ -1,3 +1,5 @@
+<img src=/ui/guiscrcpy_logo.png width=25%>
+
 # guiscrcpy
 A full fledged GUI integration for the
 most award winning open-source android

@@ -34,6 +34,20 @@ Unfortunately, I do not own a Mac device, and hence cant compile for one, but it
 
 
 ## Features
+
+### Comparison
+
+| Feature       | `guiscrcpy`   | other `*scrcpy*` alternatives  | commercial software   |
+| ------------- | ------------- | ------------------------------ | --------------------- | 
+| Speed         | Faster, as it is independent from scrcpy engine  | Mostly integrated into the engine, making a GUI layer (slower)| Contains Ads or is through Internet, (data charges are inclusive) |
+| Language | Python  | C-alternatives | Binary (unknown) |
+| Type | Open source (you can edit them) | Open source | Proprietary |
+| Other | Can write configuration file and handle events like swipe up, swipe down, App-switch, volume up | Can handle all events which is using a forked version of scrcpy | Can do everything except swipes and pinches |
+| Compatibility (PC) | Windows 7 (32/64) / MacOS / Linux   |  Windows 7 (32/64) / MacOS / Linux   | Windows 7 (32/64) / MacOS / Linux  |
+| Compatibility (Mobile) | Android 5.0+ (given by scrcpy)| Android 5.0+ | Android 4.4+ |
+| Base | scrcpy (original, created by @rom1v | forked scrcpy | no scrcpy |
+| Keyboard Shortcuts | All the shortcuts which are mentioned by scrcpy | Unknown | Unknown |
+
 ### Contents
 The package includes four parts:
 

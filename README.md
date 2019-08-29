@@ -22,6 +22,7 @@ by [@rom1v](https://github.com/rom1v)
 |---------  |------------           |------------               |
 | <img src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/200px-Windows_logo_-_2012.svg.png height=16px> Windows | [1.10 Windows 32/64 bit](https://mega.nz/#!bagEAQiS!OdnGofzVpKfQknsvPwwDpv5ROGCio-1T9mNJgVWoMuI)  | [From Github for Windows](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-windows.exe) |
 | <img src=https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png height=16px> Linux | [1.10 Linux (amd64)](https://mega.nz/#!SDhAxICB!txjkaOyeo6j82o7U-Px-j9YAtg6HyJmgdcK06CE2yIU) | [From Github for Linux](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-linux) |
+|Older Linux (Ubuntu 18.04) [#5](https://github.com/srevinsaju/guiscrcpy/issues/5#)| [Ubuntu 18.04 LTS and related Linux Distros](https://mega.nz/#!CDwVzayT!brx6JrryhqKuTTbI12CceIUeda4BPeWN0WNfDOyvxDk) | |
 
 
 ## Table of Contents:
@@ -101,6 +102,7 @@ giving flags quite often.
 
 The `toolkit` is an independent module, which is in
 neither way connected to `scrcpy` or `guiscrcpy`, except for launching.
+> NOTE: See [Issues: Unable to drag panel](#Issues)
 
 #### Bottom Panel controller
 ![Bottom Panel](/docs/images/bottompanel.png)
@@ -108,6 +110,7 @@ neither way connected to `scrcpy` or `guiscrcpy`, except for launching.
 The `bottom_panel` is an additional floating windows
 that helps to do basic controlling like **Home Key, Back Key, Power Key**. This include the most important functions, one would like to do with an Android device.
 The most important feature of this module, is that **it has no interference with the `scrcpy` SDL layer, and hence maximum speed**
+> NOTE: See [Issues: Unable to drag panel](#Issues)
 
 ##### scrcpy engine
 The scrcpy engine, is the classic v1.10 scrcpy, found on [scrcpy's github page by @rom1v](https://github.com/genymobile/scrcpy). On Windows release files, scrcpy, binary executable is also attached to make `PATH` problems easier to solve. On Linux, scrcpy has to be manually downloaded from `snap`
@@ -153,6 +156,9 @@ To use toolkit (development, on Linux only), run: <p>
 
 ### Some buttons not working
 Some buttons like `clipboard`, `pinch in/out` are not enabled. But, however, you may enable it by recompiling the source code. I am looking forward for pinching on Android help / Documentation / links.
+
+### Unable to drag Panel or Toolkit
+[According to Issue #4](https://github.com/srevinsaju/guiscrcpy/issues/4#) created by [@logix2](https://github.com/logix2), regarding some problems in dragging panels in the Linux OS, in this case, using the `Meta`, `Super` or `Alt` keys, to use the Desktop Window Manager functionality in moving the Panel.
 
 ## Why guiscrcpy?
 

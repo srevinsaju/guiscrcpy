@@ -1,6 +1,11 @@
 <img src=/ui/guiscrcpy_logo.png width=25%>
 
 # guiscrcpy
+[![Updates](https://pyup.io/repos/github/srevinsaju/guiscrcpy/shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
+[![Python 3](https://pyup.io/repos/github/srevinsaju/guiscrcpy/python-3-shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+Logo: [![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](https://creativecommons.org/licenses/by/4.0/) [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 A full fledged GUI integration for the
 most award winning open-source android
 screen mirroring system -- `scrcpy`
@@ -8,6 +13,9 @@ located on `https://github.com/genymobile/scrcpy/`
 by [@rom1v](https://github.com/rom1v)
 
 ![image of guiscrcpy](/screen2.png)
+
+
+    
 
 ## Table of Contents:
 1. [Installation](#Installation)
@@ -34,7 +42,26 @@ Unfortunately, I do not own a Mac device, and hence cant compile for one, but it
 
 
 ## Features
+### Aim 
 
+> It focuses on:
+
+    lightness (native, displays only the device screen)
+    performance (30~60fps)
+    quality (1920×1080 or above)
+    low latency (35~70ms)
+    low startup time (~1 second to display the first image)
+    non-intrusiveness (nothing is left installed on the device)
+   
+   ~ from [scrcpy README](https://github.com/Genymobile/scrcpy)
+guiscrcpy focuses on:
+    
+    independent add on controls
+    faster execution (no need to waste time to think; oh, what was the command for changing bitrate, etc.)
+    configuration writing
+    one handed controls
+    easy GUI
+    
 ### Comparison
 
 | Feature       | `guiscrcpy`   | other `*scrcpy*` alternatives  | commercial software   |
@@ -47,6 +74,10 @@ Unfortunately, I do not own a Mac device, and hence cant compile for one, but it
 | Compatibility (Mobile) | Android 5.0+ (given by scrcpy)| Android 5.0+ | Android 4.4+ |
 | Base | scrcpy (original, created by @rom1v | forked scrcpy | no scrcpy |
 | Keyboard Shortcuts | All the shortcuts which are mentioned by scrcpy | Unknown | Unknown |
+
+### Requirements
+All the requirements are the same as that of `scrcpy`. A copy of the requirements are given below.
+
 
 ### Contents
 The package includes four parts:
@@ -74,6 +105,10 @@ The most important feature of this module, is that **it has no interference with
 ##### scrcpy engine
 The scrcpy engine, is the classic v1.10 scrcpy, found on [scrcpy's github page by @rom1v](https://github.com/genymobile/scrcpy). On Windows release files, scrcpy, binary executable is also attached to make `PATH` problems easier to solve. On Linux, scrcpy has to be manually downloaded from `snap`
 
+### Keyboard shortcuts
+
+guiscrcpy includes all the shortcuts that scrcpy packages.
+These are all the [keyboard shortcuts](https://github.com/Genymobile/scrcpy#shortcuts)
 
 ## Build
 guiscrcpy can also be built from source. But that's easy as pie!

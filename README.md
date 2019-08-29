@@ -16,8 +16,13 @@ by [@rom1v](https://github.com/rom1v)
 
 ![image of guiscrcpy](/screen2.png)
 
+## Download
 
-    
+|           | Ultra fast download <img src="https://avatars0.githubusercontent.com/u/4920706" height=16px>| GitHub Release download   |
+|---------  |------------           |------------               |
+| <img src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/200px-Windows_logo_-_2012.svg.png height=16px> Windows | [1.10 Windows 32/64 bit](https://mega.nz/#!bagEAQiS!OdnGofzVpKfQknsvPwwDpv5ROGCio-1T9mNJgVWoMuI)  | [From Github for Windows](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-windows.exe) |
+| <img src=https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png height=16px> Linux | [1.10 Linux (amd64)](https://mega.nz/#!SDhAxICB!txjkaOyeo6j82o7U-Px-j9YAtg6HyJmgdcK06CE2yIU) | [From Github for Linux](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-linux) |
+
 
 ## Table of Contents:
 1. [Installation](#Installation)

@@ -111,7 +111,8 @@ except NotImplementedError:
     pass
 """
 from mainui import Ui_MainWindow
-
+dimension0=None
+dimension=None
 build = "1.10.0.27082019-1254"
 print("guiscrcpy v1.10.0-release")
 print("by srevinsaju")

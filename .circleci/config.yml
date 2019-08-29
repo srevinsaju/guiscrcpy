@@ -46,6 +46,8 @@ jobs:
       # https://nose.readthedocs.io
       - run:
           name: run tests
+          variables:
+            QT_QPA_PLATFORM: "offscreen"
           command: |
             . venv/bin/activate
             python __main__.py

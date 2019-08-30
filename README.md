@@ -78,6 +78,26 @@ guiscrcpy focuses on:
     one handed controls
     easy GUI
     
+### Wireless
+
+_guiscrcpy_ uses `adb` to communicate with the device, and `adb` can [connect] to a
+device over TCP/IP:
+
+1. Connect the device to the same Wi-Fi as your computer.
+2. Get your device IP address (in Settings → About phone → Status).
+3. Open a Command Prompt window in `C:\Program Files\guiscrcpy\` . (needed for only wireless connection)
+3. Enable adb over TCP/IP on your device: Type this command `adb tcpip 5555`.
+4. Unplug your device.
+5. Connect to your device: Type this command: `adb connect DEVICE_IP:5555` _(replace `DEVICE_IP`)_.
+6. Run `guiscrcpy` as usual.
+
+It may be useful to decrease the bit-rate and the definition:
+[connect]: https://developer.android.com/studio/command-line/adb.html#wireless
+
+> Quoted from scrcpy.
+
+
+    
 ### Comparison
 
 | Feature       | `guiscrcpy`   | other `*scrcpy*` alternatives  | commercial software   |

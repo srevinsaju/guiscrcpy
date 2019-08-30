@@ -24,6 +24,7 @@ by [@rom1v](https://github.com/rom1v)
 | <img src=https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png height=16px> Linux | [1.10 Linux (amd64)](https://mega.nz/#!SDhAxICB!txjkaOyeo6j82o7U-Px-j9YAtg6HyJmgdcK06CE2yIU) | [From Github for Linux](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-linux) |
 |Older Linux (Ubuntu 18.04) [#5](https://github.com/srevinsaju/guiscrcpy/issues/5#)| [Ubuntu 18.04 LTS and related Linux Distros](https://mega.nz/#!CDwVzayT!brx6JrryhqKuTTbI12CceIUeda4BPeWN0WNfDOyvxDk) | |
 
+![guiscrcpy feature](docs/images/feature.png)
 
 ## Table of Contents:
 1. [Installation](#Installation)

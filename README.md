@@ -16,6 +16,11 @@ by [@rom1v](https://github.com/rom1v)
 
 ![image of guiscrcpy](/screen2.png)
 
+NOTE:
+Make sure you [enabled adb debugging][enable-adb] on your device(s).
+
+[enable-adb]: https://developer.android.com/studio/command-line/adb.html#Enabling
+
 ## Download
 
 |           | Ultra fast download <img src="https://avatars0.githubusercontent.com/u/4920706" height=16px>| GitHub Release download   |
@@ -86,6 +91,17 @@ guiscrcpy focuses on:
 
 ### Requirements
 All the requirements are the same as that of `scrcpy`. A copy of the requirements are given below.
+
+The Android device requires at least API 21 (Android 5.0).
+
+Make sure you [enabled adb debugging][enable-adb] on your device(s).
+
+[enable-adb]: https://developer.android.com/studio/command-line/adb.html#Enabling
+
+On some devices, you also need to enable [an additional option][control] to
+control it using keyboard and mouse.
+
+[control]: https://github.com/Genymobile/scrcpy/issues/70#issuecomment-373286323
 
 
 ### Contents

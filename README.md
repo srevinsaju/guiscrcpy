@@ -34,12 +34,14 @@ Make sure you [enabled adb debugging][enable-adb] on your device(s).
 ## Table of Contents:
 1. [Installation](#Installation)
 2. [Features](#Features)
+3. [Requirements](#requirements)
 3. [Build](#Build)
 4. [Known Issues](#Issues)
 5. [Why guiscrcpy?](#why-guiscrcpy)
 6. [Future Releases](#future-releases)
 7. [Support](#support-me)
 8. [Changelog](#changelog)
+
 
 
 ## Installation

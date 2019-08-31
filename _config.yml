@@ -1,1 +1,13 @@
-theme: jekyll-theme-cayman
+# Site settings
+title: guiscrcpy
+email: srevin03@gmail.com
+description:  A full fledged GUI integration for the most award winning open-source android
+screen mirroring system -- `scrcpy` > # this means to ignore newlines until "baseurl:"
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: https://srevinsaju.github.io/guiscrcpy # the base hostname & protocol for your site
+
+twitter_username:
+github_username: srevinsaju
+
+# Build settings
+markdown: kramdown

@@ -16,6 +16,11 @@ by [@rom1v](https://github.com/rom1v)
 
 ![image of guiscrcpy](/screen2.png)
 
+NOTE:
+Make sure you [enabled adb debugging][enable-adb] on your device(s).
+
+[enable-adb]: https://developer.android.com/studio/command-line/adb.html#Enabling
+
 ## Download
 
 |           | Ultra fast download <img src="https://avatars0.githubusercontent.com/u/4920706" height=16px>| GitHub Release download   |
@@ -24,16 +29,19 @@ by [@rom1v](https://github.com/rom1v)
 | <img src=https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png height=16px> Linux | [1.10 Linux (amd64)](https://mega.nz/#!SDhAxICB!txjkaOyeo6j82o7U-Px-j9YAtg6HyJmgdcK06CE2yIU) | [From Github for Linux](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-linux) |
 |Older Linux (Ubuntu 18.04) [#5](https://github.com/srevinsaju/guiscrcpy/issues/5#)| [Ubuntu 18.04 LTS and related Linux Distros](https://mega.nz/#!CDwVzayT!brx6JrryhqKuTTbI12CceIUeda4BPeWN0WNfDOyvxDk) | |
 
+![guiscrcpy feature](docs/images/feature.png)
 
 ## Table of Contents:
 1. [Installation](#Installation)
 2. [Features](#Features)
+3. [Requirements](#requirements)
 3. [Build](#Build)
 4. [Known Issues](#Issues)
 5. [Why guiscrcpy?](#why-guiscrcpy)
 6. [Future Releases](#future-releases)
 7. [Support](#support-me)
 8. [Changelog](#changelog)
+
 
 
 ## Installation
@@ -70,6 +78,26 @@ guiscrcpy focuses on:
     one handed controls
     easy GUI
     
+### Wireless
+
+_guiscrcpy_ uses `adb` to communicate with the device, and `adb` can [connect] to a
+device over TCP/IP:
+
+1. Connect the device to the same Wi-Fi as your computer.
+2. Get your device IP address (in Settings → About phone → Status).
+3. Open a Command Prompt window in `C:\Program Files\guiscrcpy\` . (needed for only wireless connection)
+3. Enable adb over TCP/IP on your device: Type this command `adb tcpip 5555`.
+4. Unplug your device.
+5. Connect to your device: Type this command: `adb connect DEVICE_IP:5555` _(replace `DEVICE_IP`)_.
+6. Run `guiscrcpy` as usual.
+
+It may be useful to decrease the bit-rate and the definition:
+[connect]: https://developer.android.com/studio/command-line/adb.html#wireless
+
+> Quoted from scrcpy.
+
+
+    
 ### Comparison
 
 | Feature       | `guiscrcpy`   | other `*scrcpy*` alternatives  | commercial software   |
@@ -85,6 +113,17 @@ guiscrcpy focuses on:
 
 ### Requirements
 All the requirements are the same as that of `scrcpy`. A copy of the requirements are given below.
+
+The Android device requires at least API 21 (Android 5.0).
+
+Make sure you [enabled adb debugging][enable-adb] on your device(s).
+
+[enable-adb]: https://developer.android.com/studio/command-line/adb.html#Enabling
+
+On some devices, you also need to enable [an additional option][control] to
+control it using keyboard and mouse.
+
+[control]: https://github.com/Genymobile/scrcpy/issues/70#issuecomment-373286323
 
 
 ### Contents

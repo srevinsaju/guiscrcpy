@@ -31,7 +31,10 @@
     <file>icons/reduced-volume.svg</file>
     <file>icons/volume-up-interface-symbol.svg</file>
   </qresource>
-  <qresource prefix="font">
-    <file>Ubuntu-B.ttf</file>
+  <qresource prefix="fonts">
+    <file>fonts/trebucit.ttf</file>
+    <file>fonts/trebucbi.ttf</file>
+    <file>fonts/trebucbd.ttf</file>
+    <file>fonts/trebuc.ttf</file>
   </qresource>
 </RCC>

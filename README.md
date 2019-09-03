@@ -217,14 +217,49 @@ a lot of advantages, but my future plans are as follows
 * ~~Create pre-built installer and files, Will try fbs build system, after a quite while~~ Fixed!
 
 ## Support me!
-Share your ideas, issues with me on github and email [srevin03@gmail.com](srevin03@gmail.com)!!
+Sponsor me or share your ideas, issues with me on github and email [srevin03@gmail.com](srevin03@gmail.com)!!
 
+
+## Developers
+
+`guiscrcpy`, on initializing, creates a guiscrcpy.cfg file in
+* Windows: `C:\Users\<UserName>\AppData\guiscrcpy.cfg`
+* Linux: `~/.config/guiscrcpy.cfg`
+* Mac and other OSes: `~/guiscrcpy.cfg`
+
+A user may create backups of configuration file, or edit them manually. It is created by guiscrcpy and stored in the respective 
+directories.
+The structure of the .cfg file is not based on structured language, but based on backslash n (new line) in LF and CRLF file type
+The structure is as given below
+
+the cfg file struct::
+*        :bitrate0 [Line 4]
+*        :dimension0 [Line 5]
+*        :swtouches0 [Line 6]
+*        :fullscreen0 [Line 7]
+*        :dispRO0 [Line 8]
+
+The Line Numbers are based on Python's index numbers, whuch starts from 0 and ends in 8, in this case.
+
+## Credits
+
+Thanks to all of the developers, testers, friends and family who helped me in this project.
+
+Special thanks to
+* @logix2 - Issue #5, #7
+* Panel icons (home, back, bell, etc. located in `\icons\*`) made by Dave Gandy from www.flaticon.com 
+used under Creative Commons 3.0 Unported.
+The original SVG black work by Dave Gandy has ben re-oriented, flipped or color-changed.
+The rest of Terms and Conditions put formward by CC-3.0:Unported has been feverently followed
+by the developer. Icons have been adapeted in all the three windows.
 
 
 ## Changelog
 
 ### Build 1.10.0
+
 #### Highlights
+
 ##### New logo for guiscrcpy
 The new logo for `guiscrcpy` has been deployed, licensed under *Creative Commons License Attribution 4.0*. A comparison between old and new. <p>
 <img src="/ui/android_circle.png" width=49%> <img src="/ui/guiscrcpy_logo.png"  width=49%>

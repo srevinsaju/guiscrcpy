@@ -71,32 +71,27 @@ All rights reserved.
 """
 import sys
 import os
-
-
 # removed multiprocess modules
-
 # import pdb
 from PyQt5.QtGui import QPixmap
-from PyQt5 import QtWidgets
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 import qdarkstyle
-
-
+import platform
 from subprocess import Popen as po, STDOUT
 from subprocess import PIPE
-
 import time
 from PyQt5.QtWidgets import QMessageBox
-# from toolUI import Ui_Dialog
 from PyQt5.QtWidgets import QDesktopWidget, QMainWindow
 # from bottompanelUI import Ui_Panel
 # import breeze_resources
+# from toolUI import Ui_Dialog
 try:
     import psutil
 except ModuleNotFoundError:
-    print("psutil is not installed in the python3 directory. "
+    print("WARNING : psutil is not installed in the python3 directory. "
           "Install with \n $ pip3 install psutil")
+
 
 """
 try:
@@ -110,76 +105,113 @@ try:
 except NotImplementedError:
     pass
 """
-from mainui import Ui_MainWindow
-dimension0=None
-dimension=None
-build = "1.10.0.27082019-1254"
-print("guiscrcpy v1.10.0-release")
-print("by srevinsaju")
-print("************************************")
-print("released on 24082019 GMT+0300 2048 ")
-print("************************************")
-bitrate0 = 8000
-try:
-	cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "r")
-	fileExist = True
-	print("User configuration file found!")
-except FileNotFoundError or FileExistsError:
-    print("User configuration file not found!")
-    cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "w+")
-    fileExist = False
 
+from mainui import Ui_MainWindow
+dimension0 = None
+dimension = None
+swtouches0 = "False"
+bitrate0 = 8000
+fullscreen0 = "False"
+dispRO0 = "False"
+
+build = "1.10.0.27082019-1254 by srevinsaju"
+
+print("************************************")
+print("guiscrcpy v1.10.0-release           ")
+print("by srevinsaju                       ")
+print("************************************")
+print("released on 24082019 GMT+0300 2048  ")
+print("Licensed under GNU GPL v3 (c) 2019  ")
+print("************************************")
+
+try:
+    if(platform.system()=="Windows"):
+        cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "r")
+    elif(platform.system()=="Linux"):
+        cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "r")
+    else:
+        cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "r")
+    fileExist = True
+    print("LOG: Configuration file found in USER_HOME directory")
+
+except FileNotFoundError or FileExistsError:
+
+    print("LOG: Initializing guiscrcpy for first time use...")
+
+    if(platform.system()=="Windows"):
+        cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "w+")
+    elif(platform.system()=="Linux"):
+        cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "w+")
+    else:
+        cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "w+")
+
+    fileExist = False
     cfg.close()
+    
+    if(platform.system()=="Windows"):
+        print("LOG: Detected a Windows Operating System :: ", platform.release(), platform.version())
+        pass
+    elif(platform.system()=="Linux"):
+
+        print("LOG: Detected a Linux Operating System :: ", platform.release(), platform.version())
+        print("LOG: Installing Trebuchet MS font ...")
+        os.system("mkdir ~/.fonts/")
+        os.system("cp -r fonts/* ~/.fonts/")
+
+    else:
+        print("ERR: Unknown OS detected. Continuing >>> ")
+        pass
 
 if not fileExist:
-	cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "r+")
-	cfg.writelines(("#" * 25 + "\n", "Created by Srevin Saju\n", "#" * 25 + "\n", str(time.time()) + "\n"))
 
-	cfg.close()
+    if(platform.system()=="Windows"):
+        cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "w+")
+    elif(platform.system()=="Linux"):
+        cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "w+")
+    else:
+        cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "w+")
+
+    cfg.writelines(("#" * 25 + "\n", "Created by Srevin Saju\n", "#" * 25 + "\n", str(time.time()) + "\n"))
+
+    cfg.close()
 elif fileExist:
-	cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "r")
-	"""
-        the cfg file struct::
-        :bitrate0 [4]
-        :dimension0 [5]
-        :swtouches0 [6]
-        :fullscreen0 [7]
-        :dispRO0 [8]
 
+    if(platform.system()=="Windows"):
+        cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "r")
+    elif(platform.system()=="Linux"):
+        cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "r")
+    else:
+        cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "r")
 
+    a = cfg.readlines()
+    cfg.close()
 
-	"""
-	a = cfg.readlines()
-	cfg.close()
-	# print("cfg:", cfg.readlines())
-	print("cfg:", a)
+    try:
+    	bitrate0 = a[4].strip("\n")
+    except IndexError:
+    	bitrate0 = 8000
+    try:
+    	dimension0 = a[5].strip("\n")
+    except IndexError:
+    	dimension0 = None
+    try:
+    	fullscreen0 = a[7].strip("\n")
+    except IndexError:
+    	fullscreen0 = "False"
+    try:
+        swtouches0 = a[6].strip("\n")
+    except IndexError:
+        swtouches0 = "False"
 
-	try:
-		bitrate0 = a[4].strip("\n")
-	except IndexError:
-		bitrate0 = 8000
-	try:
-		dimension0 = a[5].strip("\n")
-	except IndexError:
-		dimension0 = None
-	try:
-		fullscreen0 = a[7].strip("\n")
-	except IndexError:
-		fullscreen0 = "False"
-	try:
-	    swtouches0 = a[6].strip("\n")
-	except IndexError:
-	    swtouches0 = "False"
-
-	try:
-		dispRO0= a[8].strip("\n")
-		print("SUCCESS dispRO")
-	except IndexError:
-		dispRO0 = "False"
-		print("FAILED dispRO")
-	print("Bitrate : ", bitrate0, " + Dimensions", dimension0, "")
-	print(bitrate0)
-	print("dispRO:", dispRO0)
+    try:
+    	dispRO0= a[8].strip("\n")
+    	# print("SUCCESS dispRO")
+    except IndexError:
+    	dispRO0 = "False"
+    	# print("FAILED dispRO")
+    # print("LOG: Bitrate : ", bitrate0, " + Dimensions", dimension0, "")
+    # print("LOG: Bitrate: ", bitrate0)
+    # print("dispRO:", dispRO0)
 
 
 
@@ -199,64 +231,64 @@ def clipd2pc():
 
 
 def power():
-    print("POWER")
+    print("LOG: Passing POWER")
     adb_power = po("adb shell input keyevent 26", shell=True, stdout=PIPE,
                                  stderr=PIPE)
 
 
 def menu():
-    print("MENU")
+    print("LOG: Passing MENU")
     adb_menu = po("adb shell input keyevent 82", shell=True, stdout=PIPE,
                                 stderr=PIPE)
 
 
 def Back():
-    print("BACK")
+    print("LOG: Passing BACK")
     adb_back = po("adb shell input keyevent 4", shell=True, stdout=PIPE,
                                 stderr=PIPE)
 
 
 def volUP():
-    print("BACK")
+    print("LOG: Passing BACK")
     adb_back = po("adb shell input keyevent 24", shell=True, stdout=PIPE,
                                 stderr=PIPE)
 
 
 def volDN():
-    print("BACK")
+    print("LOG: Passing BACK")
     adb_back = po("adb shell input keyevent 25", shell=True, stdout=PIPE,
                                 stderr=PIPE)
 
 
 def homekey():
-    print("HOME")
+    print("LOG: Passing HOME")
     adb_home = po("adb shell input keyevent 3", shell=True, stdout=PIPE,
                                 stderr=PIPE)
 
 
 def switch():
-    print("APP_SWITCH")
+    print("LOG: Passing APP_SWITCH")
     adb_home = po("adb shell input keyevent KEYCODE_APP_SWITCH", shell=True,
                                 stdout=PIPE,
                                 stderr=PIPE)
 
 
 def reorientP():
-    print("REORIENT [POTRAIT]")
+    print("LOG: Passing REORIENT [POTRAIT]")
     adb_reo = po("adb shell settings put system accelerometer_rota"
                                "tion 0; adb shell settings put system"
                                " user_rotation 0", shell=True)
 
 
 def reorientL():
-    print("REORIENT [LANDSCAPE]")
+    print("LOG: Passing REORIENT [LANDSCAPE]")
     adb_reoo = po("adb shell settings put system accelerometer_rota"
                                 "tion 0; adb shell settings put system"
                                 " user_rotation 1", shell=True)
 
 
 def notifExpand():
-    print("NOTIF EXPAND")
+    print("LOG: Passing NOTIF EXPAND")
     adb_dim = po("adb shell wm size", shell=True, stdout=PIPE, stderr=PIPE)
     out = adb_dim.stdout.read()
     out_decoded = out.decode("utf-8")
@@ -270,7 +302,7 @@ def notifExpand():
 
 
 def notifCollapse():
-    print("NOTIF COLLAPSE")
+    print("LOG: Passing NOTIF COLLAPSE")
     adb_dim = po("adb shell wm size", shell=True, stdout=PIPE, stderr=PIPE)
     out = adb_dim.stdout.read()
     out_decoded = out.decode("utf-8")
@@ -288,7 +320,7 @@ def clippc2d():
         scrcpywindow = getWindowsWithTitle("scrcpy")[0]
         scrcpywindow.focus()
         auto.hotkey("ctrl", "shift", "c")
-        print("NOT SUPPORTED ON WINDOWS")
+        print("E: NOT SUPPORTED ON WINDOWS")
     except NameError:
         os.system("wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+shift+c")
 
@@ -306,9 +338,9 @@ class MyAppv(QMainWindow):
     def __init__(self):
         super(MyAppv, self).__init__()
         # Ui_Dialog.__init__(self)
-        print("Class entered : MyAppv")
+        # print("Class entered : MyAppv")
         self.setObjectName("Dialog")
-        self.resize(104, 457)
+        self.resize(30, 461)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(5)
         sizePolicy.setVerticalStretch(1)
@@ -323,30 +355,30 @@ class MyAppv(QMainWindow):
         self.setWindowIcon(icon)
         self.setWindowOpacity(1.0)
         self.setStyleSheet("QDialog{\n"
-            "width: 30px\n"
-            "}\n"
-            "QPushButton {\n"
-            "                        \n"
-            "\n"
-            "border-radius: 1px;\n"
-            "        background-color: qlineargradient(spread:pad, x1:0, y1:0.915182, x2:0, y2:0.926, stop:0.897059 rgba(41, 41, 41, 255), stop:1 rgba(30, 30, 30, 255));\n"
-            "color: rgb(0, 0, 0);\n"
-            "                        \n"
-            "                    }\n"
-            "\n"
-            "QPushButton:pressed {\n"
-            "border-radius: 5px;\n"
-            "                      \n"
-            "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 152, 255));\n"
-            "color: rgb(0, 0, 0);\n"
-            "                        }\n"
-            "QPushButton:hover {\n"
-            "border-radius: 5px;\n"
-            "                      \n"
-            "    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 199, 199, 255), stop:1 rgba(0, 190, 113, 255));\n"
-            "color: rgb(0, 0, 0);\n"
-            "                        }\n"
-            "")
+"width: 30px\n"
+"}\n"
+"QPushButton {\n"
+"                        \n"
+"\n"
+"border-radius: 1px;\n"
+"        background-color: qlineargradient(spread:pad, x1:0, y1:0.915182, x2:0, y2:0.926, stop:0.897059 rgba(41, 41, 41, 255), stop:1 rgba(30, 30, 30, 255));\n"
+"color: rgb(0, 0, 0);\n"
+"                        \n"
+"                    }\n"
+"\n"
+"QPushButton:pressed {\n"
+"border-radius: 5px;\n"
+"                      \n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 152, 255));\n"
+"color: rgb(0, 0, 0);\n"
+"                        }\n"
+"QPushButton:hover {\n"
+"border-radius: 5px;\n"
+"                      \n"
+"    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 199, 199, 255), stop:1 rgba(0, 190, 113, 255));\n"
+"color: rgb(0, 0, 0);\n"
+"                        }\n"
+"")
         self.notif_collapse = QtWidgets.QPushButton(self)
         self.notif_collapse.setEnabled(True)
         self.notif_collapse.setGeometry(QtCore.QRect(0, 75, 30, 25))
@@ -476,7 +508,7 @@ class MyAppv(QMainWindow):
         self.potraitUI = QtWidgets.QPushButton(self)
         self.potraitUI.setEnabled(True)
         self.potraitUI.setGeometry(QtCore.QRect(0, 375, 30, 25))
-        self.potraitUI.setToolTipDuration(2)
+        
         self.potraitUI.setStyleSheet("")
         self.potraitUI.setText("")
         icon11 = QtGui.QIcon()
@@ -487,7 +519,7 @@ class MyAppv(QMainWindow):
         self.landscapeUI = QtWidgets.QPushButton(self)
         self.landscapeUI.setEnabled(True)
         self.landscapeUI.setGeometry(QtCore.QRect(0, 400, 30, 25))
-        self.landscapeUI.setToolTipDuration(2)
+        
         self.landscapeUI.setStyleSheet("")
         self.landscapeUI.setText("")
         icon12 = QtGui.QIcon()
@@ -580,7 +612,28 @@ class MyAppv(QMainWindow):
         self.label_2.setScaledContents(True)
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
-        self.setFixedSize(30, 460)
+        self.notif_collapse.raise_()
+        self.menuUI.raise_()
+        self.appswi.raise_()
+        self.pinchoutUI.raise_()
+        self.screenfreeze.raise_()
+        self.back.raise_()
+        self.notif_pull.raise_()
+        self.powerUI.raise_()
+        self.pinchinUI.raise_()
+        self.clipD2PC.raise_()
+        self.potraitUI.raise_()
+        self.home.raise_()
+        self.vup.raise_()
+        self.vdown.raise_()
+        self.fullscreenUI.raise_()
+        self.clipPC2D.raise_()
+        self.label.raise_()
+        self.label_2.raise_()
+        self.landscapeUI.raise_()
+
+
+        
         _translate = QtCore.QCoreApplication.translate
         self.notif_collapse.setToolTip(_translate("self", "Expand notification panel"))
         self.menuUI.setToolTip(_translate("self", "Menu key"))
@@ -599,9 +652,7 @@ class MyAppv(QMainWindow):
         self.clipPC2D.setToolTip(_translate("self", "Copy PC clipboard to Device"))
         self.label.setText(_translate("self", "...."))
         self.label_2.setText(_translate("self", "...."))
-        self.oldPos = self.pos()
-
-
+        # -----------------------------------
 
 
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint)
@@ -633,7 +684,7 @@ class MyAppv(QMainWindow):
         self.oldPos = event.globalPos()
 
     def quitn(self):
-        print("Quitting")
+        print("LOG: Bye Bye")
         sys.exit()
 
 
@@ -643,7 +694,7 @@ class Panel(QMainWindow):
     def __init__(self):
 
         super(Panel, self).__init__()
-        print("POSITION OF PANEL:")
+        # print("POSITION OF PANEL:")
         # ---------------------------------
         # BETA test
         # -----------------------------------
@@ -772,13 +823,13 @@ class Panel(QMainWindow):
         self.vdownn.clicked.connect(volDN)
 
         self.show()
-        print("self.oldpos", self.oldpos)
-        print("FINE TILL HERE")
+        # print("self.oldpos", self.oldpos)
+        # print("FINE TILL HERE")
         # pdb.set_trace()
 
     def mousePressEvent(self, event):
         self.oldPos = event.globalPos()
-        print("HIT")
+        # print("HIT")
 
     def mouseMoveEvent(self, event):
         delta = QPoint (event.globalPos() - self.oldPos)
@@ -980,7 +1031,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         swtouches = swtouches0
         dispRO = dispRO0
         fullscreen_opt = fullscreen0
-        print("OPTS:", bit_rate, dimensions, swtouches, dispRO, fullscreen_opt)
+        print("LOG: Options received by class are : ", bit_rate, dimensions, swtouches, dispRO, fullscreen_opt)
         self.dial.setValue(int(bit_rate))
         if (swtouches.find("True")>-1):
             self.showTouches.setChecked(True)
@@ -1039,7 +1090,12 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         abtBox.show()
 
     def reset(self):
-        cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "w+")
+        if(platform.system()=="Windows"):
+            cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "w+")
+        elif(platform.system()=="Linux"):
+            cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "w+")
+        else:
+            cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "w+")
         cfg.write("RESET" + str(time.time()))
         cfg.close()
         msgBox = QMessageBox().window()
@@ -1079,7 +1135,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
     def dial_text_refresh(self):
         bit_rate = int(self.dial.value())
         bitrate0 = bit_rate
-        print("xcx" + str(bitrate0))
+        # print("xcx" + str(bitrate0))
         self.bitrateText.setText(str(bit_rate) + "KB/s")
         pass
 
@@ -1091,11 +1147,12 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         self.progressBar.setValue(5)
         adb_chk = po("adb devices", shell=True, stdout=PIPE)
         output = adb_chk.stdout.readlines()
-        print("ADB:", output)
+        
         needed_output = output[1]
 
         deco = needed_output.decode("utf-8")
         det = deco.split("\t")
+        print("ADB: ", det)
 
         if det[0] == "\n":
             self.runningNot.setText("DEVICE IS NOT CONNECTED")
@@ -1224,7 +1281,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
 
         # self.myLine = startScrcpy(self.options)
         # self.connect(self.myLine, SIGNAL("update_terminal(QString)"), self.update_terminal)
-        print("CONNECTION ESTABLISHED")
+        print("LOG: CONNECTION ESTABLISHED")
         self.progressBar.setValue(50)
         """
         for line in iter(backup.stdout.readline, b''): # TODO NOT IMPLEMENTED
@@ -1234,7 +1291,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             output = '\n'.join(full)
             self.terminal.setText(str(output))
         """
-        print("FLAGS PASSED : " + self.options)
+        print("LOG: Flags passed to scrcpy engine : " + self.options)
         self.progressBar.setValue(75)
         backup = po("scrcpy " + str(self.options),
                                   shell=True,
@@ -1245,14 +1302,19 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
 
         timef = time.time()
         eta = timef-timei
-        print("SCRCPY is launched in", eta, "seconds")
+        print("LOG: SCRCPY is launched in", eta, "seconds")
         self.progressBar.setValue(100)
 
         # self.terminal.setText(full)
-        cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "w+")
-        print("writing: #" * 25 + "\n", "Created by Srevin Saju\n", "#" * 25 + "\n", str(time.time()) + "\n",
-                        str(bitrate0) + "\n", str(dimension0) + "\n", str(swtouches0) + "\n",
-                        str(fullscreen0) + "\n" + str(dispRO0) + "\n")
+        if(platform.system()=="Windows"):
+            cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "w+")
+        elif(platform.system()=="Linux"):
+            cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "w+")
+        else:
+            cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "w+")
+        # print("writing: #" * 25 + "\n", "Created by Srevin Saju\n", "#" * 25 + "\n", str(time.time()) + "\n",
+        #                str(bitrate0) + "\n", str(dimension0) + "\n", str(swtouches0) + "\n",
+        #                str(fullscreen0) + "\n" + str(dispRO0) + "\n")
         cfg.writelines(("#" * 25 + "\n", "Created by Srevin Saju\n", "#" * 25 + "\n", str(time.time()) + "\n",
                         str(bitrate0) + "\n", str(dimension0) + "\n", str(swtouches0) + "\n",
                         str(fullscreen0) + "\n" + str(dispRO0) + "\n"))
@@ -1286,10 +1348,24 @@ if __name__ == "__main__":
         splash.setMask(splash_pix.mask())
         splash.show()
         app.processEvents()
-        adb_chk0 = po("adb start-server", shell=True, stdout=PIPE, stderr=PIPE)
+        # -------------------
+        # chk ADB devices prehandle
+        # -------------------
+
+        adb_chk8 = po("adb devices", shell=True, stdout=PIPE)
+        output8 = adb_chk8.stdout.readlines()
+        
+        needed_output8 = output8[1]
+
+        deco8 = needed_output8.decode("utf-8")
+        det8 = deco8.split("\t")
+        print("ADB: ", deco8)
+
+        # ------------------
+
         time.sleep(1)
         app.processEvents()
-        print("output:", adb_chk0.stdout)
+        
         """
 	Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 	Ui_Dialog = uic.loadUiType(qtCreatorFile)

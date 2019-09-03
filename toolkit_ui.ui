@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>104</width>
-    <height>457</height>
+    <height>461</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -742,6 +742,25 @@ color: rgb(0, 0, 0);
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <zorder>notif_collapse</zorder>
+  <zorder>menuUI</zorder>
+  <zorder>appswi</zorder>
+  <zorder>pinchoutUI</zorder>
+  <zorder>screenfreeze</zorder>
+  <zorder>back</zorder>
+  <zorder>notif_pull</zorder>
+  <zorder>powerUI</zorder>
+  <zorder>pinchinUI</zorder>
+  <zorder>clipD2PC</zorder>
+  <zorder>potraitUI</zorder>
+  <zorder>home</zorder>
+  <zorder>vup</zorder>
+  <zorder>vdown</zorder>
+  <zorder>fullscreenUI</zorder>
+  <zorder>clipPC2D</zorder>
+  <zorder>label</zorder>
+  <zorder>label_2</zorder>
+  <zorder>landscapeUI</zorder>
  </widget>
  <resources>
   <include location="rsrc.qrc"/>

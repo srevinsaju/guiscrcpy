@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.1
+# Created by: PyQt5 UI code generator 5.12
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,9 +11,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        print("LOG: MainUI loaded")
-        QtGui.QFontDatabase.addApplicationFont(":/res/fonts/trebucbd.ttf")
-        QtGui.QFontDatabase.addApplicationFont(":/res/fonts/trebuc.ttf")
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(500, 385)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
@@ -95,8 +92,8 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
         self.label_4.setSizePolicy(sizePolicy)
-        self.label_4.setMinimumSize(QtCore.QSize(5, 5))
-        self.label_4.setMaximumSize(QtCore.QSize(75, 75))
+        self.label_4.setMinimumSize(QtCore.QSize(60, 60))
+        self.label_4.setMaximumSize(QtCore.QSize(60, 60))
         self.label_4.setText("")
         self.label_4.setPixmap(QtGui.QPixmap(":/res/ui/guiscrcpy_logo.png"))
         self.label_4.setScaledContents(True)
@@ -461,9 +458,6 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.HighlightedText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255, 128))
-        brush.setStyle(QtCore.Qt.NoBrush)
-        # palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.PlaceholderText, brush)
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
@@ -500,9 +494,6 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.HighlightedText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255, 128))
-        brush.setStyle(QtCore.Qt.NoBrush)
-        # palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.PlaceholderText, brush)
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
@@ -539,9 +530,6 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.HighlightedText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255, 128))
-        brush.setStyle(QtCore.Qt.NoBrush)
-        # palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.PlaceholderText, brush)
         self.progressBar.setPalette(palette)
         font = QtGui.QFont()
         font.setFamily("Trebuchet MS")

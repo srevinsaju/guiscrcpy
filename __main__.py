@@ -117,7 +117,7 @@ dispRO0 = "False"
 build = "1.10.0.27082019-1254 by srevinsaju"
 
 print("************************************")
-print("guiscrcpy v1.10.0-release           ")
+print("guiscrcpy v1.10.1")
 print("by srevinsaju                       ")
 print("************************************")
 print("released on 24082019 GMT+0300 2048  ")
@@ -147,7 +147,7 @@ except FileNotFoundError or FileExistsError:
 
     fileExist = False
     cfg.close()
-    
+
     if(platform.system()=="Windows"):
         print("LOG: Detected a Windows Operating System :: ", platform.release(), platform.version())
         pass
@@ -274,18 +274,16 @@ def switch():
 
 
 def reorientP():
-    print("LOG: Passing REORIENT [POTRAIT]")
-    adb_reo = po("adb shell settings put system accelerometer_rota"
-                               "tion 0; adb shell settings put system"
-                               " user_rotation 0", shell=True)
+	print("LOG: Passing REORIENT [POTRAIT]")
+	adb_reo = po("adb shell settings put system accelerometer_rotation 0", shell=True)
+
+	adb_reosl = po(" adb shell settings put system rotation 1", shell=True)
 
 
 def reorientL():
-    print("LOG: Passing REORIENT [LANDSCAPE]")
-    adb_reoo = po("adb shell settings put system accelerometer_rota"
-                                "tion 0; adb shell settings put system"
-                                " user_rotation 1", shell=True)
-
+	print("LOG: Passing REORIENT [LANDSCAPE]")
+	adb_reoo = po("adb shell settings put system accelerometer_rotation 0", shell=True)
+	adb_reool = po(" adb shell settings put system rotation 1", shell=True)
 
 def notifExpand():
     print("LOG: Passing NOTIF EXPAND")
@@ -336,6 +334,7 @@ def fullscreen():
 
 class MyAppv(QMainWindow):
     def __init__(self):
+        self.oldPos = None
         super(MyAppv, self).__init__()
         # Ui_Dialog.__init__(self)
         # print("Class entered : MyAppv")
@@ -508,7 +507,7 @@ class MyAppv(QMainWindow):
         self.potraitUI = QtWidgets.QPushButton(self)
         self.potraitUI.setEnabled(True)
         self.potraitUI.setGeometry(QtCore.QRect(0, 375, 30, 25))
-        
+
         self.potraitUI.setStyleSheet("")
         self.potraitUI.setText("")
         icon11 = QtGui.QIcon()
@@ -519,7 +518,7 @@ class MyAppv(QMainWindow):
         self.landscapeUI = QtWidgets.QPushButton(self)
         self.landscapeUI.setEnabled(True)
         self.landscapeUI.setGeometry(QtCore.QRect(0, 400, 30, 25))
-        
+
         self.landscapeUI.setStyleSheet("")
         self.landscapeUI.setText("")
         icon12 = QtGui.QIcon()
@@ -633,7 +632,7 @@ class MyAppv(QMainWindow):
         self.landscapeUI.raise_()
 
 
-        
+
         _translate = QtCore.QCoreApplication.translate
         self.notif_collapse.setToolTip(_translate("self", "Expand notification panel"))
         self.menuUI.setToolTip(_translate("self", "Menu key"))
@@ -703,6 +702,7 @@ class Panel(QMainWindow):
 
         self.setObjectName("self")
         self.resize(328, 26)
+        self.oldPos = None
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/res/ui/guiscrcpy_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.setWindowIcon(icon)
@@ -1147,7 +1147,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         self.progressBar.setValue(5)
         adb_chk = po("adb devices", shell=True, stdout=PIPE)
         output = adb_chk.stdout.readlines()
-        
+
         needed_output = output[1]
 
         deco = needed_output.decode("utf-8")
@@ -1354,7 +1354,7 @@ if __name__ == "__main__":
 
         adb_chk8 = po("adb devices", shell=True, stdout=PIPE)
         output8 = adb_chk8.stdout.readlines()
-        
+
         needed_output8 = output8[1]
 
         deco8 = needed_output8.decode("utf-8")
@@ -1365,7 +1365,7 @@ if __name__ == "__main__":
 
         time.sleep(1)
         app.processEvents()
-        
+
         """
 	Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 	Ui_Dialog = uic.loadUiType(qtCreatorFile)

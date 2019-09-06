@@ -25,7 +25,7 @@ Make sure you [enabled adb debugging][enable-adb] on your device(s).
 
 |           | Ultra fast download <img src="https://avatars0.githubusercontent.com/u/4920706" height=16px>| GitHub Release download   |
 |---------  |------------           |------------               |
-| <img src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/200px-Windows_logo_-_2012.svg.png height=16px> Windows | [**1.10.1** Windows 32/64 bit](https://mega.nz/#!3fAxRALA!27JWFbOL23udBuqDEZLBYXbySb8RkGW1qatDWG6jVM0)  | [1.10.0 Windows 32/64 bit](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-windows.exe) |
+| <img src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/200px-Windows_logo_-_2012.svg.png height=16px> Windows | [**1.10.1.1** Windows 32/64 bit](https://mega.nz/#!WSR2zIBJ!nxo0v5GxbCOTgRk5KhC2_7rOS1nNr_e-hcqoA5tTG9g)  | [1.10.0 Windows 32/64 bit](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-windows.exe) |
 | <img src=https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png height=16px> Linux | [**1.10.1** Linux (amd64)](https://mega.nz/#!uSJ3yaSS!QMs_hPAG0wkJ0nq6ErT4I61-vT5ABCV9D_bF4-BSmbk) | [1.10.0 Linux (amd64)](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-linux) |
 |Older Linux (Ubuntu 18.04) [#5](https://github.com/srevinsaju/guiscrcpy/issues/5#)| [1.10.0 Ubuntu 18.04 LTS and related Linux Distros](https://mega.nz/#!CDwVzayT!brx6JrryhqKuTTbI12CceIUeda4BPeWN0WNfDOyvxDk) **v1.10.1 Coming Soon!** | |
 
@@ -36,7 +36,7 @@ Make sure you [enabled adb debugging][enable-adb] on your device(s).
 2. [Features](#Features)
 3. [Requirements](#requirements)
 3. [Build](#Build)
-4. [Known Issues](#Issues)
+4. [Where thing go Wrong](#Issues)
 5. [Why guiscrcpy?](#why-guiscrcpy)
 6. [Future Releases](#future-releases)
 7. [Support](#support-me)
@@ -49,10 +49,14 @@ Make sure you [enabled adb debugging][enable-adb] on your device(s).
 
 (Also called Step 0). Put a star on my repo. Gives support to #opensource and me!!
 ### Linux
-For Linux, download the latest `guiscrcpy_linux-*` release, double click the file, and you are good to go.
+For Linux, download the latest official `guiscrcpy_linux-*` release from GitHub or Mega on [Downloads section](#Downloads), double click the file, and you are good to go.
 As pre-requisite, you should do `sudo snap install scrcpy` to install the scrcpy engine.
+
+For Arch Linux and derived OSes, a __third-party maintainer__ has released a `guiscrcpy-AUR` and `guiscrcpy-git`.
+See [Arch User Repository](https://aur.archlinux.org/packages/guiscrcpy/)
+
 ### Windows
-For Windows, the executable is compiled into an Installer. Download the #TODO
+For Windows, the executable is compiled into an Installer. Download the Portable file from GitHub or Mega, given in the [Downloads section](#Downloads)
 ### MacOS
 Unfortunately, I do not own a Mac device, and hence cant compile for one, but it is easy to build one. Read the [build instruction](#Build)
 
@@ -62,21 +66,21 @@ Unfortunately, I do not own a Mac device, and hence cant compile for one, but it
 
 > It focuses on:
 
-    lightness (native, displays only the device screen)
-    performance (30~60fps)
-    quality (1920×1080 or above)
-    low latency (35~70ms)
-    low startup time (~1 second to display the first image)
-    non-intrusiveness (nothing is left installed on the device)
+* lightness (native, displays only the device screen)
+* performance (30~60fps)
+* quality (1920×1080 or above)
+* low latency (35~70ms)
+* low startup time (~1 second to display the first image)
+* non-intrusiveness (nothing is left installed on the device)
    
    ~ from [scrcpy README](https://github.com/Genymobile/scrcpy)
 guiscrcpy focuses on:
     
-    independent add on controls
-    faster execution (no need to waste time to think; oh, what was the command for changing bitrate, etc.)
-    configuration writing
-    one handed controls
-    easy GUI
+* independent add on controls
+* faster execution (no need to waste time to think; oh, what was the command for changing bitrate, etc.)
+* configuration writing
+* one handed controls
+* easy GUI
     
 ### Wireless
 
@@ -247,6 +251,7 @@ Thanks to all of the developers, testers, friends and family who helped me in th
 
 Special thanks to
 * @logix2 - Issue #5, #7
+* @Strubbl - Issue #8
 * Panel icons (home, back, bell, etc. located in `\icons\*`) made by Dave Gandy from www.flaticon.com 
 used under Creative Commons 3.0 Unported.
 The original SVG black work by Dave Gandy has ben re-oriented, flipped or color-changed.

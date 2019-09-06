@@ -5,7 +5,8 @@ description:  A full fledged GUI integration for the most award winning open-sou
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: https://srevinsaju.github.io/guiscrcpy # the base hostname & protocol for your site
 
-twitter_username:
+twitter_username: srevinsaju
+instagram_username: srevinsaju
 github_username: srevinsaju
 
 # Build settings

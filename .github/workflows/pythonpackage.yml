@@ -1,4 +1,4 @@
-name: Daily Builds
+name: guiscrcpy Nightly Builds
 on: [push]
 
 

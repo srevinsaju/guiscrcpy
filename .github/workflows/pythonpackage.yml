@@ -38,8 +38,10 @@ jobs:
         cd dist
         ls
         echo commit executable
+        mv guiscrcpy guiscrcpy-linux
         git clone https://github.com/srevinsaju/guiscrcpy --branch nightly
-        cp ./guiscrcpy guiscrcpy/
+        ls
+        cp ./guiscrcpy-linux guiscrcpy/
         cd guiscrcpy
         git add *
         git commit guiscrcpy -m "Nightly"

@@ -38,7 +38,7 @@ jobs:
         cd dist
         ls
         echo commit executable
-        git commit guiscrcpy -m "Nightly"
+        git commit guiscrcpy -m "Nightly" -e -n
         echo SUCCESS
     - uses: srevinsaju/github-push-action@master
       with:

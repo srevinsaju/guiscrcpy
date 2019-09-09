@@ -31,17 +31,18 @@ jobs:
         echo Running PyIstaller 
         python -m PyInstaller *linux.spec --clean
         echo Checkout Nightly branch
-        git rm -r dist/*
-        git checkout nightly
-        echo Add dist/
         
-        git add dist/*
-        echo Changing Directory
+        
+        git checkout nightly
         cd dist
-        ls
+        echo Add dist/
+        mv guiscrcpy guiscrcpy-linux
+        git add *
+        echo Changing Directory
+        echo * 
         
         echo commit executable
-        git commit guiscrcpy -m "Nightly" -e -n
+        git commit guiscrcpy* -m "Nightly" -e -n
         echo SUCCESS
     - uses: srevinsaju/github-push-action@master
       with:

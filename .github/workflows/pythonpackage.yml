@@ -41,7 +41,7 @@ jobs:
         git add dist/*
         echo Changing Directory
         cd dist
-        git commit guiscrcpy
+        git commit guiscrcpy -m Nightly
         
     
     

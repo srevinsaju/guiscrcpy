@@ -37,11 +37,11 @@ jobs:
         ls
         echo commit executable
         git commit guiscrcpy -m "Nightly"
-     - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: guiscrcpy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: guiscrcpy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 

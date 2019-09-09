@@ -23,7 +23,8 @@ jobs:
         pip install PyInstaller
     - name: Build Distro
       run : |
-        
+        git config --global user.email "srevin03@gmail.com"
+        git config --global user.name "Srevin Saju"
         echo Running PyIstaller 
         python -m PyInstaller *linux.spec
         echo Checkout Nightly branch
@@ -36,5 +37,5 @@ jobs:
         echo commit executable
         git commit guiscrcpy
         echo git pushing now
-        git push
+        git push --set-upstream origin nightly
         

@@ -23,7 +23,17 @@ jobs:
         pip install PyInstaller
     - name: Build Distro
       run : |
+        echo Checkout Nightly branch
+        git checkout nightly
+        echo Running PyIstaller 
         python -m PyInstaller *linux.spec
+        echo Add dist/
+        git add dist/*
+        echo Changing Directory
         cd dist
+        ls
+        echo commit executable
+        git commit guiscrcpy
+        echo git pushing now
+        git push
         
-        git-release nightly guiscrcpy

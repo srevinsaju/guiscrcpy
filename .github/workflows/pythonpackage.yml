@@ -37,5 +37,11 @@ jobs:
         ls
         echo commit executable
         git commit guiscrcpy -m "Nightly"
-        echo git pushing now
+     - name: Release
+        uses: softprops/action-gh-release@v1
+        
+        with:
+          files: guiscrcpy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 

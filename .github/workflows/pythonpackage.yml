@@ -40,7 +40,7 @@ jobs:
         echo Changing Directory
         echo * 
         echo commit executable
-        git commit guiscrcpy* -m "Nightly" -e -n
+        git commit guiscrcpy* -m "Nightly" 
         echo SUCCESS
     - uses: srevinsaju/github-push-action@master
       with:

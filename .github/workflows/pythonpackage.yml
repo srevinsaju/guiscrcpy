@@ -1,7 +1,6 @@
 name: Daily Builds
 on: [push]
-  branches: 
-    - 'nightly'
+
 
 jobs:
   build:

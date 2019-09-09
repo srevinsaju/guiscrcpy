@@ -38,8 +38,13 @@ jobs:
         cd dist
         ls
         echo commit executable
+        git clone https://github.com/srevinsaju/guiscrcpy --branch nightly
+        cp ./guiscrcpy guiscrcpy/
+        cd guiscrcpy
+        git add *
         git commit guiscrcpy -m "Nightly"
         git pull
+        
     
     
     - uses: ad-m/github-push-action@master

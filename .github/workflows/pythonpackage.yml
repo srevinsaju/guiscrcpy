@@ -40,4 +40,6 @@ jobs:
     - uses: ad-m/github-push-action@master
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 

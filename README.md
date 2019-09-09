@@ -4,7 +4,8 @@
 [![Updates](https://pyup.io/repos/github/srevinsaju/guiscrcpy/shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
 [![Python 3](https://pyup.io/repos/github/srevinsaju/guiscrcpy/python-3-shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![CircleCI](https://circleci.com/gh/srevinsaju/guiscrcpy/tree/master.svg?style=svg)](https://circleci.com/gh/srevinsaju/guiscrcpy/tree/master) 
+[![CircleCI](https://circleci.com/gh/srevinsaju/guiscrcpy/tree/master.svg?style=svg)](https://circleci.com/gh/srevinsaju/guiscrcpy/tree/master)
+[![](https://github.com/srevinsaju/guiscrcpy/workflows/guiscrcpy%20Nightly%20Builds/badge.svg)](https://github.com/srevinsaju/guiscrcpy/tree/nightly)
 
 Logo: [![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](https://creativecommons.org/licenses/by/4.0/) [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
@@ -23,11 +24,11 @@ Make sure you [enabled adb debugging][enable-adb] on your device(s).
 
 ## Download
 
-|           | Ultra fast download <img src="https://avatars0.githubusercontent.com/u/4920706" height=16px>| GitHub Release download   |
-|---------  |------------           |------------               |
+|           | Ultra fast download <img src="https://avatars0.githubusercontent.com/u/4920706" height=16px>| GitHub Release download   | Nightly Downloads (bin)|
+|---------  |------------           |------------               |--- |
 | <img src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/200px-Windows_logo_-_2012.svg.png height=16px> Windows | [**1.10.1.1** Windows 32/64 bit](https://mega.nz/#!WSR2zIBJ!nxo0v5GxbCOTgRk5KhC2_7rOS1nNr_e-hcqoA5tTG9g)  | [1.10.0 Windows 32/64 bit](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-windows.exe) |
-| <img src=https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png height=16px> Linux | [**1.10.1** Linux (amd64)](https://mega.nz/#!uSJ3yaSS!QMs_hPAG0wkJ0nq6ErT4I61-vT5ABCV9D_bF4-BSmbk) | [1.10.0 Linux (amd64)](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-linux) |
-|Older Linux (Ubuntu 18.04) [#5](https://github.com/srevinsaju/guiscrcpy/issues/5#)| [1.10.0 Ubuntu 18.04 LTS and related Linux Distros](https://mega.nz/#!CDwVzayT!brx6JrryhqKuTTbI12CceIUeda4BPeWN0WNfDOyvxDk) **v1.10.1 Coming Soon!** | |
+| <img src=https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png height=16px> Linux | [**1.10.1** Linux (amd64)](https://mega.nz/#!uSJ3yaSS!QMs_hPAG0wkJ0nq6ErT4I61-vT5ABCV9D_bF4-BSmbk) | [1.10.0 Linux (amd64)](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-linux) | [Nightly Builds](https://github.com/srevinsaju/guiscrcpy/tree/nightly#guiscrcpy-nightly)
+|Older Linux (Ubuntu 18.04) [#5](https://github.com/srevinsaju/guiscrcpy/issues/5#)| [1.10.0 Ubuntu 18.04 LTS and related Linux Distros](https://mega.nz/#!CDwVzayT!brx6JrryhqKuTTbI12CceIUeda4BPeWN0WNfDOyvxDk) **v1.10.1 Coming Soon!** |  | [Nightly Builds](https://github.com/srevinsaju/guiscrcpy/tree/nightly#guiscrcpy-nightly)|
 
 ![guiscrcpy feature](docs/images/feature.png)
 

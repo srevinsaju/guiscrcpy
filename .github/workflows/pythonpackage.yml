@@ -40,7 +40,7 @@ jobs:
         echo commit executable
         git commit guiscrcpy -m "Nightly"
         git pull
-    - uses: ad-m/github-push-action@master
+    - uses: ad-m/github-push-action@nightly
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -31,12 +31,15 @@ jobs:
         echo Running PyIstaller 
         python -m PyInstaller *linux.spec --clean
         echo Checkout Nightly branch
+        git rm -r dist/*
         git checkout nightly
         echo Add dist/
+        
         git add dist/*
         echo Changing Directory
         cd dist
         ls
+        
         echo commit executable
         git commit guiscrcpy -m "Nightly" -e -n
         echo SUCCESS

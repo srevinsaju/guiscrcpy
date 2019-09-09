@@ -28,6 +28,7 @@ jobs:
       env:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       run : |
+        rm -rf guiscrcpy
         git clone https://github.com/srevinsaju/guiscrcpy
         cd guiscrcpy
         git config --global user.email "srevin03@gmail.com"

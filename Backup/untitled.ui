@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>104</width>
+    <height>70</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../rsrc.qrc">
+    <normaloff>:/res/ui/guiscrcpy_logo.png</normaloff>:/res/ui/guiscrcpy_logo.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton {
+border-radius: 15px;
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.495098, fy:0.5, stop:0.887255 rgba(35, 35, 35, 255), stop:0.901961 rgba(0, 0, 0, 255));
+color: rgb(0, 0, 0);
+
+}\n
+QPushButton:pressed {
+border-radius: 15px;
+
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 152, 255));
+color: rgb(0, 0, 0);
+   }
+QPushButton:hover {
+border-radius: 15px;
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 199, 199, 255), stop:1 rgba(0, 190, 113, 255));
+color: rgb(0, 0, 0);
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="swirt">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>20</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../rsrc.qrc">
+      <normaloff>:/icons/icons/chevron-sign-right.svg</normaloff>:/icons/icons/chevron-sign-right.svg</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="swilf">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>20</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../rsrc.qrc">
+      <normaloff>:/icons/icons/chevron-sign-left.svg</normaloff>:/icons/icons/chevron-sign-left.svg</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="swidn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../rsrc.qrc">
+      <normaloff>:/icons/icons/chevron-sign-down.svg</normaloff>:/icons/icons/chevron-sign-down.svg</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="swiup">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>0</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../rsrc.qrc">
+      <normaloff>:/icons/icons/chevron-sign-up.svg</normaloff>:/icons/icons/chevron-sign-up.svg</iconset>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../rsrc.qrc"/>
+ </resources>
+ <connections/>
+</ui>

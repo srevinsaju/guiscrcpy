@@ -1,4 +1,4 @@
-name: Daily Builds
+name: guiscrcpy Nightly Builds
 on: [push]
 
 
@@ -12,43 +12,37 @@ jobs:
         python-version: [3.7]
 
     steps:
-    
+    - uses: actions/checkout@v1
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        git clone https://github.com/srevinsaju/guiscrcpy
-        cd guiscrcpy
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install PyInstaller
-    - name: Build
+    - name: Build Distro
       env:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       run : |
-        rm -rf guiscrcpy
-        git clone https://github.com/srevinsaju/guiscrcpy
-        cd guiscrcpy
         git config --global user.email "srevin03@gmail.com"
         git config --global user.name "Srevin Saju"
         echo Running PyIstaller 
-        python -m PyInstaller *linux.spec
+        python -m PyInstaller *linux.spec --clean
         echo Checkout Nightly branch
         git checkout nightly
-        echo Add dist/
-        git add dist/*
-        echo Changing Directory
+        echo CD
         cd dist
-        git commit guiscrcpy -m Nightly
-        
-    
-    
-    - uses: ad-m/github-push-action@master
+        echo Add dist/
+        mv ./guiscrcpy ./guiscrcpy-linux
+        git add *
+        echo Changing Directory
+        echo * 
+        echo commit executable
+        git commit guiscrcpy* -m "Nightly" 
+        echo SUCCESS
+    - uses: srevinsaju/github-push-action@master
       with:
-        branch: nightly
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
-      
-                

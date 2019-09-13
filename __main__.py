@@ -1,5 +1,6 @@
 dateofficial = "13092019"
 build = "1.11.0." + dateofficial + " by srevinsaju"
+import os.path
 
 """
 GUISCRCPY by srevinsaju
@@ -15,19 +16,35 @@ Icons pack obtained from www.flaticon.com
 All rights reserved.
 
 """
+
+
+class bcolors:
+    HEADER = "\033[95m"
+    OKBLUE = "\033[94m"
+    OKGREEN = "\033[92m"
+    WARNING = "\033[93m"
+    FAIL = "\033[91mERR:"
+    ENDC = "\033[0m"
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
+
+
 # import pdb
 # removed multiprocess modules
-print("************************************")
-print("guiscrcpy", build)
-print("by srevinsaju                       ")
-print("************************************")
-print("released on ", dateofficial)
-print("Licensed under GNU GPL v3 (c) 2019  ")
-print("************************************")
-print("")
+print(bcolors.UNDERLINE + "                                  " + bcolors.ENDC)
+print()
+print("guiscrcpy")
+print("by srevinsaju")
+print(bcolors.OKBLUE + "released on " + str(dateofficial) + bcolors.ENDC)
+print(bcolors.OKBLUE + "Licensed under GNU GPL v3 (c) 2019  " + bcolors.ENDC)
+print(bcolors.UNDERLINE + "                                  " + bcolors.ENDC)
+print(bcolors.OKBLUE + "" + bcolors.ENDC)
 print("LOG: Importing modules...")
+print()
 print(
-    "MSG: Please ensure you have enabled USB debugging on your device. See README.md for more details"
+    "MSG: Please ensure you have enabled",
+    bcolors.OKGREEN + "USB Debugging" + bcolors.ENDC,
+    "on your device. See README.md for more details",
 )
 
 print("")
@@ -103,27 +120,30 @@ except FileNotFoundError or FileExistsError:
     fileExist = False
     cfg.close()
 
-if platform.system() == "Windows":
-    print(
-        "LOG: Detected a Windows Operating System :: ",
-        platform.release(),
-        platform.version(),
-    )
-    pass
-elif platform.system() == "Linux":
+    if platform.system() == "Windows":
+        print(
+            "LOG: Detected a Windows Operating System :: ",
+            platform.release(),
+            platform.version(),
+        )
+        pass
+    elif platform.system() == "Linux":
 
-    print(
-        "LOG: Detected a Linux Operating System :: ",
-        platform.release(),
-        platform.version(),
-    )
-    print("LOG: Installing Trebuchet MS font ...")
-    os.system("mkdir ~/.fonts/")
-    os.system("cp -r fonts/* ~/.fonts/")
+        print(
+            "LOG: Detected a Linux Operating System :: ",
+            platform.release(),
+            platform.version(),
+        )
+        print("LOG: Installing Trebuchet MS font ...")
+        os.system("mkdir ~/.fonts/")
+        os.system("cp -r fonts/* ~/.fonts/")
 
-else:
-    print("ERR: Unknown OS detected. Continuing >>> ")
-    pass
+    else:
+        print(
+            bcolors.FAIL,
+            " MacOS or Untested OS detected. Continuing >>> " + bcolors.ENDC,
+        )
+        pass
 
 if not fileExist:
 
@@ -184,9 +204,40 @@ elif fileExist:
     # print("dispRO:", dispRO0)
 
 if platform.system() == "Windows":
-    increment = ".\\"
+    if os.path.isfile("./scrcpy.exe"):
+        increment = ".\\"
+        # print(bcolors.BOLD + "LOG: Found scrcpy.exe in current directory.")
+    else:
+        print(
+            bcolors.FAIL
+            + " Found scrcpy.exe not found in current directory."
+            + bcolors.ENDC
+        )
+        print(
+            bcolors.BOLD
+            + "LOG: Fallback to system PATH variable. Please add scrcpy to path."
+            + bcolors.ENDC
+        )
+
+
 else:
-    increment = ""
+    if not fileExist:
+        print(
+            "LOG: One time checking for scrcpy executable. (Use RESET for rechecking)"
+        )
+        increment = ""
+        scrcpy_checker = po("scrcpy -v", stdout=PIPE, stderr=PIPE, shell=True)
+        if scrcpy_checker.stderr.read().decode("utf-8").find("not found") != -1:
+            print(
+                bcolors.FAIL
+                + " Failed to find scrcpy on path. 'Start Scrcpy' may not work"
+                + bcolors.ENDC
+            )
+        else:
+            print("LOG: Scrcpy found " + scrcpy_checker.stdout.read().decode("utf-8"))
+
+    else:
+        increment = ""
 
 
 # ===================
@@ -324,7 +375,9 @@ def clippc2d():
 
 def fullscreen():
     print(
-        "ERR: Fullscreen button is not currently supported on Binary due to safety reasons"
+        bcolor.FAIL
+        + " Fullscreen button is not currently supported on Binary due to safety reasons"
+        + bcolors.ENDC
     )
     print("If you are in")
     try:
@@ -784,7 +837,7 @@ class SwipeUX(QMainWindow):
         )
         self.setWindowIcon(icon)
         self.setStyleSheet(
-            "QWidget{background-color: rgba(0,0,0,30);}\nQPushButton {\n"
+            "QWidget{background-color: rgba(0,0,0,0);}\nQPushButton {\n"
             "border-radius: 15px;\n"
             "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.495098, fy:0.5, stop:0.887255 rgba(35, 35, 35, 255), stop:0.901961 rgba(0, 0, 0, 255));\n"
             "color: rgb(0, 0, 0);\n"
@@ -1720,31 +1773,24 @@ if __name__ == "__main__":
     # -------------------
     # chk ADB devices prehandle
     # -------------------
-
     adb_chk8 = po(increment + "adb devices", shell=True, stdout=PIPE)
     output8 = adb_chk8.stdout.readlines()
     try:
         needed_output8 = output8[1]
     except IndexError:
-        print("ERR: ADB is not installed on your system")
+        print(bcolors.FAIL + " ADB is not installed on your system" + bcolors.ENDC)
     deco8 = needed_output8.decode("utf-8")
     det8 = deco8.split("\t")
     print("ADB: ", deco8)
-
     # ------------------
 
-    time.sleep(1)
+    time.sleep(0.5)
     app.processEvents()
 
-    """
-	Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
-	Ui_Dialog = uic.loadUiType(qtCreatorFile)
-	"""
+    rw = SwipeUX()  # Load swipe UI
+    rw.show()  # show Swipe UI
 
-    rw = SwipeUX()
-    rw.show()
-
-    window = QtWidgets.QMainWindow()
+    window = QtWidgets.QMainWindow()  # Create windwo
     app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
     # windoww = QtWidgets.QMainWindow()
     # windowww = QtWidgets.QMainWindow()

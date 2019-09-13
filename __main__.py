@@ -17,6 +17,21 @@ All rights reserved.
 """
 # import pdb
 # removed multiprocess modules
+print("************************************")
+print("guiscrcpy", build)
+print("by srevinsaju                       ")
+print("************************************")
+print("released on ", dateofficial)
+print("Licensed under GNU GPL v3 (c) 2019  ")
+print("************************************")
+print("")
+print("LOG: Importing modules...")
+print(
+    "MSG: Please ensure you have enabled USB debugging on your device. See README.md for more details"
+)
+
+print("")
+
 import sys
 import os
 from PyQt5.QtGui import QPixmap
@@ -55,8 +70,7 @@ try:
 except NotImplementedError:
     pass
 """
-
-
+# Pre declare variable for handlin NameError, AttributeError exception
 dimension0 = None
 dimension = None
 swtouches0 = "False"
@@ -64,14 +78,6 @@ bitrate0 = 8000
 fullscreen0 = "False"
 dispRO0 = "False"
 
-
-print("************************************")
-print("guiscrcpy", build)
-print("by srevinsaju                       ")
-print("************************************")
-print("released on 24082019 GMT+0300 2048  ")
-print("Licensed under GNU GPL v3 (c) 2019  ")
-print("************************************")
 
 try:
     if platform.system() == "Windows":

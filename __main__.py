@@ -1719,6 +1719,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             stdout=PIPE,
             stderr=STDOUT,
         )
+
         # StartScrcpy(options=self.options)
 
         timef = time.time()
@@ -1755,6 +1756,75 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         p5.start()
         p5.join()
         """
+        if self.notifChecker.isChecked():
+            print("LOG: Launching notification auditor")
+            # ------------
+            # Begin notif auditor
+            # --------
+            import pystray
+            from PIL import Image, ImageDraw
+
+            def callback(icon):
+                if platform.system() == "Windows":
+                    print(
+                        "WARNING: Notif Auditor is experimental on Windows. If you wish to help out on this issue. Open a PR on github"
+                    )
+                    notif = po(
+                        increment + "adb shell dumpsys notification | findstr ticker ",
+                        stdout=PIPE,
+                        shell=True,
+                    )
+                else:
+                    "WARNING: Notif Auditor is experimental on Linux. If you wish to help out on this issue. Open a PR on github"
+                    notif = po(
+                        increment
+                        + "adb shell dumpsys notification | grep ticker | cut -d= -f2",
+                        stdout=PIPE,
+                        shell=True,
+                    )
+                image = Image.new("RGBA", (128, 128), (255, 255, 255, 255))
+                # loop this block --->
+                var1 = notif.stdout.readlines()
+                var2 = var1
+                while True:
+                    if platform.system() == "Windows":
+                        print(
+                            "WARNING: Notif Auditor is experimental on Windows. If you wish to help out on this issue. Open a PR on github"
+                        )
+                        notif = po(
+                            increment
+                            + "adb shell dumpsys notification | findstr ticker ",
+                            stdout=PIPE,
+                            shell=True,
+                        )
+                    else:
+                        "WARNING: Notif Auditor is experimental on Linux. If you wish to help out on this issue. Open a PR on github"
+                        notif = po(
+                            increment
+                            + "adb shell dumpsys notification | grep ticker | cut -d= -f2",
+                            stdout=PIPE,
+                            shell=True,
+                        )
+                    image = Image.new("RGBA", (128, 128), (255, 255, 255, 255))
+                    # loop this block --->
+                    var1 = notif.stdout.readlines()
+
+                    # <----
+                    print("LOG: var1: ", var1)
+                    if len(var1) > len(var2):
+                        d = ImageDraw.Draw(image)
+                        d.rectangle([0, 255, 128, 128], fill="green")
+                        icon.icon = img
+                        time.sleep(600)
+                        var2 = var1
+
+            image = Image.new("RGBA", (128, 128), (255, 255, 255, 255))
+
+            icon = pystray.Icon("Test Icon 1", image)
+
+            icon.visible = True
+            icon.run(setup=callback)
+            # End notif auditor
 
 
 if __name__ == "__main__":

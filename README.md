@@ -5,7 +5,7 @@
 [![Python 3](https://pyup.io/repos/github/srevinsaju/guiscrcpy/python-3-shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![CircleCI](https://circleci.com/gh/srevinsaju/guiscrcpy/tree/master.svg?style=svg)](https://circleci.com/gh/srevinsaju/guiscrcpy/tree/master)
-[![](https://github.com/srevinsaju/guiscrcpy/workflows/guiscrcpy%20Nightly%20Builds/badge.svg)](https://github.com/srevinsaju/guiscrcpy/tree/nightly)
+[![](https://github.com/srevinsaju/guiscrcpy-nightly/workflows/guiscrcpy%20nightly%20builds/badge.svg)](https://github.com/srevinsaju/guiscrcpy/tree/nightly)
 
 Logo: [![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](https://creativecommons.org/licenses/by/4.0/) [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 

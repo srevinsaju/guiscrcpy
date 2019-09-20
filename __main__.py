@@ -1,7 +1,7 @@
 dateofficial = "13092019"
 build = "1.11.0." + dateofficial + " by srevinsaju"
 import os.path
-
+import platform
 """
 GUISCRCPY by srevinsaju
 Get it on : https://github.com/sevinsaju/guiscrcpy
@@ -19,18 +19,29 @@ All rights reserved.
 
 
 class bcolors:
-    HEADER = "\033[95m"
-    OKBLUE = "\033[94m"
-    OKGREEN = "\033[92m"
-    WARNING = "\033[93m"
-    FAIL = "\033[91mERR:"
-    ENDC = "\033[0m"
-    BOLD = "\033[1m"
-    UNDERLINE = "\033[4m"
+    if platform.system()=="Linux":
+        HEADER = "\033[95m"
+        OKBLUE = "\033[94m"
+        OKGREEN = "\033[92m"
+        WARNING = "\033[93m"
+        FAIL = "\033[91mERR:"
+        ENDC = "\033[0m"
+        BOLD = "\033[1m"
+        UNDERLINE = "\033[4m"
+    else:
+        HEADER = ""
+        OKBLUE = ""
+        OKGREEN = ""
+        WARNING = ""
+        FAIL = "ERR:"
+        ENDC = ""
+        BOLD = ""
+        UNDERLINE = ""
 
 
 # import pdb
 # removed multiprocess modules
+
 print(bcolors.UNDERLINE + "                                  " + bcolors.ENDC)
 print()
 print("guiscrcpy")
@@ -55,7 +66,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 import qdarkstyle
-import platform
+
 from subprocess import Popen as po, STDOUT
 from subprocess import PIPE
 import time
@@ -218,6 +229,7 @@ if platform.system() == "Windows":
             + "LOG: Fallback to system PATH variable. Please add scrcpy to path."
             + bcolors.ENDC
         )
+        increment = ""
 
 
 else:
@@ -1847,11 +1859,13 @@ if __name__ == "__main__":
     output8 = adb_chk8.stdout.readlines()
     try:
         needed_output8 = output8[1]
+        deco8 = needed_output8.decode("utf-8")
+        det8 = deco8.split("\t")
+        print("ADB: ", deco8)
+
     except IndexError:
         print(bcolors.FAIL + " ADB is not installed on your system" + bcolors.ENDC)
-    deco8 = needed_output8.decode("utf-8")
-    det8 = deco8.split("\t")
-    print("ADB: ", deco8)
+    
     # ------------------
 
     time.sleep(0.5)

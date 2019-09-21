@@ -1,4 +1,4 @@
-<img src=/ui/guiscrcpy_logo.png width=25%>
+<img src=guiscrcpy/ui/guiscrcpy_logo.png width=25%>
 
 # guiscrcpy
 [![Updates](https://pyup.io/repos/github/srevinsaju/guiscrcpy/shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
@@ -26,9 +26,9 @@ Make sure you [enabled adb debugging][enable-adb] on your device(s).
 
 |           | Ultra fast download <img src="https://avatars0.githubusercontent.com/u/4920706" height=16px>| GitHub Release download   | Nightly Downloads (bin)|
 |---------  |------------           |------------               |--- |
-| <img src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/200px-Windows_logo_-_2012.svg.png height=16px> Windows | [**1.10.1.1** Windows 32/64 bit](https://mega.nz/#!WSR2zIBJ!nxo0v5GxbCOTgRk5KhC2_7rOS1nNr_e-hcqoA5tTG9g)  | [1.10.0 Windows 32/64 bit](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-windows.exe) |
-| <img src=https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png height=16px> Linux | [**1.10.1** Linux (amd64)](https://mega.nz/#!uSJ3yaSS!QMs_hPAG0wkJ0nq6ErT4I61-vT5ABCV9D_bF4-BSmbk) | [1.10.0 Linux (amd64)](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-linux) | [Nightly Builds](https://github.com/srevinsaju/guiscrcpy/tree/nightly#guiscrcpy-nightly)
-|Older Linux (Ubuntu 18.04) [#5](https://github.com/srevinsaju/guiscrcpy/issues/5#)| [1.10.0 Ubuntu 18.04 LTS and related Linux Distros](https://mega.nz/#!CDwVzayT!brx6JrryhqKuTTbI12CceIUeda4BPeWN0WNfDOyvxDk) **v1.10.1 Coming Soon!** |  | [Nightly Builds](https://github.com/srevinsaju/guiscrcpy/tree/nightly#guiscrcpy-nightly)|
+| <img src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/200px-Windows_logo_-_2012.svg.png height=16px> Windows | [**1.11.0** Windows 32/64 bit](https://mega.nz/#!fDAFAACb!N-jhb6GwRR6I-QNQQmy4AJrj0g8L5TQgwrcA4afKB0o)  | [1.10.0 Windows 32/64 bit](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-windows.exe) |
+| <img src=https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png height=16px> Linux | [For faster execution, we recommend the **Source code** on Linux](https://github.com/srevinsaju/guiscrcpy/archive/master.zip) or [**1.10.1** Linux (amd64)](https://mega.nz/#!uSJ3yaSS!QMs_hPAG0wkJ0nq6ErT4I61-vT5ABCV9D_bF4-BSmbk) | [1.10.0 Linux (amd64)](https://github.com/srevinsaju/guiscrcpy/releases/download/1.10/guiscrcpy-1.10-27082019-linux) | [Nightly Builds](https://github.com/srevinsaju/guiscrcpy/tree/nightly#guiscrcpy-nightly)
+
 
 ![guiscrcpy feature](docs/images/feature.png)
 
@@ -268,7 +268,7 @@ by the developer. Icons have been adapeted in all the three windows.
 
 ##### New logo for guiscrcpy
 The new logo for `guiscrcpy` has been deployed, licensed under *Creative Commons License Attribution 4.0*. A comparison between old and new. <p>
-<img src="/ui/android_circle.png" width=49%> <img src="/ui/guiscrcpy_logo.png"  width=49%>
+<img src="guiscrcpy/ui/android_circle.png" width=49%> <img src="guiscrcpy/ui/guiscrcpy_logo.png"  width=49%>
 ##### New UI and distributed controls
 The new UI aims for faster ergonomics and consumer oriented. Individual modules, now are separate from scrcpy executable to provide speed to the mirroring system. The new UI also looks way better than the old one ;) <p>
 <img src="/screen.png" width=100%> **OLD**

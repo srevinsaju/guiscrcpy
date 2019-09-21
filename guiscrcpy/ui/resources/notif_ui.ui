@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>270</width>
+    <height>331</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>GUI ScrcPy - Toolkit</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>rsrc/android_circle.png</normaloff>rsrc/android_circle.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0.0742574 rgba(43, 43, 43, 255));</string>
+  </property>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>5</y>
+     <width>261</width>
+     <height>320</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>261</width>
+     <height>320</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>13</pointsize>
+    </font>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::WheelFocus</enum>
+   </property>
+   <property name="acceptDrops">
+    <bool>true</bool>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0.0742574 rgba(43, 43, 43, 255));
+
+color: rgb(238, 238, 236);
+alternate-background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(25, 25, 25, 255), stop:0.0845771 rgba(81, 81, 81, 255));</string>
+   </property>
+   <property name="lineWidth">
+    <number>10</number>
+   </property>
+   <property name="midLineWidth">
+    <number>10</number>
+   </property>
+   <property name="verticalScrollBarPolicy">
+    <enum>Qt::ScrollBarAsNeeded</enum>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="showDropIndicator" stdset="0">
+    <bool>false</bool>
+   </property>
+   <property name="dragEnabled">
+    <bool>false</bool>
+   </property>
+   <property name="dragDropOverwriteMode">
+    <bool>false</bool>
+   </property>
+   <property name="alternatingRowColors">
+    <bool>true</bool>
+   </property>
+   <property name="selectionMode">
+    <enum>QAbstractItemView::MultiSelection</enum>
+   </property>
+   <property name="selectionBehavior">
+    <enum>QAbstractItemView::SelectRows</enum>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>2</width>
+     <height>4</height>
+    </size>
+   </property>
+   <property name="verticalScrollMode">
+    <enum>QAbstractItemView::ScrollPerPixel</enum>
+   </property>
+   <property name="horizontalScrollMode">
+    <enum>QAbstractItemView::ScrollPerPixel</enum>
+   </property>
+   <property name="movement">
+    <enum>QListView::Free</enum>
+   </property>
+   <property name="isWrapping" stdset="0">
+    <bool>false</bool>
+   </property>
+   <property name="resizeMode">
+    <enum>QListView::Fixed</enum>
+   </property>
+   <property name="layoutMode">
+    <enum>QListView::SinglePass</enum>
+   </property>
+   <property name="spacing">
+    <number>7</number>
+   </property>
+   <property name="viewMode">
+    <enum>QListView::ListMode</enum>
+   </property>
+   <property name="modelColumn">
+    <number>0</number>
+   </property>
+   <property name="uniformItemSizes">
+    <bool>true</bool>
+   </property>
+   <property name="batchSize">
+    <number>100</number>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+   <property name="selectionRectVisible">
+    <bool>false</bool>
+   </property>
+   <property name="itemAlignment">
+    <set>Qt::AlignHCenter</set>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

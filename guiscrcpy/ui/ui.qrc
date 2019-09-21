@@ -1,0 +1,28 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>android.png</file>
+        <file>android_circle.png</file>
+        <file>battery.png</file>
+        <file>cancel.png</file>
+        <file>cloud.png</file>
+        <file>correct.png</file>
+        <file>cut.png</file>
+        <file>download.png</file>
+        <file>file.png</file>
+        <file>folder.png</file>
+        <file>gallery.png</file>
+        <file>headphones.png</file>
+        <file>home.png</file>
+        <file>layout.png</file>
+        <file>left-arrow.png</file>
+        <file>lightning.png</file>
+        <file>menu.png</file>
+        <file>moon.png</file>
+        <file>pause.png</file>
+        <file>play-button.png</file>
+        <file>power.png</file>
+        <file>refresh.png</file>
+        <file>right-arrow.png</file>
+        <file>right-arrow-1.png</file>
+    </qresource>
+</RCC>

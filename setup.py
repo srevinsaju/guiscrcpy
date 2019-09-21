@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 import distutils.core
 import setuptools
 
@@ -14,14 +14,16 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/srevinsaju/guiscrcpy",
-    packages=['.'],
+    packages=['guiscrcpy'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: GNU GPL v3",
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    package_data={'':['*','dark/*','fonts/*','icons/*','rsrc/*','ui/*']},
+
     include_package_data=True,
-    install_requires=[],
-    package_data={'':['*']},
+    install_requires=['PyQt5','psutil','qdarkstyle'],
+    
 )

@@ -13,7 +13,7 @@
   parts:
     guiscrcpy:
       
-      build-packages: [scrcpy]
+      
       # See 'snapcraft plugins'
       plugin: dump
       source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip

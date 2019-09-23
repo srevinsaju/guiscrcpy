@@ -7,8 +7,8 @@
     A full fledged GUI integration for the award winning open source scrcpy, for 
     Android Screen mirroring
 
-  grade: edge # must be 'stable' to release into candidate/stable channels
-  confinement: devmode # use 'strict' once you have the right plugs and slots
+  grade: stable # must be 'stable' to release into candidate/stable channels
+  confinement: classic # use 'strict' once you have the right plugs and slots
 
   parts:
     guiscrcpy:

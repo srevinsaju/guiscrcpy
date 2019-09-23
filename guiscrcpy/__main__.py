@@ -1872,54 +1872,55 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             icon.run(setup=callback)
             # End notif auditor
 
+def launch_main():
+    if __name__ == "__main__":
 
-if __name__ == "__main__":
+        app = QtWidgets.QApplication(sys.argv)
 
-    app = QtWidgets.QApplication(sys.argv)
+        # file = QFile(":/dark.qss")
+        # file.open(QFile.ReadOnly | QFile.Text)
+        # stream = QTextStream(file)
+        # app.setStyleSheet(stream.readAll())
+        splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
+        splash = QtWidgets.QSplashScreen(splash_pix)
+        splash.setMask(splash_pix.mask())
+        splash.show()
+        app.processEvents()
+        # -------------------
+        # chk ADB devices prehandle
+        # -------------------
+        adb_chk8 = po(increment + "adb devices", shell=True, stdout=PIPE)
+        output8 = adb_chk8.stdout.readlines()
+        try:
+            needed_output8 = output8[1]
+            deco8 = needed_output8.decode("utf-8")
+            det8 = deco8.split("\t")
+            print("ADB: ", deco8)
 
-    # file = QFile(":/dark.qss")
-    # file.open(QFile.ReadOnly | QFile.Text)
-    # stream = QTextStream(file)
-    # app.setStyleSheet(stream.readAll())
-    splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
-    splash = QtWidgets.QSplashScreen(splash_pix)
-    splash.setMask(splash_pix.mask())
-    splash.show()
-    app.processEvents()
-    # -------------------
-    # chk ADB devices prehandle
-    # -------------------
-    adb_chk8 = po(increment + "adb devices", shell=True, stdout=PIPE)
-    output8 = adb_chk8.stdout.readlines()
-    try:
-        needed_output8 = output8[1]
-        deco8 = needed_output8.decode("utf-8")
-        det8 = deco8.split("\t")
-        print("ADB: ", deco8)
+        except IndexError:
+            print(bcolors.FAIL + " ADB is not installed on your system" + bcolors.ENDC)
 
-    except IndexError:
-        print(bcolors.FAIL + " ADB is not installed on your system" + bcolors.ENDC)
-    
-    # ------------------
+        # ------------------
 
-    time.sleep(0.5)
-    app.processEvents()
+        time.sleep(0.5)
+        app.processEvents()
 
-    rw = SwipeUX()  # Load swipe UI
-    rw.show()  # show Swipe UI
+        rw = SwipeUX()  # Load swipe UI
+        rw.show()  # show Swipe UI
 
-    window = QtWidgets.QMainWindow()  # Create windwo
-    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
-    # windoww = QtWidgets.QMainWindow()
-    # windowww = QtWidgets.QMainWindow()
-    prog = MyApp(window)
-    # panel = Panel(windoww)
-    panel = Panel()
-    progg = MyAppv()
-    window.show()
-    splash.hide()
-    # windowww.show()
-    # windoww.show()
-    app.exec_()
-    # appo.exec_()
-    sys.exit()
+        window = QtWidgets.QMainWindow()  # Create windwo
+        app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+        # windoww = QtWidgets.QMainWindow()
+        # windowww = QtWidgets.QMainWindow()
+        prog = MyApp(window)
+        # panel = Panel(windoww)
+        panel = Panel()
+        progg = MyAppv()
+        window.show()
+        splash.hide()
+        # windowww.show()
+        # windoww.show()
+        app.exec_()
+        # appo.exec_()
+        sys.exit()
+launch_main()

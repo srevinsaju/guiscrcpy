@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Prelaunch
 
 dateofficial = "13092019"

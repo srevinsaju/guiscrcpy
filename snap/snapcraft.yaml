@@ -20,9 +20,11 @@
       #python-version: python3
       
       # python-packages: [PyQt5, psutil]
-       
+      install: |
+             python3 -m pip install PyQt5 psutil qdarkstyle 
   apps:
    guiscrcpy:
-     command: chmod +x guiscrcpy/* && python3 guiscrcpy
+     command: python3 $SNAP/guiscrcpy-master/guiscrcpy/__main__.py
+     
      
   

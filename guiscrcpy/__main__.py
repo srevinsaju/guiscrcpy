@@ -5,6 +5,7 @@ dateofficial = "13092019"
 build = "1.11.0." + dateofficial + " by srevinsaju"
 import os.path
 import os
+import subprocess as sp
 run4pip = False
 
 # print("__FILE__", str(__file__))
@@ -18,6 +19,8 @@ elif (str(__file__)[0]=="/"):
         filename=str(__file__)[:-len("__main__.py")]
         print("FILENAME: ", filename)
         os.chdir(filename)
+        sp.Popen("python3 -m pip install PyQt5 psutil qdarkstyle", shell=True, stdout=sp.PIPE)
+        
 else:
         filename=str(__file__)
         os.chdir(str(os.path.abspath(__file__))[:-len(filename)])

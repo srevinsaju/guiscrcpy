@@ -18,7 +18,7 @@
       plugin: python
       source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
       python-version: python3
-      source-type: git
+      
       python-packages: [PyQt5, psutil]
        
   apps:

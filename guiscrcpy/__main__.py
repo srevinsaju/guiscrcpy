@@ -19,7 +19,7 @@ elif (str(__file__)[0]=="/"):
         filename=str(__file__)[:-len("__main__.py")]
         print("FILENAME: ", filename)
         os.chdir(filename)
-        sp.Popen("python3 -m pip install PyQt5 psutil qdarkstyle", shell=True, stdout=sp.PIPE)
+        # sp.Popen("python3 -m pip install PyQt5 psutil qdarkstyle", shell=True, stdout=sp.PIPE)
         
 else:
         filename=str(__file__)

@@ -15,13 +15,14 @@
       
       
       # See 'snapcraft plugins'
-      plugin: dump
+      plugin: python
       source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
-      #python-version: python3
+      python-version: python3
       
-      # python-packages: [PyQt5, psutil]
-      install: |
-             python3 -m pip install PyQt5 psutil qdarkstyle 
+      python-packages: [PyQt5, psutil,qdarkstyle]
+      #install: |
+      #
+      #python3 -m pip install PyQt5 psutil qdarkstyle 
   apps:
    guiscrcpy:
      command: python3 $SNAP/guiscrcpy-master/guiscrcpy/__main__.py

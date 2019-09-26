@@ -6,26 +6,35 @@
   description: |
     A full fledged GUI integration for the award winning open source scrcpy, for 
     Android Screen mirroring
-
+  
   grade: stable # must be 'stable' to release into candidate/stable channels
   confinement: strict # use 'strict' once you have the right plugs and slots
-
+  base: core18
   parts:
     guiscrcpy:
       
       
       # See 'snapcraft plugins'
-      plugin: python
+      plugin: dump
       source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
-      python-version: python3
+      # python-version: python3
       
-      python-packages: [PyQt5, psutil,qdarkstyle]
-      #install: |
-      #
-      #python3 -m pip install PyQt5 psutil qdarkstyle 
+      # python-packages: [PyQt5, psutil,qdarkstyle]
+      build-packages: 
+        - python3-pip
+        - python3-venv
+      prepare: |
+          python3 -m venv venv
+          ./venv/bin/pip3 install PyQt5 psutil qdarkstyle PyInstaller
+          ./venv/bin/python3 -m PyInstaller -n guiscrcpy guiscrcpy-master/guiscrcpy/__main__.py --noconfirm --clea --distpath ./dist
+          chmod a+rwx *
+
+
   apps:
    guiscrcpy:
-     command: python3 $SNAP/guiscrcpy-master/guiscrcpy/__main__.py
+           #build-packages: 
+           #- python3-pip
+     command: $SNAP/dist/guiscrcpy/guiscrcpy
      
      
   

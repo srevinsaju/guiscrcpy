@@ -2,30 +2,32 @@
 # Prelaunch
 
 dateofficial = "13092019"
-build = "1.11.0." + dateofficial + " by srevinsaju"
+build = "1.11.1." + dateofficial + " by srevinsaju"
 import os.path
 import os
 import subprocess as sp
+
 run4pip = False
 
 # print("__FILE__", str(__file__))
-if (str(__file__)[0]=="."):
-        print("__FILE__", str(__file__))
-        filename=str(__file__)[2:]
-        print('fllename:', filename)
-        os.chdir(str(os.path.abspath(__file__))[:-len(filename)])
+if str(__file__)[0] == ".":
+    print("__FILE__", str(__file__))
+    filename = str(__file__)[2:]
+    print("fllename:", filename)
+    os.chdir(str(os.path.abspath(__file__))[: -len(filename)])
 
-elif (str(__file__)[0]=="/"):
-        filename=str(__file__)[:-len("__main__.py")]
-        print("FILENAME: ", filename)
-        os.chdir(filename)
-        # sp.Popen("python3 -m pip install PyQt5 psutil qdarkstyle", shell=True, stdout=sp.PIPE)
-        
+elif str(__file__)[0] == "/":
+    filename = str(__file__)[: -len("__main__.py")]
+    print("FILENAME: ", filename)
+    os.chdir(filename)
+    # sp.Popen("python3 -m pip install PyQt5 psutil qdarkstyle", shell=True, stdout=sp.PIPE)
+
 else:
-        filename=str(__file__)
-        os.chdir(str(os.path.abspath(__file__))[:-len(filename)])
+    filename = str(__file__)
+    os.chdir(str(os.path.abspath(__file__))[: -len(filename)])
 
 import platform
+
 """
 GUISCRCPY by srevinsaju
 Get it on : https://github.com/sevinsaju/guiscrcpy
@@ -38,12 +40,12 @@ by the debeloper. Icons have been adapeted in all the three windows.
 
 Icons pack obtained from www.flaticon.com
 All rights reserved.
-  
+
 """
 
 
 class bcolors:
-    if platform.system()=="Linux":
+    if platform.system() == "Linux":
         HEADER = "\033[95m"
         OKBLUE = "\033[94m"
         OKGREEN = "\033[92m"
@@ -85,7 +87,10 @@ print(
 # print('LOG: __file__ name             >> ', str(__file__))
 # print("LOG: os.path Absolute Path     >> ", os.path.abspath(__file__))
 print("LOG: Current Working Directory", os.getcwd())
-print("LOG: Script       Path         >> ", str(os.path.abspath(__file__))[:-len(filename)])
+print(
+    "LOG: Script       Path         >> ",
+    str(os.path.abspath(__file__))[: -len(filename)],
+)
 
 print("")
 
@@ -101,15 +106,20 @@ from subprocess import PIPE
 import time
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QDesktopWidget, QMainWindow
+
 try:
     from mainui import Ui_MainWindow
 except (ModuleNotFoundError, ImportError):
     try:
         from .mainui import Ui_MainWindow
+
         print("LOG: Safe submodule import of mainui")
     except Exception as e:
-        print("ERR: An Error with Code: {c} has occured explicitly, {m}. Please report to https://github.com/srevinsaju/guiscrcpy/issues".format(c=type(e).__name__, m=str(e)))
-
+        print(
+            "ERR: An Error with Code: {c} has occured explicitly, {m}. Please report to https://github.com/srevinsaju/guiscrcpy/issues".format(
+                c=type(e).__name__, m=str(e)
+            )
+        )
 
 
 # from bottompanelUI import Ui_Panel
@@ -1533,6 +1543,11 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         self.pushButton.clicked.connect(self.reset)
         self.abtme.clicked.connect(self.openme)
         self.abtgit.clicked.connect(self.opengit)
+        self.usbaud.clicked.connect(self.usbaudi)
+
+    def usbaudi(self):
+        print("LOG: Called usbaudio")
+        runnow = po("usbaudio", shell=True, stdout=PIPE, stderr=PIPE)
 
     def openme(self):
         webbrowser.open("https://srevinsaju.wixsite.com/srevinsaju")
@@ -1876,6 +1891,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             icon.run(setup=callback)
             # End notif auditor
 
+
 def launch_main():
     if __name__ == "__main__":
 
@@ -1927,4 +1943,6 @@ def launch_main():
         app.exec_()
         # appo.exec_()
         sys.exit()
+
+
 launch_main()

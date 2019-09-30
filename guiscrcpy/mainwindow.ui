@@ -81,7 +81,21 @@ border-radius: 10px;
 
                         
                     }
+QPushButton#usbaud{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 0, 255, 255), stop:0.901961 rgba(152, 0, 255, 255));
+color: rgb(0, 0, 0);
+border-radius: 10px;
 
+                        
+                    }
+
+.QPushButton#usbaud:hover{                        
+	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(172, 0, 0, 255), stop:1 rgba(175, 106, 0, 255));
+color: rgb(0, 0, 0);
+border-radius: 10px;
+
+                        
+                    }
 </string>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
@@ -777,7 +791,7 @@ image: url(:/res/ui/guiscrcpy_logo.png);</string>
          <item>
           <widget class="QPushButton" name="abtme">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -800,6 +814,29 @@ image: url(:/res/ui/guiscrcpy_logo.png);</string>
              <width>20</width>
              <height>20</height>
             </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="usbaud">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+             <horstretch>11</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>33</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/volume-up-interface-symbol.svg</normaloff>:/icons/icons/volume-up-interface-symbol.svg</iconset>
            </property>
           </widget>
          </item>

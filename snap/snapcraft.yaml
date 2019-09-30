@@ -8,7 +8,7 @@
     Android Screen mirroring
   
   grade: stable # must be 'stable' to release into candidate/stable channels
-  confinement: strict # use 'strict' once you have the right plugs and slots
+  confinement: classic # use 'strict' once you have the right plugs and slots
   base: core18
   parts:
     guiscrcpy:
@@ -21,20 +21,25 @@
       
       # python-packages: [PyQt5, psutil,qdarkstyle]
       build-packages: 
-        - python3-pip
-        - python3-venv
-      prepare: |
-          python3 -m venv venv
-          ./venv/bin/pip3 install PyQt5 psutil qdarkstyle PyInstaller
-          ./venv/bin/python3 -m PyInstaller -n guiscrcpy guiscrcpy-master/guiscrcpy/__main__.py --noconfirm --clea --distpath ./dist
+        - python3.6
+        - python3.6-pip
+        - python3.6-venv
+      override-prime: |
+          snapcraftctl build
+          cp -r  ../parts/guiscrcpy/src/guiscrcpy-master .
+          python3.6 -m venv venv
+          ./venv/bin/pip3.6 install PyQt5 psutil qdarkstyle PyInstaller
+          #./venv/bin/python3 -m PyInstaller -n guiscrcpy guiscrcpy-master/guiscrcpy/__main__.py --noconfirm --clea --distpath guiscrcpy-master/guiscrcpy/dist
           chmod a+rwx *
-
+          #chmod a+rwx guiscrcpy-master/guiscrcpy/dist/*
+          #cp -r guiscrcpy-master/guiscrcpy/dist  ./../../../prime/
+          #prime: [+venv/*] 
 
   apps:
    guiscrcpy:
            #build-packages: 
            #- python3-pip
-     command: $SNAP/dist/guiscrcpy/guiscrcpy
+     command: bash -c '$SNAP/venv/bin/pip3.6 install PyQt5 psutil qdarkstyle; $SNAP/venv/bin/python3.6 $SNAP/guiscrcpy-master/guiscrcpy'
      
      
   

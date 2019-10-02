@@ -6,6 +6,22 @@ build = "1.11.1." + dateofficial + " by srevinsaju"
 import os.path
 import os
 import subprocess as sp
+from subprocess import Popen as po, STDOUT
+from subprocess import PIPE
+
+# Argument parser
+
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('-i', '--install', action='store_true', help="Install guiscrcpy system wide")
+
+
+parser.add_argument('-s', '--start', action='store_true', help="Start scrcpy first before loading the GUI")
+parser.add_argument('-v', '--version', action='store_true', help="Displat guiscrcpy version")
+#parser.add_argument('-b', '--bar-value', default=3.14)
+args = parser.parse_args()
+print("LOG: Received flag", args.start)
+
 
 run4pip = False
 
@@ -76,7 +92,28 @@ print(bcolors.OKBLUE + "released on " + str(dateofficial) + bcolors.ENDC)
 print(bcolors.OKBLUE + "Licensed under GNU GPL v3 (c) 2019  " + bcolors.ENDC)
 print(bcolors.UNDERLINE + "                                  " + bcolors.ENDC)
 print(bcolors.OKBLUE + "" + bcolors.ENDC)
-print("LOG: Importing modules...")
+
+# chk version argument given or not
+import sys
+if(args.version):
+    sys.exit(0)
+# chk install value given
+if(args.install):
+    if platform.system()=="Linux":
+    # print("Supported on Linux only")
+
+        import subprocess
+        inf = subprocess.Popen("find .. -iname 'guiscrcpy-src-installer.sh'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        a1 = inf.stdout.read().decode("utf-8")
+        dirch = a1[:a1.find("guiscrcpy-src-installer.sh")]
+        cmd = "cd " + dirch + " ; " + "./guiscrcpy-src-installer.sh"
+        os.system(cmd)
+        sys.exit()
+    else:
+        print("Installation supported on Linux only")
+        sys.exit()
+    
+
 print()
 print(
     "MSG: Please ensure you have enabled",
@@ -94,59 +131,12 @@ print(
 
 print("")
 
-import sys
-import os
-from PyQt5.QtGui import QPixmap
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import *
-import qdarkstyle
 
-from subprocess import Popen as po, STDOUT
-from subprocess import PIPE
-import time
-from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtWidgets import QDesktopWidget, QMainWindow
-
-try:
-    from mainui import Ui_MainWindow
-except (ModuleNotFoundError, ImportError):
-    try:
-        from .mainui import Ui_MainWindow
-
-        print("LOG: Safe submodule import of mainui")
-    except Exception as e:
-        print(
-            "ERR: An Error with Code: {c} has occured explicitly, {m}. Please report to https://github.com/srevinsaju/guiscrcpy/issues".format(
-                c=type(e).__name__, m=str(e)
-            )
-        )
-
-
-# from bottompanelUI import Ui_Panel
-# import breeze_resources
-# from toolUI import Ui_Dialog
-try:
-    import psutil
-except ModuleNotFoundError:
-    print(
-        "WARNING : psutil is not installed in the python3 directory. "
-        "Install with \n $ pip3 install psutil"
-    )
-
-# Uncomment this if you would like to test experimental features
-"""
-try:
-    import pyautogui as auto
-except ModuleNotFoundError:
-    print("PyAutoGUI is not installed. Please install it with pip install pyautogui."
-          "Read the README.md on github.com/srevinsaju/guiscrcpy. \n You might want to continue without "
-          "pyAutoGUI limited functionality")
-try:
-    from pygetwindow import getWindowsWithTitle
-except NotImplementedError:
-    pass
-"""
+# ******************************
+# CONFIGURATION FILE CHECKER
+# *****************************
 # Pre declare variable for handlin NameError, AttributeError exception
+
 dimension0 = None
 dimension = None
 swtouches0 = "False"
@@ -301,6 +291,85 @@ else:
 
 
 # ===================
+
+def invokeScrcpy():
+    optPass = ""
+    
+    optPass+= " -b " + bitrate0
+    if(fullscreen0!="False"):
+        optPass += " -f "
+    if(swtouches0!="False"):
+        optPass += " -t "
+    if(dispRO0 != "False"):
+        optPass += " --turn-screen-off "
+    backup0r = po(
+            increment + "scrcpy " + str(optPass),
+            shell=True,
+            stdin=PIPE,
+            stdout=PIPE,
+            stderr=STDOUT,
+        )
+    print("LOG: ", backup0r.stdout)
+# ******************************
+
+if (args.start):
+    print("RUNNING SCRCPY DIRECTLY")
+    invokeScrcpy()
+
+
+print("LOG: Importing modules...")
+
+import os
+from PyQt5.QtGui import QPixmap
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import *
+import qdarkstyle
+
+
+import time
+from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QDesktopWidget, QMainWindow
+
+try:
+    from mainui import Ui_MainWindow
+except (ModuleNotFoundError, ImportError):
+    try:
+        from .mainui import Ui_MainWindow
+
+        print("LOG: Safe submodule import of mainui")
+    except Exception as e:
+        print(
+            "ERR: An Error with Code: {c} has occured explicitly, {m}. Please report to https://github.com/srevinsaju/guiscrcpy/issues".format(
+                c=type(e).__name__, m=str(e)
+            )
+        )
+
+
+# from bottompanelUI import Ui_Panel
+# import breeze_resources
+# from toolUI import Ui_Dialog
+try:
+    import psutil
+except ModuleNotFoundError:
+    print(
+        "WARNING : psutil is not installed in the python3 directory. "
+        "Install with \n $ pip3 install psutil"
+    )
+
+# Uncomment this if you would like to test experimental features
+"""
+try:
+    import pyautogui as auto
+except ModuleNotFoundError:
+    print("PyAutoGUI is not installed. Please install it with pip install pyautogui."
+          "Read the README.md on github.com/srevinsaju/guiscrcpy. \n You might want to continue without "
+          "pyAutoGUI limited functionality")
+try:
+    from pygetwindow import getWindowsWithTitle
+except NotImplementedError:
+    pass
+"""
+
 
 
 # BEGIN TOOLKIT.UI

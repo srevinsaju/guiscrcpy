@@ -9,37 +9,26 @@
   
   grade: stable # must be 'stable' to release into candidate/stable channels
   confinement: classic # use 'strict' once you have the right plugs and slots
-  base: core18
+  #base: core18
   parts:
     guiscrcpy:
       
-      
+      after: [desktop-qt5]
       # See 'snapcraft plugins'
-      plugin: dump
+      plugin: python
+      python-version: python3
       source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
-      # python-version: python3
+      #requirements: requirements.txt
+      stage-packages: [python3-pip]
+      python-packages: [PyQt5, psutil,qdarkstyle]
       
-      # python-packages: [PyQt5, psutil,qdarkstyle]
-      build-packages: 
-        - python3.6
-        - python3.6-pip
-        - python3.6-venv
-      override-prime: |
-          snapcraftctl build
-          cp -r  ../parts/guiscrcpy/src/guiscrcpy-master .
-          python3.6 -m venv venv
-          ./venv/bin/pip3.6 install PyQt5 psutil qdarkstyle PyInstaller
-          #./venv/bin/python3 -m PyInstaller -n guiscrcpy guiscrcpy-master/guiscrcpy/__main__.py --noconfirm --clea --distpath guiscrcpy-master/guiscrcpy/dist
-          chmod a+rwx *
-          #chmod a+rwx guiscrcpy-master/guiscrcpy/dist/*
-          #cp -r guiscrcpy-master/guiscrcpy/dist  ./../../../prime/
-          #prime: [+venv/*] 
+      
 
   apps:
    guiscrcpy:
            #build-packages: 
            #- python3-pip
-     command: bash -c '$SNAP/venv/bin/pip3.6 install PyQt5 psutil qdarkstyle; $SNAP/venv/bin/python3.6 $SNAP/guiscrcpy-master/guiscrcpy'
+     command: desktop-launch python3 $SNAP/guiscrcpy-master/guiscrcpy
      
      
   

@@ -9,7 +9,7 @@
   
   grade: stable # must be 'stable' to release into candidate/stable channels
   confinement: classic # use 'strict' once you have the right plugs and slots
-  #base: core18
+  # nbase: core18
   parts:
     guiscrcpy:
       
@@ -19,16 +19,16 @@
       python-version: python3
       source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
       #requirements: requirements.txt
-      #stage-packages: [python3-pip]
+      # fgfstage-packages: [python3-pip]
       python-packages: [PyQt5, psutil,qdarkstyle]
       
       
 
   apps:
    guiscrcpy:
-           #build-packages: 
-           #- python3-pip
+   
+
      command: desktop-launch python3 $SNAP/guiscrcpy-master/guiscrcpy
      
      
-  
+    

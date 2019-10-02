@@ -13,11 +13,9 @@ from subprocess import PIPE
 
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument('-i', '--install', action='store_true', help="Install guiscrcpy system wide")
-
-
+parser.add_argument('-i', '--install', action='store_true', help="Install guiscrcpy system wide on Linux")
 parser.add_argument('-s', '--start', action='store_true', help="Start scrcpy first before loading the GUI")
-parser.add_argument('-v', '--version', action='store_true', help="Displat guiscrcpy version")
+parser.add_argument('-v', '--version', action='store_true', help="Display guiscrcpy version")
 #parser.add_argument('-b', '--bar-value', default=3.14)
 args = parser.parse_args()
 print("LOG: Received flag", args.start)

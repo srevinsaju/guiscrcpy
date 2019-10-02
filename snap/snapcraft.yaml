@@ -19,7 +19,7 @@
       python-version: python3
       source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
       #requirements: requirements.txt
-      stage-packages: [python3-pip]
+      #stage-packages: [python3-pip]
       python-packages: [PyQt5, psutil,qdarkstyle]
       
       

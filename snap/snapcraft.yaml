@@ -10,7 +10,7 @@
   grade: stable # must be 'stable' to release into candidate/stable channels
   confinement: strict # use 'strict' once you have the right plugs and slots
   # plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy']
-  base: core
+ 
   
   architectures:
         - build-on: amd64

@@ -8,7 +8,8 @@
     Android Screen mirroring
   
   grade: stable # must be 'stable' to release into candidate/stable channels
-  confinement: classic # use 'strict' once you have the right plugs and slots
+  confinement: strict # use 'strict' once you have the right plugs and slots
+  plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy']
   # nbase: core18
   parts:
     guiscrcpy:
@@ -29,6 +30,6 @@
    
 
      command: desktop-launch python3 $SNAP/guiscrcpy-master/guiscrcpy
-     
+     plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy']
      
     

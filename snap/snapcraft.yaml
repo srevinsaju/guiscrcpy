@@ -15,39 +15,40 @@
         - build-on: amd64
           
   parts:
-    guiscrcpy:
+    pre-guiscrcpy:
      
       after: [desktop-qt5]
       # See 'snapcraft plugins'
-      plugin: python
-      python-version: python3
+      plugin: dump
       source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
       #requirements: requirements.txt
       build-packages: [python3-pip]
-      python-packages: [PyQt5, psutil,qdarkstyle]
-      stage-packages: [adb, python3-pyqt5, python3]
-
-
-
-    
-    dump-guiscrcpy:
-      after: [guiscrcpy]
+         
+    guiscrcpy:
+      after: [pre-guiscrcpy]
       plugin: dump
       source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
-      
+      build-packages: [python3-pip]
 
       override-prime: |
+              echo "Installing PIP modules"
               snapcraftctl build
+              python3 -m pip install PyQt5 psutil qdarkstyle PyInstaller
+              echo "Copying files"
               cp -r  ../parts/guiscrcpy/src/guiscrcpy-master .
+              echo "Generating Binary"
+              python3 -m PyInstaller -n guiscrcpy -y guiscrcpy-master/guiscrcpy/__main__.py
+              echo * 
+              echo "Compiled Successfully"
 
-              
+      stage-packages: [adb]        
       
 
   apps:
    guiscrcpy:
    
 
-     command: desktop-launch $SNAP/guiscrcpy-master/guiscrcpy/__main__.py
-     plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy','network','network-bind','unity7']
+     command: desktop-launch $SNAP/dist/guiscrcpy
+     plugs: ['desktop','content','dbus','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy','network','network-bind','unity7']
      
     

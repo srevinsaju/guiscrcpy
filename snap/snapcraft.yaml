@@ -22,7 +22,16 @@
       #requirements: requirements.txt
       build-packages: [python3-pip]
       python-packages: [PyQt5, psutil,qdarkstyle]
-      
+    
+    dump-gui:
+      after: [guiscrcpy]
+      plugin: dump
+      source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
+      override-prime: |
+              snapcraftctl build
+              cp -r  ../parts/guiscrcpy/src/guiscrcpy-master .
+
+              
       
 
   apps:

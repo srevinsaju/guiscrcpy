@@ -10,14 +10,14 @@
   grade: stable # must be 'stable' to release into candidate/stable channels
   confinement: strict # use 'strict' once you have the right plugs and slots
   # plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy']
-  # nbase: core18
-        
+  base: core
+  
   architectures:
         - build-on: amd64
           
   parts:
     guiscrcpy:
-      
+     
       after: [desktop-qt5]
       # See 'snapcraft plugins'
       plugin: python
@@ -26,14 +26,17 @@
       #requirements: requirements.txt
       build-packages: [python3-pip]
       python-packages: [PyQt5, psutil,qdarkstyle]
-      stage-packages: [adb]
-      # istage-snaps: [scrcpy]
+      stage-packages: [adb, python3-pyqt5, python3]
+      stage-snaps: 
+        -  scrcpy
 
     
     dump-guiscrcpy:
       after: [guiscrcpy]
       plugin: dump
       source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
+      stage-snaps: [scrcpy]
+
       override-prime: |
               snapcraftctl build
               cp -r  ../parts/guiscrcpy/src/guiscrcpy-master .
@@ -45,7 +48,7 @@
    guiscrcpy:
    
 
-     command: desktop-launch python3 $SNAP/guiscrcpy-master/guiscrcpy
+     command: desktop-launch $SNAP/guiscrcpy-master/guiscrcpy/__main__.py
      plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy','network','network-bind','unity7']
      
     

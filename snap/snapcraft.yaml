@@ -11,7 +11,6 @@
   confinement: strict # use 'strict' once you have the right plugs and slots
   # plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy']
  
-  
   architectures:
         - build-on: amd64
           

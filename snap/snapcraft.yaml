@@ -27,7 +27,7 @@
       build-packages: [python3-pip]
       python-packages: [PyQt5, psutil,qdarkstyle]
       stage-packages: [adb]
-      stage-snaps: [scrcpy]
+      # istage-snaps: [scrcpy]
 
     
     dump-guiscrcpy:

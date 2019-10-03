@@ -49,7 +49,8 @@
    guiscrcpy:
    
 
-     command: desktop-launch $SNAP/dist/guiscrcpy
+     command: desktop-launch python3 $SNAP/guiscrcpy-master/guiscrcpy
+     
      plugs: ['desktop','content','dbus','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy','network','network-bind','unity7']
      
     

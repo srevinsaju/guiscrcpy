@@ -46,6 +46,6 @@
    
 
      command: desktop-launch python3 $SNAP/guiscrcpy-master/guiscrcpy
-     plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy', 'adb','network','network-bind','adb-support','unity7']
+     plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy','network','network-bind','unity7']
      
     

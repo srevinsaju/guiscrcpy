@@ -31,7 +31,7 @@
 
     
     dump-guiscrcpy:
-      after: [guiscrcpy, scrcpy]
+      after: [guiscrcpy]
       plugin: dump
       source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
       

@@ -31,10 +31,10 @@
 
     
     dump-guiscrcpy:
-      after: [guiscrcpy]
+      after: [guiscrcpy, scrcpy]
       plugin: dump
       source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
-      stage-snaps: [scrcpy]
+      
 
       override-prime: |
               snapcraftctl build

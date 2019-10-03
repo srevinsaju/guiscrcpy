@@ -11,6 +11,10 @@
   confinement: strict # use 'strict' once you have the right plugs and slots
   # plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy']
   # nbase: core18
+        
+  architectures:
+        - build-on: amd64
+          
   parts:
     guiscrcpy:
       
@@ -22,8 +26,11 @@
       #requirements: requirements.txt
       build-packages: [python3-pip]
       python-packages: [PyQt5, psutil,qdarkstyle]
+      stage-packages: [adb]
+      stage-snaps: [scrcpy]
+
     
-    dump-gui:
+    dump-guiscrcpy:
       after: [guiscrcpy]
       plugin: dump
       source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
@@ -39,6 +46,6 @@
    
 
      command: desktop-launch python3 $SNAP/guiscrcpy-master/guiscrcpy
-     plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy']
+     plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy', 'adb','network','network-bind','adb-support','unity7']
      
     

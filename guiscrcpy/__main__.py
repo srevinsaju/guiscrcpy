@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # Prelaunch
 
-dateofficial = "13092019"
-build = "1.11.1." + dateofficial + " by srevinsaju"
+dateofficial = "03102019"
+build = "1.11.2." + dateofficial + " by srevinsaju"
 import os.path
 import os
 import subprocess as sp

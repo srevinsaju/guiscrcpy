@@ -3,6 +3,7 @@
 # guiscrcpy
 
 [![CircleCI](https://circleci.com/gh/srevinsaju/guiscrcpy/tree/master.svg?style=svg)](https://circleci.com/gh/srevinsaju/guiscrcpy/tree/master)
+[![codecov](https://codecov.io/gh/srevinsaju/guiscrcpy/branch/master/graph/badge.svg)](https://codecov.io/gh/srevinsaju/guiscrcpy)
 [![Updates](https://pyup.io/repos/github/srevinsaju/guiscrcpy/shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
 [![Python 3](https://pyup.io/repos/github/srevinsaju/guiscrcpy/python-3-shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/guiscrcpy?style=flat-square)

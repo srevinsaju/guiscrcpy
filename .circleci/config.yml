@@ -35,9 +35,6 @@ jobs:
             echo 'export CODECOV_TOKEN="085850e5-a220-4d9f-b174-eb90bbdaab39"' >> $BASH_ENV
             pip install -r requirements.txt
             pip install codecov
-      - run:
-          command: |
-            coverage run guiscrcpy/__main__.py
             
            
       - save_cache:

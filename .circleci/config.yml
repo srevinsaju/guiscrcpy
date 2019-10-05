@@ -64,6 +64,7 @@ jobs:
             python guiscrcpy -v
             codecov
             codecov --token=085850e5-a220-4d9f-b174-eb90bbdaab39
+            bash <(curl -s https://codecov.io/bash) -t uuid-repo-token
 
       - store_artifacts:
           path: htmlcov

@@ -42,14 +42,7 @@ jobs:
             pip install codecov
             pip install coverage
       
-      - run:
-        name: Run Tests
-        command: |
-          $HOME/.local/bin/coverage run guiscrcpy
-          $HOME/.local/bin/coverage report
-          $HOME/.local/bin/coverage html  # open htmlcov/index.html in a browser
-      - store_artifacts:
-          path: htmlcov
+     
             
            
       - save_cache:
@@ -69,6 +62,8 @@ jobs:
           command: |
             . venv/bin/activate
             python guiscrcpy -v
+            codecov
+            codecov --token=085850e5-a220-4d9f-b174-eb90bbdaab39
 
       - store_artifacts:
           path: htmlcov

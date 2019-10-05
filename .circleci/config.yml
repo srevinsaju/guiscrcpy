@@ -50,7 +50,7 @@ jobs:
             QT_QPA_PLATFORM: "offscreen"
           command: |
             . venv/bin/activate
-            python __maintest__.py
+            python guiscrcpy -v
 
       - store_artifacts:
           path: test-reports

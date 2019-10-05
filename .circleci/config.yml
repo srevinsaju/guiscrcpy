@@ -40,6 +40,16 @@ jobs:
             echo 'export CODECOV_TOKEN="085850e5-a220-4d9f-b174-eb90bbdaab39"' >> $BASH_ENV
             pip install -r requirements.txt
             pip install codecov
+            pip install coverage
+      
+      - run:
+        name: Run Tests
+        command: |
+          $HOME/.local/bin/coverage run guiscrcpy
+          $HOME/.local/bin/coverage report
+          $HOME/.local/bin/coverage html  # open htmlcov/index.html in a browser
+      - store_artifacts:
+          path: htmlcov
             
            
       - save_cache:
@@ -61,5 +71,5 @@ jobs:
             python guiscrcpy -v
 
       - store_artifacts:
-          path: test-reports
+          path: htmlcov
           destination: test-reports

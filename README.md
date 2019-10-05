@@ -2,8 +2,22 @@
 
 # guiscrcpy
 
+[![CircleCI](https://circleci.com/gh/srevinsaju/guiscrcpy/tree/master.svg?style=svg)](https://circleci.com/gh/srevinsaju/guiscrcpy/tree/master)
 [![Updates](https://pyup.io/repos/github/srevinsaju/guiscrcpy/shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
-[![Python 3](https://pyup.io/repos/github/srevinsaju/guiscrcpy/python-3-shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)[![CircleCI](https://circleci.com/gh/srevinsaju/guiscrcpy/tree/master.svg?style=svg)](https://circleci.com/gh/srevinsaju/guiscrcpy/tree/master)[![Snap Status](https://build.snapcraft.io/badge/srevinsaju/guiscrcpy.svg)](https://build.snapcraft.io/user/srevinsaju/guiscrcpy)[![](https://github.com/srevinsaju/guiscrcpy-nightly/workflows/guiscrcpy%20nightly%20builds/badge.svg)](https://github.com/srevinsaju/guiscrcpy/tree/nightly)[![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](https://creativecommons.org/licenses/by/4.0/) [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![Python 3](https://pyup.io/repos/github/srevinsaju/guiscrcpy/python-3-shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/guiscrcpy?style=flat-square)
+
+![PyPI](https://img.shields.io/pypi/v/guiscrcpy?style=flat-square)
+![PyPI - Wheel](https://img.shields.io/pypi/wheel/guiscrcpy?style=flat-square)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/guiscrcpy?color=dark%20green&logo=PYPI&logoColor=Green&style=flat-square)
+![AUR version](https://img.shields.io/aur/version/guiscrcpy?label=Arch%20Linux%20Package&style=flat-square)
+[![Snap Status](https://build.snapcraft.io/badge/srevinsaju/guiscrcpy.svg)](https://build.snapcraft.io/user/srevinsaju/guiscrcpy)
+![GitHub All Releases](https://img.shields.io/github/downloads/srevinsaju/guiscrcpy/total?style=flat-square)
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+![Twitter Follow](https://img.shields.io/twitter/follow/srevinsaju?style=social)
+![GitHub followers](https://img.shields.io/github/followers/srevinsaju?label=srevin%20Saju&style=social)
 
 ![image of guiscrcpy](/docs/screen3.png)
 

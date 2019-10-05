@@ -45,8 +45,8 @@ Make sure you [enabled adb debugging][enable-adb] on your device(s).
 
 ### Installing from pip
 It is the easiest way of installing guiscrcpy.
-Just use `pip install guiscrcpy`.
-<blockquote class="embedly-card"><h4><a href="https://PYPI.org/project/guiscrcpy">guiscrcpy</a></h4><p>guiscrcpy is a multiplatform, ready-to-use GUI layer for Android to PC screen mirroring written in the advancing programming language python3 for the most award winning open-source android screen mirroring system -- scrcpy located on https://github.com/genymobile/scrcpy/ by @rom1v NOTE: Make sure you enabled adb debugging on your device(s).</p></blockquote> <script async src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+Just use `pip install guiscrcpy`
+Replace `pip` with `pip3` if `python3` is not your default version.
 
 ### Building from source
 It is always recommended to run guiscrcpy from source due to its flexibility and fast I/O speeds. Thanks to Python's interpreter technology, commands are executed faster than ever. The procedure to install guiscrcpy from source is same for all platform or OSes which support python3.

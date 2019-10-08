@@ -1,15 +1,20 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import os,sys
 import subprocess
+import platform
 
 def check_snap():
-    """Check if inside a snap"""
+    if platform.platform()=="Linux":
 
-    if 'SNAP_COMMON' in os.environ:
-        print ('running in a snap')
-        return True
-    return False
+        """Check if inside a snap"""
+
+        if 'SNAP_COMMON' in os.environ:
+            print ('running in a snap')
+            return True
+        return False
+    else:
+        return False
 
 def add_path():
     """Add home dir to path for accessing tools from a snap"""
@@ -25,11 +30,18 @@ def add_path():
 
 def run_test():
     print(__file__)
+    if(platform.platform()=="Windows":
+            print("DETECTED OS :: WINDOWS")
+            pythonexec = "python"
+    else:
+            print("DETECTED OS :: *NIX")
+            pythonexec = "python3"
+
     filename = str(__file__)[:-(len("app.py"))]
     os.chdir(str(os.path.abspath(__file__)[:-len("app.py")]))
-    cmd = 'python3 __main__.py'
-    tmp = subprocess.Popen(cmd, shell=True, executable='/bin/bash')
-    print(tmp)
+    cmd = pythonexec + ' __main__.py'
+    tmp = subprocess.Popen(cmd, shell=True)
+    
     return
 
 def main():
@@ -37,7 +49,7 @@ def main():
 
     if check_snap() is True:
         add_path()
-    print ('hello!')
+    print ('Hello!')
     run_test()
 
 if __name__ == '__main__':

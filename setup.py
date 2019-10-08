@@ -7,7 +7,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name = 'guiscrcpy',
-    version = '1.11.32',
+    version = '1.11.38',
     description = 'An Open Source - Fast -  Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',

@@ -30,7 +30,7 @@ def add_path():
 
 def run_test():
     print(__file__)
-    if(platform.platform()=="Windows":
+    if(platform.platform()=="Windows"):
             print("DETECTED OS :: WINDOWS")
             pythonexec = "python"
     else:

@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+import os
+import platform
+print("RUNNING FROM PIP :: 0")
+if platform.system()=="Windows":
+	os.system("python -c 'import guiscrcpy; guiscrcpy.runnow()'")
+else:
+	os.system("python3 -c 'import guiscrcpy; guiscrcpy.runnow()'")

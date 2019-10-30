@@ -2013,3 +2013,60 @@ def launch_main():
 
 
 launch_main()
+
+
+
+def runnow():
+
+
+
+
+
+
+
+        app = QtWidgets.QApplication(sys.argv)
+
+        # file = QFile(":/dark.qss")
+        # file.open(QFile.ReadOnly | QFile.Text)
+        # stream = QTextStream(file)
+        # app.setStyleSheet(stream.readAll())
+        splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
+        splash = QtWidgets.QSplashScreen(splash_pix)
+        splash.setMask(splash_pix.mask())
+        splash.show()
+        app.processEvents()
+        # chk ADB devices prehandle
+        # -------------------
+        adb_chk8 = po(increment + "adb devices", shell=True, stdout=PIPE)
+        output8 = adb_chk8.stdout.readlines()
+        try:
+            needed_output8 = output8[1]
+            deco8 = needed_output8.decode("utf-8")
+            det8 = deco8.split("\t")
+            print("ADB: ", deco8)
+
+        except IndexError:
+            print(bcolors.FAIL + " ADB is not installed on your system" + bcolors.ENDC)
+
+        # ------------------
+
+        time.sleep(0.5)
+        app.processEvents()
+
+        rw = SwipeUX()  # Load swipe UI
+        rw.show()  # show Swipe UI
+
+        window = QtWidgets.QMainWindow()  # Create windwo
+        app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+        # windoww = QtWidgets.QMainWindow()
+        # windowww = QtWidgets.QMainWindow()
+        prog = MyApp(window)
+        # panel = Panel(windoww)
+        panel = Panel()
+        progg = MyAppv()
+        window.show()
+        splash.hide()
+        # windowww.show()
+        # windoww.show()
+        app.exec_()
+

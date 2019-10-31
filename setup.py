@@ -1,13 +1,18 @@
 from setuptools import setup
 import sys,os
 from os import path
+import git
+
+repo = git.Repo(search_parent_directories=True)
+sha = repo.head.object.hexsha
+
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
     name = 'guiscrcpy',
-    version = '1.11.32',
+    version = '1.11.3'+sha[:7],
     description = 'An Open Source - Fast -  Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',

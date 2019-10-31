@@ -39,7 +39,7 @@ def run_test():
 
     filename = str(__file__)[:-(len("app.py"))]
     os.chdir(str(os.path.abspath(__file__)[:-len("app.py")]))
-    cmd = pythonexec + ' __main__.py'
+    cmd = pythonexec + ' __init__.py'
     tmp = subprocess.Popen(cmd, shell=True)
     
     return
@@ -54,5 +54,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 

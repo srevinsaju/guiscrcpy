@@ -2024,5 +2024,6 @@ def launch_main():
     ar = ""
     for i in sys.argv[1:]:
         ar += " " + i + " "
-    a= po(pythonexec + " ."+ar, shell=True, stdout=PIPE)
+    #a= po(pythonexec + " ."+ar, shell=True, stdout=PIPE)
+    launch_main0()
     print(a.stdout)

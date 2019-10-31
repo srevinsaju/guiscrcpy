@@ -821,5 +821,7 @@ class Ui_MainWindow(object):
         self.executeaction.setText(_translate("MainWindow", "START SCRCPY"))
         self.progressBar.setStatusTip(_translate("MainWindow", "Progress Bar"))
 
-
-import rsrc_rc
+try:
+    import rsrc_rc
+except:
+    from guiscrcpy import rsrc_rc

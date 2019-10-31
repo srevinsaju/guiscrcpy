@@ -332,10 +332,12 @@ try:
     from mainui import Ui_MainWindow
 except (ModuleNotFoundError, ImportError):
     try:
-        from .mainui import Ui_MainWindow
+        
+        from guiscrcpy import Ui_MainWindow
 
         print("LOG: Safe submodule import of mainui")
     except Exception as e:
+        
         print(
             "ERR: An Error with Code: {c} has occured explicitly, {m}. Please report to https://github.com/srevinsaju/guiscrcpy/issues".format(
                 c=type(e).__name__, m=str(e)
@@ -1959,8 +1961,8 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             # End notif auditor
 
 
-def launch_main():
-    if __name__ == "__main__":
+def launch_main0():
+    
 
         app = QtWidgets.QApplication(sys.argv)
 
@@ -2011,62 +2013,16 @@ def launch_main():
         # appo.exec_()
         sys.exit()
 
-
-launch_main()
-
-
-
-def runnow():
-
-
-
-
-
-
-
-        app = QtWidgets.QApplication(sys.argv)
-
-        # file = QFile(":/dark.qss")
-        # file.open(QFile.ReadOnly | QFile.Text)
-        # stream = QTextStream(file)
-        # app.setStyleSheet(stream.readAll())
-        splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
-        splash = QtWidgets.QSplashScreen(splash_pix)
-        splash.setMask(splash_pix.mask())
-        splash.show()
-        app.processEvents()
-        # chk ADB devices prehandle
-        # -------------------
-        adb_chk8 = po(increment + "adb devices", shell=True, stdout=PIPE)
-        output8 = adb_chk8.stdout.readlines()
-        try:
-            needed_output8 = output8[1]
-            deco8 = needed_output8.decode("utf-8")
-            det8 = deco8.split("\t")
-            print("ADB: ", deco8)
-
-        except IndexError:
-            print(bcolors.FAIL + " ADB is not installed on your system" + bcolors.ENDC)
-
-        # ------------------
-
-        time.sleep(0.5)
-        app.processEvents()
-
-        rw = SwipeUX()  # Load swipe UI
-        rw.show()  # show Swipe UI
-
-        window = QtWidgets.QMainWindow()  # Create windwo
-        app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
-        # windoww = QtWidgets.QMainWindow()
-        # windowww = QtWidgets.QMainWindow()
-        prog = MyApp(window)
-        # panel = Panel(windoww)
-        panel = Panel()
-        progg = MyAppv()
-        window.show()
-        splash.hide()
-        # windowww.show()
-        # windoww.show()
-        app.exec_()
-
+if __name__ == "__main__":
+    launch_main0()
+    
+def launch_main():
+    if(platform.system()=="Windows"):
+        pythonexec = "python"
+    else:
+        pythonexec = "python3"
+    ar = ""
+    for i in sys.argv[1:]:
+        ar += " " + i + " "
+    a= po(pythonexec + " ."+ar, shell=True, stdout=PIPE)
+    print(a.stdout)

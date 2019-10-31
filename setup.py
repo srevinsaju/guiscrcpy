@@ -7,13 +7,12 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name = 'guiscrcpy',
-    version = '1.11.38',
+    version = '1.11.32',
     description = 'An Open Source - Fast -  Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',
     license='GPL v3',
     author = 'srevinsaju',
-    author_email = "srevin03@gmail.com",
     packages = ['guiscrcpy'],
     url = "https://srevinsaju.github.io/guiscrcpy",
     download_url = "https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
@@ -24,8 +23,9 @@ setup(
     install_requires=['PyQt5','psutil','qdarkstyle'],
     entry_points = {
         'console_scripts': [
-            'guiscrcpy=guiscrcpy.app:main']
+            'guiscrcpy=guiscrcpy.__main__:launch_main']
             },
+    #scripts = ["guiscrcpy"],
     classifiers = ['Operating System :: OS Independent',
             
             'Programming Language :: Python :: 3.6',
@@ -34,4 +34,3 @@ setup(
             'Operating System :: POSIX',
             'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'],
 )
-

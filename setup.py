@@ -7,11 +7,11 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name = 'guiscrcpy',
-    version = '1.11.40',
-    description = 'an open source - fast -  android screen mirroring system.',
+    version = '1.11.38',
+    description = 'An Open Source - Fast -  Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    license='gpl v3',
+    license='GPL v3',
     author = 'srevinsaju',
     author_email = "srevin03@gmail.com",
     packages = ['guiscrcpy'],
@@ -21,17 +21,17 @@ setup(
         
                  },
     include_package_data = True,
-    install_requires=['pyqt5','qdarkstyle'],
-    #entry_points = {
-    #    'console_scripts': [
-    #        'guiscrcpy=guiscrcpy.guiscrcpy:main']
-    #        },
-    scripts=['guiscrcpy/bin/guiscrcpy'],
-    classifiers = ['operating system :: os independent',
+    install_requires=['PyQt5','psutil','qdarkstyle'],
+    entry_points = {
+        'console_scripts': [
+            'guiscrcpy=guiscrcpy.app:main']
+            },
+    classifiers = ['Operating System :: OS Independent',
             
-            'programming language :: python :: 3.6',
-            'operating system :: macos :: macos x',
-            'operating system :: microsoft :: windows',
-            'operating system :: posix',
-            'license :: osi approved :: gnu general public license v3 (gplv3)'],
+            'Programming Language :: Python :: 3.6',
+            'Operating System :: MacOS :: MacOS X',
+            'Operating System :: Microsoft :: Windows',
+            'Operating System :: POSIX',
+            'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'],
 )
+

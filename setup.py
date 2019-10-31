@@ -13,6 +13,7 @@ setup(
     long_description_content_type='text/markdown',
     license='gpl v3',
     author = 'srevinsaju',
+    author_email = "srevin03@gmail.com",
     packages = ['guiscrcpy'],
     url = "https://srevinsaju.github.io/guiscrcpy",
     download_url = "https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
@@ -20,7 +21,7 @@ setup(
         
                  },
     include_package_data = True,
-    install_requires=['pyqt5','psutil','qdarkstyle'],
+    install_requires=['pyqt5','qdarkstyle'],
     #entry_points = {
     #    'console_scripts': [
     #        'guiscrcpy=guiscrcpy.guiscrcpy:main']

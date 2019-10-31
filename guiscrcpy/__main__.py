@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 # Prelaunch
+try:
+    import git
+    try:
+        repo = git.Repo(search_parent_directories=True)
+        sha = "-"+repo.head.object.hexsha
+    except:
+        print("LOG: This is not running from Source. No git sha retrievable")
+        sha = ""
+except ModuleNotFoundError:
+    print("ERR: gitpython is not found. It is not a dependency, but you can optionally install it with python3 -m pip install gitpython")
 
-dateofficial = "03102019"
-build = "1.11.2." + dateofficial + " by srevinsaju"
+build  = "1.11.3" + sha  + " by srevinsaju"
 import os.path
 import os
 import subprocess as sp
@@ -86,7 +95,7 @@ print(bcolors.UNDERLINE + "                                  " + bcolors.ENDC)
 print()
 print("guiscrcpy")
 print("by srevinsaju")
-print(bcolors.OKBLUE + "released on " + str(dateofficial) + bcolors.ENDC)
+print(bcolors.OKBLUE + "commit-" + str(sha) + bcolors.ENDC)
 print(bcolors.OKBLUE + "Licensed under GNU GPL v3 (c) 2019  " + bcolors.ENDC)
 print(bcolors.UNDERLINE + "                                  " + bcolors.ENDC)
 print(bcolors.OKBLUE + "" + bcolors.ENDC)

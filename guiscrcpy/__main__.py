@@ -6,6 +6,7 @@ try:
     try:
         repo = git.Repo(search_parent_directories=True)
         sha = "-"+repo.head.object.hexsha
+        __version__ = repo.git.describe("--tags")
     except:
         print("LOG: This is not running from Source. No git sha retrievable")
         print("LOG: Extracting version number from pip")
@@ -17,7 +18,7 @@ try:
 except ModuleNotFoundError:
     print("ERR: gitpython is not found. It is not a dependency, but you can optionally install it with python3 -m pip install gitpython")
 if sha:
-    build  = "1.11.3" + sha  + " by srevinsaju"
+    build  = __version__ + " by srevinsaju"
 else:
     build = __version__ + " by srevinsaju"
 import os.path
@@ -102,7 +103,7 @@ class bcolors:
 if not sha:
     commit1 = __version__
 else:
-    commit1 = "commit"+sha
+    commit1 = __version__ + " commit"+sha
 
 print(bcolors.UNDERLINE + "                                  " + bcolors.ENDC)
 print()

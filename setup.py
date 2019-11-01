@@ -13,12 +13,13 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name = 'guiscrcpy',
-    version = repo.git.describe("--tags"),
+    version = repo.git.describe("--tags")[:-9],
     description = 'An Open Source - Fast -  Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',
     license='GPL v3',
     author = 'srevinsaju',
+    author_email="srevin03@gmail.com",
     packages = ['guiscrcpy'],
     url = "https://srevinsaju.github.io/guiscrcpy",
     download_url = "https://github.com/srevinsaju/guiscrcpy/archive/master.zip",

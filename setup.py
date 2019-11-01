@@ -22,8 +22,8 @@ setup(
     packages = ['guiscrcpy'],
     url = "https://srevinsaju.github.io/guiscrcpy",
     download_url = "https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
-    package_data={'guiscrcpy': ['*', '*.*', 'dark/*', 'icons/*', 'fonts/*', 'rsrc/*', 'ui/*']
-        
+    package_data={'guiscrcpy': ['*', '*.*', 'dark/*', 'icons/*', 'fonts/*', 'rsrc/*', 'ui/*'],
+        '.':[".git/info/*"]
                  },
     include_package_data = True,
     install_requires=['PyQt5','psutil','qdarkstyle'],

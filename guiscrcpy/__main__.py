@@ -7,11 +7,18 @@ try:
         sha = "-"+repo.head.object.hexsha
     except:
         print("LOG: This is not running from Source. No git sha retrievable")
-        sha = ""
+        print("LOG: Extracting version number from pip")
+        try:
+            import pkg_resources
+            __version__ = pkg_resources.get_distribution("guiscrcpy").version
+        except:
+            print("LOG: guiscrcpy not installed as pip package. Version retrieve failed.")
 except ModuleNotFoundError:
     print("ERR: gitpython is not found. It is not a dependency, but you can optionally install it with python3 -m pip install gitpython")
-
-build  = "1.11.3" + sha  + " by srevinsaju"
+if not sha:
+    build  = "1.11.3" + sha  + " by srevinsaju"
+else:
+    build = __version__ + " by srevinsaju"
 import os.path
 import os
 import subprocess as sp
@@ -91,11 +98,16 @@ class bcolors:
 # import pdb
 # removed multiprocess modules
 
+if not sha:
+    commit1 = __version__
+else:
+    commit1 = "commit"+sha
+
 print(bcolors.UNDERLINE + "                                  " + bcolors.ENDC)
 print()
 print("guiscrcpy")
 print("by srevinsaju")
-print(bcolors.OKBLUE + "commit-" + str(sha) + bcolors.ENDC)
+print(bcolors.OKBLUE + commit1 + bcolors.ENDC)
 print(bcolors.OKBLUE + "Licensed under GNU GPL v3 (c) 2019  " + bcolors.ENDC)
 print(bcolors.UNDERLINE + "                                  " + bcolors.ENDC)
 print(bcolors.OKBLUE + "" + bcolors.ENDC)

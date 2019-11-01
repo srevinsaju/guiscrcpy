@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # Prelaunch
+sha = None
 try:
     import git
     try:
@@ -15,7 +16,7 @@ try:
             print("LOG: guiscrcpy not installed as pip package. Version retrieve failed.")
 except ModuleNotFoundError:
     print("ERR: gitpython is not found. It is not a dependency, but you can optionally install it with python3 -m pip install gitpython")
-if not sha:
+if sha:
     build  = "1.11.3" + sha  + " by srevinsaju"
 else:
     build = __version__ + " by srevinsaju"

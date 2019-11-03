@@ -1,39 +1,53 @@
 #!/usr/bin/env python3
 # Prelaunch
+from PyQt5.QtWidgets import QDesktopWidget, QMainWindow
+from PyQt5.QtWidgets import QMessageBox
+import qdarkstyle
+from PyQt5.QtCore import *
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QPixmap
+import json
+import sys
+import platform
+import argparse
+import time
+from subprocess import PIPE
+from subprocess import Popen as po, STDOUT
+import os
+import os.path
 sha = None
 try:
     import git
     try:
         repo = git.Repo(search_parent_directories=True)
-        sha = "-"+repo.head.object.hexsha
+        sha = "-" + repo.head.object.hexsha
         __version__ = repo.git.describe("--tags")
-    except:
+    except BaseException:
         print("LOG: This is not running from Source. No git sha retrievable")
         print("LOG: Extracting version number from pip")
         try:
             import pkg_resources
             __version__ = pkg_resources.get_distribution("guiscrcpy").version
-        except:
+        except BaseException:
             print("LOG: guiscrcpy not installed as pip package. Version retrieve failed.")
 except ModuleNotFoundError:
     print("ERR: gitpython is not found. It is not a dependency, but you can optionally install it with python3 -m pip install gitpython")
 if sha:
-    build  = __version__ + " by srevinsaju"
+    build = __version__ + " by srevinsaju"
 else:
     build = __version__ + " by srevinsaju"
-import os.path
-import os
-import subprocess as sp
-from subprocess import Popen as po, STDOUT
-from subprocess import PIPE
-import time
 # Argument parser
 
-import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument('-i', '--install', action='store_true', help="Install guiscrcpy system wide on Linux")
-parser.add_argument('-s', '--start', action='store_true', help="Start scrcpy first before loading the GUI")
-parser.add_argument('-v', '--version', action='store_true', help="Display guiscrcpy version")
+parser.add_argument('-i', '--install', action='store_true',
+                    help="Install guiscrcpy system wide on Linux")
+parser.add_argument('-s', '--start', action='store_true',
+                    help="Start scrcpy first before loading the GUI")
+parser.add_argument(
+    '-v',
+    '--version',
+    action='store_true',
+    help="Display guiscrcpy version")
 #parser.add_argument('-b', '--bar-value', default=3.14)
 args = parser.parse_args()
 print("LOG: Received flag", args.start)
@@ -58,7 +72,6 @@ else:
     filename = str(__file__)
     os.chdir(str(os.path.abspath(__file__))[: -len(filename)])
 
-import platform
 
 """
 GUISCRCPY by srevinsaju
@@ -103,7 +116,7 @@ class bcolors:
 if not sha:
     commit1 = __version__
 else:
-    commit1 = __version__ + " commit"+sha
+    commit1 = __version__ + " commit" + sha
 
 print(bcolors.UNDERLINE + "                                  " + bcolors.ENDC)
 print()
@@ -115,16 +128,19 @@ print(bcolors.UNDERLINE + "                                  " + bcolors.ENDC)
 print(bcolors.OKBLUE + "" + bcolors.ENDC)
 
 # chk version argument given or not
-import sys
 if(args.version):
     sys.exit(0)
 # chk install value given
 if(args.install):
-    if platform.system()=="Linux":
-    # print("Supported on Linux only")
+    if platform.system() == "Linux":
+        # print("Supported on Linux only")
 
         import subprocess
-        inf = subprocess.Popen("find .. -iname 'guiscrcpy-src-installer.sh'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        inf = subprocess.Popen(
+            "find .. -iname 'guiscrcpy-src-installer.sh'",
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
         a1 = inf.stdout.read().decode("utf-8")
         dirch = a1[:a1.find("guiscrcpy-src-installer.sh")]
         cmd = "cd " + dirch + " ; " + "./guiscrcpy-src-installer.sh"
@@ -133,7 +149,7 @@ if(args.install):
     else:
         print("Installation supported on Linux only")
         sys.exit()
-    
+
 
 print()
 print(
@@ -157,14 +173,13 @@ print("")
 # CONFIGURATION FILE CHECKER
 # *****************************
 # Pre declare variable for handlin NameError, AttributeError exception
-import json
 config = {
-        'dimension':None,
-        'swtouches':False, 
-        'bitrate':8000, 
-        'fullscreen' : False, 
-        'dispRO':False,
-        'extra':""}
+    'dimension': None,
+    'swtouches': False,
+    'bitrate': 8000,
+    'fullscreen': False,
+    'dispRO': False,
+    'extra': ""}
 dimension0 = None
 dimension = None
 swtouches0 = "False"
@@ -176,7 +191,7 @@ jsonf = 'guiscrcpy.json'
 if (platform.system() == 'Windows'):
     cfgpath = os.path.expanduser("~/AppData/Local/")
 else:
-    if (os.getenv('XDG_CONFIG_HOME') == None):
+    if (os.getenv('XDG_CONFIG_HOME') is None):
         cfgpath = os.path.expanduser("~/.config/")
     else:
         cfgpath = os.getenv('XDG_CONFIG_HOME').split(":")[0]
@@ -191,8 +206,8 @@ except FileNotFoundError:
 
     print("LOG: Initializing guiscrcpy for first time use...")
     with open(cfgpath + jsonf, 'w') as f:
-        json.dump(config,f)
-        
+        json.dump(config, f)
+
     print("LOG: Configuration file created in ", cfgpath, " directory")
     fileExist = False
 
@@ -225,20 +240,20 @@ if not fileExist:
 
     # Init json file for first time use
     config = {
-        'dimension':None,
-        'swtouches':False, 
-        'bitrate':8000, 
-        'fullscreen' : False, 
-        'dispRO':False,
-        'extra':""}
+        'dimension': None,
+        'swtouches': False,
+        'bitrate': 8000,
+        'fullscreen': False,
+        'dispRO': False,
+        'extra': ""}
     with open(cfgpath + jsonf, 'w') as f:
         json.dump(config, f)
-    
-    
+
+
 elif fileExist:
     with open(cfgpath + jsonf, 'r') as f:
         config = json.load(f)
-        
+
     """
     try:
         bitrate0 = a[4].strip("\n")
@@ -279,10 +294,9 @@ if platform.system() == "Windows":
             + bcolors.ENDC
         )
         print(
-            bcolors.BOLD
-            + "LOG: Fallback to system PATH variable. Please add scrcpy to path."
-            + bcolors.ENDC
-        )
+            bcolors.BOLD +
+            "LOG: Fallback to system PATH variable. Please add scrcpy to path." +
+            bcolors.ENDC)
         increment = ""
 
 
@@ -300,7 +314,9 @@ else:
                 + bcolors.ENDC
             )
         else:
-            print("LOG: Scrcpy found " + scrcpy_checker.stdout.read().decode("utf-8"))
+            print(
+                "LOG: Scrcpy found " +
+                scrcpy_checker.stdout.read().decode("utf-8"))
 
     else:
         increment = ""
@@ -310,8 +326,8 @@ else:
 
 def invokeScrcpy():
     optPass = ""
-    
-    optPass+= " -b " + str(config['bitrate'])
+
+    optPass += " -b " + str(config['bitrate'])
     if(config['fullscreen']):
         optPass += " -f "
     if(config['swtouches']):
@@ -319,14 +335,16 @@ def invokeScrcpy():
     if(config['dispRO']):
         optPass += " --turn-screen-off "
     backup0r = po(
-            increment + "scrcpy " + str(optPass),
-            shell=True,
-            stdin=PIPE,
-            stdout=PIPE,
-            stderr=STDOUT,
-        )
+        increment + "scrcpy " + str(optPass),
+        shell=True,
+        stdin=PIPE,
+        stdout=PIPE,
+        stderr=STDOUT,
+    )
     print("LOG: ", backup0r.stdout)
+    
 # ******************************
+
 
 if (args.start):
     print("RUNNING SCRCPY DIRECTLY")
@@ -335,32 +353,21 @@ if (args.start):
 
 print("LOG: Importing modules...")
 
-import os
-from PyQt5.QtGui import QPixmap
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import *
-import qdarkstyle
-
-
-import time
-from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtWidgets import QDesktopWidget, QMainWindow
 
 try:
     from mainui import Ui_MainWindow
 except (ModuleNotFoundError, ImportError):
     try:
-        
+
         from guiscrcpy import Ui_MainWindow
 
         print("LOG: Safe submodule import of mainui")
     except Exception as e:
-        
+
         print(
             "ERR: An Error with Code: {c} has occured explicitly, {m}. Please report to https://github.com/srevinsaju/guiscrcpy/issues".format(
-                c=type(e).__name__, m=str(e)
-            )
-        )
+                c=type(e).__name__,
+                m=str(e)))
 
 
 # from bottompanelUI import Ui_Panel
@@ -389,15 +396,13 @@ except NotImplementedError:
 """
 
 
-
 # BEGIN TOOLKIT.UI
 
 
 def clipd2pc():
     print(
         "WARNING : Copy device to PC is implemented only in source code due to "
-        "its development stage"
-    )
+        "its development stage")
     print(" If you are a developer, uncomment the import statements of PyAutoGui")
     try:
         scrcpywindow = getWindowsWithTitle("scrcpy")[0]
@@ -410,43 +415,61 @@ def clipd2pc():
 def power():
     print("LOG: Passing POWER")
     adb_power = po(
-        increment + "adb shell input keyevent 26", shell=True, stdout=PIPE, stderr=PIPE
-    )
+        increment +
+        "adb shell input keyevent 26",
+        shell=True,
+        stdout=PIPE,
+        stderr=PIPE)
 
 
 def menu():
     print("LOG: Passing MENU")
     adb_menu = po(
-        increment + "adb shell input keyevent 82", shell=True, stdout=PIPE, stderr=PIPE
-    )
+        increment +
+        "adb shell input keyevent 82",
+        shell=True,
+        stdout=PIPE,
+        stderr=PIPE)
 
 
 def Back():
     print("LOG: Passing BACK")
     adb_back = po(
-        increment + "adb shell input keyevent 4", shell=True, stdout=PIPE, stderr=PIPE
-    )
+        increment +
+        "adb shell input keyevent 4",
+        shell=True,
+        stdout=PIPE,
+        stderr=PIPE)
 
 
 def volUP():
     print("LOG: Passing BACK")
     adb_back = po(
-        increment + "adb shell input keyevent 24", shell=True, stdout=PIPE, stderr=PIPE
-    )
+        increment +
+        "adb shell input keyevent 24",
+        shell=True,
+        stdout=PIPE,
+        stderr=PIPE)
 
 
 def volDN():
     print("LOG: Passing BACK")
     adb_back = po(
-        increment + "adb shell input keyevent 25", shell=True, stdout=PIPE, stderr=PIPE
-    )
+        increment +
+        "adb shell input keyevent 25",
+        shell=True,
+        stdout=PIPE,
+        stderr=PIPE)
 
 
 def homekey():
     print("LOG: Passing HOME")
     adb_home = po(
-        increment + "adb shell input keyevent 3", shell=True, stdout=PIPE, stderr=PIPE
-    )
+        increment +
+        "adb shell input keyevent 3",
+        shell=True,
+        stdout=PIPE,
+        stderr=PIPE)
 
 
 def switch():
@@ -462,23 +485,36 @@ def switch():
 def reorientP():
     print("LOG: Passing REORIENT [POTRAIT]")
     adb_reo = po(
-        increment + "adb shell settings put system accelerometer_rotation 0", shell=True
-    )
+        increment +
+        "adb shell settings put system accelerometer_rotation 0",
+        shell=True)
 
-    adb_reosl = po(increment + " adb shell settings put system rotation 1", shell=True)
+    adb_reosl = po(
+        increment +
+        " adb shell settings put system rotation 1",
+        shell=True)
 
 
 def reorientL():
     print("LOG: Passing REORIENT [LANDSCAPE]")
     adb_reoo = po(
-        increment + "adb shell settings put system accelerometer_rotation 0", shell=True
-    )
-    adb_reool = po(increment + " adb shell settings put system rotation 1", shell=True)
+        increment +
+        "adb shell settings put system accelerometer_rotation 0",
+        shell=True)
+    adb_reool = po(
+        increment +
+        " adb shell settings put system rotation 1",
+        shell=True)
 
 
 def notifExpand():
     print("LOG: Passing NOTIF EXPAND")
-    adb_dim = po(increment + "adb shell wm size", shell=True, stdout=PIPE, stderr=PIPE)
+    adb_dim = po(
+        increment +
+        "adb shell wm size",
+        shell=True,
+        stdout=PIPE,
+        stderr=PIPE)
     out = adb_dim.stdout.read()
     out_decoded = out.decode("utf-8")
     out_decoded = out_decoded[:-1]
@@ -495,7 +531,12 @@ def notifExpand():
 
 def notifCollapse():
     print("LOG: Passing NOTIF COLLAPSE")
-    adb_dim = po(increment + "adb shell wm size", shell=True, stdout=PIPE, stderr=PIPE)
+    adb_dim = po(
+        increment +
+        "adb shell wm size",
+        shell=True,
+        stdout=PIPE,
+        stderr=PIPE)
     out = adb_dim.stdout.read()
     out_decoded = out.decode("utf-8")
     out_decoded = out_decoded[:-1]
@@ -517,15 +558,15 @@ def clippc2d():
         auto.hotkey("ctrl", "shift", "c")
         print("E: NOT SUPPORTED ON WINDOWS")
     except NameError:
-        os.system("wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+shift+c")
+        os.system(
+            "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+shift+c")
 
 
 def fullscreen():
     print(
-        bcolor.FAIL
-        + " Fullscreen button is not currently supported on Binary due to safety reasons"
-        + bcolors.ENDC
-    )
+        bcolor.FAIL +
+        " Fullscreen button is not currently supported on Binary due to safety reasons" +
+        bcolors.ENDC)
     print("If you are in")
     try:
         scrcpywindow = getWindowsWithTitle("scrcpy")[0]
@@ -587,8 +628,7 @@ class MyAppv(QMainWindow):
             "    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 199, 199, 255), stop:1 rgba(0, 190, 113, 255));\n"
             "color: rgb(0, 0, 0);\n"
             "                        }\n"
-            ""
-        )
+            "")
         self.notif_collapse = QtWidgets.QPushButton(self)
         self.notif_collapse.setEnabled(True)
         self.notif_collapse.setGeometry(QtCore.QRect(0, 75, 30, 25))
@@ -795,8 +835,9 @@ class MyAppv(QMainWindow):
         self.home.setText("")
         icon13 = QtGui.QIcon()
         icon13.addPixmap(
-            QtGui.QPixmap(":/icons/icons/home.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off
-        )
+            QtGui.QPixmap(":/icons/icons/home.svg"),
+            QtGui.QIcon.Normal,
+            QtGui.QIcon.Off)
         self.home.setIcon(icon13)
         self.home.setFlat(True)
         self.home.setObjectName("home")
@@ -909,21 +950,33 @@ class MyAppv(QMainWindow):
         self.landscapeUI.raise_()
 
         _translate = QtCore.QCoreApplication.translate
-        self.notif_collapse.setToolTip(_translate("self", "Expand notification panel"))
+        self.notif_collapse.setToolTip(
+            _translate("self", "Expand notification panel"))
         self.menuUI.setToolTip(_translate("self", "Menu key"))
-        self.appswi.setToolTip(_translate("self", "press the APP_SWITCH button"))
-        self.pinchoutUI.setToolTip(_translate("self", "Pinch out in the screen"))
+        self.appswi.setToolTip(
+            _translate(
+                "self",
+                "press the APP_SWITCH button"))
+        self.pinchoutUI.setToolTip(_translate(
+            "self", "Pinch out in the screen"))
         self.back.setToolTip(_translate("self", "Back key"))
-        self.notif_pull.setToolTip(_translate("self", "Expand notification panel"))
+        self.notif_pull.setToolTip(_translate(
+            "self", "Expand notification panel"))
         self.powerUI.setToolTip(_translate("self", "Power on/off"))
         self.pinchinUI.setToolTip(_translate("self", "Pinch in the screen"))
-        self.clipD2PC.setToolTip(_translate("self", "Copy device clipbioard to PC"))
+        self.clipD2PC.setToolTip(
+            _translate(
+                "self",
+                "Copy device clipbioard to PC"))
         self.potraitUI.setToolTip(_translate("self", "Potrait"))
         self.landscapeUI.setToolTip(_translate("self", "Landscape"))
         self.home.setToolTip(_translate("self", "Home key"))
         self.vup.setToolTip(_translate("self", "Volume Up"))
         self.fullscreenUI.setToolTip(_translate("self", "Fullscreen"))
-        self.clipPC2D.setToolTip(_translate("self", "Copy PC clipboard to Device"))
+        self.clipPC2D.setToolTip(
+            _translate(
+                "self",
+                "Copy PC clipboard to Device"))
         self.label.setText(_translate("self", "...."))
         self.label_2.setText(_translate("self", "...."))
         # -----------------------------------
@@ -1001,8 +1054,7 @@ class SwipeUX(QMainWindow):
             "border-radius: 15px;\n"
             "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 199, 199, 255), stop:1 rgba(0, 190, 113, 255));\n"
             "color: rgb(0, 0, 0);\n"
-            "}"
-        )
+            "}")
         self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
         self.swirt = QtWidgets.QPushButton(self.centralwidget)
@@ -1082,8 +1134,11 @@ class SwipeUX(QMainWindow):
     def swipdn(self):
         print("LOG: Passing SWIPE DOWN")
         adb_dim = po(
-            increment + "adb shell wm size", shell=True, stdout=PIPE, stderr=PIPE
-        )
+            increment +
+            "adb shell wm size",
+            shell=True,
+            stdout=PIPE,
+            stderr=PIPE)
         out = adb_dim.stdout.read()
         out_decoded = out.decode("utf-8")
         out_decoded = out_decoded[:-1]
@@ -1111,8 +1166,11 @@ class SwipeUX(QMainWindow):
     def swipup(self):
         print("LOG: Passing SWIPE UP")
         adb_dim = po(
-            increment + "adb shell wm size", shell=True, stdout=PIPE, stderr=PIPE
-        )
+            increment +
+            "adb shell wm size",
+            shell=True,
+            stdout=PIPE,
+            stderr=PIPE)
         out = adb_dim.stdout.read()
         out_decoded = out.decode("utf-8")
         out_decoded = out_decoded[:-1]
@@ -1141,8 +1199,11 @@ class SwipeUX(QMainWindow):
     def swipleft(self):
         print("LOG: Passing SWIPE LEFT")
         adb_dim = po(
-            increment + "adb shell wm size", shell=True, stdout=PIPE, stderr=PIPE
-        )
+            increment +
+            "adb shell wm size",
+            shell=True,
+            stdout=PIPE,
+            stderr=PIPE)
         out = adb_dim.stdout.read()
         out_decoded = out.decode("utf-8")
         out_decoded = out_decoded[:-1]
@@ -1172,8 +1233,11 @@ class SwipeUX(QMainWindow):
     def swipright(self):
         print("LOG: Passing SWIPE RIGHT")
         adb_dim = po(
-            increment + "adb shell wm size", shell=True, stdout=PIPE, stderr=PIPE
-        )
+            increment +
+            "adb shell wm size",
+            shell=True,
+            stdout=PIPE,
+            stderr=PIPE)
         out = adb_dim.stdout.read()
         out_decoded = out.decode("utf-8")
         out_decoded = out_decoded[:-1]
@@ -1244,8 +1308,7 @@ class Panel(QMainWindow):
             "    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 199, 199, 255), stop:1 rgba(0, 190, 113, 255));\n"
             "color: rgb(0, 0, 0);\n"
             "                        }\n"
-            ""
-        )
+            "")
         self.backk = QtWidgets.QPushButton(self)
         self.backk.setEnabled(True)
         self.backk.setGeometry(QtCore.QRect(210, 0, 51, 25))
@@ -1306,8 +1369,9 @@ class Panel(QMainWindow):
         self.homee.setText("")
         icon5 = QtGui.QIcon()
         icon5.addPixmap(
-            QtGui.QPixmap(":/icons/icons/home.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off
-        )
+            QtGui.QPixmap(":/icons/icons/home.svg"),
+            QtGui.QIcon.Normal,
+            QtGui.QIcon.Off)
         self.homee.setIcon(icon5)
         self.homee.setObjectName("homee")
         self.vupp = QtWidgets.QPushButton(self)
@@ -1593,7 +1657,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             self.displayForceOn.setChecked(True)
         else:
             self.displayForceOn.setChecked(False)
-        if config['dimension'] != None:
+        if config['dimension'] is not None:
             self.dimensionDefaultCheckbox.setChecked(False)
             try:
                 self.dimensionSlider.setValue(config['dimension'])
@@ -1611,7 +1675,8 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             self.runningNot.setText("SCRCPY SERVER NOT RUNNING")
 
         # CONNECT DIMENSION CHECK BOX TO STATE CHANGE
-        self.dimensionDefaultCheckbox.stateChanged.connect(self.dimensionChange)
+        self.dimensionDefaultCheckbox.stateChanged.connect(
+            self.dimensionChange)
         self.build_label.setText("Build " + str(build))
 
         # DIAL CTRL GRP
@@ -1647,14 +1712,14 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         abtBox.about(
             self.pushButton,
             "Info",
-            "Please restart GUIscrcpy to reset the settings. GUIscrcpy will now exit",
+            "Please restart guiscrcpy to reset the settings. guiscrcpy will now exit",
         )
         abtBox.addButton("OK", abtBox.hide())
         abtBox.show()
 
     def reset(self):
-        
-        os.remove(cfgpath+jsonf)
+
+        os.remove(cfgpath + jsonf)
         print("LOG: CONFIGURATION FILE REMOVED SUCCESSFULLY")
         print("RESTART")
         msgBox = QMessageBox().window()
@@ -1679,25 +1744,25 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             self.dimensionSlider.setEnabled(False)
             config['dimension'] = None
             self.dimensionText.setText("DEFAULT")
-            
 
         else:
             self.dimensionSlider.setEnabled(True)
             config['dimension'] = int(self.dimensionSlider.value())
-            
+
             self.dimensionText.setText(" " + str(config['dimension']) + "px")
             self.dimensionSlider.sliderMoved.connect(self.slider_text_refresh)
-            self.dimensionSlider.sliderReleased.connect(self.slider_text_refresh)
+            self.dimensionSlider.sliderReleased.connect(
+                self.slider_text_refresh)
 
     def slider_text_refresh(self):
         config['dimension'] = int(self.dimensionSlider.value())
-        
+
         self.dimensionText.setText(str(config['dimension']) + "px")
         pass
 
     def dial_text_refresh(self):
         config['bitrate'] = int(self.dial.value())
-        
+
         # print("xcx" + str(bitrate0))
         self.bitrateText.setText(str(config['bitrate']) + "KB/s")
         pass
@@ -1747,8 +1812,11 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         # check if the defaultDimension is checked or not for giving signal
         # ADB READ DIMENSIONS :: BEGIN
         adb_dim = po(
-            increment + "adb shell wm size", shell=True, stdout=PIPE, stderr=PIPE
-        )
+            increment +
+            "adb shell wm size",
+            shell=True,
+            stdout=PIPE,
+            stderr=PIPE)
         out = adb_dim.stdout.read()
         out_decoded = out.decode("utf-8")
         out_decoded = out_decoded[:-1]
@@ -1762,7 +1830,6 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             self.dimensionSlider.setEnabled(False)
             self.dimensionText.setText("DEFAULT")
             config['dimension'] = None
-            
 
         else:
             self.dimensionSlider.setEnabled(True)
@@ -1875,11 +1942,10 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         print("LOG: SCRCPY is launched in", eta, "seconds")
         self.progressBar.setValue(100)
 
-        with open(cfgpath+jsonf, 'w') as f:
-            json.dump(config,f)
-        print("LOG: Configuration file at ", cfgpath+jsonf, ".")
-    
-        
+        with open(cfgpath + jsonf, 'w') as f:
+            json.dump(config, f)
+        print("LOG: Configuration file at ", cfgpath + jsonf, ".")
+
         """
         if platform.system() == "Windows":
             cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "w+")
@@ -1887,7 +1953,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "w+")
         else:
             cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "w+")
-        
+
         # print("writing: #" * 25 + "\n", "Created by Srevin Saju\n", "#" * 25 + "\n", str(time.time()) + "\n",
         #                str(bitrate0) + "\n", str(dimension0) + "\n", str(swtouches0) + "\n",
         #                str(fullscreen0) + "\n" + str(dispRO0) + "\n")
@@ -1905,7 +1971,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         )
 
         cfg.close()
-        
+
         #p5 = multiprocessing.Process(target=update_terminal)
         #p5.start()
         #p5.join()
@@ -1924,15 +1990,16 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
                         "WARNING: Notif Auditor is experimental on Windows. If you wish to help out on this issue. Open a PR on github"
                     )
                     notif = po(
-                        increment + "adb shell dumpsys notification | findstr ticker ",
+                        increment +
+                        "adb shell dumpsys notification | findstr ticker ",
                         stdout=PIPE,
                         shell=True,
                     )
                 else:
                     "WARNING: Notif Auditor is experimental on Linux. If you wish to help out on this issue. Open a PR on github"
                     notif = po(
-                        increment
-                        + "adb shell dumpsys notification | grep ticker | cut -d= -f2",
+                        increment +
+                        "adb shell dumpsys notification | grep ticker | cut -d= -f2",
                         stdout=PIPE,
                         shell=True,
                     )
@@ -1946,16 +2013,16 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
                             "WARNING: Notif Auditor is experimental on Windows. If you wish to help out on this issue. Open a PR on github"
                         )
                         notif = po(
-                            increment
-                            + "adb shell dumpsys notification | findstr ticker ",
+                            increment +
+                            "adb shell dumpsys notification | findstr ticker ",
                             stdout=PIPE,
                             shell=True,
                         )
                     else:
                         "WARNING: Notif Auditor is experimental on Linux. If you wish to help out on this issue. Open a PR on github"
                         notif = po(
-                            increment
-                            + "adb shell dumpsys notification | grep ticker | cut -d= -f2",
+                            increment +
+                            "adb shell dumpsys notification | grep ticker | cut -d= -f2",
                             stdout=PIPE,
                             shell=True,
                         )
@@ -1982,62 +2049,66 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
 
 
 def launch_main0():
-    
 
-        app = QtWidgets.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
 
-        # file = QFile(":/dark.qss")
-        # file.open(QFile.ReadOnly | QFile.Text)
-        # stream = QTextStream(file)
-        # app.setStyleSheet(stream.readAll())
-        splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
-        splash = QtWidgets.QSplashScreen(splash_pix)
-        splash.setMask(splash_pix.mask())
-        splash.show()
-        app.processEvents()
-        # -------------------
-        # chk ADB devices prehandle
-        # -------------------
-        adb_chk8 = po(increment + "adb devices", shell=True, stdout=PIPE)
-        output8 = adb_chk8.stdout.readlines()
-        try:
-            needed_output8 = output8[1]
-            deco8 = needed_output8.decode("utf-8")
-            det8 = deco8.split("\t")
-            print("ADB: ", deco8)
+    # file = QFile(":/dark.qss")
+    # file.open(QFile.ReadOnly | QFile.Text)
+    # stream = QTextStream(file)
+    # app.setStyleSheet(stream.readAll())
+    splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
+    splash = QtWidgets.QSplashScreen(splash_pix)
+    splash.setMask(splash_pix.mask())
+    splash.show()
+    app.processEvents()
+    # -------------------
+    # chk ADB devices prehandle
+    # -------------------
+    adb_chk8 = po(increment + "adb devices", shell=True, stdout=PIPE)
+    output8 = adb_chk8.stdout.readlines()
+    try:
+        needed_output8 = output8[1]
+        deco8 = needed_output8.decode("utf-8")
+        det8 = deco8.split("\t")
+        print("ADB: ", deco8)
 
-        except IndexError:
-            print(bcolors.FAIL + " ADB is not installed on your system" + bcolors.ENDC)
+    except IndexError:
+        print(
+            bcolors.FAIL +
+            " ADB is not installed on your system" +
+            bcolors.ENDC)
 
-        # ------------------
+    # ------------------
 
-        time.sleep(0.5)
-        app.processEvents()
+    time.sleep(0.5)
+    app.processEvents()
 
-        rw = SwipeUX()  # Load swipe UI
-        rw.show()  # show Swipe UI
+    rw = SwipeUX()  # Load swipe UI
+    rw.show()  # show Swipe UI
 
-        window = QtWidgets.QMainWindow()  # Create windwo
-        app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
-        # windoww = QtWidgets.QMainWindow()
-        # windowww = QtWidgets.QMainWindow()
-        prog = MyApp(window)
-        # panel = Panel(windoww)
-        panel = Panel()
-        progg = MyAppv()
-        window.show()
-        splash.hide()
-        # windowww.show()
-        # windoww.show()
-        app.exec_()
-        # appo.exec_()
-        sys.exit()
+    window = QtWidgets.QMainWindow()  # Create windwo
+    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+    # windoww = QtWidgets.QMainWindow()
+    # windowww = QtWidgets.QMainWindow()
+    prog = MyApp(window)
+    # panel = Panel(windoww)
+    panel = Panel()
+    progg = MyAppv()
+    window.show()
+    splash.hide()
+    # windowww.show()
+    # windoww.show()
+    app.exec_()
+    # appo.exec_()
+    sys.exit()
+
 
 if __name__ == "__main__":
     launch_main0()
-    
+
+
 def launch_main():
-    if(platform.system()=="Windows"):
+    if(platform.system() == "Windows"):
         pythonexec = "python"
     else:
         pythonexec = "python3"

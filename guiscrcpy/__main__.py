@@ -157,38 +157,44 @@ print("")
 # CONFIGURATION FILE CHECKER
 # *****************************
 # Pre declare variable for handlin NameError, AttributeError exception
-
+import json
+config = {
+        'dimension':None,
+        'swtouches':False, 
+        'bitrate':8000, 
+        'fullscreen' : False, 
+        'dispRO':False,
+        'extra':""}
 dimension0 = None
 dimension = None
 swtouches0 = "False"
 bitrate0 = 8000
 fullscreen0 = "False"
 dispRO0 = "False"
-
+jsonf = 'guiscrcpy.json'
+# Declare Config path position
+if (platform.system() == 'Windows'):
+    cfgpath = os.path.expanduser("~/AppData/Local/")
+else:
+    if (os.getenv('XDG_CONFIG_HOME') == None):
+        cfgpath = os.path.expanduser("~/.config/")
+    else:
+        cfgpath = os.getenv('XDG_CONFIG_HOME').split(":")[0]
 
 try:
-    if platform.system() == "Windows":
-        cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "r")
-    elif platform.system() == "Linux":
-        cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "r")
-    else:
-        cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "r")
+    with open(cfgpath + jsonf, 'r') as f:
+        config = json.load(f)
     fileExist = True
-    print("LOG: Configuration file found in USER_HOME directory")
+    print("LOG: Configuration file found in ", cfgpath, " directory")
 
-except FileNotFoundError or FileExistsError:
+except FileNotFoundError:
 
     print("LOG: Initializing guiscrcpy for first time use...")
-
-    if platform.system() == "Windows":
-        cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "w+")
-    elif platform.system() == "Linux":
-        cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "w+")
-    else:
-        cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "w+")
-
+    with open(cfgpath + jsonf, 'w') as f:
+        json.dump(config,f)
+        
+    print("LOG: Configuration file created in ", cfgpath, " directory")
     fileExist = False
-    cfg.close()
 
     if platform.system() == "Windows":
         print(
@@ -211,41 +217,29 @@ except FileNotFoundError or FileExistsError:
     else:
         print(
             bcolors.FAIL,
-            " MacOS or Untested OS detected. Continuing >>> " + bcolors.ENDC,
+            " MacOS :: Untested OS detected. Continuing >>> " + bcolors.ENDC,
         )
         pass
 
 if not fileExist:
 
-    if platform.system() == "Windows":
-        cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "w+")
-    elif platform.system() == "Linux":
-        cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "w+")
-    else:
-        cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "w+")
-
-    cfg.writelines(
-        (
-            "#" * 25 + "\n",
-            "Created by Srevin Saju\n",
-            "#" * 25 + "\n",
-            str(time.time()) + "\n",
-        )
-    )
-
-    cfg.close()
+    # Init json file for first time use
+    config = {
+        'dimension':None,
+        'swtouches':False, 
+        'bitrate':8000, 
+        'fullscreen' : False, 
+        'dispRO':False,
+        'extra':""}
+    with open(cfgpath + jsonf, 'w') as f:
+        json.dump(config, f)
+    
+    
 elif fileExist:
-
-    if platform.system() == "Windows":
-        cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "r")
-    elif platform.system() == "Linux":
-        cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "r")
-    else:
-        cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "r")
-
-    a = cfg.readlines()
-    cfg.close()
-
+    with open(cfgpath + jsonf, 'r') as f:
+        config = json.load(f)
+        
+    """
     try:
         bitrate0 = a[4].strip("\n")
     except IndexError:
@@ -269,6 +263,7 @@ elif fileExist:
     except IndexError:
         dispRO0 = "False"
         # print("FAILED dispRO")
+    """
     # print("LOG: Bitrate : ", bitrate0, " + Dimensions", dimension0, "")
     # print("LOG: Bitrate: ", bitrate0)
     # print("dispRO:", dispRO0)
@@ -316,12 +311,12 @@ else:
 def invokeScrcpy():
     optPass = ""
     
-    optPass+= " -b " + bitrate0
-    if(fullscreen0!="False"):
+    optPass+= " -b " + config['bitrate']
+    if(config['fullscreen']):
         optPass += " -f "
-    if(swtouches0!="False"):
+    if(config['swtouches']):
         optPass += " -t "
-    if(dispRO0 != "False"):
+    if(config['dispRO']):
         optPass += " --turn-screen-off "
     backup0r = po(
             increment + "scrcpy " + str(optPass),
@@ -1576,35 +1571,35 @@ border-radius: 10px;
 border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 255, 255), stop:1 rgba(255, 0, 255, 255));
         """
 
-        bit_rate = bitrate0
-        dimensions = dimension0
-        swtouches = swtouches0
-        dispRO = dispRO0
-        fullscreen_opt = fullscreen0
+        #bit_rate = bitrate0
+        #dimensions = dimension0
+        #swtouches = swtouches0
+        #dispRO = dispRO0
+        #fullscreen_opt = fullscreen0
         print(
             "LOG: Options received by class are : ",
-            bit_rate,
-            dimensions,
-            swtouches,
-            dispRO,
-            fullscreen_opt,
+            config['bitrate'],
+            config['dimension'],
+            config['swtouches'],
+            config['dispRO'],
+            config['fullscreen'],
         )
-        self.dial.setValue(int(bit_rate))
-        if swtouches.find("True") > -1:
+        self.dial.setValue(config['bitrate'])
+        if config['swtouches']:
             self.showTouches.setChecked(True)
         else:
             self.showTouches.setChecked(False)
-        if dispRO.find("True") > -1:
+        if config['dispRO']:
             self.displayForceOn.setChecked(True)
         else:
             self.displayForceOn.setChecked(False)
-        if dimensions != None:
+        if config['dimension'] != None:
             self.dimensionDefaultCheckbox.setChecked(False)
             try:
-                self.dimensionSlider.setValue(dimensions)
+                self.dimensionSlider.setValue(config['dimension'])
             except TypeError:
                 self.dimensionDefaultCheckbox.setChecked(True)
-        if fullscreen_opt.find("True") > -1:
+        if config['fullscreen']:
             self.fullscreen.setChecked(True)
         else:
             self.fullscreen.setChecked(False)
@@ -1629,8 +1624,8 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
 
         self.quit.clicked.connect(self.quitAct)
         self.dimensionText.setText("DEFAULT")
-        bit_rate = int(self.dial.value())
-        self.bitrateText.setText(" " + str(bit_rate) + "KB/s")
+        config['bitrate'] = int(self.dial.value())
+        self.bitrateText.setText(" " + str(config['bitrate']) + "KB/s")
         self.pushButton.setText("RESET")
         self.pushButton.clicked.connect(self.reset)
         self.abtme.clicked.connect(self.openme)
@@ -1642,7 +1637,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         runnow = po("usbaudio", shell=True, stdout=PIPE, stderr=PIPE)
 
     def openme(self):
-        webbrowser.open("https://srevinsaju.wixsite.com/srevinsaju")
+        webbrowser.open("https://srevinsaju.github.io")
 
     def opengit(self):
         webbrowser.open("https://github.com/srevinsaju/guiscrcpy")
@@ -1658,19 +1653,15 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         abtBox.show()
 
     def reset(self):
-        if platform.system() == "Windows":
-            cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "w+")
-        elif platform.system() == "Linux":
-            cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "w+")
-        else:
-            cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "w+")
-        cfg.write("RESET" + str(time.time()))
-        cfg.close()
+        
+        os.remove(cfgpath+jsonf)
+        print("LOG: CONFIGURATION FILE REMOVED SUCCESSFULLY")
+        print("RESTART")
         msgBox = QMessageBox().window()
         msgBox.about(
             self.pushButton,
             "Info",
-            "Please restart GUIscrcpy to reset the settings. GUIscrcpy will now exit",
+            "Please restart guiscrcpy to reset the settings. guiscrcpy will now exit",
         )
         msgBox.addButton("OK", self.quitAct())
         msgBox.show()
@@ -1686,29 +1677,29 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
 
         if self.dimensionDefaultCheckbox.isChecked():
             self.dimensionSlider.setEnabled(False)
-            dimension = None
+            config['dimension'] = None
             self.dimensionText.setText("DEFAULT")
-            dimension0 = None
+            
 
         else:
             self.dimensionSlider.setEnabled(True)
-            dimension = int(self.dimensionSlider.value())
-            dimension0 = int(self.dimensionSlider.value())
-            self.dimensionText.setText(" " + str(dimension) + "px")
+            config['dimension'] = int(self.dimensionSlider.value())
+            
+            self.dimensionText.setText(" " + str(config['dimension']) + "px")
             self.dimensionSlider.sliderMoved.connect(self.slider_text_refresh)
             self.dimensionSlider.sliderReleased.connect(self.slider_text_refresh)
 
     def slider_text_refresh(self):
-        dimension = int(self.dimensionSlider.value())
-        dimension0 = int(self.dimensionSlider.value())
-        self.dimensionText.setText(str(dimension) + "px")
+        config['dimension'] = int(self.dimensionSlider.value())
+        
+        self.dimensionText.setText(str(config['dimension']) + "px")
         pass
 
     def dial_text_refresh(self):
-        bit_rate = int(self.dial.value())
-        bitrate0 = bit_rate
+        config['bitrate'] = int(self.dial.value())
+        
         # print("xcx" + str(bitrate0))
-        self.bitrateText.setText(str(bit_rate) + "KB/s")
+        self.bitrateText.setText(str(config['bitrate']) + "KB/s")
         pass
 
     def start_act(self):
@@ -1770,14 +1761,14 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         if self.dimensionDefaultCheckbox.isChecked():
             self.dimensionSlider.setEnabled(False)
             self.dimensionText.setText("DEFAULT")
-            dimension = None
-            dimension0 = None
+            config['dimension'] = None
+            
 
         else:
             self.dimensionSlider.setEnabled(True)
-            dimension = int(self.dimensionSlider.value())
-            dimension0 = int(self.dimensionSlider.value())
-            self.dimensionText.setText(str(dimension) + "px")
+            config['dimension'] = int(self.dimensionSlider.value())
+            dimensionSlider.value(config['dimension'])
+            self.dimensionText.setText(str(config['dimension']) + "px")
 
         # check if the defaultDimension is checked or not for giving signal
         self.progressBar.setValue(20)
@@ -1791,11 +1782,11 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         """
 
         # process dimension
-        if dimension is None:
+        if config['dimension'] is None:
             self.options = " "
             pass
-        elif dimension is not None:
-            self.options = " -m " + str(dimension)
+        elif config['dimension'] is not None:
+            self.options = " -m " + str(config['dimension'])
         else:
             self.options = ""
 
@@ -1805,9 +1796,9 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             self.options += " --always-on-top"
         if self.fullscreen.isChecked():
             self.options += " -f"
-            fullscreen0 = True
+            config['fullscreen'] = True
         else:
-            fullscreen0 = False
+            config['fullscreen'] = False
         """
         if self.keepdisplayRO.isChecked():
             self.options += " --no-control"
@@ -1815,14 +1806,14 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         self.progressBar.setValue(30)
         if self.showTouches.isChecked():
             self.options += " --show-touches"
-            swtouches0 = True
+            config['swtouches'] = True
 
             """        if self.keepdisplayRO.isChecked():
             self.options += " --turn-screen-off"
             """
 
         else:
-            swtouches0 = False
+            config['swtouches'] = False
         if self.recScui.isChecked():
             self.options += " -r " + str(int(time.time())) + ".mp4 "
 
@@ -1831,16 +1822,16 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             """
         if self.displayForceOn.isChecked():
             self.options += " -S"
-            dispRO0 = True
+            config['dispRO'] = True
             """        if self.keepdisplayRO.isChecked():
             self.options += " --turn-screen-off"
             """
 
         else:
-            dispRO0 = False
+            config['dispRO'] = False
 
         self.options += " -b " + str(int(self.dial.value())) + "K"
-        bitrate0 = str(int(self.dial.value()))
+        config['bitrate'] = str(int(self.dial.value()))
         self.progressBar.setValue(40)
 
         # implies program not idle
@@ -1884,13 +1875,19 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         print("LOG: SCRCPY is launched in", eta, "seconds")
         self.progressBar.setValue(100)
 
-        # self.terminal.setText(full)
+        with open(cfgpath+jsonf, 'w') as f:
+            json.dump(config,f)
+        print("LOG: Configuration file at ", cfgpath+jsonf, ".")
+    
+        
+        """
         if platform.system() == "Windows":
             cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "w+")
         elif platform.system() == "Linux":
             cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "w+")
         else:
             cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "w+")
+        
         # print("writing: #" * 25 + "\n", "Created by Srevin Saju\n", "#" * 25 + "\n", str(time.time()) + "\n",
         #                str(bitrate0) + "\n", str(dimension0) + "\n", str(swtouches0) + "\n",
         #                str(fullscreen0) + "\n" + str(dispRO0) + "\n")
@@ -1908,10 +1905,10 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         )
 
         cfg.close()
-        """
-        p5 = multiprocessing.Process(target=update_terminal)
-        p5.start()
-        p5.join()
+        
+        #p5 = multiprocessing.Process(target=update_terminal)
+        #p5.start()
+        #p5.join()
         """
         if self.notifChecker.isChecked():
             print("LOG: Launching notification auditor")

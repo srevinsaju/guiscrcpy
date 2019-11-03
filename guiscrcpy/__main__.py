@@ -311,7 +311,7 @@ else:
 def invokeScrcpy():
     optPass = ""
     
-    optPass+= " -b " + config['bitrate']
+    optPass+= " -b " + str(config['bitrate'])
     if(config['fullscreen']):
         optPass += " -f "
     if(config['swtouches']):
@@ -1584,7 +1584,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             config['dispRO'],
             config['fullscreen'],
         )
-        self.dial.setValue(config['bitrate'])
+        self.dial.setValue(int(config['bitrate']))
         if config['swtouches']:
             self.showTouches.setChecked(True)
         else:
@@ -1831,7 +1831,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             config['dispRO'] = False
 
         self.options += " -b " + str(int(self.dial.value())) + "K"
-        config['bitrate'] = str(int(self.dial.value()))
+        config['bitrate'] = int(self.dial.value())
         self.progressBar.setValue(40)
 
         # implies program not idle

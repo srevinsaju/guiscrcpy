@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Prelaunch
-from PyQt5.QtWidgets import QDesktopWidget, QMainWindow
+from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox
 import qdarkstyle
 from PyQt5.QtCore import *
@@ -27,17 +27,24 @@ try:
         print("LOG: Extracting version number from pip")
         try:
             import pkg_resources
-            __version__ = pkg_resources.get_distribution("guiscrcpy").version
+            __version__ = pkg_resources.get_distribution(
+                "guiscrcpy").version
         except BaseException:
-            print("LOG: guiscrcpy not installed as pip package. Version retrieve failed.")
+            print("LOG: guiscrcpy not installed as pip package." +
+                  "Version retrieve failed.")
 except ModuleNotFoundError:
-    print("ERR: gitpython is not found. It is not a dependency, but you can optionally install it with python3 -m pip install gitpython")
+    print(
+        "ERR: gitpython is not found. It is not a dependency,"
+        " but you can optionally install it "
+        "with python3 -m pip install gitpython"
+        )
 if sha:
     build = __version__ + " by srevinsaju"
 else:
     build = __version__ + " by srevinsaju"
+    
+    
 # Argument parser
-
 parser = argparse.ArgumentParser()
 parser.add_argument('-i', '--install', action='store_true',
                     help="Install guiscrcpy system wide on Linux")
@@ -48,14 +55,12 @@ parser.add_argument(
     '--version',
     action='store_true',
     help="Display guiscrcpy version")
-#parser.add_argument('-b', '--bar-value', default=3.14)
+
+# parser.add_argument('-b', '--bar-value', default=3.14)
+
 args = parser.parse_args()
 print("LOG: Received flag", args.start)
 
-
-run4pip = False
-
-# print("__FILE__", str(__file__))
 if str(__file__)[0] == ".":
     print("__FILE__", str(__file__))
     filename = str(__file__)[2:]
@@ -66,7 +71,7 @@ elif str(__file__)[0] == "/":
     filename = str(__file__)[: -len("__main__.py")]
     print("FILENAME: ", filename)
     os.chdir(filename)
-    # sp.Popen("python3 -m pip install PyQt5 psutil qdarkstyle", shell=True, stdout=sp.PIPE)
+
 
 else:
     filename = str(__file__)
@@ -78,10 +83,12 @@ GUISCRCPY by srevinsaju
 Get it on : https://github.com/sevinsaju/guiscrcpy
 Licensed under GNU Public License
 
-Icon made by Dave Gandy from www.flaticon.com used under Creative Commons 3.0 Unported.
-The original SVG black work by Dave Gandy has ben re-oriented, flipped or color-changed.
-The rest of Terms and Conditions put formward by CC-3.0:Unported has been feverently followed
-by the debeloper. Icons have been adapeted in all the three windows.
+Icon made by Dave Gandy from www.flaticon.com used under
+Creative Commons 3.0 Unported. The original SVG black work
+by Dave Gandy has ben re-oriented, flipped or color-changed.
+The rest of Terms and Conditions put formward by
+CC-3.0:Unported has been feverently followed by the developer.
+Icons have been adapeted in all the three windows.
 
 Icons pack obtained from www.flaticon.com
 All rights reserved.
@@ -118,13 +125,22 @@ if not sha:
 else:
     commit1 = __version__ + " commit" + sha
 
-print(bcolors.UNDERLINE + "                                  " + bcolors.ENDC)
+print(
+    bcolors.UNDERLINE +
+    "                                  " +
+    bcolors.ENDC)
 print()
 print("guiscrcpy")
 print("by srevinsaju")
 print(bcolors.OKBLUE + commit1 + bcolors.ENDC)
-print(bcolors.OKBLUE + "Licensed under GNU GPL v3 (c) 2019  " + bcolors.ENDC)
-print(bcolors.UNDERLINE + "                                  " + bcolors.ENDC)
+print(
+    bcolors.OKBLUE +
+    "Licensed under GNU GPL v3 (c) 2019  " +
+    bcolors.ENDC)
+print(
+    bcolors.UNDERLINE +
+    "                                  " +
+    bcolors.ENDC)
 print(bcolors.OKBLUE + "" + bcolors.ENDC)
 
 # chk version argument given or not
@@ -232,7 +248,8 @@ except FileNotFoundError:
     else:
         print(
             bcolors.FAIL,
-            " MacOS :: Untested OS detected. Continuing >>> " + bcolors.ENDC,
+            " MacOS :: Untested OS detected. Continuing >>> " +
+            bcolors.ENDC,
         )
         pass
 
@@ -295,7 +312,8 @@ if platform.system() == "Windows":
         )
         print(
             bcolors.BOLD +
-            "LOG: Fallback to system PATH variable. Please add scrcpy to path." +
+            "LOG: Fallback to system PATH variable."+
+            "Please add scrcpy to path." +
             bcolors.ENDC)
         increment = ""
 
@@ -303,16 +321,20 @@ if platform.system() == "Windows":
 else:
     if not fileExist:
         print(
-            "LOG: One time checking for scrcpy executable. (Use RESET for rechecking)"
+            "LOG: One time checking for scrcpy executable." +
+            "(Use RESET for rechecking)"
         )
         increment = ""
-        scrcpy_checker = po("scrcpy -v", stdout=PIPE, stderr=PIPE, shell=True)
+        scrcpy_checker = po(
+            "scrcpy -v",
+            stdout=PIPE,
+            stderr=PIPE,
+            shell=True)
         if scrcpy_checker.stderr.read().decode("utf-8").find("not found") != -1:
             print(
-                bcolors.FAIL
-                + " Failed to find scrcpy on path. 'Start Scrcpy' may not work"
-                + bcolors.ENDC
-            )
+                bcolors.FAIL +
+                " Failed to find scrcpy on path. 'Start Scrcpy' may not work" +
+                bcolors.ENDC)
         else:
             print(
                 "LOG: Scrcpy found " +
@@ -322,7 +344,9 @@ else:
         increment = ""
 
 
-# ===================
+# ***************************
+# BEGIN ENGIN CODE
+# ***************************
 
 def invokeScrcpy():
     optPass = ""
@@ -342,7 +366,7 @@ def invokeScrcpy():
         stderr=STDOUT,
     )
     print("LOG: ", backup0r.stdout)
-    
+
 # ******************************
 
 
@@ -409,12 +433,13 @@ def clipd2pc():
         scrcpywindow.focus()
         auto.hotkey("ctrl", "c")
     except NameError:
-        os.system("wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+c")
+        os.system(
+            "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+c")
 
 
 def power():
     print("LOG: Passing POWER")
-    adb_power = po(
+    po(
         increment +
         "adb shell input keyevent 26",
         shell=True,
@@ -573,7 +598,8 @@ def fullscreen():
         scrcpywindow.focus()
         auto.hotkey("ctrl", "f")
     except NameError:
-        os.system("wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+f")
+        os.system(
+            "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+f")
 
 
 class MyAppv(QMainWindow):
@@ -963,7 +989,8 @@ class MyAppv(QMainWindow):
         self.notif_pull.setToolTip(_translate(
             "self", "Expand notification panel"))
         self.powerUI.setToolTip(_translate("self", "Power on/off"))
-        self.pinchinUI.setToolTip(_translate("self", "Pinch in the screen"))
+        self.pinchinUI.setToolTip(
+            _translate("self", "Pinch in the screen"))
         self.clipD2PC.setToolTip(
             _translate(
                 "self",
@@ -1749,8 +1776,10 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             self.dimensionSlider.setEnabled(True)
             config['dimension'] = int(self.dimensionSlider.value())
 
-            self.dimensionText.setText(" " + str(config['dimension']) + "px")
-            self.dimensionSlider.sliderMoved.connect(self.slider_text_refresh)
+            self.dimensionText.setText(
+                " " + str(config['dimension']) + "px")
+            self.dimensionSlider.sliderMoved.connect(
+                self.slider_text_refresh)
             self.dimensionSlider.sliderReleased.connect(
                 self.slider_text_refresh)
 
@@ -1793,7 +1822,8 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             return 0
 
         if det[1].find("device") > -1:
-            self.runningNot.setText("DEVICE " + str(det[0]) + " IS CONNECTED")
+            self.runningNot.setText(
+                "DEVICE " + str(det[0]) + " IS CONNECTED")
             self.progressBar.setValue(10)
 
         elif det[1][:-1] == "unauthorized":
@@ -2026,7 +2056,8 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
                             stdout=PIPE,
                             shell=True,
                         )
-                    image = Image.new("RGBA", (128, 128), (255, 255, 255, 255))
+                    image = Image.new(
+                        "RGBA", (128, 128), (255, 255, 255, 255))
                     # loop this block --->
                     var1 = notif.stdout.readlines()
 

@@ -4,6 +4,7 @@ from os import path
 import git
 from pyshortcuts import make_shortcut
 import platform
+from shutil import copyfile
 repo = git.Repo(search_parent_directories=True)
 sha = repo.head.object.hexsha
 
@@ -29,7 +30,7 @@ setup(
                  },
     include_package_data = True,
     install_requires=['PyQt5','psutil','qdarkstyle'],
-    scripts = ["guiscrcpy/guiscrcpy"],
+    scripts = ["guiscrcpy/guiscrcpy", "guiscrcpy/guiscrcpy.mapper"],
     classifiers = ['Operating System :: OS Independent',
             
             'Programming Language :: Python :: 3.6',
@@ -48,23 +49,20 @@ print("CREATING SHORTCUTS...")
 print("thanks to pyshortcuts by @newvile shortcuts for pip packages are easier than ever")
 
 if platform.platform()=="Windows":
-    cfgpath = os.path.expanduser("~/AppData/Local/guiscrcpy")
+    cfgpath = os.path.expanduser("~/AppData/Local/guiscrcpy/")
 else:
-    cfgpath = os.path.expanduser("~/AppData/Local/guiscrcpy")
-    
+    cfgpath = os.path.expanduser("~/.config/guiscrcpy/")
 
-import guiscrcpy
-patz = list(guiscrcpy.__path__)[0]
-print("PATH", patz)
-make_shortcut(
+def last_i():
     
-    script=os.path.expanduser("~/.local/bin/guiscrcpy"),
-    name="guiscrcpy",
-    
-    description="Open Source GUI based Android Screen Mirroring System",
-    icon=os.path.expanduser(patz)+"/ui/guiscrcpy_logo.svg",
-    desktop=True,
-    startmenu=True,
-    executable=None
-    
-)
+    copyfile("./guiscrcpy/icons/guiscrcpy_logo_SRj_icon.ico", cfgpath+"logo.ico")    
+    make_shortcut(
+        script=os.path.expanduser("~/.local/bin/guiscrcpy"),
+        name="guiscrcpy",
+        description="Open Source GUI based Android Screen Mirroring System",
+        icon=cfgpath + "logo.ico",
+        desktop=True,
+        startmenu=True,
+        executable=None,
+    )
+last_i()

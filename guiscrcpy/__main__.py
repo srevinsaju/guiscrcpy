@@ -1739,10 +1739,35 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         self.usbaud.clicked.connect(self.usbaudi)
         self.mapnow.clicked.connect(self.mapp)
     
+    
     def mapp(self):
-        print("Launching mapper")
+        if(os.path.exists(cfgpath + "guiscrcpy.mapper.py")):
+            import guiscrcpy.mapper
+        else:
+            print("guiscrcpy ~ mapper is not initialized. Initialize by running $ guiscrcpy.mapper")
+
+            
+    def fin(self):
+        result = []
+        try:
+            from guiscrcpy import __path__ as xz
+            str1 = xz
+            print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", str1)
+        except:
+            str1 = []
+        for path in os.getenv('PATH').split(":")+str1:
+            print("PATH:", path)
+            for files in os.listdir(path):
+                print("FILE: ", files)
+                if "mapper.py" in files:
+                    result.append(os.path.join(path, "mapper.py"))
+                    break
+            else:
+                print("Mapper.py not found")
+                
+        return result
         
-        from guiscrcpy import mapper
+        
         
     def usbaudi(self):
         print("LOG: Called usbaudio")
@@ -2118,36 +2143,6 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             json.dump(config, f)
         print("LOG: Configuration file at ", cfgpath + jsonf, ".")
 
-        """
-        if platform.system() == "Windows":
-            cfg = open(os.path.expanduser("~/AppData/Local/guiscrcpy.cfg"), "w+")
-        elif platform.system() == "Linux":
-            cfg = open(os.path.expanduser("~/.config/guiscrcpy.cfg"), "w+")
-        else:
-            cfg = open(os.path.expanduser("~/guiscrcpy.cfg"), "w+")
-
-        # print("writing: #" * 25 + "\n", "Created by Srevin Saju\n", "#" * 25 + "\n", str(time.time()) + "\n",
-        #                str(bitrate0) + "\n", str(dimension0) + "\n", str(swtouches0) + "\n",
-        #                str(fullscreen0) + "\n" + str(dispRO0) + "\n")
-        cfg.writelines(
-            (
-                "#" * 25 + "\n",
-                "Created by Srevin Saju\n",
-                "#" * 25 + "\n",
-                str(time.time()) + "\n",
-                str(bitrate0) + "\n",
-                str(dimension0) + "\n",
-                str(swtouches0) + "\n",
-                str(fullscreen0) + "\n" + str(dispRO0) + "\n",
-            )
-        )
-
-        cfg.close()
-
-        #p5 = multiprocessing.Process(target=update_terminal)
-        #p5.start()
-        #p5.join()
-        """
         if self.notifChecker.isChecked():
             print("LOG: Launching notification auditor")
             # ------------
@@ -2278,11 +2273,8 @@ def launch_main0():
 
 if __name__ == "__main__":
     try:
+        import guiscrcpy
         patz = list(guiscrcpy.__path__)[0]
-        import re
-        import sys
-
-
         sys.path.append(patz)
         sys.path.append('')
     except ModuleNotFoundError:

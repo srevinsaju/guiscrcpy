@@ -29,11 +29,7 @@ setup(
                  },
     include_package_data = True,
     install_requires=['PyQt5','psutil','qdarkstyle'],
-    """entry_points = {
-        'console_scripts': [
-            'guiscrcpy=guiscrcpy.__main__:launch_main']
-            },"""
-    scripts = ["guiscrcpy"],
+    scripts = ["guiscrcpy/guiscrcpy"],
     classifiers = ['Operating System :: OS Independent',
             
             'Programming Language :: Python :: 3.6',
@@ -45,6 +41,10 @@ setup(
 
 
 print("CREATING SHORTCUTS...")
+"""entry_points = {
+        'console_scripts': [
+            'guiscrcpy=guiscrcpy.__main__:launch_main']
+            },"""
 print("thanks to pyshortcuts by @newvile shortcuts for pip packages are easier than ever")
 
 if platform.platform()=="Windows":
@@ -54,7 +54,7 @@ else:
 
 make_shortcut(
     
-    script=,
+    script=os.path.expanduser("~/.local/bin/guiscrcpy"),
     name="guiscrcpy",
     
     description="Open Source GUI based Android Screen Mirroring System",

@@ -2273,6 +2273,10 @@ if __name__ == "__main__":
 
 
 def launch_main():
+    import guiscrcpy
+    patz1 = list(guiscrcpy.__path__)[0]
+    sys.path.append(patz1)
+    # print("SYS.path ==", sys.path)
     if(platform.system() == "Windows"):
         pythonexec = "python"
     else:

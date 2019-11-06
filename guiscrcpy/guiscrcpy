@@ -1,8 +1,17 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+import guiscrcpy
+patz = list(guiscrcpy.__path__)[0]
 import re
 import sys
 
-from guiscrcpy.__main__ import launch_main
-sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
-sys.exit(launch_main())
+
+sys.path.append(patz)
+sys.path.append('')
+# print("PATH: ", sys.path)
+from guiscrcpy import __main__
+
+import os
+os.chdir(patz)
+
+__main__.launch_main()

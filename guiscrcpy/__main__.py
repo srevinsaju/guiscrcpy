@@ -1752,7 +1752,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             from guiscrcpy import mapper
             mapper.file_check()
         else:
-            print("guiscrcpy ~ mapper is not initialized. Initialize by running $ guiscrcpy.mapper")
+            print("guiscrcpy ~ mapper is not initialized. Initialize by running","$ guiscrcpy-mapper", "reset points by", "$ guiscrcpy-mapper -r", sep="\n")
 
             
     def fin(self):

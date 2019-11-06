@@ -54,19 +54,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--delay', default=10, help="Set time to delay before screen is captured")
 parser.add_argument('-r', '--reset', action="store_true", help="Remove prefernces")
 args = parser.parse_args()
-if (args.reset):
-    os.remove(cfgpath+"guiscrcpy.mapper.json")
-    print("FILE RESET")
 
-    sys.exit()
-
-
-
-print("WAITING FOR ", args.delay, "s")
-time.sleep(args.delay)
-
-
-print("waiting for  seconds")
 adb_dim = po(
             "adb shell wm size", shell=True, stdout=PIPE, stderr=PIPE
         )
@@ -262,6 +250,7 @@ def listen_keypress(key_a):
 
 def sth():
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     window = MapperUI()
     
@@ -299,7 +288,7 @@ def file_check():
                 platform.release(),
                 platform.version(),
             )
-        
+
     if not fileExist:
 
         # Init json file for first time use
@@ -313,7 +302,7 @@ def file_check():
             key_a = json.load(f)
         print('KEY:A', key_a)
         listen_keypress(key_a)
-        
+
 
 def file_checkm():
     try:
@@ -327,6 +316,13 @@ def file_checkm():
             json.dump(key_a, f)
         print("LOG: Key:Pos JSON Configuration file created in ", cfgpath, " directory")
         fileExist = False
+        if (args.reset):
+            os.remove(cfgpath+"guiscrcpy.mapper.json")
+            print("FILE RESET")
+            sys.exit()
+        print("WAITING FOR ", args.delay, "s")
+        time.sleep(args.delay)
+
         if platform.system() == "Windows":
             print(
                 "LOG: Detected a Windows Operating System :: ",

@@ -30,7 +30,7 @@ setup(
                  },
     include_package_data = True,
     install_requires=['PyQt5','psutil','qdarkstyle'],
-    scripts = ["guiscrcpy/guiscrcpy", "guiscrcpy/guiscrcpy.mapper"],
+    scripts = ["guiscrcpy/guiscrcpy", "guiscrcpy/guiscrcpy-mapper"],
     classifiers = ['Operating System :: OS Independent',
             
             'Programming Language :: Python :: 3.6',
@@ -55,7 +55,7 @@ else:
 
 def last_i():
     
-    copyfile("./guiscrcpy/icons/guiscrcpy_logo_SRj_icon.ico", cfgpath+"logo.ico")    
+    copyfile("./guiscrcpy/icons/guiscrcpy_logo_SRj_icon.ico", cfgpath+"logo.ico") 
     make_shortcut(
         script=os.path.expanduser("~/.local/bin/guiscrcpy"),
         name="guiscrcpy",
@@ -65,4 +65,6 @@ def last_i():
         startmenu=True,
         executable=None,
     )
+
+            
 last_i()

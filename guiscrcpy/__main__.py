@@ -1727,6 +1727,13 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
 
         # MAIN EXECUTE ACTION
         self.executeaction.clicked.connect(self.start_act)
+        try:
+            if config['extra']:
+                self.flaglineedit.setText(config['extra'])
+            else:
+                pass
+        except:
+            pass
 
         self.quit.clicked.connect(self.quitAct)
         self.dimensionText.setText("DEFAULT")
@@ -1741,8 +1748,9 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
     
     
     def mapp(self):
-        if(os.path.exists(cfgpath + "guiscrcpy.mapper.py")):
-            import guiscrcpy.mapper
+        if(os.path.exists(cfgpath + "guiscrcpy.mapper.json")):
+            from guiscrcpy import mapper
+            mapper.file_check()
         else:
             print("guiscrcpy ~ mapper is not initialized. Initialize by running $ guiscrcpy.mapper")
 
@@ -2125,15 +2133,13 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         
         # run scrcpy usng subprocess
         backup = po(
-            increment + "scrcpy " + str(self.options) + str(config['extra']),
+            increment + "scrcpy " + str(self.options) + " " +  str(config['extra']),
             shell=True,
             stdin=PIPE,
             stdout=PIPE,
             stderr=STDOUT,
         )
-
-        # StartScrcpy(options=self.options)
-
+        # StartScrcpy(options=self.options
         timef = time.time()
         eta = timef - timei
         print("LOG: SCRCPY is launched in", eta, "seconds")

@@ -6,7 +6,7 @@
 GitPython == 3.0.4
 
 # guiscrcpy/__main__.py: 2158
-Pillow == 6.1.0
+Pillow==6.2.1
 
 # guiscrcpy/__main__.py: 25,26,38,39
 # guiscrcpy/breeze_resources.py: 9

@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import argparse
+import os
+import sys
+import platform
+parser = argparse.ArgumentParser()
+parser.add_argument('-r', '--reset', action="store_true", help="Remove prefernces")
+args = parser.parse_args()
+if (platform.system() == 'Windows'):
+    cfgpath = os.path.expanduser("~/AppData/Local/guiscrcpy/")
+else:
+    if (os.getenv('XDG_CONFIG_HOME') is None):
+        cfgpath = os.path.expanduser("~/.config/guiscrcpy/")
+    else:
+        cfgpath = os.getenv('XDG_CONFIG_HOME').split(":")[0] + "/guiscrcpy/"
+
+if (args.reset):
+    os.remove(cfgpath+"guiscrcpy.mapper.json")
+    print("FILE RESET")
+
+    sys.exit()
+
+
+
+import guiscrcpy
+patz = list(guiscrcpy.__path__)[0]
+import re
+import sys
+
+
+
+sys.path.append(patz)
+sys.path.append('')
+# print("PATH: ", sys.path)
+from guiscrcpy import mapper
+mapper.file_check()
+import os
+os.chdir(patz)

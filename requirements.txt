@@ -51,4 +51,4 @@ qt-backport == 0.1.3
 
 # guiscrcpy/__main__.py: 53
 # setup.py: 1
-setuptools == 41.1.0
+setuptools==41.6.0

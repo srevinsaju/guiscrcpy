@@ -49,12 +49,12 @@ except:
 jsonf = 'guiscrcpy.mapper.json'
 # Declare key_a. path position
 if (platform.system() == 'Windows'):
-    cfgpath = os.path.expanduser("~/AppData/Local/")
+    cfgpath = os.path.expanduser("~/AppData/Local/guiscrcpy/")
 else:
     if (os.getenv('XDG_CONFIG_HOME') is None):
-        cfgpath = os.path.expanduser("~/.config/")
+        cfgpath = os.path.expanduser("~/.config/guiscrcpy/")
     else:
-        cfgpath = os.getenv('XDG_CONFIG_HOME').split(":")[0]
+        cfgpath = os.getenv('XDG_CONFIG_HOME').split(":")[0] + "/guiscrcpy/"
 
 class Window(QtWidgets.QWidget):
     def __init__(self):

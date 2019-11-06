@@ -48,17 +48,21 @@ print("CREATING SHORTCUTS...")
 print("thanks to pyshortcuts by @newvile shortcuts for pip packages are easier than ever")
 
 if platform.platform()=="Windows":
-    cfgpath = os.path.expanduser("~/AppData/Local/")
+    cfgpath = os.path.expanduser("~/AppData/Local/guiscrcpy")
 else:
-    cfgpath = os.path.expanduser("~/AppData/Local/")
+    cfgpath = os.path.expanduser("~/AppData/Local/guiscrcpy")
+    
 
+import guiscrcpy
+patz = list(guiscrcpy.__path__)[0]
+print("PATH", patz)
 make_shortcut(
     
     script=os.path.expanduser("~/.local/bin/guiscrcpy"),
     name="guiscrcpy",
     
     description="Open Source GUI based Android Screen Mirroring System",
-    icon="guiscrcpy/ui/guiscrcpy_logo.svg",
+    icon=os.path.expanduser(patz)+"/ui/guiscrcpy_logo.svg",
     desktop=True,
     startmenu=True,
     executable=None

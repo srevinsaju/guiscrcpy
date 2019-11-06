@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>385</height>
+    <height>420</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>385</height>
+    <height>420</height>
    </size>
   </property>
   <property name="font">
@@ -57,7 +57,7 @@ border-radius: 10px;
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 152, 255));
 color: rgb(0, 0, 0);
                         }
-QPushButton:hover {
+.QPushButton:hover {
 border-radius: 10px;
 					  
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 199, 199, 255), stop:1 rgba(0, 190, 113, 255));
@@ -81,7 +81,7 @@ border-radius: 10px;
 
                         
                     }
-QPushButton#usbaud{
+.QPushButton#usbaud{
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 0, 255, 255), stop:0.901961 rgba(152, 0, 255, 255));
 color: rgb(0, 0, 0);
 border-radius: 10px;
@@ -96,6 +96,21 @@ border-radius: 10px;
 
                         
                     }
+.QPushButton#mapnow{
+background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(253, 0, 255, 255), stop:0.990196 rgba(88, 0, 255, 255));
+color: rgb(0, 0, 0);
+border-radius: 10px;
+
+                        
+                    }
+.QPushButton#mapnow{
+background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(199, 0, 255, 255), stop:0.990196 rgba(88, 0, 255, 255));
+color: rgb(0, 0, 0);
+border-radius: 10px;
+
+                        
+                    }
+
 </string>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
@@ -689,6 +704,18 @@ image: url(:/res/ui/guiscrcpy_logo.png);</string>
         </layout>
        </item>
        <item>
+        <widget class="QLineEdit" name="flaglineedit">
+         <property name="font">
+          <font>
+           <family>Courier 10 Pitch</family>
+          </font>
+         </property>
+         <property name="placeholderText">
+          <string extracomment="Enter additional flags to pass to scrcpy">Enter additional flags to pass to scrcpy</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="spacing">
           <number>5</number>
@@ -837,6 +864,38 @@ image: url(:/res/ui/guiscrcpy_logo.png);</string>
            <property name="icon">
             <iconset resource="rsrc.qrc">
              <normaloff>:/icons/icons/volume-up-interface-symbol.svg</normaloff>:/icons/icons/volume-up-interface-symbol.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="mapnow">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+             <horstretch>11</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>33</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Device Point to Key mapping launcher. Click to register keys for the first time. For the subsequent launches, the button will start key listeners</string>
+           </property>
+           <property name="toolTipDuration">
+            <number>3</number>
+           </property>
+           <property name="statusTip">
+            <string>Device Point to Key mapping launcher. Click to register keys for the first time. For the subsequent launches, the button will start key listeners</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/four-black-squares.svg</normaloff>:/icons/icons/four-black-squares.svg</iconset>
            </property>
           </widget>
          </item>

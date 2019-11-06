@@ -1,4 +1,22 @@
 #!/usr/bin/env python3
+
+"""
+GUISCRCPY by srevinsaju
+Get it on : https://github.com/sevinsaju/guiscrcpy
+Licensed under GNU Public License
+
+Icon made by Dave Gandy from www.flaticon.com used under
+Creative Commons 3.0 Unported. The original SVG black work
+by Dave Gandy has ben re-oriented, flipped or color-changed.
+The rest of Terms and Conditions put formward by
+CC-3.0:Unported has been feverently followed by the developer.
+Icons have been adapeted in all the three windows.
+
+Icons pack obtained from www.flaticon.com
+All rights reserved.
+
+"""
+
 # Prelaunch
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox
@@ -49,8 +67,7 @@ if sha:
     build = __version__ + " by srevinsaju"
 else:
     build = __version__ + " by srevinsaju"
-    
-    
+
 # Argument parser
 parser = argparse.ArgumentParser()
 parser.add_argument('-i', '--install', action='store_true',
@@ -85,22 +102,7 @@ else:
     os.chdir(str(os.path.abspath(__file__))[: -len(filename)])
 
 
-"""
-GUISCRCPY by srevinsaju
-Get it on : https://github.com/sevinsaju/guiscrcpy
-Licensed under GNU Public License
 
-Icon made by Dave Gandy from www.flaticon.com used under
-Creative Commons 3.0 Unported. The original SVG black work
-by Dave Gandy has ben re-oriented, flipped or color-changed.
-The rest of Terms and Conditions put formward by
-CC-3.0:Unported has been feverently followed by the developer.
-Icons have been adapeted in all the three windows.
-
-Icons pack obtained from www.flaticon.com
-All rights reserved.
-
-"""
 
 
 class bcolors:
@@ -212,12 +214,13 @@ dispRO0 = "False"
 jsonf = 'guiscrcpy.json'
 # Declare Config path position
 if (platform.system() == 'Windows'):
-    cfgpath = os.path.expanduser("~/AppData/Local/")
+    cfgpath = os.path.expanduser("~/AppData/Local/guiscrcpy/")
 else:
     if (os.getenv('XDG_CONFIG_HOME') is None):
-        cfgpath = os.path.expanduser("~/.config/")
+        cfgpath = os.path.expanduser("~/.config/guiscrcpy/")
     else:
-        cfgpath = os.getenv('XDG_CONFIG_HOME').split(":")[0]
+        cfgpath = os.getenv('XDG_CONFIG_HOME').split(":")[0]+"/guiscrcpy"
+        
 
 try:
     with open(cfgpath + jsonf, 'r') as f:
@@ -228,6 +231,10 @@ try:
 except FileNotFoundError:
 
     print("LOG: Initializing guiscrcpy for first time use...")
+    try:
+        os.makedirs(cfgpath)
+    except FileExistsError:
+        print("LOG: Folder guiscrcpy aldready exists.")
     with open(cfgpath + jsonf, 'w') as f:
         json.dump(config, f)
 
@@ -1730,7 +1737,13 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         self.abtme.clicked.connect(self.openme)
         self.abtgit.clicked.connect(self.opengit)
         self.usbaud.clicked.connect(self.usbaudi)
-
+        self.mapnow.clicked.connect(self.mapp)
+    
+    def mapp(self):
+        print("Launching mapper")
+        
+        from guiscrcpy import mapper
+        
     def usbaudi(self):
         print("LOG: Called usbaudio")
         runnow = po("usbaudio", shell=True, stdout=PIPE, stderr=PIPE)
@@ -2065,17 +2078,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         config['bitrate'] = int(self.dial.value())
         self.progressBar.setValue(40)
 
-        # implies program not idle
 
-        """
-        if(value == 91):
-            print("DEVICE NOT DETECTED [ERROR]")
-            self.runningNot.setText("DEVICE NOT DETECTED")
-        else:
-            print("DEVICE DETECTED")
-            self.runningNot.setText("SCRCPY CONNECTED")
-        """
-        # TODO
 
         # self.myLine = startScrcpy(self.options)
         # self.connect(self.myLine, SIGNAL("update_terminal(QString)"), self.update_terminal)
@@ -2091,8 +2094,13 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         """
         print("LOG: Flags passed to scrcpy engine : " + self.options)
         self.progressBar.setValue(75)
+        
+        # get additional flags from QLineEdit self.flaglineedit
+        config['extra']= self.flaglineedit.text()
+        
+        # run scrcpy usng subprocess
         backup = po(
-            increment + "scrcpy " + str(self.options),
+            increment + "scrcpy " + str(self.options) + str(config['extra']),
             shell=True,
             stdin=PIPE,
             stdout=PIPE,
@@ -2269,7 +2277,20 @@ def launch_main0():
 
 
 if __name__ == "__main__":
+    try:
+        patz = list(guiscrcpy.__path__)[0]
+        import re
+        import sys
+
+
+        sys.path.append(patz)
+        sys.path.append('')
+    except ModuleNotFoundError:
+        pass
+    sys.path.append('')
+
     launch_main0()
+    
 
 
 def launch_main():

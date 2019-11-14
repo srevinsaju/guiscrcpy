@@ -3,7 +3,7 @@
 
 # guiscrcpy/__main__.py: 44
 # setup.py: 4
-GitPython == 3.0.4
+GitPython==3.0.5
 
 # guiscrcpy/__main__.py: 2158
 # Pillow == 6.2.1

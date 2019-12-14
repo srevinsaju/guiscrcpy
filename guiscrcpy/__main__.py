@@ -603,7 +603,7 @@ def clippc2d():
 
 def fullscreen():
     print(
-        bcolor.FAIL +
+        bcolors.FAIL +
         " Fullscreen button is not currently supported on Binary due to safety reasons" +
         bcolors.ENDC)
     print("If you are in")
@@ -2044,7 +2044,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         else:
             self.dimensionSlider.setEnabled(True)
             config['dimension'] = int(self.dimensionSlider.value())
-            dimensionSlider.value(config['dimension'])
+            self.dimensionSlider.setValue(config['dimension'])
             self.dimensionText.setText(str(config['dimension']) + "px")
 
         # check if the defaultDimension is checked or not for giving signal
@@ -2306,3 +2306,4 @@ def launch_main():
     #a= po(pythonexec + " ."+ar, shell=True, stdout=PIPE)
     launch_main0()
     print(a.stdout)
+

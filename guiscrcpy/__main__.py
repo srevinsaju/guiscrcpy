@@ -169,10 +169,6 @@ print(
 # print('LOG: __file__ name             >> ', str(__file__))
 # print("LOG: os.path Absolute Path     >> ", os.path.abspath(__file__))
 print("LOG: Current Working Directory", os.getcwd())
-print(
-    "LOG: Script       Path         >> ",
-    str(os.path.abspath(__file__))[: -len(filename)],
-)
 
 print("")
 
@@ -376,11 +372,11 @@ print("LOG: Importing modules...")
 
 
 try:
-    from mainui import Ui_MainWindow
+    from .mainui import Ui_MainWindow
 except (ModuleNotFoundError, ImportError):
     try:
-
-        from guiscrcpy import Ui_MainWindow
+    
+        from guiscrcpy.mainui import Ui_MainWindow
 
         print("LOG: Safe submodule import of mainui")
     except Exception as e:

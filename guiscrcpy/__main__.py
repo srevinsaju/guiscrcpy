@@ -85,24 +85,7 @@ parser.add_argument(
 args = parser.parse_args()
 print("LOG: Received flag", args.start)
 
-if str(__file__)[0] == ".":
-    print("__FILE__", str(__file__))
-    filename = str(__file__)[2:]
-    print("fllename:", filename)
-    os.chdir(str(os.path.abspath(__file__))[: -len(filename)])
-
-elif str(__file__)[0] == "/":
-    filename = str(__file__)[: -len("__main__.py")]
-    print("FILENAME: ", filename)
-    os.chdir(filename)
-
-
-else:
-    filename = str(__file__)
-    os.chdir(str(os.path.abspath(__file__))[: -len(filename)])
-
-
-
+os.chdir(os.path.dirname(__file__))
 
 
 class bcolors:

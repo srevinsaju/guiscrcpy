@@ -42,11 +42,12 @@ setup(
 )
 
 
-print("CREATING SHORTCUTS...")
-"""entry_points = {
-        'console_scripts': [
-            'guiscrcpy=guiscrcpy.__main__:launch_main']
-            },"""
+#print("CREATING SHORTCUTS...")
+#"""entry_points = {
+#        'console_scripts': [
+#            'guiscrcpy=guiscrcpy.__main__:launch_main']
+#
+"""
 print("thanks to pyshortcuts by @newvile shortcuts for pip packages are easier than ever")
 
 if platform.platform()=="Windows":
@@ -54,8 +55,8 @@ if platform.platform()=="Windows":
 else:
     cfgpath = os.path.expanduser("~/.config/guiscrcpy/")
 
-def last_i():
-    
+#def last_i():
+#    
     copyfile("./guiscrcpy/icons/guiscrcpy_logo_SRj_icon.ico", cfgpath+"logo.ico") 
     make_shortcut(
         script=os.path.expanduser("~/.local/bin/guiscrcpy"),
@@ -69,3 +70,4 @@ def last_i():
 
             
 last_i()
+"""

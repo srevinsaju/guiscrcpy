@@ -32,8 +32,9 @@ setup(
     install_requires=['PyQt5','psutil','qdarkstyle', 'pynput', 'gitpython'],
     scripts = ["guiscrcpy/guiscrcpy", "guiscrcpy/guiscrcpy-mapper"],
     classifiers = ['Operating System :: OS Independent',
-            
+            'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.6',
+            'Programming Language :: Python :: 3.8',
             'Operating System :: MacOS :: MacOS X',
             'Operating System :: Microsoft :: Windows',
             'Operating System :: POSIX',

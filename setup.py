@@ -2,7 +2,7 @@ from setuptools import setup
 import sys,os
 from os import path
 import git
-from pyshortcuts import make_shortcut
+# from pyshortcuts import make_shortcut
 import platform
 from shutil import copyfile
 repo = git.Repo(search_parent_directories=True)

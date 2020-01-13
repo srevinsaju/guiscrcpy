@@ -11,7 +11,7 @@ jobs:
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:3.6.1
+      - image: circleci/python:3.8
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -62,7 +62,7 @@ jobs:
             DISPLAY: ":99.0"
       
           command: |
-            /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x24"
+            /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x24
             . venv/bin/activate
             python guiscrcpy -v
             coverage run guiscrcpy -v

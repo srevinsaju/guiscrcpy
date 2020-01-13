@@ -59,7 +59,11 @@ jobs:
           name: run tests
           variables:
             QT_QPA_PLATFORM: "offscreen"
+      
           command: |
+            "export DISPLAY=:99.0"
+            "sh -e /etc/init.d/xvfb start"  # For testing UI in travis-ci
+            sleep 3
             . venv/bin/activate
             python guiscrcpy -v
             coverage run guiscrcpy -v

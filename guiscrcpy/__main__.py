@@ -34,7 +34,12 @@ from subprocess import Popen as po, STDOUT
 import os
 import os.path
 from subprocess import PIPE, Popen
-from pynput import keyboard
+try:
+    from pynput import keyboard
+except Xlib.error.DisplayNameError:
+    print("Running from tty, pass")
+    keyboard = None
+
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 

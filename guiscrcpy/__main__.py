@@ -56,13 +56,13 @@ try:
         except BaseException:
             print("LOG: guiscrcpy not installed as pip package." +
                   "Version retrieve failed.")
-            
+
 except ModuleNotFoundError:
     print(
         "ERR: gitpython is not found. It is not a dependency,"
         " but you can optionally install it "
         "with python3 -m pip install gitpython"
-        )
+    )
 if sha:
     build = __version__ + " by srevinsaju"
 else:
@@ -199,7 +199,7 @@ else:
         cfgpath = os.path.expanduser("~/.config/guiscrcpy/")
     else:
         cfgpath = os.getenv('XDG_CONFIG_HOME').split(":")[0]+"/guiscrcpy"
-        
+
 
 try:
     with open(cfgpath + jsonf, 'r') as f:
@@ -305,7 +305,7 @@ if platform.system() == "Windows":
         )
         print(
             bcolors.BOLD +
-            "LOG: Fallback to system PATH variable."+
+            "LOG: Fallback to system PATH variable." +
             "Please add scrcpy to path." +
             bcolors.ENDC)
         increment = ""
@@ -375,7 +375,7 @@ try:
     from .mainui import Ui_MainWindow
 except (ModuleNotFoundError, ImportError):
     try:
-    
+
         from guiscrcpy.mainui import Ui_MainWindow
 
         print("LOG: Safe submodule import of mainui")
@@ -540,7 +540,8 @@ def notifExpand():
     dimensions_ = dimVal[1]
     dimValues = dimensions_.split("x")
     adb_pull = po(
-        increment + "adb shell input swipe 0 0 0 " + str(int(dimValues[1]) - 1),
+        increment + "adb shell input swipe 0 0 0 " +
+        str(int(dimValues[1]) - 1),
         shell=True,
         stdout=PIPE,
         stderr=PIPE,
@@ -562,7 +563,8 @@ def notifCollapse():
     dimensions_ = dimVal[1]
     dimValues = dimensions_.split("x")
     adb_pull = po(
-        increment + "adb shell input swipe 0 " + str(int(dimValues[1]) - 1) + " 0 0",
+        increment + "adb shell input swipe 0 " +
+        str(int(dimValues[1]) - 1) + " 0 0",
         shell=True,
         stdout=PIPE,
         stderr=PIPE,
@@ -723,7 +725,8 @@ class MyAppv(QMainWindow):
         self.screenfreeze.setText("")
         icon5 = QtGui.QIcon()
         icon5.addPixmap(
-            QtGui.QPixmap(":/icons/icons/cross-mark-on-a-black-circle-background.svg"),
+            QtGui.QPixmap(
+                ":/icons/icons/cross-mark-on-a-black-circle-background.svg"),
             QtGui.QIcon.Normal,
             QtGui.QIcon.Off,
         )
@@ -1724,16 +1727,15 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         self.abtgit.clicked.connect(self.opengit)
         self.usbaud.clicked.connect(self.usbaudi)
         self.mapnow.clicked.connect(self.mapp)
-    
-    
+
     def mapp(self):
         if(os.path.exists(cfgpath + "guiscrcpy.mapper.json")):
             from guiscrcpy import mapper
             mapper.file_check()
         else:
-            print("guiscrcpy ~ mapper is not initialized. Initialize by running","$ guiscrcpy-mapper", "reset points by", "$ guiscrcpy-mapper -r", sep="\n")
+            print("guiscrcpy ~ mapper is not initialized. Initialize by running",
+                  "$ guiscrcpy-mapper", "reset points by", "$ guiscrcpy-mapper -r", sep="\n")
 
-            
     def fin(self):
         result = []
         try:
@@ -1751,16 +1753,13 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
                     break
             else:
                 print("Mapper.py not found")
-                
+
         return result
-        
-        
-        
+
     def usbaudi(self):
         print("LOG: Called usbaudio")
         runnow = po("usbaudio", shell=True, stdout=PIPE, stderr=PIPE)
-    
-    
+
     """
     def mapper(self):
         
@@ -1885,8 +1884,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             
             sys.exit(app.exec_())
     """
-    
-    
+
     def openme(self):
         webbrowser.open("https://srevinsaju.github.io")
 
@@ -2090,8 +2088,6 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         config['bitrate'] = int(self.dial.value())
         self.progressBar.setValue(40)
 
-
-
         # self.myLine = startScrcpy(self.options)
         # self.connect(self.myLine, SIGNAL("update_terminal(QString)"), self.update_terminal)
         print("LOG: CONNECTION ESTABLISHED")
@@ -2106,13 +2102,14 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         """
         print("LOG: Flags passed to scrcpy engine : " + self.options)
         self.progressBar.setValue(75)
-        
+
         # get additional flags from QLineEdit self.flaglineedit
-        config['extra']= self.flaglineedit.text()
-        
+        config['extra'] = self.flaglineedit.text()
+
         # run scrcpy usng subprocess
         backup = po(
-            increment + "scrcpy " + str(self.options) + " " +  str(config['extra']),
+            increment + "scrcpy " +
+            str(self.options) + " " + str(config['extra']),
             shell=True,
             stdin=PIPE,
             stdout=PIPE,
@@ -2267,7 +2264,6 @@ if __name__ == "__main__":
     sys.path.append('')
 
     launch_main0()
-    
 
 
 def launch_main():
@@ -2285,4 +2281,3 @@ def launch_main():
     #a= po(pythonexec + " ."+ar, shell=True, stdout=PIPE)
     launch_main0()
     print(a.stdout)
-

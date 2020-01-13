@@ -36,8 +36,8 @@ import os.path
 from subprocess import PIPE, Popen
 try:
     from pynput import keyboard
-except Xlib.error.DisplayNameError:
-    print("Running from tty, pass")
+except Exception as e:
+    print("Running from tty, pass. E:{}".format(e))
     keyboard = None
 
 from PyQt5.QtGui import QPixmap

@@ -40,6 +40,7 @@ jobs:
             echo 'export CODECOV_TOKEN="085850e5-a220-4d9f-b174-eb90bbdaab39"' >> $BASH_ENV
             pip install -r requirements.txt
             pip install codecov
+            pip install pytest-qt
             pip install coverage
       
      
@@ -65,12 +66,6 @@ jobs:
             /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x24
             . venv/bin/activate
             python guiscrcpy -v
-            coverage run guiscrcpy -v
-            coverage xml
-            codecov
-            codecov --token=085850e5-a220-4d9f-b174-eb90bbdaab39
-            bash <(curl -s https://codecov.io/bash) -t uuid-repo-token
+            pytest-qt guiscrcpy
 
-      - store_artifacts:
-          path: htmlcov
-          destination: test-reports
+            

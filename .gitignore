@@ -5,8 +5,10 @@ src
 venv
 build
 .idea
-
- 
+.vscode
+*.egg-info
+*.tar.gz
+*.whl 
 *.dll
 *.so
 

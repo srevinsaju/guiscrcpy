@@ -18,7 +18,7 @@ GitPython==3.0.5
 # guiscrcpy/ui/resources/test.py: 8
 # guiscrcpy/ui/resources/toolUI.py: 9
 # guiscrcpy/ui/resources/toolkit.py: 8
-PyQt5 == 5.13.2
+PyQt5
 
 # guiscrcpy/__main__.py: 23
 QDarkStyle == 2.7

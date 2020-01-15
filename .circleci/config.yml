@@ -42,6 +42,7 @@ jobs:
             pip install codecov
             pip install pytest-qt
             pip install coverage
+            python3 setup.py install
       
      
             
@@ -66,5 +67,8 @@ jobs:
             /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x24
             . venv/bin/activate
             python guiscrcpy -v
-            pytest '/guiscrcpy/__main__.py'
+            ls
+            pytest ./guiscrcpy/__main__.py
+            
+            echo Done
 

@@ -28,6 +28,7 @@ import json
 import sys
 import platform
 import argparse
+import webbrowser
 import time
 from subprocess import PIPE
 from subprocess import Popen as po, STDOUT
@@ -50,7 +51,8 @@ try:
     try:
         repo = git.Repo(search_parent_directories=True)
         sha = "-" + repo.head.object.hexsha
-        __version__ = repo.git.describe("--tags")
+        if not repo.git.describe("--tags").startswith('0.')
+            __version__ = repo.git.describe("--tags")
     except BaseException:
         print("LOG: This is not running from Source. No git sha retrievable")
         print("LOG: Extracting version number from pip")
@@ -68,10 +70,8 @@ except ModuleNotFoundError:
         " but you can optionally install it "
         "with python3 -m pip install gitpython"
     )
-if sha:
-    build = __version__ + " by srevinsaju"
-else:
-    build = __version__ + " by srevinsaju"
+
+build = __version__ + " by srevinsaju"
 
 # Argument parser
 parser = argparse.ArgumentParser()
@@ -141,10 +141,10 @@ print(
 print(bcolors.OKBLUE + "" + bcolors.ENDC)
 
 # chk version argument given or not
-if(args.version):
+if args.version:
     sys.exit(0)
 # chk install value given
-if(args.install):
+if args.install:
     if platform.system() == "Linux":
         # print("Supported on Linux only")
 
@@ -367,30 +367,23 @@ def invokeScrcpy():
 
 # ******************************
 
-
 if (args.start):
     print("RUNNING SCRCPY DIRECTLY")
     invokeScrcpy()
 
-
 print("LOG: Importing modules...")
-
 
 try:
     from .mainui import Ui_MainWindow
 except (ModuleNotFoundError, ImportError):
     try:
-
         from guiscrcpy.mainui import Ui_MainWindow
-
         print("LOG: Safe submodule import of mainui")
     except Exception as e:
-
         print(
             "ERR: An Error with Code: {c} has occured explicitly, {m}. Please report to https://github.com/srevinsaju/guiscrcpy/issues".format(
                 c=type(e).__name__,
                 m=str(e)))
-
 
 # from bottompanelUI import Ui_Panel
 # import breeze_resources
@@ -403,211 +396,147 @@ except ModuleNotFoundError:
         "Install with \n $ pip3 install psutil"
     )
 
-# Uncomment this if you would like to test experimental features
-"""
 try:
     import pyautogui as auto
-except ModuleNotFoundError:
-    print("PyAutoGUI is not installed. Please install it with pip install pyautogui."
-          "Read the README.md on github.com/srevinsaju/guiscrcpy. \n You might want to continue without "
-          "pyAutoGUI limited functionality")
-try:
     from pygetwindow import getWindowsWithTitle
-except NotImplementedError:
-    pass
-"""
-
+except Exception as e:
+    print("LOG: 1 {}".format(e))
+    auto = None
+    getWindowsWithTitle = None
 
 # BEGIN TOOLKIT.UI
+class UXMapper:
+    def __init__(self):
+        print("LOG: Launching UX Mapper")
+        self.has_modules = getWindowsWithTitle and auto
+        print("LOG: Calculating Screen Size")
+        self.adb_dim = po("{}adb shell wm size".format(increment),
+            shell=True,
+            stdout=PIPE,
+            stderr=PIPE)
+        self.raw_dimensions = self.adb_dim.stdout.read().decode()
+        self.android_dimensions = self.get_dimensions()
 
+    def do_swipe(self, x1=10, y1=10, x2=10, y2=10):
+        adb_pull = po(
+            "{}adb shell input swipe {} {} {} {}".format(increment, x1, y1, x2, y2),
+            shell=True,
+            stdout=PIPE,
+            stderr=PIPE,
+        )
+        return True
+    
+    def do_keyevent(self, key):
+        po(
+            "{}adb shell input keyevent {}".format(increment, key),
+            shell=True,
+            stdout=PIPE,
+            stderr=PIPE)
+        
+    def get_dimensions(self):
+        for i in ['Override Size', 'Physical Size']:
+            if i and (i in self.out):
+                out = self.raw_dimensions[self.raw_dimensions.find(i):]
+                out_decoded = out.split(':')[1].strip()
+                dimValues = out_decoded.split('x')
+                return dimValues
+            else:
+                raise Exception(
+                    "AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'")
 
-def clipd2pc():
-    print(
-        "WARNING : Copy device to PC is implemented only in source code due to "
-        "its development stage")
-    print(" If you are a developer, uncomment the import statements of PyAutoGui")
-    try:
-        scrcpywindow = getWindowsWithTitle("scrcpy")[0]
-        scrcpywindow.focus()
-        auto.hotkey("ctrl", "c")
-    except NameError:
-        os.system(
-            "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+c")
+    def copy_devpc(self):
+        if self.has_modules:
+            scrcpywindow = getWindowsWithTitle("scrcpy")[0]
+            scrcpywindow.focus()
+            auto.hotkey("ctrl", "c")
+        else:
+            os.system(
+                "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+c")
 
+    def key_power(self):
+        print("LOG: Passing POWER")
+        self.do_keyevent(26)
 
-def power():
-    print("LOG: Passing POWER")
-    po(
-        increment +
-        "adb shell input keyevent 26",
-        shell=True,
-        stdout=PIPE,
-        stderr=PIPE)
+    def key_menu(self):
+        print("LOG: Passing MENU")
+        self.do_keyevent(82)
 
+    def key_back(self):
+        print("LOG: Passing BACK")
+        self.do_keyevent(4)
 
-def menu():
-    print("LOG: Passing MENU")
-    adb_menu = po(
-        increment +
-        "adb shell input keyevent 82",
-        shell=True,
-        stdout=PIPE,
-        stderr=PIPE)
+    def key_volume_up(self):
+        print("LOG: Passing BACK")
+        self.do_keyevent(24)
 
+    def key_volume_down(self):
+        print("LOG: Passing BACK")
+        self.do_keyevent(25)
 
-def Back():
-    print("LOG: Passing BACK")
-    adb_back = po(
-        increment +
-        "adb shell input keyevent 4",
-        shell=True,
-        stdout=PIPE,
-        stderr=PIPE)
+    def key_home(self):
+        print("LOG: Passing HOME")
+        self.do_keyevent(3)
 
+    def key_switch(self):
+        print("LOG: Passing APP_SWITCH")
+        self.do_keyevent("KEYCODE_APP_SWITCH")
 
-def volUP():
-    print("LOG: Passing BACK")
-    adb_back = po(
-        increment +
-        "adb shell input keyevent 24",
-        shell=True,
-        stdout=PIPE,
-        stderr=PIPE)
+    def reorientP(self):
+        print("LOG: Passing REORIENT [POTRAIT]")
+        adb_reo = po(
+            increment +
+            "adb shell settings put system accelerometer_rotation 0",
+            shell=True)
 
+        adb_reosl = po(
+            increment +
+            " adb shell settings put system rotation 1",
+            shell=True)
 
-def volDN():
-    print("LOG: Passing BACK")
-    adb_back = po(
-        increment +
-        "adb shell input keyevent 25",
-        shell=True,
-        stdout=PIPE,
-        stderr=PIPE)
+    def reorientL(self):
+        print("LOG: Passing REORIENT [LANDSCAPE]")
+        adb_reoo = po(
+            increment +
+            "adb shell settings put system accelerometer_rotation 0",
+            shell=True)
+        adb_reool = po(
+            increment +
+            " adb shell settings put system rotation 1",
+            shell=True)
 
+    def expand_notifications(self):
+        print("LOG: Passing NOTIF EXPAND")
+        self.do_swipe(0, 0, 0, int(self.android_dimensions[1]) - 1)
 
-def homekey():
-    print("LOG: Passing HOME")
-    adb_home = po(
-        increment +
-        "adb shell input keyevent 3",
-        shell=True,
-        stdout=PIPE,
-        stderr=PIPE)
+    def collapse_notifications(self):
+        print("LOG: Passing NOTIF COLLAPSE")
+        self.do_swipe(0, int(self.android_dimensions[1]) - 1, 0, 0)
 
+    def copy_pc2dev(self):
+        if self.has_modules:
+            scrcpywindow = getWindowsWithTitle("scrcpy")[0]
+            scrcpywindow.focus()
+            auto.hotkey("ctrl", "shift", "c")
+            print("E: NOT SUPPORTED ON WINDOWS")
+        else:
+            os.system(
+                "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+shift+c")
 
-def switch():
-    print("LOG: Passing APP_SWITCH")
-    adb_home = po(
-        increment + "adb shell input keyevent KEYCODE_APP_SWITCH",
-        shell=True,
-        stdout=PIPE,
-        stderr=PIPE,
-    )
-
-
-def reorientP():
-    print("LOG: Passing REORIENT [POTRAIT]")
-    adb_reo = po(
-        increment +
-        "adb shell settings put system accelerometer_rotation 0",
-        shell=True)
-
-    adb_reosl = po(
-        increment +
-        " adb shell settings put system rotation 1",
-        shell=True)
-
-
-def reorientL():
-    print("LOG: Passing REORIENT [LANDSCAPE]")
-    adb_reoo = po(
-        increment +
-        "adb shell settings put system accelerometer_rotation 0",
-        shell=True)
-    adb_reool = po(
-        increment +
-        " adb shell settings put system rotation 1",
-        shell=True)
-
-
-def notifExpand():
-    print("LOG: Passing NOTIF EXPAND")
-    adb_dim = po(
-        increment +
-        "adb shell wm size",
-        shell=True,
-        stdout=PIPE,
-        stderr=PIPE)
-    out = adb_dim.stdout.read()
-    out_decoded = out.decode("utf-8")
-    out_decoded = out_decoded[:-1]
-    dimVal = out_decoded.split(": ")
-    dimensions_ = dimVal[1]
-    dimValues = dimensions_.split("x")
-    adb_pull = po(
-        increment + "adb shell input swipe 0 0 0 " +
-        str(int(dimValues[1]) - 1),
-        shell=True,
-        stdout=PIPE,
-        stderr=PIPE,
-    )
-
-
-def notifCollapse():
-    print("LOG: Passing NOTIF COLLAPSE")
-    adb_dim = po(
-        increment +
-        "adb shell wm size",
-        shell=True,
-        stdout=PIPE,
-        stderr=PIPE)
-    out = adb_dim.stdout.read()
-    out_decoded = out.decode("utf-8")
-    out_decoded = out_decoded[:-1]
-    dimVal = out_decoded.split(": ")
-    dimensions_ = dimVal[1]
-    dimValues = dimensions_.split("x")
-    adb_pull = po(
-        increment + "adb shell input swipe 0 " +
-        str(int(dimValues[1]) - 1) + " 0 0",
-        shell=True,
-        stdout=PIPE,
-        stderr=PIPE,
-    )
-
-
-def clippc2d():
-    try:
-        scrcpywindow = getWindowsWithTitle("scrcpy")[0]
-        scrcpywindow.focus()
-        auto.hotkey("ctrl", "shift", "c")
-        print("E: NOT SUPPORTED ON WINDOWS")
-    except NameError:
-        os.system(
-            "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+shift+c")
-
-
-def fullscreen():
-    print(
-        bcolors.FAIL +
-        " Fullscreen button is not currently supported on Binary due to safety reasons" +
-        bcolors.ENDC)
-    print("If you are in")
-    try:
-        scrcpywindow = getWindowsWithTitle("scrcpy")[0]
-        scrcpywindow.focus()
-        auto.hotkey("ctrl", "f")
-    except NameError:
-        os.system(
-            "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+f")
+    def fullscreen(self):
+        if self.has_modules:
+            scrcpywindow = getWindowsWithTitle("scrcpy")[0]
+            scrcpywindow.focus()
+            auto.hotkey("ctrl", "f")
+        else:
+            os.system(
+                "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+f")
 
 
 class MyAppv(QMainWindow):
     def __init__(self):
         self.oldPos = None
         super(MyAppv, self).__init__()
-        # Ui_Dialog.__init__(self)
-        # print("Class entered : MyAppv")
+
         self.setObjectName("Dialog")
         self.resize(30, 461)
         sizePolicy = QtWidgets.QSizePolicy(
@@ -660,7 +589,7 @@ class MyAppv(QMainWindow):
         self.notif_collapse.setGeometry(QtCore.QRect(0, 75, 30, 25))
         self.notif_collapse.setMouseTracking(True)
         # self.notif_collapse.setTabletTracking(True)
-        self.notif_collapse.setAutoFillBackground(False)
+        self.notif_collapse.setAutoFillkey_background(False)
         self.notif_collapse.setStyleSheet("")
         self.notif_collapse.setText("")
         icon1 = QtGui.QIcon()
@@ -677,7 +606,7 @@ class MyAppv(QMainWindow):
         self.menuUI.setGeometry(QtCore.QRect(0, 275, 30, 25))
         self.menuUI.setMouseTracking(True)
         # self.menuUI.setTabletTracking(True)
-        self.menuUI.setAutoFillBackground(False)
+        self.menuUI.setAutoFillkey_background(False)
         self.menuUI.setStyleSheet("")
         self.menuUI.setText("")
         icon2 = QtGui.QIcon()
@@ -694,7 +623,7 @@ class MyAppv(QMainWindow):
         self.appswi.setGeometry(QtCore.QRect(0, 300, 30, 25))
         self.appswi.setMouseTracking(True)
         # self.appswi.setTabletTracking(True)
-        self.appswi.setAutoFillBackground(False)
+        self.appswi.setAutoFillkey_background(False)
         self.appswi.setStyleSheet("")
         self.appswi.setText("")
         icon3 = QtGui.QIcon()
@@ -725,7 +654,7 @@ class MyAppv(QMainWindow):
         self.screenfreeze.setGeometry(QtCore.QRect(0, 0, 30, 25))
         self.screenfreeze.setMouseTracking(True)
         # self.screenfreeze.setTabletTracking(True)
-        self.screenfreeze.setAutoFillBackground(False)
+        self.screenfreeze.setAutoFillkey_background(False)
         self.screenfreeze.setStyleSheet("")
         self.screenfreeze.setText("")
         icon5 = QtGui.QIcon()
@@ -743,7 +672,7 @@ class MyAppv(QMainWindow):
         self.back.setGeometry(QtCore.QRect(0, 250, 30, 25))
         self.back.setMouseTracking(True)
         # self.back.setTabletTracking(True)
-        self.back.setAutoFillBackground(False)
+        self.back.setAutoFillkey_background(False)
         self.back.setStyleSheet("")
         self.back.setText("")
         icon6 = QtGui.QIcon()
@@ -760,7 +689,7 @@ class MyAppv(QMainWindow):
         self.notif_pull.setGeometry(QtCore.QRect(0, 50, 30, 25))
         self.notif_pull.setMouseTracking(True)
         # self.notif_pull.setTabletTracking(True)
-        self.notif_pull.setAutoFillBackground(False)
+        self.notif_pull.setAutoFillkey_background(False)
         self.notif_pull.setStyleSheet("")
         self.notif_pull.setText("")
         icon7 = QtGui.QIcon()
@@ -777,12 +706,12 @@ class MyAppv(QMainWindow):
         self.powerUI.setGeometry(QtCore.QRect(0, 200, 30, 25))
         self.powerUI.setMouseTracking(True)
         # self.powerUI.setTabletTracking(True)
-        self.powerUI.setAutoFillBackground(False)
+        self.powerUI.setAutoFillkey_background(False)
         self.powerUI.setStyleSheet("")
         self.powerUI.setText("")
         icon8 = QtGui.QIcon()
         icon8.addPixmap(
-            QtGui.QPixmap(":/icons/icons/power.svg"),
+            QtGui.QPixmap(":/icons/icons/key_power.svg"),
             QtGui.QIcon.Normal,
             QtGui.QIcon.Off,
         )
@@ -810,7 +739,7 @@ class MyAppv(QMainWindow):
         self.clipD2PC.setGeometry(QtCore.QRect(0, 100, 30, 25))
         self.clipD2PC.setMouseTracking(True)
         # self.clipD2PC.setTabletTracking(True)
-        self.clipD2PC.setAutoFillBackground(False)
+        self.clipD2PC.setAutoFillkey_background(False)
         self.clipD2PC.setStyleSheet("")
         self.clipD2PC.setText("")
         icon10 = QtGui.QIcon()
@@ -857,7 +786,7 @@ class MyAppv(QMainWindow):
         self.home.setGeometry(QtCore.QRect(0, 225, 30, 25))
         self.home.setMouseTracking(True)
         # self.home.setTabletTracking(True)
-        self.home.setAutoFillBackground(False)
+        self.home.setAutoFillkey_background(False)
         self.home.setStyleSheet("")
         self.home.setText("")
         icon13 = QtGui.QIcon()
@@ -873,7 +802,7 @@ class MyAppv(QMainWindow):
         self.vup.setGeometry(QtCore.QRect(0, 150, 30, 25))
         self.vup.setMouseTracking(True)
         # self.vup.setTabletTracking(True)
-        self.vup.setAutoFillBackground(False)
+        self.vup.setAutoFillkey_background(False)
         self.vup.setStyleSheet("")
         self.vup.setText("")
         icon14 = QtGui.QIcon()
@@ -890,7 +819,7 @@ class MyAppv(QMainWindow):
         self.vdown.setGeometry(QtCore.QRect(0, 175, 30, 25))
         self.vdown.setMouseTracking(True)
         # self.vdown.setTabletTracking(True)
-        self.vdown.setAutoFillBackground(False)
+        self.vdown.setAutoFillkey_background(False)
         self.vdown.setStyleSheet("")
         self.vdown.setText("")
         icon15 = QtGui.QIcon()
@@ -907,7 +836,7 @@ class MyAppv(QMainWindow):
         self.fullscreenUI.setGeometry(QtCore.QRect(0, 25, 30, 25))
         self.fullscreenUI.setMouseTracking(True)
         # self.fullscreenUI.setTabletTracking(True)
-        self.fullscreenUI.setAutoFillBackground(False)
+        self.fullscreenUI.setAutoFillkey_background(False)
         self.fullscreenUI.setStyleSheet("")
         self.fullscreenUI.setText("")
         icon16 = QtGui.QIcon()
@@ -924,7 +853,7 @@ class MyAppv(QMainWindow):
         self.clipPC2D.setGeometry(QtCore.QRect(0, 125, 30, 25))
         self.clipPC2D.setMouseTracking(True)
         # self.clipPC2D.setTabletTracking(True)
-        self.clipPC2D.setAutoFillBackground(False)
+        self.clipPC2D.setAutoFillkey_background(False)
         self.clipPC2D.setStyleSheet("")
         self.clipPC2D.setText("")
         icon17 = QtGui.QIcon()
@@ -986,7 +915,7 @@ class MyAppv(QMainWindow):
                 "press the APP_SWITCH button"))
         self.pinchoutUI.setToolTip(_translate(
             "self", "Pinch out in the screen"))
-        self.back.setToolTip(_translate("self", "Back key"))
+        self.back.setToolTip(_translate("self", "key_back key"))
         self.notif_pull.setToolTip(_translate(
             "self", "Expand notification panel"))
         self.powerUI.setToolTip(_translate("self", "Power on/off"))
@@ -1012,22 +941,24 @@ class MyAppv(QMainWindow):
         self.setWindowFlags(
             QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
         )
-        # self.setupUi(Dialog)
-        self.clipD2PC.clicked.connect(clipd2pc)
-        self.clipPC2D.clicked.connect(clippc2d)
-        self.back.clicked.connect(Back)
+        # Connect signals
+        # Launch UXMApper
+        self.ux = UXMapper()
+        self.clipD2PC.clicked.connect(self.ux.copy_devpc)
+        self.clipPC2D.clicked.connect(self.ux.copy_pc2dev)
+        self.back.clicked.connect(self.ux.key_back)
         self.screenfreeze.clicked.connect(self.quitn)
-        self.appswi.clicked.connect(switch)
-        self.menuUI.clicked.connect(menu)
-        self.home.clicked.connect(homekey)
-        self.notif_pull.clicked.connect(notifExpand)
-        self.notif_collapse.clicked.connect(notifCollapse)
-        self.fullscreenUI.clicked.connect(fullscreen)
-        self.powerUI.clicked.connect(power)
-        self.vup.clicked.connect(volUP)
-        self.vdown.clicked.connect(volDN)
-        self.potraitUI.clicked.connect(reorientP)
-        self.landscapeUI.clicked.connect(reorientL)
+        self.appswi.clicked.connect(self.ux.key_switch)
+        self.menuUI.clicked.connect(self.ux.key_menu)
+        self.home.clicked.connect(self.ux.key_home)
+        self.notif_pull.clicked.connect(self.ux.expand_notifications)
+        self.notif_collapse.clicked.connect(self.ux.collapse_notifications)
+        self.fullscreenUI.clicked.connect(self.ux.fullscreen)
+        self.powerUI.clicked.connect(self.ux.key_power)
+        self.vup.clicked.connect(self.ux.key_volume_up)
+        self.vdown.clicked.connect(self.ux.key_volume_down)
+        self.potraitUI.clicked.connect(self.ux.reorientP)
+        self.landscapeUI.clicked.connect(self.ux.reorientL)
         self.show()
 
     def mousePressEvent(self, event):
@@ -1050,8 +981,8 @@ class SwipeUX(QMainWindow):
         self.oldPos = None
         self.setObjectName("SwipeUX")
         self.setWindowFlags(Qt.FramelessWindowHint)
-        self.setAttribute(Qt.WA_NoSystemBackground, True)
-        self.setAttribute(Qt.WA_TranslucentBackground, True)
+        self.setAttribute(Qt.WA_NoSystemkey_background, True)
+        self.setAttribute(Qt.WA_Translucentkey_background, True)
 
         # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint)
         self.resize(70, 70)
@@ -1134,7 +1065,7 @@ class SwipeUX(QMainWindow):
         # ================
 
         self.oldpos = self.pos()
-
+        self.ux = UXMapper()
         self.swiup.pressed.connect(self.swipup)
         self.swidn.pressed.connect(self.swipdn)
         self.swilf.pressed.connect(self.swipleft)
@@ -1161,136 +1092,35 @@ class SwipeUX(QMainWindow):
 
     def swipdn(self):
         print("LOG: Passing SWIPE DOWN")
-        adb_dim = po(
-            increment +
-            "adb shell wm size",
-            shell=True,
-            stdout=PIPE,
-            stderr=PIPE)
-        out = adb_dim.stdout.read()
-        out_decoded = out.decode("utf-8")
-        out_decoded = out_decoded[:-1]
-        dimVal = out_decoded.split(": ")
-        dimensions_ = dimVal[1]
-        dimValues = dimensions_.split("x")
-        posy = int(dimValues[1])
+        dimValues = self.ux.android_dimensions
+        posy = int(dimValues[1]) - 200
         posx = int(dimValues[0])
-
         newposx = posx / 2  # find center
-
-        adb_pull = po(
-            increment
-            + "adb shell input swipe "
-            + str(newposx)
-            + " 200 "
-            + str(newposx)
-            + " "
-            + str(posy - 200),
-            shell=True,
-            stdout=PIPE,
-            stderr=PIPE,
-        )
+        self.ux.do_swipe(newposx, 200, newposx, posy)
 
     def swipup(self):
         print("LOG: Passing SWIPE UP")
-        adb_dim = po(
-            increment +
-            "adb shell wm size",
-            shell=True,
-            stdout=PIPE,
-            stderr=PIPE)
-        out = adb_dim.stdout.read()
-        out_decoded = out.decode("utf-8")
-        out_decoded = out_decoded[:-1]
-        dimVal = out_decoded.split(": ")
-        dimensions__ = dimVal[1]
-        dimValues = dimensions__.split("x")
-        posy = int(dimValues[1])
+        dimValues = self.ux.android_dimensions
+        posy = int(dimValues[1]) - 100
         posx = int(dimValues[0])
-
-        newposx = posx / 2  # find center
-
-        adb_pull = po(
-            increment
-            + "adb shell input swipe "
-            + str(newposx)
-            + " "
-            + str(posy - 200)
-            + " "
-            + str(newposx)
-            + " 200",
-            shell=True,
-            stdout=PIPE,
-            stderr=PIPE,
-        )
+        newposx = int(posx / 2)  # find center
+        self.ux.do_swipe(newposx, posy, newposx, 200)
 
     def swipleft(self):
         print("LOG: Passing SWIPE LEFT")
-        adb_dim = po(
-            increment +
-            "adb shell wm size",
-            shell=True,
-            stdout=PIPE,
-            stderr=PIPE)
-        out = adb_dim.stdout.read()
-        out_decoded = out.decode("utf-8")
-        out_decoded = out_decoded[:-1]
-        dimVal = out_decoded.split(": ")
-        dimensions__ = dimVal[1]
-        dimValues = dimensions__.split("x")
+        dimValues = self.ux.android_dimensions
         posy = int(dimValues[1])
-        posx = int(dimValues[0])
-
-        newposy = posy / 2  # find center
-
-        adb_pull = po(
-            increment
-            + "adb shell input swipe "
-            + str(10)
-            + " "
-            + str(newposy)
-            + " "
-            + str(posx - 10)
-            + " "
-            + str(newposy),
-            shell=True,
-            stdout=PIPE,
-            stderr=PIPE,
-        )
+        posx = int(dimValues[0]) - 10
+        newposy = int(posy / 2)  # find center
+        self.ux.do_swipe(10, newposy, posx, newposy)
 
     def swipright(self):
         print("LOG: Passing SWIPE RIGHT")
-        adb_dim = po(
-            increment +
-            "adb shell wm size",
-            shell=True,
-            stdout=PIPE,
-            stderr=PIPE)
-        out = adb_dim.stdout.read()
-        out_decoded = out.decode("utf-8")
-        out_decoded = out_decoded[:-1]
-        dimVal = out_decoded.split(": ")
-        dimensions_ = dimVal[1]
-        dimValues = dimensions_.split("x")
+        dimValues = self.ux.android_dimensions
         posy = int(dimValues[1])
-        posx = int(dimValues[0])
-
-        newposy = posy / 2  # find center
-
-        adb_pull = po(
-            increment
-            + "adb shell input swipe "
-            + str(posx - 10)
-            + " "
-            + str(newposy)
-            + " "
-            + str(10)
-            + " "
-            + str(newposy),
-            shell=True,
-            stdout=PIPE,
-            stderr=PIPE,
-        )
+        posx = int(dimValues[0]) - 10
+        newposy = int(posy / 2)  # find center
+        self.ux.do_swipe(posx, newposy, 10, newposy)
 
 
 class Panel(QMainWindow):
@@ -1298,12 +1128,6 @@ class Panel(QMainWindow):
     def __init__(self):
 
         super(Panel, self).__init__()
-        # print("POSITION OF PANEL:")
-        # ---------------------------------
-        # BETA test
-        # -----------------------------------
-        # imported bottompanelUI.py into main module
-        # -----------------------------------
 
         self.setObjectName("self")
         self.resize(328, 26)
@@ -1357,7 +1181,7 @@ class Panel(QMainWindow):
         self.powerUII.setText("")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(
-            QtGui.QPixmap(":/icons/icons/power.svg"),
+            QtGui.QPixmap(":/icons/icons/key_power.svg"),
             QtGui.QIcon.Normal,
             QtGui.QIcon.Off,
         )
@@ -1434,7 +1258,7 @@ class Panel(QMainWindow):
         self.label.raise_()
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("Panel", "guiscrcpy"))
-        self.backk.setToolTip(_translate("Panel", "Back key"))
+        self.backk.setToolTip(_translate("Panel", "key_back key"))
         self.powerUII.setToolTip(_translate("Panel", "Power on/off"))
         self.menuUII.setToolTip(_translate("Panel", "Menu key"))
         self.vdownn.setToolTip(_translate("Panel", "Volume Up"))
@@ -1450,12 +1274,13 @@ class Panel(QMainWindow):
         )
 
         # self.setupUi(Dialog)
-        self.backk.clicked.connect(Back)
-        self.menuUII.clicked.connect(menu)
-        self.homee.clicked.connect(homekey)
-        self.powerUII.clicked.connect(power)
-        self.vupp.clicked.connect(volUP)
-        self.vdownn.clicked.connect(volDN)
+        self.ux = UXMapper()
+        self.backk.clicked.connect(self.ux.key_back)
+        self.menuUII.clicked.connect(self.ux.key_menu)
+        self.homee.clicked.connect(self.ux.key_home)
+        self.powerUII.clicked.connect(self.ux.key_power)
+        self.vupp.clicked.connect(self.ux.key_volume_up)
+        self.vdownn.clicked.connect(self.ux.key_volume_down)
 
         self.show()
         # print("self.oldpos", self.oldpos)
@@ -1472,164 +1297,8 @@ class Panel(QMainWindow):
         self.move(self.x() + delta.x(), self.y() + delta.y())
         self.oldPos = event.globalPos()
 
-    """
-        def __init__(self, Dialog):
-        super(Panel, self).__init__()
-
-        Ui_Panel.__init__(self)
-        # Dialog.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        Dialog.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint)
-
-        self.setupUi(Dialog)
-        self.backk.clicked.connect(Back)
-        self.menuUII.clicked.connect(menu)
-        self.homee.clicked.connect(homekey)
-        self.powerUII.clicked.connect(power)
-        self.vupp.clicked.connect(volUP)
-        self.vdownn.clicked.connect(volDN)
-
-
-
-
-
-        self.mwidget = Ui_Panel()
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-
-
-        #size
-        self.setFixedSize(320, 450)
-        self.center()
-        self.oldPos = self.pos()
-
-        self.show()
-
-    #center
-    def center(self):
-        qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
-
-    def mousePressEvent(self, event):
-        self.oldPos = event.globalPos()
-
-    def mouseMoveEvent(self, event):
-        delta = QPoint (event.globalPos() - self.oldPos)
-        #print(delta)
-        self.move(self.x() + delta.x(), self.y() + delta.y())
-        self.oldPos = event.globalPos()
-
-
-    def __init__(self, Dialog):
-        super(Panel, self).__init__()
-
-        Ui_Panel.__init__(self)
-        # Dialog.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        Dialog.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint)
-
-        self.setupUi(Dialog)
-        self.backk.clicked.connect(Back)
-        self.menuUII.clicked.connect(menu)
-        self.homee.clicked.connect(homekey)
-        self.powerUII.clicked.connect(power)
-        self.vupp.clicked.connect(volUP)
-        self.vdownn.clicked.connect(volDN)
-        self.oldPos = self.pos()
-
-
-    def mousePressEvent(self, event):
-        self.oldPos = event.globalPos()
-
-    def mouseMoveEvent(self, event):
-        delta = QPoint (event.globalPos() - self.oldPos)
-        print("LOG: Delta: ", delta)
-        self.move(self.x() + delta.x(), self.y() + delta.y())
-        self.oldPos = event.globalPos()
-
-    def mousePressEvent(self, event):
-        self.offset = event.pos()
-
-    def mouseMoveEvent(self, event):
-        x=event.globalX()
-        y=event.globalY()
-        x_w = self.offset.x()
-        y_w = self.offset.y()
-        self.move(x-x_w, y-y_w)
-    """
-
-
 # END TOOLKIT
 
-
-def update_terminal():
-    """
-        self.new_thread = Terminal()
-        self.connect(self.new_thread, SIGNAL("line"), self.show_variable)
-        self.new_thread.start()
-    """
-    tmpTerminal = open("usercfgGUISCRCPY.cfg", "r")
-    tmpRead = tmpTerminal.read()
-    return tmpRead
-
-
-"""
-class StartScrcpy(QThread):
-    print("Hello")
-
-    def __init__(self, options):
-        QThread.__init__(self)
-        print("SCRCPY launch")
-        # backup = po(increment+"scrcpy" + str(options),
-        #                          shell=True,
-        #                          stdin=PIPE,
-        #                          stdout=PIPE,
-        #                          stderr=STDOUT)
-
-    def __del__(self):
-        self.wait()
-
-    def startSact(self):
-        # TODO FIX OPTIONS
-        # this block is for instantaneous reading the output
-        # block ends out
-        if checkProcessRunning("scrcpy"):
-            print("SCRCPY RUNNING")
-            # self.runningNot.setText("SCRCPY SERVER RUNNING")
-        else:
-            print("SCRCPY SERVER IS INACTIVE")
-            # self.runningNot.setText("SCRCPY SERVER NOT RUNNING")
-
-    def run(self):
-        pass
-"""
-
-
-def readThreadStdOut():
-    someFile = open("user.history", "w+")
-    out, err = StartScrcpy.backup.stdout, StartScrcpy.backup.stderr
-    out_decoded = out.decode("utf-8")
-    someFile.write(str(out_decoded))
-    someFile.flush()
-
-
-runme = True
-full = []
-
-"""
-def loop():
-    for line in iter(StartScrcpy.backup.stdout.readline, b''):  # TODO NOT IMPLEMENTED
-        line = line.rstrip().decode('utf8')
-        print(">>>", line)
-        full.append(line)
-        output = '\n'.join(full)
-
-
-loopprocess = multiprocessing.Process(target=loop)
-loopprocess.start()
-loopprocess.join()
-print("Scrcpy proceed")
-print(StartScrcpy.backup.stdout)
-""" ""
 
 
 def checkProcessRunning(processName):
@@ -1656,18 +1325,6 @@ class MyApp(Ui_MainWindow):
         # self.menuAbout.itemPressed.connect(self.menu_about)
 
         # check if process Scrcpy is running right now in while loop
-        """
-        background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 152, 255));
-color: rgb(0, 0, 0);
-border-radius: 10px;
-border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 255, 255), stop:1 rgba(255, 0, 255, 255));
-        """
-
-        #bit_rate = bitrate0
-        #dimensions = dimension0
-        #swtouches = swtouches0
-        #dispRO = dispRO0
-        #fullscreen_opt = fullscreen0
         print(
             "LOG: Options received by class are : ",
             config['bitrate'],
@@ -2002,19 +1659,9 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
             self.progressBar.setValue(0)
             return 0
         # check if the defaultDimension is checked or not for giving signal
-        # ADB READ DIMENSIONS :: BEGIN
-        adb_dim = po(
-            increment +
-            "adb shell wm size",
-            shell=True,
-            stdout=PIPE,
-            stderr=PIPE)
-        out = adb_dim.stdout.read()
-        out_decoded = out.decode("utf-8")
-        out_decoded = out_decoded[:-1]
-        dimVal = out_decoded.split(": ")
-        dimensions_ = dimVal[1]
-        dimValues = dimensions_.split("x")
+
+        ux = UXMapper()
+        dimValues = ux.get_dimensions()
 
         self.progressBar.setValue(15)
 
@@ -2097,14 +1744,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
         # self.connect(self.myLine, SIGNAL("update_terminal(QString)"), self.update_terminal)
         print("LOG: CONNECTION ESTABLISHED")
         self.progressBar.setValue(50)
-        """
-        for line in iter(backup.stdout.readline, b''): # TODO NOT IMPLEMENTED
-            line = line.rstrip().decode('utf8')
-            print(">>>", line)
-            full.append(line)
-            output = '\n'.join(full)
-            self.terminal.setText(str(output))
-        """
+
         print("LOG: Flags passed to scrcpy engine : " + self.options)
         self.progressBar.setValue(75)
 
@@ -2190,7 +1830,7 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
                     if len(var1) > len(var2):
                         d = ImageDraw.Draw(image)
                         d.rectangle([0, 255, 128, 128], fill="green")
-                        icon.icon = img
+                        icon.icon = image
                         time.sleep(600)
                         var2 = var1
 
@@ -2283,6 +1923,4 @@ def launch_main():
     ar = ""
     for i in sys.argv[1:]:
         ar += " " + i + " "
-    #a= po(pythonexec + " ."+ar, shell=True, stdout=PIPE)
     launch_main0()
-    print(a.stdout)

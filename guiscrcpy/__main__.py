@@ -434,15 +434,17 @@ class UXMapper:
             stderr=PIPE)
         
     def get_dimensions(self):
-        for i in ['Override Size', 'Physical Size']:
-            if i and (i in self.out):
+        for i in ['Override size', 'Physical size']:
+            print(i, self.raw_dimensions)
+            if i in self.raw_dimensions:
+
                 out = self.raw_dimensions[self.raw_dimensions.find(i):]
                 out_decoded = out.split(':')[1].strip()
                 dimValues = out_decoded.split('x')
                 return dimValues
-            else:
-                raise Exception(
-                    "AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'")
+        else:
+            raise Exception(
+                "AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'")
 
     def copy_devpc(self):
         if self.has_modules:
@@ -589,7 +591,7 @@ class MyAppv(QMainWindow):
         self.notif_collapse.setGeometry(QtCore.QRect(0, 75, 30, 25))
         self.notif_collapse.setMouseTracking(True)
         # self.notif_collapse.setTabletTracking(True)
-        self.notif_collapse.setAutoFillkey_background(False)
+        # self.notif_collapse.setAutoFillkey_background(False)
         self.notif_collapse.setStyleSheet("")
         self.notif_collapse.setText("")
         icon1 = QtGui.QIcon()
@@ -606,7 +608,7 @@ class MyAppv(QMainWindow):
         self.menuUI.setGeometry(QtCore.QRect(0, 275, 30, 25))
         self.menuUI.setMouseTracking(True)
         # self.menuUI.setTabletTracking(True)
-        self.menuUI.setAutoFillkey_background(False)
+        # self.menuUI.setAutoFillkey_background(False)
         self.menuUI.setStyleSheet("")
         self.menuUI.setText("")
         icon2 = QtGui.QIcon()
@@ -623,7 +625,7 @@ class MyAppv(QMainWindow):
         self.appswi.setGeometry(QtCore.QRect(0, 300, 30, 25))
         self.appswi.setMouseTracking(True)
         # self.appswi.setTabletTracking(True)
-        self.appswi.setAutoFillkey_background(False)
+        # self.appswi.setAutoFillkey_background(False)
         self.appswi.setStyleSheet("")
         self.appswi.setText("")
         icon3 = QtGui.QIcon()
@@ -654,7 +656,7 @@ class MyAppv(QMainWindow):
         self.screenfreeze.setGeometry(QtCore.QRect(0, 0, 30, 25))
         self.screenfreeze.setMouseTracking(True)
         # self.screenfreeze.setTabletTracking(True)
-        self.screenfreeze.setAutoFillkey_background(False)
+        # self.screenfreeze.setAutoFillkey_background(False)
         self.screenfreeze.setStyleSheet("")
         self.screenfreeze.setText("")
         icon5 = QtGui.QIcon()
@@ -672,7 +674,7 @@ class MyAppv(QMainWindow):
         self.back.setGeometry(QtCore.QRect(0, 250, 30, 25))
         self.back.setMouseTracking(True)
         # self.back.setTabletTracking(True)
-        self.back.setAutoFillkey_background(False)
+        # self.back.setAutoFillkey_background(False)
         self.back.setStyleSheet("")
         self.back.setText("")
         icon6 = QtGui.QIcon()
@@ -689,7 +691,7 @@ class MyAppv(QMainWindow):
         self.notif_pull.setGeometry(QtCore.QRect(0, 50, 30, 25))
         self.notif_pull.setMouseTracking(True)
         # self.notif_pull.setTabletTracking(True)
-        self.notif_pull.setAutoFillkey_background(False)
+        # self.notif_pull.setAutoFillkey_background(False)
         self.notif_pull.setStyleSheet("")
         self.notif_pull.setText("")
         icon7 = QtGui.QIcon()
@@ -706,7 +708,7 @@ class MyAppv(QMainWindow):
         self.powerUI.setGeometry(QtCore.QRect(0, 200, 30, 25))
         self.powerUI.setMouseTracking(True)
         # self.powerUI.setTabletTracking(True)
-        self.powerUI.setAutoFillkey_background(False)
+        # self.powerUI.setAutoFillkey_background(False)
         self.powerUI.setStyleSheet("")
         self.powerUI.setText("")
         icon8 = QtGui.QIcon()
@@ -739,7 +741,7 @@ class MyAppv(QMainWindow):
         self.clipD2PC.setGeometry(QtCore.QRect(0, 100, 30, 25))
         self.clipD2PC.setMouseTracking(True)
         # self.clipD2PC.setTabletTracking(True)
-        self.clipD2PC.setAutoFillkey_background(False)
+        # self.clipD2PC.setAutoFillkey_background(False)
         self.clipD2PC.setStyleSheet("")
         self.clipD2PC.setText("")
         icon10 = QtGui.QIcon()
@@ -786,7 +788,7 @@ class MyAppv(QMainWindow):
         self.home.setGeometry(QtCore.QRect(0, 225, 30, 25))
         self.home.setMouseTracking(True)
         # self.home.setTabletTracking(True)
-        self.home.setAutoFillkey_background(False)
+        # self.home.setAutoFillkey_background(False)
         self.home.setStyleSheet("")
         self.home.setText("")
         icon13 = QtGui.QIcon()
@@ -802,7 +804,7 @@ class MyAppv(QMainWindow):
         self.vup.setGeometry(QtCore.QRect(0, 150, 30, 25))
         self.vup.setMouseTracking(True)
         # self.vup.setTabletTracking(True)
-        self.vup.setAutoFillkey_background(False)
+        # self.vup.setAutoFillkey_background(False)
         self.vup.setStyleSheet("")
         self.vup.setText("")
         icon14 = QtGui.QIcon()
@@ -819,7 +821,7 @@ class MyAppv(QMainWindow):
         self.vdown.setGeometry(QtCore.QRect(0, 175, 30, 25))
         self.vdown.setMouseTracking(True)
         # self.vdown.setTabletTracking(True)
-        self.vdown.setAutoFillkey_background(False)
+        # self.vdown.setAutoFillkey_background(False)
         self.vdown.setStyleSheet("")
         self.vdown.setText("")
         icon15 = QtGui.QIcon()
@@ -836,7 +838,7 @@ class MyAppv(QMainWindow):
         self.fullscreenUI.setGeometry(QtCore.QRect(0, 25, 30, 25))
         self.fullscreenUI.setMouseTracking(True)
         # self.fullscreenUI.setTabletTracking(True)
-        self.fullscreenUI.setAutoFillkey_background(False)
+        # self.fullscreenUI.setAutoFillkey_background(False)
         self.fullscreenUI.setStyleSheet("")
         self.fullscreenUI.setText("")
         icon16 = QtGui.QIcon()
@@ -853,7 +855,7 @@ class MyAppv(QMainWindow):
         self.clipPC2D.setGeometry(QtCore.QRect(0, 125, 30, 25))
         self.clipPC2D.setMouseTracking(True)
         # self.clipPC2D.setTabletTracking(True)
-        self.clipPC2D.setAutoFillkey_background(False)
+        # self.clipPC2D.setAutoFillkey_background(False)
         self.clipPC2D.setStyleSheet("")
         self.clipPC2D.setText("")
         icon17 = QtGui.QIcon()
@@ -981,8 +983,8 @@ class SwipeUX(QMainWindow):
         self.oldPos = None
         self.setObjectName("SwipeUX")
         self.setWindowFlags(Qt.FramelessWindowHint)
-        self.setAttribute(Qt.WA_NoSystemkey_background, True)
-        self.setAttribute(Qt.WA_Translucentkey_background, True)
+        # self.setAttribute(Qt.WA_NoSystemkey_background, True)
+        # self.setAttribute(Qt.WA_Translucentkey_background, True)
 
         # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint)
         self.resize(70, 70)

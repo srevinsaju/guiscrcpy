@@ -51,7 +51,7 @@ try:
     try:
         repo = git.Repo(search_parent_directories=True)
         sha = "-" + repo.head.object.hexsha
-        if not repo.git.describe("--tags").startswith('0.')
+        if not repo.git.describe("--tags").startswith('0.'):
             __version__ = repo.git.describe("--tags")
     except BaseException:
         print("LOG: This is not running from Source. No git sha retrievable")

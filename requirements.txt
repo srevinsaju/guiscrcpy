@@ -49,4 +49,4 @@ pystray == 0.14.4
 
 # guiscrcpy/__main__.py: 53
 # setup.py: 1
-setuptools==45.0.0
+setuptools==45.1.0

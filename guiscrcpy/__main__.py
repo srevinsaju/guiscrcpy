@@ -446,8 +446,7 @@ class UXMapper:
                 dimValues = out_decoded.split('x')
                 return dimValues
         else:
-            raise Exception(
-                "AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'")
+            print("AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'")
 
     def copy_devpc(self):
         if self.has_modules:

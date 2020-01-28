@@ -984,6 +984,7 @@ class MyAppv(QMainWindow):
 
 class SwipeUX(QMainWindow):
     def __init__(self):
+        QMainWindow.__init__(self)
         super(SwipeUX, self).__init__()
         self.oldPos = None
         self.setObjectName("SwipeUX")

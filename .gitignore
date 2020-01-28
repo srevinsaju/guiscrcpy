@@ -1,4 +1,6 @@
 __pycache__
+*.pyo
+*.pyc
 dist
 release
 src

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>420</height>
+    <width>550</width>
+    <height>497</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -244,6 +244,12 @@ border-radius: 10px;
     </item>
     <item row="1" column="0">
      <widget class="QFrame" name="frame">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <property name="sizeConstraint">
         <enum>QLayout::SetMaximumSize</enum>
@@ -503,6 +509,9 @@ color: rgb(0, 0, 0)</string>
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item row="0" column="1">
           <widget class="QLabel" name="label">
            <property name="font">
@@ -532,45 +541,6 @@ color: rgb(0, 0, 0)</string>
            </property>
            <property name="checked">
             <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="bitrateText">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <family>Trebuchet MS</family>
-             <pointsize>26</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="statusTip">
-            <string/>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(0, 0, 0);
-border-radius: 10px;
-
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 0, 255));</string>
-           </property>
-           <property name="text">
-            <string>8000 KB/s</string>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::AutoText</enum>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="margin">
-            <number>8</number>
            </property>
           </widget>
          </item>
@@ -698,6 +668,45 @@ image: url(:/res/ui/guiscrcpy_logo.png);</string>
            </property>
            <property name="notchesVisible">
             <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="bitrateText">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Trebuchet MS</family>
+             <pointsize>26</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 0, 0);
+border-radius: 10px;
+
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 0, 255));</string>
+           </property>
+           <property name="text">
+            <string>8000 KB/s</string>
+           </property>
+           <property name="textFormat">
+            <enum>Qt::AutoText</enum>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="margin">
+            <number>8</number>
            </property>
           </widget>
          </item>
@@ -909,7 +918,7 @@ image: url(:/res/ui/guiscrcpy_logo.png);</string>
            </property>
            <property name="minimumSize">
             <size>
-             <width>200</width>
+             <width>0</width>
              <height>0</height>
             </size>
            </property>

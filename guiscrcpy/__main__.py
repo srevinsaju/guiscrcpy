@@ -318,6 +318,10 @@ if platform.system() == "Windows":
             bcolors.ENDC)
         increment = ""
 
+    if os.path.exists('bin/adb.exe'):
+        increment = ".\\bin\\"
+    if os.path.exists('bin/scrcpy.exe'):
+        increment = ".\\bin\\"
 
 else:
     if not fileExist:

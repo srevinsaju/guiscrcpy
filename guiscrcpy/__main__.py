@@ -89,8 +89,11 @@ parser.add_argument(
 
 args = parser.parse_args()
 print("LOG: Received flag", args.start)
-
-os.chdir(os.path.dirname(__file__))
+try:
+	os.chdir(os.path.dirname(__file__))
+except:
+    # Its a PyInstaller compiled package
+	pass
 
 
 class bcolors:

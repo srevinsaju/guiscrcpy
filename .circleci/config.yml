@@ -68,7 +68,7 @@ jobs:
             . venv/bin/activate
             python guiscrcpy -v
             ls
-            pytest ./guiscrcpy/__main__.py
+            pytest ./guiscrcpy/launcher.py
             
             echo Done
 

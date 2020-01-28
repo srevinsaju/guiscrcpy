@@ -18,33 +18,80 @@ All rights reserved.
 """
 
 # Prelaunch
+
+__version__ = '2.0.0-raw'
+
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtWidgets import QMessageBox
 import qdarkstyle
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import Qt
 import json
 import sys
 import platform
 import argparse
+import logging
 import webbrowser
 import time
+from datetime import datetime
 from subprocess import PIPE
 from subprocess import Popen as po, STDOUT
 import os
 import os.path
 from subprocess import PIPE, Popen
+
+try:
+	os.chdir(os.path.dirname(__file__))
+except:
+    # Its a PyInstaller compiled package
+	pass
+
+# get cfgpath
+# Declare Config path position
+if (platform.system() == 'Windows'):
+    cfgpath = os.path.expanduser("~/AppData/Local/guiscrcpy/")
+else:
+    if (os.getenv('XDG_CONFIG_HOME') is None):
+        cfgpath = os.path.expanduser("~/.config/guiscrcpy/")
+    else:
+        cfgpath = os.getenv('XDG_CONFIG_HOME').split(":")[0]+"/guiscrcpy"
+
+# init parser
+parser = argparse.ArgumentParser()
+parser.add_argument('-i', '--install', action='store_true',
+                    help="Install guiscrcpy system wide on Linux")
+parser.add_argument('-s', '--start', action='store_true',
+                    help="Start scrcpy first before loading the GUI")
+parser.add_argument('-d', '--debug', default=3,
+                    help="Set a logging level from 0,1,2,3,4,5")
+parser.add_argument('-v', '--version', action='store_true',
+                    help="Display guiscrcpy version")
+args = parser.parse_args()
+
+if args.debug:
+    logging_priority = int(args.debug) * 10
+else:
+    logging_priority = 30
+
+# setup logging 
+logging.basicConfig(
+    filename=os.path.join(cfgpath, 'guiscrcpy_log_{}.log'.format(datetime.now().strftime("%Y%m%d_%H%M%S"))),
+    filemode='w',
+    level=logging_priority,
+    format='%(levelname)s :: %(message)s'
+)
+logging.getLogger().addHandler(logging.StreamHandler())
+
+# init pynput if it exists, else pass
 try:
     from pynput import keyboard
 except Exception as e:
-    print("Running from tty, pass. E:{}".format(e))
+    logging.warning("Running from tty, pass. E:{}".format(e))
     keyboard = None
 
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt
-
-__version__ = '2.0.0-raw'
+# FIXME move to version.py
 sha = None
 try:
     import git
@@ -54,18 +101,18 @@ try:
         if not repo.git.describe("--tags").startswith('0.'):
             __version__ = repo.git.describe("--tags")
     except BaseException:
-        print("LOG: This is not running from Source. No git sha retrievable")
-        print("LOG: Extracting version number from pip")
+        logging.warning("This is not running from Source. No git sha retrievable")
+        logging.warning("Extracting version number from pip")
         try:
             import pkg_resources
             __version__ = pkg_resources.get_distribution(
                 "guiscrcpy").version
         except BaseException:
-            print("LOG: guiscrcpy not installed as pip package." +
+            logging.warning("guiscrcpy not installed as pip package." +
                   "Version retrieve failed.")
 
 except ModuleNotFoundError:
-    print(
+    logging.warning(
         "ERR: gitpython is not found. It is not a dependency,"
         " but you can optionally install it "
         "with python3 -m pip install gitpython"
@@ -74,29 +121,11 @@ except ModuleNotFoundError:
 build = __version__ + " by srevinsaju"
 
 # Argument parser
-parser = argparse.ArgumentParser()
-parser.add_argument('-i', '--install', action='store_true',
-                    help="Install guiscrcpy system wide on Linux")
-parser.add_argument('-s', '--start', action='store_true',
-                    help="Start scrcpy first before loading the GUI")
-parser.add_argument(
-    '-v',
-    '--version',
-    action='store_true',
-    help="Display guiscrcpy version")
 
-# parser.add_argument('-b', '--bar-value', default=3.14)
-
-args = parser.parse_args()
-print("LOG: Received flag", args.start)
-try:
-	os.chdir(os.path.dirname(__file__))
-except:
-    # Its a PyInstaller compiled package
-	pass
+logging.debug("Received flag {}".format(args.start))
 
 
-class bcolors:
+class termcolors:
     if platform.system() == "Linux":
         HEADER = "\033[95m"
         OKBLUE = "\033[94m"
@@ -126,59 +155,37 @@ else:
     commit1 = __version__ + " commit" + sha
 
 print(
-    bcolors.UNDERLINE +
+    termcolors.UNDERLINE +
     "                                  " +
-    bcolors.ENDC)
+    termcolors.ENDC)
 print()
 print("guiscrcpy")
 print("by srevinsaju")
-print(bcolors.OKBLUE + commit1 + bcolors.ENDC)
+print(termcolors.OKBLUE + commit1 + termcolors.ENDC)
 print(
-    bcolors.OKBLUE +
+    termcolors.OKBLUE +
     "Licensed under GNU GPL v3 (c) 2019  " +
-    bcolors.ENDC)
+    termcolors.ENDC)
 print(
-    bcolors.UNDERLINE +
+    termcolors.UNDERLINE +
     "                                  " +
-    bcolors.ENDC)
-print(bcolors.OKBLUE + "" + bcolors.ENDC)
+    termcolors.ENDC)
+print(termcolors.OKBLUE + "" + termcolors.ENDC)
 
 # chk version argument given or not
 if args.version:
     sys.exit(0)
-# chk install value given
-if args.install:
-    if platform.system() == "Linux":
-        # print("Supported on Linux only")
-
-        import subprocess
-        inf = subprocess.Popen(
-            "find .. -iname 'guiscrcpy-src-installer.sh'",
-            shell=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
-        a1 = inf.stdout.read().decode("utf-8")
-        dirch = a1[:a1.find("guiscrcpy-src-installer.sh")]
-        cmd = "cd " + dirch + " ; " + "./guiscrcpy-src-installer.sh"
-        os.system(cmd)
-        sys.exit()
-    else:
-        print("Installation supported on Linux only")
-        sys.exit()
-
 
 print()
 print(
     "MSG: Please ensure you have enabled",
-    bcolors.OKGREEN + "USB Debugging" + bcolors.ENDC,
+    termcolors.OKGREEN + "USB Debugging" + termcolors.ENDC,
     "on your device. See README.md for more details",
 )
-# print("LOG: Current Working Directory >> ", os.getcwd())
-# print('LOG: __file__ name             >> ', str(__file__))
-# print("LOG: os.path Absolute Path     >> ", os.path.abspath(__file__))
-print("LOG: Current Working Directory", os.getcwd())
-
-print("")
+# print("Current Working Directory >> ", os.getcwd())
+# print('__file__ name             >> ', str(__file__))
+# print("os.path Absolute Path     >> ", os.path.abspath(__file__))
+logging.debug("Current Working Directory {}".format(os.getcwd()))
 
 
 # ******************************
@@ -199,60 +206,47 @@ bitrate0 = 8000
 fullscreen0 = "False"
 dispRO0 = "False"
 jsonf = 'guiscrcpy.json'
-# Declare Config path position
-if (platform.system() == 'Windows'):
-    cfgpath = os.path.expanduser("~/AppData/Local/guiscrcpy/")
-else:
-    if (os.getenv('XDG_CONFIG_HOME') is None):
-        cfgpath = os.path.expanduser("~/.config/guiscrcpy/")
-    else:
-        cfgpath = os.getenv('XDG_CONFIG_HOME').split(":")[0]+"/guiscrcpy"
 
 
 try:
     with open(cfgpath + jsonf, 'r') as f:
         config = json.load(f)
     fileExist = True
-    print("LOG: Configuration file found in ", cfgpath, " directory")
+    logging.debug("Configuration file found in {} directory".format(cfgpath))
 
 except FileNotFoundError:
 
-    print("LOG: Initializing guiscrcpy for first time use...")
+    logging.debug("Initializing guiscrcpy for first time use...")
     try:
         os.makedirs(cfgpath)
     except FileExistsError:
-        print("LOG: Folder guiscrcpy aldready exists.")
+        logging.debug("Folder guiscrcpy aldready exists.")
     with open(cfgpath + jsonf, 'w') as f:
         json.dump(config, f)
 
-    print("LOG: Configuration file created in ", cfgpath, " directory")
+    logging.debug("Configuration file created in {} directory".format(cfgpath))
     fileExist = False
 
     if platform.system() == "Windows":
-        print(
-            "LOG: Detected a Windows Operating System :: ",
+        logging.debug(
+            "Detected a Windows Operating System :: {} {}".format(
             platform.release(),
-            platform.version(),
-        )
+            platform.version()
+        ))
         pass
     elif platform.system() == "Linux":
 
-        print(
-            "LOG: Detected a Linux Operating System :: ",
+        logging.debug(
+            "Detected a Linux Operating System :: {} {} ".format(
             platform.release(),
-            platform.version(),
-        )
-        print("LOG: Installing Trebuchet MS font ...")
+            platform.version()
+        ))
+        logging.debug("Installing Trebuchet MS font ...")
         os.system("mkdir ~/.fonts/")
         os.system("cp -r fonts/* ~/.fonts/")
 
     else:
-        print(
-            bcolors.FAIL,
-            " MacOS :: Untested OS detected. Continuing >>> " +
-            bcolors.ENDC,
-        )
-        pass
+        logging.debug(" MacOS :: Untested OS detected. Continuing >>> ")
 
 if not fileExist:
 
@@ -272,50 +266,17 @@ elif fileExist:
     with open(cfgpath + jsonf, 'r') as f:
         config = json.load(f)
 
-    """
-    try:
-        bitrate0 = a[4].strip("\n")
-    except IndexError:
-        bitrate0 = 8000
-    try:
-        dimension0 = a[5].strip("\n")
-    except IndexError:
-        dimension0 = None
-    try:
-        fullscreen0 = a[7].strip("\n")
-    except IndexError:
-        fullscreen0 = "False"
-    try:
-        swtouches0 = a[6].strip("\n")
-    except IndexError:
-        swtouches0 = "False"
-
-    try:
-        dispRO0 = a[8].strip("\n")
-        # print("SUCCESS dispRO")
-    except IndexError:
-        dispRO0 = "False"
-        # print("FAILED dispRO")
-    """
-    # print("LOG: Bitrate : ", bitrate0, " + Dimensions", dimension0, "")
-    # print("LOG: Bitrate: ", bitrate0)
-    # print("dispRO:", dispRO0)
-
 if platform.system() == "Windows":
+
     if os.path.isfile("./scrcpy.exe"):
         increment = ".\\"
-        # print(bcolors.BOLD + "LOG: Found scrcpy.exe in current directory.")
     else:
+        logging.error("scrcpy.exe not found in current directory.")
         print(
-            bcolors.FAIL
-            + " Found scrcpy.exe not found in current directory."
-            + bcolors.ENDC
-        )
-        print(
-            bcolors.BOLD +
-            "LOG: Fallback to system PATH variable." +
+            termcolors.BOLD +
+            "Fallback to system PATH variable." +
             "Please add scrcpy to path." +
-            bcolors.ENDC)
+            termcolors.ENDC)
         increment = ""
 
     if os.path.exists('bin/adb.exe'):
@@ -325,8 +286,8 @@ if platform.system() == "Windows":
 
 else:
     if not fileExist:
-        print(
-            "LOG: One time checking for scrcpy executable." +
+        logging.debug(
+            "One time checking for scrcpy executable." +
             "(Use RESET for rechecking)"
         )
         increment = ""
@@ -336,15 +297,9 @@ else:
             stderr=PIPE,
             shell=True)
         if scrcpy_checker.stderr.read().decode("utf-8").find("not found") != -1:
-            print(
-                bcolors.FAIL +
-                " Failed to find scrcpy on path. 'Start Scrcpy' may not work" +
-                bcolors.ENDC)
+            logging.error("Failed to find scrcpy on path. 'Start Scrcpy' may not work")
         else:
-            print(
-                "LOG: Scrcpy found " +
-                scrcpy_checker.stdout.read().decode("utf-8"))
-
+            logging.debug("Scrcpy found " + scrcpy_checker.stdout.read().decode("utf-8"))
     else:
         increment = ""
 
@@ -370,24 +325,24 @@ def invokeScrcpy():
         stdout=PIPE,
         stderr=STDOUT,
     )
-    print("LOG: ", backup0r.stdout)
+    logging.debug(str(backup0r.stdout))
 
 # ******************************
 
 if (args.start):
-    print("RUNNING SCRCPY DIRECTLY")
+    logging.debug("RUNNING SCRCPY DIRECTLY")
     invokeScrcpy()
 
-print("LOG: Importing modules...")
+logging.debug("Importing modules...")
 
 try:
     from .mainui import Ui_MainWindow
 except (ModuleNotFoundError, ImportError):
     try:
         from guiscrcpy.mainui import Ui_MainWindow
-        print("LOG: Safe submodule import of mainui")
+        logging.debug("Safe submodule import of mainui")
     except Exception as e:
-        print(
+        logging.error(
             "ERR: An Error with Code: {c} has occured explicitly, {m}. Please report to https://github.com/srevinsaju/guiscrcpy/issues".format(
                 c=type(e).__name__,
                 m=str(e)))
@@ -398,7 +353,7 @@ except (ModuleNotFoundError, ImportError):
 try:
     import psutil
 except ModuleNotFoundError:
-    print(
+    logging.warning(
         "WARNING : psutil is not installed in the python3 directory. "
         "Install with \n $ pip3 install psutil"
     )
@@ -407,16 +362,17 @@ try:
     import pyautogui as auto
     from pygetwindow import getWindowsWithTitle
 except Exception as e:
-    print("LOG: 1 {}".format(e))
+    logging.debug("1 {}".format(e))
     auto = None
     getWindowsWithTitle = None
+
 
 # BEGIN TOOLKIT.UI
 class UXMapper:
     def __init__(self):
-        print("LOG: Launching UX Mapper")
+        logging.debug("Launching UX Mapper")
         self.has_modules = getWindowsWithTitle and auto
-        print("LOG: Calculating Screen Size")
+        logging.debug("Calculating Screen Size")
         self.adb_dim = po("{}adb shell wm size".format(increment),
             shell=True,
             stdout=PIPE,
@@ -442,15 +398,13 @@ class UXMapper:
         
     def get_dimensions(self):
         for i in ['Override size', 'Physical size']:
-            print(i, self.raw_dimensions)
             if i in self.raw_dimensions:
-
                 out = self.raw_dimensions[self.raw_dimensions.find(i):]
                 out_decoded = out.split(':')[1].strip()
                 dimValues = out_decoded.split('x')
                 return dimValues
         else:
-            print("AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'")
+            logging.error("AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'")
 
     def copy_devpc(self):
         if self.has_modules:
@@ -462,35 +416,35 @@ class UXMapper:
                 "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+c")
 
     def key_power(self):
-        print("LOG: Passing POWER")
+        logging.debug("Passing POWER")
         self.do_keyevent(26)
 
     def key_menu(self):
-        print("LOG: Passing MENU")
+        logging.debug("Passing MENU")
         self.do_keyevent(82)
 
     def key_back(self):
-        print("LOG: Passing BACK")
+        logging.debug("Passing BACK")
         self.do_keyevent(4)
 
     def key_volume_up(self):
-        print("LOG: Passing BACK")
+        logging.debug("Passing BACK")
         self.do_keyevent(24)
 
     def key_volume_down(self):
-        print("LOG: Passing BACK")
+        logging.debug("Passing BACK")
         self.do_keyevent(25)
 
     def key_home(self):
-        print("LOG: Passing HOME")
+        logging.debug("Passing HOME")
         self.do_keyevent(3)
 
     def key_switch(self):
-        print("LOG: Passing APP_SWITCH")
+        logging.debug("Passing APP_SWITCH")
         self.do_keyevent("KEYCODE_APP_SWITCH")
 
     def reorientP(self):
-        print("LOG: Passing REORIENT [POTRAIT]")
+        logging.debug("Passing REORIENT [POTRAIT]")
         adb_reo = po(
             increment +
             "adb shell settings put system accelerometer_rotation 0",
@@ -502,7 +456,7 @@ class UXMapper:
             shell=True)
 
     def reorientL(self):
-        print("LOG: Passing REORIENT [LANDSCAPE]")
+        logging.debug("Passing REORIENT [LANDSCAPE]")
         adb_reoo = po(
             increment +
             "adb shell settings put system accelerometer_rotation 0",
@@ -513,11 +467,11 @@ class UXMapper:
             shell=True)
 
     def expand_notifications(self):
-        print("LOG: Passing NOTIF EXPAND")
+        logging.debug("Passing NOTIF EXPAND")
         self.do_swipe(0, 0, 0, int(self.android_dimensions[1]) - 1)
 
     def collapse_notifications(self):
-        print("LOG: Passing NOTIF COLLAPSE")
+        logging.debug("Passing NOTIF COLLAPSE")
         self.do_swipe(0, int(self.android_dimensions[1]) - 1, 0, 0)
 
     def copy_pc2dev(self):
@@ -525,7 +479,7 @@ class UXMapper:
             scrcpywindow = getWindowsWithTitle("scrcpy")[0]
             scrcpywindow.focus()
             auto.hotkey("ctrl", "shift", "c")
-            print("E: NOT SUPPORTED ON WINDOWS")
+            logging.warning(" NOT SUPPORTED ON WINDOWS")
         else:
             os.system(
                 "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+shift+c")
@@ -544,7 +498,7 @@ class MyAppv(QMainWindow):
     def __init__(self):
         self.oldPos = None
         super(MyAppv, self).__init__()
-
+        self.ux = None
         self.setObjectName("Dialog")
         self.resize(30, 461)
         sizePolicy = QtWidgets.QSizePolicy(
@@ -951,6 +905,7 @@ class MyAppv(QMainWindow):
         )
         # Connect signals
         # Launch UXMApper
+    def init(self):
         self.ux = UXMapper()
         self.clipD2PC.clicked.connect(self.ux.copy_devpc)
         self.clipPC2D.clicked.connect(self.ux.copy_pc2dev)
@@ -975,14 +930,13 @@ class MyAppv(QMainWindow):
     def mouseMoveEvent(self, event):
         try:
             delta = QPoint(event.globalPos() - self.oldPos)
-            # print(delta)
             self.move(self.x() + delta.x(), self.y() + delta.y())
             self.oldPos = event.globalPos()
         except TypeError:
             pass
 
     def quitn(self):
-        print("LOG: Bye Bye")
+        print("Bye Bye")
         sys.exit()
 
 
@@ -991,10 +945,11 @@ class SwipeUX(QMainWindow):
         QMainWindow.__init__(self)
         super(SwipeUX, self).__init__()
         self.oldPos = None
+        self.ux = None
         self.setObjectName("SwipeUX")
         self.setWindowFlags(Qt.FramelessWindowHint)
-        # self.setAttribute(Qt.WA_NoSystemkey_background, True)
-        # self.setAttribute(Qt.WA_Translucentkey_background, True)
+        self.setAttribute(Qt.WA_NoSystemBackground, True)
+        self.setAttribute(Qt.WA_TranslucentBackground, True)
 
         # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint)
         self.resize(70, 70)
@@ -1077,11 +1032,14 @@ class SwipeUX(QMainWindow):
         # ================
 
         self.oldpos = self.pos()
-        self.ux = UXMapper()
         self.swiup.pressed.connect(self.swipup)
         self.swidn.pressed.connect(self.swipdn)
         self.swilf.pressed.connect(self.swipleft)
         self.swirt.pressed.connect(self.swipright)
+
+    def init(self):
+        self.ux = UXMapper()
+        self.show()
 
     def paintEvent(self, event):
         qp = QtGui.QPainter()
@@ -1094,7 +1052,6 @@ class SwipeUX(QMainWindow):
 
     def mousePressEvent(self, event):
         self.oldPos = event.globalPos()
-        # print("HIT")
 
     def mouseMoveEvent(self, event):
         try:
@@ -1106,7 +1063,7 @@ class SwipeUX(QMainWindow):
             pass
 
     def swipdn(self):
-        print("LOG: Passing SWIPE DOWN")
+        logging.debug("Passing SWIPE DOWN")
         dimValues = self.ux.android_dimensions
         posy = int(dimValues[1]) - 200
         posx = int(dimValues[0])
@@ -1114,7 +1071,7 @@ class SwipeUX(QMainWindow):
         self.ux.do_swipe(newposx, 200, newposx, posy)
 
     def swipup(self):
-        print("LOG: Passing SWIPE UP")
+        logging.debug("Passing SWIPE UP")
         dimValues = self.ux.android_dimensions
         posy = int(dimValues[1]) - 100
         posx = int(dimValues[0])
@@ -1122,7 +1079,7 @@ class SwipeUX(QMainWindow):
         self.ux.do_swipe(newposx, posy, newposx, 200)
 
     def swipleft(self):
-        print("LOG: Passing SWIPE LEFT")
+        logging.debug("Passing SWIPE LEFT")
         dimValues = self.ux.android_dimensions
         posy = int(dimValues[1])
         posx = int(dimValues[0]) - 10
@@ -1130,7 +1087,7 @@ class SwipeUX(QMainWindow):
         self.ux.do_swipe(10, newposy, posx, newposy)
 
     def swipright(self):
-        print("LOG: Passing SWIPE RIGHT")
+        logging.debug("Passing SWIPE RIGHT")
         dimValues = self.ux.android_dimensions
         posy = int(dimValues[1])
         posx = int(dimValues[0]) - 10
@@ -1143,6 +1100,9 @@ class Panel(QMainWindow):
     def __init__(self):
 
         super(Panel, self).__init__()
+
+        # self.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True) #enable highdpi scaling
+        # self.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True) #use highdpi icons
 
         self.setObjectName("self")
         self.resize(328, 26)
@@ -1288,7 +1248,7 @@ class Panel(QMainWindow):
             QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
         )
 
-        # self.setupUi(Dialog)
+    def init(self):
         self.ux = UXMapper()
         self.backk.clicked.connect(self.ux.key_back)
         self.menuUII.clicked.connect(self.ux.key_menu)
@@ -1296,15 +1256,11 @@ class Panel(QMainWindow):
         self.powerUII.clicked.connect(self.ux.key_power)
         self.vupp.clicked.connect(self.ux.key_volume_up)
         self.vdownn.clicked.connect(self.ux.key_volume_down)
-
         self.show()
-        # print("self.oldpos", self.oldpos)
-        # print("FINE TILL HERE")
-        # pdb.set_trace()
+
 
     def mousePressEvent(self, event):
         self.oldPos = event.globalPos()
-        # print("HIT")
 
     def mouseMoveEvent(self, event):
         try:
@@ -1336,21 +1292,26 @@ class MyApp(Ui_MainWindow):
 
         super(MyApp, self).__init__()
         # uic.loadUi(qtCreatorFile, self)
+        
+        # self.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True) #enable highdpi scaling
+        # self.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True) #use highdpi icons
+
 
         Ui_MainWindow.__init__(self)
         self.setupUi(MainWindow)
+
         # self.setupUi(self)
         # self.menuAbout.itemPressed.connect(self.menu_about)
 
         # check if process Scrcpy is running right now in while loop
-        print(
-            "LOG: Options received by class are : ",
+        logging.debug(
+            "Options received by class are : {} {} {} {} {} ".format(
             config['bitrate'],
             config['dimension'],
             config['swtouches'],
             config['dispRO'],
             config['fullscreen'],
-        )
+        ))
         self.dial.setValue(int(config['bitrate']))
         if config['swtouches']:
             self.showTouches.setChecked(True)
@@ -1371,10 +1332,10 @@ class MyApp(Ui_MainWindow):
         else:
             self.fullscreen.setChecked(False)
         if checkProcessRunning("scrcpy"):
-            print("SCRCPY RUNNING")
+            logging.debug("SCRCPY RUNNING")
             self.runningNot.setText("SCRCPY SERVER RUNNING")
         else:
-            print("SCRCPY SERVER IS INACTIVE")
+            logging.debug("SCRCPY SERVER IS INACTIVE")
             self.runningNot.setText("SCRCPY SERVER NOT RUNNING")
 
         # CONNECT DIMENSION CHECK BOX TO STATE CHANGE
@@ -1397,6 +1358,11 @@ class MyApp(Ui_MainWindow):
         except:
             pass
 
+        # show subwindows
+        self.swipe_instance = SwipeUX()  # Load swipe UI
+        self.panel_instance = Panel()
+        self.side_instance = MyAppv()
+
         self.quit.clicked.connect(self.quitAct)
         self.dimensionText.setText("DEFAULT")
         config['bitrate'] = int(self.dial.value())
@@ -1408,162 +1374,38 @@ class MyApp(Ui_MainWindow):
         self.usbaud.clicked.connect(self.usbaudi)
         self.mapnow.clicked.connect(self.mapp)
 
+
     def mapp(self):
         if(os.path.exists(cfgpath + "guiscrcpy.mapper.json")):
             from guiscrcpy import mapper
             mapper.file_check()
         else:
-            print("guiscrcpy ~ mapper is not initialized. Initialize by running",
-                  "$ guiscrcpy-mapper", "reset points by", "$ guiscrcpy-mapper -r", sep="\n")
+            logging.warning(
+                "guiscrcpy ~ mapper is not initialized. Initialize by running" +
+                "$ guiscrcpy-mapper" + "reset points by" + "$ guiscrcpy-mapper -r")
 
     def fin(self):
         result = []
         try:
             from guiscrcpy import __path__ as xz
             str1 = xz
-            print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", str1)
         except:
             str1 = []
         for path in os.getenv('PATH').split(":")+str1:
-            print("PATH:", path)
+            logging.debug("PATH: {}".format(path))
             for files in os.listdir(path):
-                print("FILE: ", files)
+                logging.debug("FILE: {}".format(files))
                 if "mapper.py" in files:
                     result.append(os.path.join(path, "mapper.py"))
                     break
             else:
-                print("Mapper.py not found")
+                logging.debug("Mapper.py not found")
 
         return result
 
     def usbaudi(self):
-        print("LOG: Called usbaudio")
+        logging.debug("Called usbaudio")
         runnow = po("usbaudio", shell=True, stdout=PIPE, stderr=PIPE)
-
-    """
-    def mapper(self):
-        
-        fixedpos = [0,0]
-
-        class Window(QtWidgets.QWidget):
-            def __init__(self):
-                QtWidgets.QWidget.__init__(self)
-                self.label = QtWidgets.QLabel(self)
-                self.drawing = False
-                adb_dim = po(
-                    "adb shell wm size", shell=True, stdout=PIPE, stderr=PIPE
-                )
-                out = adb_dim.stdout.read()
-                out_decoded = out.decode("utf-8")
-                out_decoded = out_decoded[:-1]
-                dimVal = out_decoded.split(": ")
-                dimensions_ = dimVal[1]
-                dimValues = dimensions_.split("x")
-                print(dimValues, "HH")
-                def on_press(key):
-                    try:
-
-                        if key.char == ",":
-                            a = Popen(
-                                "adb shell screencap -p /sdcard/scr.png",
-                                shell=True,
-                                stdout=PIPE,
-                            )
-                            b = Popen("adb pull /sdcard/scr.png", shell=True, stdout=PIPE)
-                            
-
-                            print(a.stdout)
-                    except AttributeError:
-                        print("special key {0} pressed".format(key))
-
-                def on_release(key):
-                    print("{0} released".format(key))
-                    if key == keyboard.Key.esc:
-                        # Stop listener
-                        return False
-                    if key.char == "o":
-                        # Stop listener
-                        print("REL POS :: ", fixedpos)
-                        relx = fixedpos[0]/self.label.width()
-                        rely = fixedpos[1]/self.label.height()
-                        fixx = relx * int(dimValues[0])
-                        fixy = rely * int(dimValues[1])
-                        print("FINALIZED POS :: ", fixx, fixy)
-                        sys.exit(fixx, fixy)
-
-                # Collect events until released
-                with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
-                    listener.join()
-
-                # ...or, in a non-blocking fashion:
-                listener = keyboard.Listener(on_press=on_press, on_release=on_release)
-                listener.start()
-
-                self.label.setSizePolicy(
-                    QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored
-                )
-                self.label.resize(800, 600)
-                self.label.setContentsMargins(0, 0, 0, 0)
-                self.pixmap = QtGui.QPixmap("scr.png")
-                self.label.resize(0.5*self.pixmap.width(), 0.5*self.pixmap.height())
-                self.resize(0.5*self.pixmap.width(), 0.5*self.pixmap.height())
-                print("Lets Check")
-                self.label.setPixmap(self.pixmap)
-                self.label.setMinimumSize(1, 1)
-                self.label.setMaximumSize(0.5*self.pixmap.width(), 0.5*self.pixmap.height())
-                self.setMaximumSize(0.5*self.pixmap.width(), 0.5*self.pixmap.height())
-                self.label.installEventFilter(self)
-                layout = QtWidgets.QVBoxLayout(self)
-                layout.addWidget(self.label)
-                print("NICE LOOK")
-                print("image.width == ", self.label.width())
-                print("image.height == ", self.label.height())
-
-            def eventFilter(self, source, event):
-                if source is self.label and event.type() == QtCore.QEvent.Resize:
-                    self.label.setPixmap(
-                        self.pixmap.scaled(self.label.size(), QtCore.Qt.KeepAspectRatio)
-                    )
-                return super(Window, self).eventFilter(source, event)
-
-
-            def mousePressEvent(self, event):
-                if event.button() == Qt.LeftButton:
-                    
-                    self.lastPoint= event.pos()
-                    fixedpos[0] =int(event.pos().x())
-                    fixedpos[1] =int(event.pos().y())
-                    print(self.lastPoint , "LAST")
-                    self.lastPoint=self.label.mapFromParent(event .pos()) #this is working fine now
-                    # self.label.setPixmap(QPixmap.fromImage(self.image))
-
-            def mouseMoveEvent(self,event):
-                if (event.buttons() & Qt.LeftButton):
-                    
-                    #painter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine, Qt.RoundCap,Qt.RoundJoin))
-                    # painter.drawLine(self.label.mapFromParent(event.pos()),self.lastPoint)
-                    self.lastPoint=self.label.mapFromParent(event.pos()) #this is working fine now
-                    print(self.lastPoint , "MOVE")
-                    fixedpos[0] =int(event.pos().x())
-                    fixedpos[1] =int(event.pos().y())
-                    # self.label.setPixmap(QPixmap.fromImage(self.image))
-                
-            def mouseReleaseEvent(self,event):
-                if event.button == Qt.LeftButton:
-                    #self.drawing = False
-                    self.label.setPixmap(QPixmap.fromImage(self.image))
-
-
-        if __name__ == "__main__":
-
-            import sys
-
-            app = QtWidgets.QApplication(sys.argv)
-            window = Window()
-            window.show()
-            
-            sys.exit(app.exec_())
-    """
 
     def openme(self):
         webbrowser.open("https://srevinsaju.github.io")
@@ -1584,8 +1426,8 @@ class MyApp(Ui_MainWindow):
     def reset(self):
 
         os.remove(cfgpath + jsonf)
-        print("LOG: CONFIGURATION FILE REMOVED SUCCESSFULLY")
-        print("RESTART")
+        logging.debug("CONFIGURATION FILE REMOVED SUCCESSFULLY")
+        logging.debug("RESTART")
         msgBox = QMessageBox().window()
         msgBox.about(
             self.pushButton,
@@ -1622,14 +1464,11 @@ class MyApp(Ui_MainWindow):
 
     def slider_text_refresh(self):
         config['dimension'] = int(self.dimensionSlider.value())
-
         self.dimensionText.setText(str(config['dimension']) + "px")
         pass
 
     def dial_text_refresh(self):
         config['bitrate'] = int(self.dial.value())
-
-        # print("xcx" + str(bitrate0))
         self.bitrateText.setText(str(config['bitrate']) + "KB/s")
         pass
 
@@ -1645,7 +1484,7 @@ class MyApp(Ui_MainWindow):
 
         deco = needed_output.decode("utf-8")
         det = deco.split("\t")
-        print("ADB: ", det)
+        logging.debug("ADB: {}".format(det))
 
         if det[0] == "\n":
             self.runningNot.setText("DEVICE IS NOT CONNECTED")
@@ -1760,15 +1599,19 @@ class MyApp(Ui_MainWindow):
 
         # self.myLine = startScrcpy(self.options)
         # self.connect(self.myLine, SIGNAL("update_terminal(QString)"), self.update_terminal)
-        print("LOG: CONNECTION ESTABLISHED")
+        logging.debug("CONNECTION ESTABLISHED")
         self.progressBar.setValue(50)
 
-        print("LOG: Flags passed to scrcpy engine : " + self.options)
+        logging.debug("Flags passed to scrcpy engine : " + self.options)
         self.progressBar.setValue(75)
 
         # get additional flags from QLineEdit self.flaglineedit
         config['extra'] = self.flaglineedit.text()
 
+        # show subwindows
+        self.swipe_instance.init()  # show Swipe UI
+        self.panel_instance.init()
+        self.side_instance.init()
         # run scrcpy usng subprocess
         backup = po(
             increment + "scrcpy " +
@@ -1781,15 +1624,15 @@ class MyApp(Ui_MainWindow):
         # StartScrcpy(options=self.options
         timef = time.time()
         eta = timef - timei
-        print("LOG: SCRCPY is launched in", eta, "seconds")
+        print("SCRCPY is launched in", eta, "seconds")
         self.progressBar.setValue(100)
 
         with open(cfgpath + jsonf, 'w') as f:
             json.dump(config, f)
-        print("LOG: Configuration file at ", cfgpath + jsonf, ".")
+        logging.debug("Configuration file at {}".format(cfgpath + jsonf, "."))
 
         if self.notifChecker.isChecked():
-            print("LOG: Launching notification auditor")
+            logging.warning("Launching notification auditor")
             # ------------
             # Begin notif auditor
             # --------
@@ -1798,8 +1641,8 @@ class MyApp(Ui_MainWindow):
 
             def callback(icon):
                 if platform.system() == "Windows":
-                    print(
-                        "WARNING: Notif Auditor is experimental on Windows. If you wish to help out on this issue. Open a PR on github"
+                    logging.warning(
+                        "Notif Auditor is experimental on Windows. If you wish to help out on this issue. Open a PR on github"
                     )
                     notif = po(
                         increment +
@@ -1808,7 +1651,7 @@ class MyApp(Ui_MainWindow):
                         shell=True,
                     )
                 else:
-                    "WARNING: Notif Auditor is experimental on Linux. If you wish to help out on this issue. Open a PR on github"
+                    "Notif Auditor is experimental on Linux. If you wish to help out on this issue. Open a PR on github"
                     notif = po(
                         increment +
                         "adb shell dumpsys notification | grep ticker | cut -d= -f2",
@@ -1821,8 +1664,8 @@ class MyApp(Ui_MainWindow):
                 var2 = var1
                 while True:
                     if platform.system() == "Windows":
-                        print(
-                            "WARNING: Notif Auditor is experimental on Windows. If you wish to help out on this issue. Open a PR on github"
+                        logging.warning(
+                            "Notif Auditor is experimental on Windows. If you wish to help out on this issue. Open a PR on github"
                         )
                         notif = po(
                             increment +
@@ -1831,7 +1674,7 @@ class MyApp(Ui_MainWindow):
                             shell=True,
                         )
                     else:
-                        "WARNING: Notif Auditor is experimental on Linux. If you wish to help out on this issue. Open a PR on github"
+                        "Notif Auditor is experimental on Linux. If you wish to help out on this issue. Open a PR on github"
                         notif = po(
                             increment +
                             "adb shell dumpsys notification | grep ticker | cut -d= -f2",
@@ -1844,7 +1687,6 @@ class MyApp(Ui_MainWindow):
                     var1 = notif.stdout.readlines()
 
                     # <----
-                    print("LOG: var1: ", var1)
                     if len(var1) > len(var2):
                         d = ImageDraw.Draw(image)
                         d.rectangle([0, 255, 128, 128], fill="green")
@@ -1861,7 +1703,7 @@ class MyApp(Ui_MainWindow):
             # End notif auditor
 
 
-def launch_main0():
+def bootstrap0():
 
     QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True) #enable highdpi scaling
     QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True) #use highdpi icons
@@ -1881,6 +1723,7 @@ def launch_main0():
     splash.setMask(splash_pix.mask())
     splash.show()
     app.processEvents()
+
     # -------------------
     # chk ADB devices prehandle
     # -------------------
@@ -1890,19 +1733,17 @@ def launch_main0():
         needed_output8 = output8[1]
         deco8 = needed_output8.decode("utf-8")
         det8 = deco8.split("\t")
-        print("ADB: ", deco8)
+        logging.debug("ADB: {}".format(deco8))
 
     except IndexError:
-        print(
-            bcolors.FAIL +
-            " ADB is not installed on your system" +
-            bcolors.ENDC)
+        logging.error("ADB is not installed on your system")
 
     # ------------------
     app.processEvents()
 
 
     # panel = Panel(windoww)
+
     window.show()
     splash.hide()
     # windowww.show()
@@ -1922,10 +1763,10 @@ if __name__ == "__main__":
         pass
     sys.path.append('')
 
-    launch_main0()
+    bootstrap0()
 
 
-def launch_main():
+def bootstrap():
     from guiscrcpy import __path__
     patz1 = list(__path__)[0]
     sys.path.append(patz1)
@@ -1936,4 +1777,4 @@ def launch_main():
     ar = ""
     for i in sys.argv[1:]:
         ar += " " + i + " "
-    launch_main0()
+    bootstrap0()

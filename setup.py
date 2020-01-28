@@ -26,12 +26,12 @@ setup(
     packages=['guiscrcpy'],
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
-    package_data={'guiscrcpy': ['*', '*.*', 'dark/*', 'icons/*', 'fonts/*', 'rsrc/*', 'ui/*'],
+    package_data={'guiscrcpy': ['*', '*.*', 'resources/*', 'ui/*', 'lib/*'],
                   '.': [".git/info/*"]
                   },
     include_package_data=True,
     install_requires=['PyQt5', 'psutil', 'qdarkstyle', 'pynput', 'gitpython'],
-    scripts=["guiscrcpy/guiscrcpy", "guiscrcpy/guiscrcpy-mapper"],
+    scripts=["scripts/guiscrcpy", "scripts/guiscrcpy-mapper"],
     classifiers=['Operating System :: OS Independent',
                  'Programming Language :: Python :: 3.7',
                  'Programming Language :: Python :: 3.6',
@@ -42,33 +42,3 @@ setup(
                  'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'],
 )
 
-
-#print("CREATING SHORTCUTS...")
-# """entry_points = {
-#        'console_scripts': [
-#            'guiscrcpy=guiscrcpy.__main__:launch_main']
-#
-"""
-print("thanks to pyshortcuts by @newvile shortcuts for pip packages are easier than ever")
-
-if platform.platform()=="Windows":
-    cfgpath = os.path.expanduser("~/AppData/Local/guiscrcpy/")
-else:
-    cfgpath = os.path.expanduser("~/.config/guiscrcpy/")
-
-#def last_i():
-#    
-    copyfile("./guiscrcpy/icons/guiscrcpy_logo_SRj_icon.ico", cfgpath+"logo.ico") 
-    make_shortcut(
-        script=os.path.expanduser("~/.local/bin/guiscrcpy"),
-        name="guiscrcpy",
-        description="Open Source GUI based Android Screen Mirroring System",
-        icon=cfgpath + "logo.ico",
-        desktop=True,
-        startmenu=True,
-        executable=None,
-    )
-
-            
-last_i()
-"""

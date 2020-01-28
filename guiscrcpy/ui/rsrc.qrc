@@ -1,0 +1,43 @@
+<RCC>
+  <qresource prefix="res">
+    <file>ui/guiscrcpy_logo.png</file>
+    <file>ui/rect.png</file>
+    <file>ui/guiscrcpy-branding.png</file>
+  </qresource>
+  <qresource prefix="icons">
+    <file>icons/chevron-sign-down.svg</file>
+    <file>icons/chevron-sign-right.svg</file>
+    <file>icons/chevron-sign-up.svg</file>
+    <file>icons/home.svg</file>
+    <file>icons/zoom-out.svg</file>
+    <file>icons/ss-branding.png</file>
+    <file>icons/github.logo.svg</file>
+    <file>icons/bullseye.svg</file>
+    <file>icons/zoom-in.svg</file>
+    <file>icons/hand-finger-pointing-down.svg</file>
+    <file>icons/fire-symbol.svg</file>
+    <file>icons/refresh-arrow.svg</file>
+    <file>icons/bell-musical-tool(2).svg</file>
+    <file>icons/copy-document(1).svg</file>
+    <file>icons/copy-document.svg</file>
+    <file>icons/bell-musical-tool.svg</file>
+    <file>icons/facetime-button.svg</file>
+    <file>icons/increase-size-option.svg</file>
+    <file>icons/small-rocket-ship-silhouette.svg</file>
+    <file>icons/cross-mark-on-a-black-circle-background.svg</file>
+    <file>icons/vertical-resizing-option.svg</file>
+    <file>icons/horizontal-resize-option.svg</file>
+    <file>icons/reorder-option.svg</file>
+    <file>icons/four-black-squares.svg</file>
+    <file>icons/power.svg</file>
+    <file>icons/chevron-sign-left.svg</file>
+    <file>icons/reduced-volume.svg</file>
+    <file>icons/volume-up-interface-symbol.svg</file>
+  </qresource>
+  <qresource prefix="fonts">
+    <file>fonts/trebucit.ttf</file>
+    <file>fonts/trebucbi.ttf</file>
+    <file>fonts/trebucbd.ttf</file>
+    <file>fonts/trebuc.ttf</file>
+  </qresource>
+</RCC>

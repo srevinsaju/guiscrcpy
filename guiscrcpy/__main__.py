@@ -1863,11 +1863,14 @@ class MyApp(Ui_MainWindow):
 
 def launch_main0():
 
-    app = QtWidgets.QApplication(sys.argv)
-
     QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True) #enable highdpi scaling
     QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True) #use highdpi icons
     app = QtWidgets.QApplication(sys.argv)
+    window = QtWidgets.QMainWindow()  # Create windwo
+    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+    # windoww = QtWidgets.QMainWindow()
+    # windowww = QtWidgets.QMainWindow()
+    prog = MyApp(window)
 
     # file = QFile(":/dark.qss")
     # file.open(QFile.ReadOnly | QFile.Text)
@@ -1896,21 +1899,10 @@ def launch_main0():
             bcolors.ENDC)
 
     # ------------------
-
-    time.sleep(0.5)
     app.processEvents()
 
-    rw = SwipeUX()  # Load swipe UI
-    rw.show()  # show Swipe UI
 
-    window = QtWidgets.QMainWindow()  # Create windwo
-    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
-    # windoww = QtWidgets.QMainWindow()
-    # windowww = QtWidgets.QMainWindow()
-    prog = MyApp(window)
     # panel = Panel(windoww)
-    panel = Panel()
-    progg = MyAppv()
     window.show()
     splash.hide()
     # windowww.show()
@@ -1922,8 +1914,8 @@ def launch_main0():
 
 if __name__ == "__main__":
     try:
-        import guiscrcpy
-        patz = list(guiscrcpy.__path__)[0]
+        from guiscrcpy import __path__
+        patz = list(__path__)[0]
         sys.path.append(patz)
         sys.path.append('')
     except ModuleNotFoundError:
@@ -1934,11 +1926,10 @@ if __name__ == "__main__":
 
 
 def launch_main():
-    import guiscrcpy
-    patz1 = list(guiscrcpy.__path__)[0]
+    from guiscrcpy import __path__
+    patz1 = list(__path__)[0]
     sys.path.append(patz1)
-    # print("SYS.path ==", sys.path)
-    if(platform.system() == "Windows"):
+    if (platform.system() == "Windows"):
         pythonexec = "python"
     else:
         pythonexec = "python3"

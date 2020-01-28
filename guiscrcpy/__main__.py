@@ -969,10 +969,13 @@ class MyAppv(QMainWindow):
         self.oldPos = event.globalPos()
 
     def mouseMoveEvent(self, event):
-        delta = QPoint(event.globalPos() - self.oldPos)
-        # print(delta)
-        self.move(self.x() + delta.x(), self.y() + delta.y())
-        self.oldPos = event.globalPos()
+        try:
+            delta = QPoint(event.globalPos() - self.oldPos)
+            # print(delta)
+            self.move(self.x() + delta.x(), self.y() + delta.y())
+            self.oldPos = event.globalPos()
+        except TypeError:
+            pass
 
     def quitn(self):
         print("LOG: Bye Bye")
@@ -1089,10 +1092,13 @@ class SwipeUX(QMainWindow):
         # print("HIT")
 
     def mouseMoveEvent(self, event):
-        delta = QPoint(event.globalPos() - self.oldPos)
+        try:
+            delta = QPoint(event.globalPos() - self.oldPos)
 
-        self.move(self.x() + delta.x(), self.y() + delta.y())
-        self.oldPos = event.globalPos()
+            self.move(self.x() + delta.x(), self.y() + delta.y())
+            self.oldPos = event.globalPos()
+        except TypeError:
+            pass
 
     def swipdn(self):
         print("LOG: Passing SWIPE DOWN")
@@ -1296,10 +1302,13 @@ class Panel(QMainWindow):
         # print("HIT")
 
     def mouseMoveEvent(self, event):
-        delta = QPoint(event.globalPos() - self.oldPos)
+        try:
+            delta = QPoint(event.globalPos() - self.oldPos)
 
-        self.move(self.x() + delta.x(), self.y() + delta.y())
-        self.oldPos = event.globalPos()
+            self.move(self.x() + delta.x(), self.y() + delta.y())
+            self.oldPos = event.globalPos()
+        except TypeError:
+            pass
 
 # END TOOLKIT
 

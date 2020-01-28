@@ -4,7 +4,7 @@ __pycache__
 dist
 bin
 release
-src
+
 venv
 build
 .idea

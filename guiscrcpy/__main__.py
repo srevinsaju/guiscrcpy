@@ -7,10 +7,10 @@ Licensed under GNU Public License
 
 Icon made by Dave Gandy from www.flaticon.com used under
 Creative Commons 3.0 Unported. The original SVG black work
-by Dave Gandy has ben re-oriented, flipped or color-changed.
+by Dave Gandy has been re-oriented, flipped or color-changed.
 The rest of Terms and Conditions put formward by
 CC-3.0:Unported has been feverently followed by the developer.
-Icons have been adapeted in all the three windows.
+Icons have been adapted in all the three windows.
 
 Icons pack obtained from www.flaticon.com
 All rights reserved.

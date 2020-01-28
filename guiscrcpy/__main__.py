@@ -1865,6 +1865,9 @@ def launch_main0():
 
     app = QtWidgets.QApplication(sys.argv)
 
+    QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True) #enable highdpi scaling
+    QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True) #use highdpi icons
+
     # file = QFile(":/dark.qss")
     # file.open(QFile.ReadOnly | QFile.Text)
     # stream = QTextStream(file)

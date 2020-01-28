@@ -2,6 +2,7 @@ __pycache__
 *.pyo
 *.pyc
 dist
+bin
 release
 src
 venv

@@ -18,7 +18,7 @@ All rights reserved.
 """
 
 # Prelaunch
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtWidgets import QMessageBox
 import qdarkstyle
 from PyQt5.QtCore import *

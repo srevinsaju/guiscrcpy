@@ -6,8 +6,11 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+try:
+    from guiscrcpy import rsrc_rc
+except ModuleNotFoundError:
+    import rsrc_rc
 
-import rsrc_rc
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 

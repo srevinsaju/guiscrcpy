@@ -716,13 +716,10 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
 class Panel(QMainWindow, Ui_HorizontalPanel):
     # there was a Dialog in the bracket
     def __init__(self):
-
         QMainWindow.__init__(self)
         Ui_HorizontalPanel.__init__(self)
         self.setupUi(self)
         self.oldpos = self.pos()
-        # Ui_Panel.__init__(self)
-        # Dialog.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.setWindowFlags(
             QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
         )
@@ -737,7 +734,6 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
         self.vdownn.clicked.connect(self.ux.key_volume_down)
         self.show()
 
-
     def mousePressEvent(self, event):
         self.oldPos = event.globalPos()
 
@@ -750,16 +746,12 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
         except TypeError:
             pass
 
-# END TOOLKIT
-
 
 class InterfaceGuiscrcpy(Ui_MainWindow):
     def __init__(self, Ui_MainWindow):
         Ui_MainWindow.__init__()
         self.setupUi(Ui_MainWindow)
         super(InterfaceGuiscrcpy, self).__init__()
-
-        # check if process Scrcpy is running right now in while loop
         logging.debug(
             "Options received by class are : {} {} {} {} {} ".format(
             config['bitrate'],

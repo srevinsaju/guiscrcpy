@@ -23,7 +23,6 @@ __version__ = '2.0.0-raw'
 
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtWidgets import QMessageBox
-import qdarkstyle
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPixmap
@@ -1157,15 +1156,8 @@ def bootstrap0():
     QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True) #use highdpi icons
     app = QtWidgets.QApplication(sys.argv)
     window = QtWidgets.QMainWindow()  # Create windwo
-    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
-    # windoww = QtWidgets.QMainWindow()
-    # windowww = QtWidgets.QMainWindow()
     prog = InterfaceGuiscrcpy(window)
 
-    # file = QFile(":/dark.qss")
-    # file.open(QFile.ReadOnly | QFile.Text)
-    # stream = QTextStream(file)
-    # app.setStyleSheet(stream.readAll())
     splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
     splash = QtWidgets.QSplashScreen(splash_pix)
     splash.setMask(splash_pix.mask())

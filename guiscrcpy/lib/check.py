@@ -92,7 +92,6 @@ class adb:
         if increment is None:
             raise FileNotFoundError(
                 "guiscrcpy couldn't find adb. Please specify path to adb in configuration file")
-        print(increment)
         proc = Popen(_(increment + " devices"), stdout=PIPE)
         output = decode_process(proc)[1].split('\t')
         logging.debug("ADB: {}".format(output))

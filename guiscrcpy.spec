@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['guiscrcpy\\guiscrcpy'],
+a = Analysis(['scripts\\guiscrcpy'],
              pathex=['C:\\Users\\SS\\repo\\guiscrcpy'],
              binaries=[],
              datas=[],
@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True , icon='guiscrcpy\\icons\\guiscrcpy_logo_SRj_icon.ico')
+          console=True , icon='guiscrcpy\\ui\\icons\\guiscrcpy_logo_SRj_icon.ico')

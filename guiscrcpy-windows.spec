@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True , icon='guiscrcpy\\ui\\icons\\guiscrcpy_logo_SRj_icon.ico')
+          console=True , version='version.txt', icon='guiscrcpy\\ui\\icons\\guiscrcpy_logo_SRj_icon.ico')

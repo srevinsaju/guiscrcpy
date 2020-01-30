@@ -64,7 +64,7 @@ class InterfaceConfig:
 
     def write_file(self):
         with open(os.path.join(self.cfgpath, self.jsonfile), 'w') as f:
-            json.dump(self.config, f)
+            json.dump(self.config, f, indent=4, sort_keys=True)
 
     def check_file(self):
         if not os.path.exists(self.cfgpath):

@@ -1,4 +1,4 @@
-name: Python application
+name: Flake8 Python Linux
 
 on: [push]
 

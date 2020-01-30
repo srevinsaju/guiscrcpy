@@ -13,10 +13,14 @@ this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
+ver = repo.git.describe("--tags")
+if '-' in ver:
+    ver = ver[:-9]
+
 
 setup(
     name='guiscrcpy',
-    version=repo.git.describe("--tags")[:-9],
+    version=ver,
     description='An Open Source - Fast -  Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',

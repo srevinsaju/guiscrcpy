@@ -1,4 +1,4 @@
-<img src=guiscrcpy/ui/guiscrcpy_logo.png width=25%>
+<img src=https://github.com/srevinsaju/guiscrcpy/blob/master/guiscrcpy/ui/ui/guiscrcpy_logo.png width=25%>
 
 # guiscrcpy
 

@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-
+import shlex
 import logging
 import os
 from guiscrcpy.platform.platform import System

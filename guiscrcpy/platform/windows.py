@@ -9,7 +9,7 @@ class Windows:
 
     @staticmethod
     def make_config():
-        path = os.path.expanduser("~/AppData/Local/guiscrcpy/")
+        path = os.path.expanduser(os.path.join("~", "AppData", "Local", "guiscrcpy"))
         if not os.path.exists(path):
             try:
                 os.makedirs(path)
@@ -27,7 +27,7 @@ class Windows:
         return 'Windows'
 
     def cfgpath(self):
-        return os.path.expanduser("~/AppData/Local/guiscrcpy/")
+        return self.make_config()
 
     def increment(self):
         pass

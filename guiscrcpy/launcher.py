@@ -8,7 +8,7 @@ Licensed under GNU Public License
 Icon made by Dave Gandy from www.flaticon.com used under
 Creative Commons 3.0 Unported. The original SVG black work
 by Dave Gandy has been re-oriented, flipped or color-changed.
-The rest of Terms and Conditions put formward by
+The rest of Terms and Conditions put forward by
 CC-3.0:Unported has been feverently followed by the developer.
 Icons have been adapted in all the three windows.
 

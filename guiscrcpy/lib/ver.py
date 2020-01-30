@@ -1,4 +1,4 @@
-__version__ = '2.0-raw'
+__version__ = '3.0-raw'
 import logging
 try:
     import git

@@ -20,7 +20,7 @@ All rights reserved.
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import *
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtGui import QPixmap
 import sys
 import argparse
@@ -39,6 +39,7 @@ from guiscrcpy.platform import platform
 from guiscrcpy.theme.decorate import header
 from guiscrcpy.lib.check import adb
 from guiscrcpy.lib.check import scrcpy
+from guiscrcpy.theme.style import darkstylesheet
 from guiscrcpy.ui.main import Ui_MainWindow
 from guiscrcpy.ui.toolkit import Ui_ToolbarPanel
 from guiscrcpy.ui.panel import Ui_HorizontalPanel
@@ -429,6 +430,10 @@ def bootstrap0():
     QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)  # enable highdpi scaling
     QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)  # use highdpi icons
     app = QtWidgets.QApplication(sys.argv)
+
+    app.setStyle('Breeze')
+    app.setStyleSheet(darkstylesheet())
+
     window = QtWidgets.QMainWindow()  # Create windwo
     prog = InterfaceGuiscrcpy(window)
 

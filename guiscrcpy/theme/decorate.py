@@ -21,7 +21,6 @@ class header:
             termcolors.ENDC)
         print(termcolors.OKBLUE + "" + termcolors.ENDC)
 
-
         print()
         print(
             "MSG: Please ensure you have enabled",

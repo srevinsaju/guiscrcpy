@@ -12,7 +12,6 @@ except Exception as e:
     getWindowsWithTitle = None
 
 
-
 class UXMapper:
     def __init__(self):
         logging.debug("Launching UX Mapper")
@@ -34,7 +33,8 @@ class UXMapper:
             scrcpywindow.focus()
             auto.hotkey("ctrl", "c")
         else:
-            os.system("wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+c")
+            os.system(
+                "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+c")
 
     def key_power(self):
         logging.debug("Passing POWER")

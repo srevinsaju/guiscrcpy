@@ -6,6 +6,7 @@ from guiscrcpy.platform import platform
 from guiscrcpy.lib.check import adb
 from guiscrcpy.lib.check import scrcpy
 
+
 class InterfaceConfig:
     def __init__(self, mode='w'):
         self.os = platform.System()

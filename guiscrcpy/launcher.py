@@ -427,8 +427,10 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
 
 
 def bootstrap0():
-    QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)  # enable highdpi scaling
-    QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)  # use highdpi icons
+    # enable highdpi scaling
+    QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+    QApplication.setAttribute(
+        QtCore.Qt.AA_UseHighDpiPixmaps, True)  # use highdpi icons
     app = QtWidgets.QApplication(sys.argv)
 
     app.setStyle('Breeze')

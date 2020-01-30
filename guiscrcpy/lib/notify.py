@@ -58,4 +58,3 @@ class NotifyAuditor:
                 icon.icon = image
                 time.sleep(600)
                 var2 = var1
-

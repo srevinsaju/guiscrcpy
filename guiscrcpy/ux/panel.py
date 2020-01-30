@@ -38,4 +38,3 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
             self.oldPos = event.globalPos()
         except TypeError:
             pass
-

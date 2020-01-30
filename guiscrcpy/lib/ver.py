@@ -3,8 +3,10 @@ import logging
 try:
     import git
 except ModuleNotFoundError:
-    logging.warning('GitPython not installed. Fallback to pip3 version reading')
+    logging.warning(
+        'GitPython not installed. Fallback to pip3 version reading')
     git = None
+
 
 class version:
     def __init__(self):
@@ -52,7 +54,7 @@ class version:
             return False
 
     def get_version(self):
-        return  self.version
+        return self.version
 
     def get_commit(self):
         return self.commit
@@ -62,4 +64,3 @@ class version:
             return self.sha
         else:
             return ''
-

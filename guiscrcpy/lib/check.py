@@ -6,8 +6,10 @@ from guiscrcpy.platform.platform import System
 
 environment = System()
 
+
 def check(binary):
     pass
+
 
 class scrcpy:
     def __init__(self):
@@ -32,7 +34,9 @@ class scrcpy:
         if scrcpy_path and (type(scrcpy_path) is list):
             return scrcpy_path[0]
         else:
-            logging.error('scrcpy could not be found in any of the paths {}'.format(environment.paths()))
+            logging.error('scrcpy could not be found in any of the paths {}'.format(
+                environment.paths()))
+
 
 class adb:
     def __init__(self):
@@ -44,7 +48,8 @@ class adb:
         if adb_path and (type(adb_path) is list):
             return adb_path[0]
         else:
-            logging.error('adb could not be found in any of the paths {}'.format(environment.paths()))
+            logging.error('adb could not be found in any of the paths {}'.format(
+                environment.paths()))
 
     @staticmethod
     def shell_input(path, command):
@@ -69,7 +74,8 @@ class adb:
                 dimValues = out_decoded.split('x')
                 return dimValues
         else:
-            logging.error("AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'")
+            logging.error(
+                "AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'")
             return False
 
     @staticmethod

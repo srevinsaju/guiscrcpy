@@ -160,4 +160,3 @@ class SwipeUX(QMainWindow):
         posx = int(dimValues[0]) - 10
         newposy = int(posy / 2)  # find center
         self.ux.do_swipe(posx, newposy, 10, newposy)
-

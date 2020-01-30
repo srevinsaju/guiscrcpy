@@ -3,6 +3,7 @@ import os
 from guiscrcpy.platform.platform import System
 environment = System()
 
+
 def decode(raw_output):
     pass
 
@@ -38,7 +39,8 @@ def check_existence(paths, file=(), directory=True, PATH=False):
 
     if PATH:
         new_paths = os.getenv('PATH').split(os.pathsep)
-        found_path = check_existence(new_paths, file=file, directory=directory, PATH=False)
+        found_path = check_existence(
+            new_paths, file=file, directory=directory, PATH=False)
         if found_path:
             return [found_path, 'path']
         else:

@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 
+from . import rsrc_rc
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -15,36 +16,38 @@ class Ui_HorizontalPanel(object):
         HorizontalPanel.setObjectName("HorizontalPanel")
         HorizontalPanel.resize(328, 26)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/res/ui/guiscrcpy_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/res/ui/guiscrcpy_logo.png"),
+                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
         HorizontalPanel.setWindowIcon(icon)
         HorizontalPanel.setStyleSheet("\n"
-".QPushButton {\n"
-"border-radius: 1px;\n"
-"color: rgb(0, 0, 0);\n"
-" \n"
-"    background-color: qlineargradient(spread:pad, x1:0, y1:0.915182, x2:0, y2:0.926, stop:0.897059 rgba(41, 41, 41, 255), stop:1 rgba(30, 30, 30, 255));\n"
-"                    }\n"
-"\n"
-"QPushButton:pressed {\n"
-"border-radius: 5px;\n"
-"                      \n"
-"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 152, 255));\n"
-"color: rgb(0, 0, 0);\n"
-"                        }\n"
-"QPushButton:hover {\n"
-"border-radius: 5px;\n"
-"                      \n"
-"    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 199, 199, 255), stop:1 rgba(0, 190, 113, 255));\n"
-"color: rgb(0, 0, 0);\n"
-"                        }\n"
-"")
+                                      ".QPushButton {\n"
+                                      "border-radius: 1px;\n"
+                                      "color: rgb(0, 0, 0);\n"
+                                      " \n"
+                                      "    background-color: qlineargradient(spread:pad, x1:0, y1:0.915182, x2:0, y2:0.926, stop:0.897059 rgba(41, 41, 41, 255), stop:1 rgba(30, 30, 30, 255));\n"
+                                      "                    }\n"
+                                      "\n"
+                                      "QPushButton:pressed {\n"
+                                      "border-radius: 5px;\n"
+                                      "                      \n"
+                                      "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 152, 255));\n"
+                                      "color: rgb(0, 0, 0);\n"
+                                      "                        }\n"
+                                      "QPushButton:hover {\n"
+                                      "border-radius: 5px;\n"
+                                      "                      \n"
+                                      "    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 199, 199, 255), stop:1 rgba(0, 190, 113, 255));\n"
+                                      "color: rgb(0, 0, 0);\n"
+                                      "                        }\n"
+                                      "")
         self.backk = QtWidgets.QPushButton(HorizontalPanel)
         self.backk.setEnabled(True)
         self.backk.setGeometry(QtCore.QRect(210, 0, 51, 25))
         self.backk.setStyleSheet("")
         self.backk.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/icons/chevron-sign-left.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(
+            ":/icons/icons/chevron-sign-left.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.backk.setIcon(icon1)
         self.backk.setObjectName("backk")
         self.powerUII = QtWidgets.QPushButton(HorizontalPanel)
@@ -53,7 +56,8 @@ class Ui_HorizontalPanel(object):
         self.powerUII.setStyleSheet("")
         self.powerUII.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/icons/icons/power.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/icons/icons/power.svg"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.powerUII.setIcon(icon2)
         self.powerUII.setCheckable(False)
         self.powerUII.setObjectName("powerUII")
@@ -63,7 +67,8 @@ class Ui_HorizontalPanel(object):
         self.menuUII.setStyleSheet("")
         self.menuUII.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/icons/icons/reorder-option.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(
+            ":/icons/icons/reorder-option.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.menuUII.setIcon(icon3)
         self.menuUII.setObjectName("menuUII")
         self.vdownn = QtWidgets.QPushButton(HorizontalPanel)
@@ -72,7 +77,8 @@ class Ui_HorizontalPanel(object):
         self.vdownn.setStyleSheet("")
         self.vdownn.setText("")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/icons/icons/reduced-volume.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(
+            ":/icons/icons/reduced-volume.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.vdownn.setIcon(icon4)
         self.vdownn.setObjectName("vdownn")
         self.homee = QtWidgets.QPushButton(HorizontalPanel)
@@ -81,7 +87,8 @@ class Ui_HorizontalPanel(object):
         self.homee.setStyleSheet("")
         self.homee.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/icons/icons/home.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap(":/icons/icons/home.svg"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.homee.setIcon(icon5)
         self.homee.setObjectName("homee")
         self.vupp = QtWidgets.QPushButton(HorizontalPanel)
@@ -90,7 +97,8 @@ class Ui_HorizontalPanel(object):
         self.vupp.setStyleSheet("")
         self.vupp.setText("")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/icons/icons/volume-up-interface-symbol.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap(
+            ":/icons/icons/volume-up-interface-symbol.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.vupp.setIcon(icon6)
         self.vupp.setObjectName("vupp")
         self.label = QtWidgets.QLabel(HorizontalPanel)
@@ -116,11 +124,11 @@ class Ui_HorizontalPanel(object):
 
     def retranslateUi(self, HorizontalPanel):
         _translate = QtCore.QCoreApplication.translate
-        HorizontalPanel.setWindowTitle(_translate("HorizontalPanel", "guiscrcpy"))
+        HorizontalPanel.setWindowTitle(
+            _translate("HorizontalPanel", "guiscrcpy"))
         self.backk.setToolTip(_translate("HorizontalPanel", "Back key"))
         self.powerUII.setToolTip(_translate("HorizontalPanel", "Power on/off"))
         self.menuUII.setToolTip(_translate("HorizontalPanel", "Menu key"))
         self.vdownn.setToolTip(_translate("HorizontalPanel", "Volume Up"))
         self.homee.setToolTip(_translate("HorizontalPanel", "Home key"))
         self.label.setText(_translate("HorizontalPanel", "::"))
-from . import rsrc_rc

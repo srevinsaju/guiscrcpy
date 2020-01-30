@@ -1,4 +1,4 @@
-name: Flake8 Python Windows
+name: Windows
 
 on: [push]
 

@@ -21,9 +21,9 @@ import logging
 import os
 
 
-class Linux:
+class Darwin:
     def __init__(self):
-        pass
+        logging.error("MacOS is untested. guiscrcpy is trying to use Linux config on Mac")
 
     def cfgpath(self):
         return self.make_config()
@@ -48,7 +48,7 @@ class Linux:
         return path
 
     def system(self):
-        return 'Linux'
+        return 'Darwin'
 
     def increment(self):
         pass

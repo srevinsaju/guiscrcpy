@@ -1,7 +1,7 @@
 import logging
 import shlex
 from subprocess import Popen, PIPE
-from guiscrcpy.lib.utils import decode_process, check_existence
+from guiscrcpy.lib.utils import decode_process, check_existence, shellify as _
 from guiscrcpy.platform.platform import System
 
 environment = System()
@@ -18,7 +18,7 @@ class scrcpy:
     @staticmethod
     def start(path, args):
         Popen(
-            shlex.split("{} {}".format(path, args)),
+            _("{} {}".format(path, args)),
             stdout=PIPE,
             stderr=PIPE,
         )
@@ -30,7 +30,7 @@ class scrcpy:
 
     @staticmethod
     def check():
-        scrcpy_path = check_existence(environment.paths(), ['scrcpy'], False)
+        scrcpy_path = check_existence(environment.paths(), ['scrcpy'], False, True)
         if scrcpy_path and (type(scrcpy_path) is list):
             return scrcpy_path[0]
         else:
@@ -44,7 +44,7 @@ class adb:
 
     @staticmethod
     def check():
-        adb_path = check_existence(environment.paths(), ['adb'], False)
+        adb_path = check_existence(environment.paths(), ['adb'], False, True)
         if adb_path and (type(adb_path) is list):
             return adb_path[0]
         else:
@@ -54,7 +54,7 @@ class adb:
     @staticmethod
     def shell_input(path, command):
         shellx = Popen(
-            shlex.split("{} shell input {}".format(path, command)),
+            _("{} shell input {}".format(path, command)),
             stdout=PIPE,
             stderr=PIPE,
         )
@@ -62,7 +62,7 @@ class adb:
     @staticmethod
     def get_dimensions(path):
         shellx = Popen(
-            shlex.split("{} shell wm size".format(path)),
+            _("{} shell wm size".format(path)),
             stdout=PIPE,
             stderr=PIPE,
         )
@@ -81,7 +81,7 @@ class adb:
     @staticmethod
     def shell(path, command):
         shellx = Popen(
-            shlex.split("{} shell {}".format(path, command)),
+            _("{} shell {}".format(path, command)),
             stdout=PIPE,
             stderr=PIPE,
         )
@@ -89,7 +89,11 @@ class adb:
 
     @staticmethod
     def devices(increment=''):
-        proc = Popen(shlex.split(increment + " devices"), stdout=PIPE)
+        if increment is None:
+            raise FileNotFoundError(
+                "guiscrcpy couldn't find adb. Please specify path to adb in configuration file")
+        print(increment)
+        proc = Popen(_(increment + " devices"), stdout=PIPE)
         output = decode_process(proc)[1].split('\t')
         logging.debug("ADB: {}".format(output))
         return output

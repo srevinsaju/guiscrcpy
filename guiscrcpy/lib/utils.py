@@ -4,6 +4,14 @@ from guiscrcpy.platform.platform import System
 environment = System()
 
 
+def shellify(args):
+    if environment.system() == 'Windows':
+        return args
+    else:
+        return shlex.split(args)
+
+_ = shellify
+
 def decode(raw_output):
     pass
 
@@ -26,14 +34,19 @@ def check_existence(paths, file=(), directory=True, PATH=False):
             if directory and os.path.isdir(j):
                 return [j]
             else:
+                if environment.system() == 'Windows':
+                    append = '.exe'
+                else:
+                    append = ''
+
                 if (type(file) is list) or (type(file) is tuple):
                     for exe in file:
-                        if os.path.exists(os.path.join(j, exe)):
-                            return [os.path.join(j, exe)]
+                        if os.path.exists(os.path.join(j, exe+append)):
+                            return [os.path.join(j, exe+append)]
                 else:
 
-                    if os.path.exists(os.path.join(j, file)):
-                        return [os.path.join(j, file)]
+                    if os.path.exists(os.path.join(j, file+append)):
+                        return [os.path.join(j, file+append)]
         else:
             logging.debug("{} doesn't exist".format(i))
 
@@ -42,7 +55,7 @@ def check_existence(paths, file=(), directory=True, PATH=False):
         found_path = check_existence(
             new_paths, file=file, directory=directory, PATH=False)
         if found_path:
-            return [found_path, 'path']
+            return found_path + ['path']
         else:
             return False
     else:

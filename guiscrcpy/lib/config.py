@@ -58,12 +58,12 @@ class InterfaceConfig:
         return self.cfgpath
 
     def read_file(self):
-        with open(self.cfgpath + self.jsonfile, 'r') as f:
+        with open(os.path.join(self.cfgpath, self.jsonfile), 'r') as f:
             config = json.load(f)
         self.update_config(config)
 
     def write_file(self):
-        with open(self.cfgpath + self.jsonfile, 'w') as f:
+        with open(os.path.join(self.cfgpath, self.jsonfile), 'w') as f:
             json.dump(self.config, f)
 
     def check_file(self):

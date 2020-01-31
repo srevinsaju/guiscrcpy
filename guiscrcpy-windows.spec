@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['scripts\\guiscrcpy'],
-             pathex=['C:\\Users\\SS\\repo\\guiscrcpy'],
+             pathex=['guiscrcpy'],
              binaries=[],
              datas=[],
              hiddenimports=['guiscrcpy'],

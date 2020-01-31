@@ -2,25 +2,20 @@ from setuptools import setup
 import sys
 import os
 from os import path
-import git
+
 # from pyshortcuts import make_shortcut
 import platform
 from shutil import copyfile
-repo = git.Repo(search_parent_directories=True)
-sha = repo.head.object.hexsha
+
 
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-ver = repo.git.describe("--tags")
-if '-' in ver:
-    ver = ver[:-9]
-
 
 setup(
     name='guiscrcpy',
-    version=ver,
+    version='3.0',
     description='An Open Source - Fast -  Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',

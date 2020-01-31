@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 
-__version__ = '3.0-raw'
+__version__ = '3.0-flatpak'
 import logging
 try:
     import git

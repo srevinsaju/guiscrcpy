@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=guiscrcpy
+Exec=python3 bin/guiscrcpy
+Type=Application
+Icon=guiscrcpy_logo
+Terminal=false
+Categories=Application;Development;
+Keywords=Python;Screen;Mirroring;Android
+StartupWMClass=guiscrcpy

@@ -34,7 +34,7 @@ setup(
                   '.': [".git/info/*"]
                   },
     include_package_data=True,
-    install_requires=['PyQt5', 'psutil', 'qdarkstyle', 'pynput', 'gitpython'],
+    install_requires=['PyQt5>=5.14', 'psutil', 'pynput', 'gitpython'],
     scripts=["scripts/guiscrcpy", "scripts/guiscrcpy-mapper"],
     classifiers=['Operating System :: OS Independent',
                  'Programming Language :: Python :: 3.7',

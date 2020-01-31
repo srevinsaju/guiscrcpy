@@ -1,0 +1,38 @@
+name: Windows Executable
+
+on:
+  push:
+    branches: 
+      - master
+      - develop
+  pull_request:
+    branches: 
+      - master
+      - develop
+
+
+jobs:
+  build:
+    name: Upload artifact
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+        
+      - name: Install dependencies
+        run: |
+          pip3 install PyInstaller
+          pip3 install -r requirements.txt
+          
+      - name: Create .exe
+        run: |
+          python3 -m PyInstaller guiscrcpy-windows.spec
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          # Artifact name
+          name: guiscrcpy-$(git rev-parse --short "$GITHUB_SHA").exe
+          # Directory containing files to upload
+          path: dist/guiscrcpy.exe
+
+    

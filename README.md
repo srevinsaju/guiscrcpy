@@ -21,6 +21,10 @@
 ![Twitter Follow](https://img.shields.io/twitter/follow/srevinsaju?style=social)
 ![GitHub followers](https://img.shields.io/github/followers/srevinsaju?label=srevin%20Saju&style=social)
 
+For beta Windows compiled executables, click 
+![Windows Executable](https://github.com/srevinsaju/guiscrcpy/workflows/Windows%20Executable/badge.svg)
+and download the artifact.
+
 ![image of guiscrcpy](https://raw.githubusercontent.com/srevinsaju/guiscrcpy-docs/master/docs/screen3.png)
 
 guiscrcpy is a multiplatform, ready-to-use GUI layer for Android to PC screen mirroring written in the advancing programming language python3 for the most award winning open-source android screen mirroring system -- `scrcpy` located on `https://github.com/genymobile/scrcpy/` by [@rom1v](https://github.com/rom1v)

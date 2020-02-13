@@ -14,13 +14,23 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 ver = repo.git.describe("--tags")
-if '-' in ver:
-    ver = ver[:-9]
 
+raw_version = ver.split('-')
+
+if len(raw_version) == 1:
+    # Stable Release
+    v = "{}".format(raw_version[0])
+elif len(raw_version) == 2:
+    # Release Candidate
+    v = "{major}.post{minor}".format(major=raw_version[0], minor=raw_version[1])
+else:
+    # Revision Dev
+    v = "{major}.post{minor}.dev".format(major=raw_version[0], minor=raw_version[1])
+    
 
 setup(
     name='guiscrcpy',
-    version=ver,
+    version="{}".format(v),
     description='An Open Source - Fast -  Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',

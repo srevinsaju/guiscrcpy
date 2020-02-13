@@ -36,6 +36,11 @@ setup(
     include_package_data=True,
     install_requires=['PyQt5==5.14.1', 'psutil', 'pynput', 'gitpython'],
     scripts=["scripts/guiscrcpy", "scripts/guiscrcpy-mapper"],
+    entry_points={
+        'console_scripts': [
+            'guiscrcpy = guiscrcpy.launcher:bootstrap',
+        ]
+    },
     classifiers=['Operating System :: OS Independent',
                  'Programming Language :: Python :: 3.7',
                  'Programming Language :: Python :: 3.6',

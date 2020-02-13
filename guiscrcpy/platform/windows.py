@@ -32,7 +32,6 @@ class Windows:
         if not os.path.exists(path):
             try:
                 os.makedirs(path)
-                return True
             except Exception as e:
                 logging.error(
                     "Error creating configuration file in dir {path}. Error code:{e}"

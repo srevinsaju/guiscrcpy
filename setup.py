@@ -2,31 +2,35 @@ from setuptools import setup
 import sys
 import os
 from os import path
-import git
-# from pyshortcuts import make_shortcut
-import platform
-from shutil import copyfile
-repo = git.Repo(search_parent_directories=True)
-sha = repo.head.object.hexsha
 
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-ver = repo.git.describe("--tags")
+def gen_version():
+    import git
 
-raw_version = ver.split('-')
+    repo = git.Repo(search_parent_directories=True)
+    sha = repo.head.object.hexsha
+    ver = repo.git.describe("--tags")
+    raw_version = ver.split('-')
+    if len(raw_version) == 1:
+        # Stable Release
+        v = "{}".format(raw_version[0])
+    elif len(raw_version) == 2:
+        # Release Candidate
+        v = "{major}.post{minor}".format(major=raw_version[0], minor=raw_version[1])
+    else:
+        # Revision Dev
+        v = "{major}.post{minor}.dev".format(major=raw_version[0], minor=raw_version[1])
 
-if len(raw_version) == 1:
-    # Stable Release
-    v = "{}".format(raw_version[0])
-elif len(raw_version) == 2:
-    # Release Candidate
-    v = "{major}.post{minor}".format(major=raw_version[0], minor=raw_version[1])
-else:
-    # Revision Dev
-    v = "{major}.post{minor}.dev".format(major=raw_version[0], minor=raw_version[1])
-    
+    return v
+
+try:
+    v = gen_version()
+except Exception as e:
+    print("WARNING: {}".format(e))
+    v = "3.x.src.dev"
 
 setup(
     name='guiscrcpy',

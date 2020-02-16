@@ -6,8 +6,11 @@ import os
 
 
 class NetworkManager:
-        
-    def pinger(job_q, results_q):
+
+    def __init__(self):
+        pass
+
+    def pinger(self, job_q, results_q):
         """
         Do Ping
         :param job_q:
@@ -30,7 +33,7 @@ class NetworkManager:
                 pass
 
 
-    def get_my_ip():
+    def get_my_ip(self):
         """
         Find my IP address
         :return:
@@ -42,7 +45,7 @@ class NetworkManager:
         return ip
 
 
-    def map_network(pool_size=255):
+    def map_network(self, pool_size=255):
         """
         Maps the network
         :param pool_size: amount of parallel ping processes
@@ -52,14 +55,14 @@ class NetworkManager:
         ip_list = list()
 
         # get my IP and compose a base like 192.168.1.xxx
-        ip_parts = get_my_ip().split('.')
+        ip_parts = self.get_my_ip().split('.')
         base_ip = ip_parts[0] + '.' + ip_parts[1] + '.' + ip_parts[2] + '.'
 
         # prepare the jobs queue
         jobs = multiprocessing.Queue()
         results = multiprocessing.Queue()
 
-        pool = [multiprocessing.Process(target=pinger, args=(jobs, results)) for i in range(pool_size)]
+        pool = [multiprocessing.Process(target=self.pinger, args=(jobs, results)) for i in range(pool_size)]
 
         for p in pool:
             p.start()
@@ -83,7 +86,7 @@ class NetworkManager:
 
 
 if __name__ == '__main__':
-
     print('Mapping...')
-    lst = map_network()
+    nm = NetworkManager()
+    lst = nm.map_network()
     print(lst)

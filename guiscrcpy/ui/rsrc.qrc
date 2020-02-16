@@ -34,10 +34,8 @@
     <file>icons/reduced-volume.svg</file>
     <file>icons/volume-up-interface-symbol.svg</file>
   </qresource>
-  <qresource prefix="fonts">
-    <file>fonts/trebucit.ttf</file>
-    <file>fonts/trebucbi.ttf</file>
-    <file>fonts/trebucbd.ttf</file>
-    <file>fonts/trebuc.ttf</file>
+  <qresource prefix="font">
+    <file>fonts/TitilliumWeb-Bold.ttf</file>
+    <file>fonts/TitilliumWeb-Regular.ttf</file>
   </qresource>
 </RCC>

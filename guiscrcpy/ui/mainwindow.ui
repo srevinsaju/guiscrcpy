@@ -201,7 +201,7 @@ border-radius: 10px;
            </property>
            <property name="font">
             <font>
-             <family>Trebuchet MS</family>
+             <family>Titillium Web</family>
              <pointsize>28</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -228,6 +228,11 @@ border-radius: 10px;
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Titillium Web</family>
+            </font>
            </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 255, 255);</string>
@@ -705,7 +710,7 @@ image: url(:/res/ui/guiscrcpy_logo.png);</string>
            </property>
            <property name="font">
             <font>
-             <family>Trebuchet MS</family>
+             <family>Titillium Web</family>
              <pointsize>26</pointsize>
              <weight>75</weight>
              <bold>true</bold>
@@ -816,8 +821,10 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
            </property>
            <property name="font">
             <font>
-             <family>Trebuchet MS</family>
+             <family>Titillium Web</family>
              <pointsize>11</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
             </font>
            </property>
            <property name="text">
@@ -954,8 +961,11 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
            </property>
            <property name="font">
             <font>
-             <family>Trebuchet MS</family>
+             <family>Titillium Web</family>
              <pointsize>11</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
             </font>
            </property>
            <property name="statusTip">
@@ -1374,7 +1384,7 @@ selection-background-color: rgb(85, 255, 0);</string>
   <include location="rsrc.qrc"/>
   <include location="rsrc.qrc"/>
   <include location="rsrc.qrc"/>
-  <include location="../../resources/rsrc.qrc"/>
+  <include location="rsrc.qrc"/>
  </resources>
  <connections/>
 </ui>

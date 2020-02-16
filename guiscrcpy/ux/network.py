@@ -18,18 +18,22 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import sys
+import logging
+import time
 
 from PyQt5.QtWidgets import QMainWindow
 
 from guiscrcpy.network.network import NetworkManager
 from guiscrcpy.ui.network import Ui_NetworkUI
+from guiscrcpy.lib.check import adb
 
 
 class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
-    def __init__(self):
+    def __init__(self, adb_path=None):
         QMainWindow.__init__(self)
         Ui_NetworkUI.__init__(self)
         self.setupUi(self)
+        adb.path = adb_path
         self.nm = NetworkManager()
 
     def init(self):
@@ -38,8 +42,26 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
         self.nm_det.setText("Click Refresh to load IP addresses")
 
     def connect(self):
-        print(self.listView.currentItem().text())
-
+        try:
+            ip = self.listView.currentItem().text()
+        except AttributeError:
+            return
+        sp = adb.command(adb.path, 'connect {}:5555'.format(ip))
+        count = 0
+        while True:
+            count += 1
+            readout = sp.stdout.readline().decode()
+            if 'failed' in readout:
+                self.nm_det.setText('Device failed to get connected (is it an Android dev?')
+                return
+            if 'connected' in readout:
+                print(readout)
+                break
+            if count > 30:
+                self.nm_det.setText('Device connect failed: Timeout')
+            else:
+                time.sleep(1)
+        self.nm_det.setText("Connected to IP:{}:5555".format(ip))
 
     def refresh(self):
         self.listView.clear()

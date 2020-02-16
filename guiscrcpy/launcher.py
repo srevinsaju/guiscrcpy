@@ -218,7 +218,7 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
 
     def network_mgr(self):
         from guiscrcpy.ux.network import InterfaceNetwork
-        self.nm = InterfaceNetwork()
+        self.nm = InterfaceNetwork(adb.path)
         self.nm.init()
         self.nm.show()
 

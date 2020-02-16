@@ -26,8 +26,7 @@ class NetworkManager:
                 break
 
             try:
-                subprocess.check_call(['ping', '-c1', ip],
-                                      stdout=DEVNULL)
+                subprocess.check_call(['ping', '-c1', ip], stdout=DEVNULL)
                 results_q.put(ip)
             except:
                 pass

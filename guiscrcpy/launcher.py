@@ -55,8 +55,6 @@ from guiscrcpy.lib.check import adb
 from guiscrcpy.lib.check import scrcpy
 from guiscrcpy.theme.style import darkstylesheet
 from guiscrcpy.ui.main import Ui_MainWindow
-from guiscrcpy.ui.toolkit import Ui_ToolbarPanel
-from guiscrcpy.ui.panel import Ui_HorizontalPanel
 from guiscrcpy.lib.toolkit import UXMapper
 from guiscrcpy.ux.panel import Panel
 from guiscrcpy.ux.swipe import SwipeUX
@@ -206,7 +204,6 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
         self.swipe_instance = SwipeUX()  # Load swipe UI
         self.panel_instance = Panel()
         self.side_instance = InterfaceToolkit()
-
         self.quit.clicked.connect(self.quitAct)
         self.dimensionText.setText("DEFAULT")
         config['bitrate'] = int(self.dial.value())
@@ -217,6 +214,13 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
         self.abtgit.clicked.connect(self.opengit)
         self.usbaud.clicked.connect(self.usbaudi)
         self.mapnow.clicked.connect(self.mapp)
+        self.network_button.clicked.connect(self.network_mgr)
+
+    def network_mgr(self):
+        from guiscrcpy.ux.network import InterfaceNetwork
+        self.nm = InterfaceNetwork()
+        self.nm.init()
+        self.nm.show()
 
     def mapp(self):
         if (os.path.exists(

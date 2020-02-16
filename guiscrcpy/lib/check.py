@@ -108,6 +108,16 @@ class adb:
         return True
 
     @staticmethod
+    def command(path, command):
+        shellx = Popen(
+            _("{} {}".format(path, command)),
+            stdout=PIPE,
+            stderr=PIPE,
+        )
+        return shellx
+
+
+    @staticmethod
     def devices(increment=''):
         if increment is None:
             raise FileNotFoundError(

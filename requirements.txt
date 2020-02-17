@@ -1,4 +1,4 @@
-GitPython==3.0.7
+GitPython==3.0.8
 PyQt5>=5.14
 psutil==5.6.7
 pynput>=1.6

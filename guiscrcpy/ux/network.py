@@ -61,7 +61,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
                 self.nm_det.setText('Device connect failed: Timeout')
             else:
                 time.sleep(1)
-        self.nm_det.setText("Connected to IP:{}:5555".format(ip))
+        self.nm_det.setText("Connected to IP:{}:{}".format(ip, self.spinBox.value()))
 
     def refresh(self):
         self.listView.clear()

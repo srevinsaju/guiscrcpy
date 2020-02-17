@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>547</width>
-    <height>499</height>
+    <height>482</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -87,6 +87,12 @@ color: rgb(0, 0, 0);
 border-radius: 10px;
 }
 .QPushButton#network_button{
+background-color: rgb(60, 60, 60);
+color: rgb(0, 0, 0);
+border-radius: 10px;	
+ }
+
+.QPushButton#settings_button{
 background-color: rgb(60, 60, 60);
 color: rgb(0, 0, 0);
 border-radius: 10px;	
@@ -257,42 +263,7 @@ border-radius: 10px;
          <property name="verticalSpacing">
           <number>1</number>
          </property>
-         <item row="1" column="2">
-          <widget class="QCheckBox" name="notifChecker">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>10</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Trebuchet MS</family>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Make guiscrcpy check for new notifications on your device. A status bar icon indicating new notifications will be visible. (Experimental)</string>
-           </property>
-           <property name="toolTipDuration">
-            <number>2</number>
-           </property>
-           <property name="text">
-            <string>Notification Auditor</string>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/bell-musical-tool.svg</normaloff>:/icons/icons/bell-musical-tool.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
+         <item row="1" column="0" colspan="3">
           <widget class="QCheckBox" name="displayForceOn">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -327,36 +298,7 @@ border-radius: 10px;
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QCheckBox" name="fullscreen">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>10</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Trebuchet MS</family>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Fullscreen</string>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/increase-size-option.svg</normaloff>:/icons/icons/increase-size-option.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
+         <item row="0" column="4">
           <widget class="QCheckBox" name="showTouches">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -385,10 +327,10 @@ border-radius: 10px;
            </property>
           </widget>
          </item>
-         <item row="2" column="3">
+         <item row="2" column="0">
           <widget class="QPushButton" name="network_button">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -402,9 +344,48 @@ border-radius: 10px;
            <property name="text">
             <string/>
            </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/wifi.svg</normaloff>:/icons/icons/wifi.svg</iconset>
+           </property>
           </widget>
          </item>
          <item row="1" column="3">
+          <widget class="QCheckBox" name="notifChecker">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Trebuchet MS</family>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string>Make guiscrcpy check for new notifications on your device. A status bar icon indicating new notifications will be visible. (Experimental)</string>
+           </property>
+           <property name="toolTipDuration">
+            <number>2</number>
+           </property>
+           <property name="text">
+            <string>Notification Auditor</string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/bell-musical-tool.svg</normaloff>:/icons/icons/bell-musical-tool.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
           <widget class="QCheckBox" name="recScui">
            <property name="enabled">
             <bool>true</bool>
@@ -448,7 +429,49 @@ border-radius: 10px;
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
+         <item row="2" column="2" colspan="3">
+          <widget class="QPushButton" name="runningNot">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QCheckBox" name="fullscreen">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Trebuchet MS</family>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Fullscreen</string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/increase-size-option.svg</normaloff>:/icons/icons/increase-size-option.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="3">
           <widget class="QCheckBox" name="aotop">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -483,16 +506,20 @@ border-radius: 10px;
            </property>
           </widget>
          </item>
-         <item row="3" column="0" colspan="4">
-          <widget class="QPushButton" name="runningNot">
+         <item row="2" column="1">
+          <widget class="QPushButton" name="settings_button">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/gear.svg</normaloff>:/icons/icons/gear.svg</iconset>
            </property>
           </widget>
          </item>
@@ -1367,9 +1394,6 @@ selection-background-color: rgb(85, 255, 0);</string>
   </widget>
  </widget>
  <resources>
-  <include location="rsrc.qrc"/>
-  <include location="rsrc.qrc"/>
-  <include location="rsrc.qrc"/>
   <include location="rsrc.qrc"/>
  </resources>
  <connections/>

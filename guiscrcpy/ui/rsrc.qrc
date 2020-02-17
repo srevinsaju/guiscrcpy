@@ -5,6 +5,8 @@
     <file>ui/guiscrcpy-branding.png</file>
   </qresource>
   <qresource prefix="icons">
+    <file>icons/gear.svg</file>
+    <file>icons/wifi.svg</file>
     <file>icons/chevron-sign-down.svg</file>
     <file>icons/chevron-sign-right.svg</file>
     <file>icons/chevron-sign-up.svg</file>

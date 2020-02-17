@@ -8,7 +8,7 @@
     Android Screen mirroring
   
   grade: stable # must be 'stable' to release into candidate/stable channels
-  confinement: classic #use 'strict' once you have the right plugs and slots
+  confinement: strict #use 'strict' once you have the right plugs and slots
   # plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy']
  
   architectures:
@@ -30,18 +30,7 @@
 
 
     
-    dump-guiscrcpy:
-      after: [guiscrcpy]
-      plugin: dump
-      source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
-      
-
-      override-prime: |
-              snapcraftctl build
-              cp -r  ../parts/guiscrcpy/src/guiscrcpy-master .
-
-              
-
+    
          
       
 

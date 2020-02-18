@@ -1,6 +1,6 @@
 GitPython==3.0.7
 PyQt5>=5.14
-psutil==5.6.7
+psutil==5.7.0
 pynput>=1.6
 pyshortcuts==1.7
 pystray==0.14.4

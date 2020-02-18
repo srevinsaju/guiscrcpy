@@ -215,6 +215,10 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
         self.usbaud.clicked.connect(self.usbaudi)
         self.mapnow.clicked.connect(self.mapp)
         self.network_button.clicked.connect(self.network_mgr)
+        self.settings_button.clicked.connect(self.settings_mgr)
+
+    def settings_mgr(self):
+        pass
 
     def network_mgr(self):
         from guiscrcpy.ux.network import InterfaceNetwork

@@ -1,45 +1,102 @@
 
-  # After registering a name on build.snapcraft.io, commit an uncommented line:
-  name: guiscrcpy
-  version: '1.11.0' # just for humans, typically '1.2+git' or '1.3.2'
-  summary: An opensource GUI for android screen mirroring# 79 char long summary
-  description: |
-    A full fledged GUI integration for the award winning open source scrcpy, for 
-    Android Screen mirroring
-  
-  grade: stable # must be 'stable' to release into candidate/stable channels
-  confinement: strict #use 'strict' once you have the right plugs and slots
-  # plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy']
- 
-  architectures:
-        - build-on: amd64
-          
-  parts:
-    guiscrcpy:
-     
-      after: [desktop-qt5]
-      # See 'snapcraft plugins'
-      plugin: python
-      python-version: python3
-      source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
-      #requirements: requirements.txt
-      build-packages: [python3-pip]
-      python-packages: [PyQt5, psutil,qdarkstyle]
-      stage-packages: [python3-pyqt5, python3]
+# After registering a name on build.snapcraft.io, commit an uncommented line:
+name: guiscrcpy
+version: '3.x-git' # just for humans, typically '1.2+git' or '1.3.2'
+summary: An opensource GUI for android screen mirroring# 79 char long summary
+description: |
+  A full fledged GUI integration for the award winning open source scrcpy, for 
+  Android Screen mirroring
+
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: strict #use 'strict' once you have the right plugs and slots
+# plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy']
 
 
+base: core18
 
+architectures:
+- build-on: i386
+- build-on: amd64
+- build-on: armhf
+
+apps:
+  scrcpy:
+    command: usr/local/bin/scrcpy
+    environment:
+      LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/android:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:/var/lib/snapd/lib/gl"
+      MESA_GLSL_CACHE_DIR: "$SNAP_USER_DATA"
+      LIBGL_DRIVERS_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri"
+  adb:  
+    command: usr/bin/adb
+    environment:
+      LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/android/"
+  guiscrcpy:
+    command: usr/bin/guiscrcpy
+
+
+layout:
+  /usr/local/share/scrcpy:
+    bind: $SNAP/usr/local/share/scrcpy
+
+parts:
+  scrcpy-server:
+    plugin: nil
+    override-pull:
+      wget https://github.com/Genymobile/scrcpy/releases/download/v1.12.1/scrcpy-server-v1.12.1
+    override-build: |
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/
+      cp scrcpy-server-v1.12.1 $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/scrcpy-server
+  scrcpy:
+    source: https://github.com/Genymobile/scrcpy.git
+    plugin: meson
+    meson-parameters: 
+      - --buildtype=release
+      - --strip 
+      - -Db_lto=true
+      - -Dcompile_server=false
+    override-pull: |
+        snapcraftctl pull
+        snapcraftctl set-version $(git describe --tag)      
+    build-packages:
+      - make
+      - gcc
+      - pkg-config
+      - meson
+      - ninja-build
+      - libavcodec-dev
+      - libavformat-dev
+      - libavutil-dev
+      - libsdl2-dev
+      - wget
+    stage-packages:
+      - ffmpeg
+      - libsdl2-2.0-0
+      - libslang2
+      - libglu1-mesa
+      - adb
+  guiscrcpy:
     
-    
-         
-      
+    # See 'snapcraft plugins'
+    plugin: python
+    python-version: python3
+    source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
+    #requirements: requirements.txt
+    build-packages: [python3-pip]
+    python-packages: [PyQt5, psutil,qdarkstyle]
+    stage-packages: [python3-pyqt5, python3]
 
-  apps:
-   guiscrcpy:
-   
-
-     command: desktop-launch python3 $SNAP/guiscrcpy-master/guiscrcpy
-     
-     plugs: ['desktop','content','dbus','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy','network','network-bind','unity7']
-     
+plugs:
+  adb-support:
+  desktop:
+  desktop-legacy:
+  x11:
+  unity7:
+  wayland:
+  opengl:
+  home:
+  network-bind:
+  network:
+  adb:
+    interface: content
+    target: $SNAP/usr/bin
     

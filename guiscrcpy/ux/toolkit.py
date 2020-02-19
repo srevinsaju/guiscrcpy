@@ -65,7 +65,7 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
             delta = QPoint(event.globalPos() - self.oldPos)
             self.move(self.x() + delta.x(), self.y() + delta.y())
             self.oldPos = event.globalPos()
-        except TypeError:
+        except (TypeError, AttributeError):
             pass
 
     def quitn(self):

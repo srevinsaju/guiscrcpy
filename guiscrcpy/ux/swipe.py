@@ -146,7 +146,7 @@ class SwipeUX(QMainWindow):
 
             self.move(self.x() + delta.x(), self.y() + delta.y())
             self.oldPos = event.globalPos()
-        except TypeError:
+        except (TypeError, AttributeError):
             pass
 
     def swipdn(self):

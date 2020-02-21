@@ -27,10 +27,10 @@
      <property name="spacing">
       <number>0</number>
      </property>
-     <item row="11" column="4" colspan="2">
+     <item row="10" column="4" colspan="2">
       <widget class="QLineEdit" name="b1c2"/>
      </item>
-     <item row="12" column="3">
+     <item row="11" column="3">
       <widget class="QLabel" name="label_6">
        <property name="text">
         <string>h</string>
@@ -40,7 +40,7 @@
        </property>
       </widget>
      </item>
-     <item row="12" column="1">
+     <item row="11" column="1">
       <widget class="QLabel" name="label_5">
        <property name="text">
         <string>w</string>
@@ -57,7 +57,7 @@
        </property>
       </widget>
      </item>
-     <item row="11" column="3">
+     <item row="10" column="3">
       <widget class="QLabel" name="label_4">
        <property name="minimumSize">
         <size>
@@ -87,14 +87,7 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
-      <widget class="QCheckBox" name="a7">
-       <property name="text">
-        <string>Record Format</string>
-       </property>
-      </widget>
-     </item>
-     <item row="12" column="2">
+     <item row="11" column="2">
       <widget class="QLineEdit" name="b2c1"/>
      </item>
      <item row="3" column="0">
@@ -104,7 +97,7 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="1" colspan="5">
+     <item row="7" column="1" colspan="5">
       <widget class="QLineEdit" name="a8c1"/>
      </item>
      <item row="1" column="1">
@@ -117,20 +110,27 @@
        </property>
       </widget>
      </item>
-     <item row="9" column="0">
+     <item row="8" column="0">
       <widget class="QCheckBox" name="a9">
        <property name="text">
         <string>Borderless Window</string>
        </property>
       </widget>
      </item>
-     <item row="11" column="1">
+     <item row="10" column="1">
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>x</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="2" colspan="4">
+      <widget class="QPushButton" name="update">
+       <property name="text">
+        <string>Update</string>
        </property>
       </widget>
      </item>
@@ -144,14 +144,14 @@
      <item row="5" column="1" colspan="5">
       <widget class="QLineEdit" name="a5c1"/>
      </item>
-     <item row="8" column="0">
+     <item row="7" column="0">
       <widget class="QCheckBox" name="a8">
        <property name="text">
         <string>Serial</string>
        </property>
       </widget>
      </item>
-     <item row="11" column="2">
+     <item row="10" column="2">
       <widget class="QLineEdit" name="b1c1"/>
      </item>
      <item row="1" column="3">
@@ -164,7 +164,7 @@
        </property>
       </widget>
      </item>
-     <item row="11" column="0">
+     <item row="10" column="0">
       <widget class="QCheckBox" name="b1">
        <property name="text">
         <string>Window position</string>
@@ -174,10 +174,17 @@
      <item row="1" column="2">
       <widget class="QLineEdit" name="a2c1"/>
      </item>
-     <item row="12" column="4" colspan="2">
+     <item row="11" column="4" colspan="2">
       <widget class="QLineEdit" name="b2c2"/>
      </item>
-     <item row="12" column="0">
+     <item row="12" column="0" colspan="2">
+      <widget class="QPushButton" name="cancel">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="0">
       <widget class="QCheckBox" name="b2">
        <property name="text">
         <string>Window size</string>
@@ -191,17 +198,14 @@
        </property>
       </widget>
      </item>
-     <item row="10" column="0">
+     <item row="9" column="0">
       <widget class="QCheckBox" name="b0">
        <property name="text">
         <string>Window Title</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="1" colspan="5">
-      <widget class="QLineEdit" name="a7c1"/>
-     </item>
-     <item row="10" column="1" colspan="5">
+     <item row="9" column="1" colspan="5">
       <widget class="QLineEdit" name="b0c1"/>
      </item>
      <item row="5" column="0">
@@ -219,20 +223,6 @@
      </item>
      <item row="3" column="1" colspan="5">
       <widget class="QSpinBox" name="a3e1"/>
-     </item>
-     <item row="13" column="2" colspan="4">
-      <widget class="QPushButton" name="update">
-       <property name="text">
-        <string>Update</string>
-       </property>
-      </widget>
-     </item>
-     <item row="13" column="0" colspan="2">
-      <widget class="QPushButton" name="cancel">
-       <property name="text">
-        <string>Cancel</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </widget>

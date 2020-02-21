@@ -21,39 +21,44 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import QPoint
 from PyQt5.QtWidgets import QMainWindow
 
-from guiscrcpy.ui.panel import Ui_HorizontalPanel
+from guiscrcpy.ui.settings import Ui_MainWindow
 from guiscrcpy.settings.settings import SettingsManager
 
 
-class (QMainWindow, Ui_HorizontalPanel):
+class InterfaceSettings(QMainWindow, Ui_MainWindow):
     # there was a Dialog in the bracket
     def __init__(self):
         QMainWindow.__init__(self)
-        Ui_HorizontalPanel.__init__(self)
+        Ui_MainWindow.__init__(self)
         self.setupUi(self)
-        self.oldpos = self.pos()
-        self.setWindowFlags(
-            QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
-        )
+        self.checkboxes = {
+            self.a1: [[None], '--always-on-top', 0],
+            self.a2: [[self.a2c1, self.a2c2], '--crop {}:{}', 1],
+            self.a3: [[self.a3e1], '--max-fps {}'],
+            self.a4: [[None], '--prefer-text'],
+            self.a5: [[self.a5c1], '--push-target {}'],
+            self.a6: [[self.a6c1, self.a6c1], '--record {}'],
+            self.a8: [[self.a8c1], '--serial {}'],
+            self.a9: [[None], '--window-borderless'],
+            self.b0: [[self.b0c1], '--window-title'],
+            self.b1: [[self.b1c1, self.b1c1], '--window-x {} --window-y {}'],
+            self.b2: [[self.b2c1, self.b2c2], '--window-width {} --window-height {}'],
+        }
+
 
     def init(self):
-        self.ux = UXMapper()
-        self.backk.clicked.connect(self.ux.key_back)
-        self.menuUII.clicked.connect(self.ux.key_menu)
-        self.homee.clicked.connect(self.ux.key_home)
-        self.powerUII.clicked.connect(self.ux.key_power)
-        self.vupp.clicked.connect(self.ux.key_volume_up)
-        self.vdownn.clicked.connect(self.ux.key_volume_down)
+        
+        for i in self.checkboxes:
+            self.checkboxes[i].clicked.connect(lambda k=i: self.updatelist(k))
+
         self.show()
 
-    def mousePressEvent(self, event):
-        self.oldPos = event.globalPos()
+    def checkboxes_act(self, args):
+        pass
 
-    def mouseMoveEvent(self, event):
-        try:
-            delta = QPoint(event.globalPos() - self.oldPos)
+    def updatelist(self, args):
+        pass
 
-            self.move(self.x() + delta.x(), self.y() + delta.y())
-            self.oldPos = event.globalPos()
-        except TypeError:
-            pass
+    def complete(self):
+        pass
+

@@ -177,13 +177,6 @@
      <item row="11" column="4" colspan="2">
       <widget class="QLineEdit" name="b2c2"/>
      </item>
-     <item row="12" column="0" colspan="2">
-      <widget class="QPushButton" name="cancel">
-       <property name="text">
-        <string>Cancel</string>
-       </property>
-      </widget>
-     </item>
      <item row="11" column="0">
       <widget class="QCheckBox" name="b2">
        <property name="text">

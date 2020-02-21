@@ -9,35 +9,61 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>324</width>
-    <height>299</height>
+    <width>328</width>
+    <height>337</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Network Manager</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>1</x>
-      <y>4</y>
-      <width>325</width>
-      <height>271</height>
+      <x>2</x>
+      <y>5</y>
+      <width>143</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>List of Network Devices</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>29</y>
+      <width>321</width>
+      <height>281</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetMaximumSize</enum>
-     </property>
      <item row="0" column="0" colspan="2">
-      <widget class="QLabel" name="label">
+      <widget class="QListWidget" name="listView"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="nm_refresh">
+       <property name="statusTip">
+        <string>Refresh Devices list</string>
+       </property>
        <property name="text">
-        <string>List of Network Devices</string>
+        <string>REFRESH</string>
        </property>
       </widget>
      </item>
-     <item row="8" column="0">
+     <item row="1" column="0" colspan="2">
+      <widget class="QPushButton" name="nm_det">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
       <widget class="QSpinBox" name="spinBox">
        <property name="font">
         <font>
@@ -65,14 +91,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0" colspan="3">
-      <widget class="QProgressBar" name="progressBar">
-       <property name="value">
-        <number>100</number>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="2">
+     <item row="4" column="1">
       <widget class="QPushButton" name="nm_connect">
        <property name="statusTip">
         <string>Establish connection</string>
@@ -82,26 +101,10 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0" colspan="3">
-      <widget class="QPushButton" name="nm_det">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
+     <item row="3" column="1">
+      <widget class="QPushButton" name="tcpip">
        <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" colspan="3">
-      <widget class="QListWidget" name="listView"/>
-     </item>
-     <item row="8" column="1">
-      <widget class="QPushButton" name="nm_refresh">
-       <property name="statusTip">
-        <string>Refresh Devices list</string>
-       </property>
-       <property name="text">
-        <string>REFRESH</string>
+        <string>TCPIP</string>
        </property>
       </widget>
      </item>

@@ -16,10 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import os
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QPoint
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QDialog
 
 from guiscrcpy.ui.settings import Ui_MainWindow
 from guiscrcpy.settings.settings import SettingsManager
@@ -39,41 +40,56 @@ class InterfaceSettings(QMainWindow, Ui_MainWindow):
             self.a3: [[self.a3e1], '--max-fps {}'],
             self.a4: [[None], '--prefer-text'],
             self.a5: [[self.a5c1], '--push-target {}'],
-            self.a6: [[self.a6c1, self.a6c1], '--record {}'],
+            self.a6: [[self.a6c1], '--record {}'],
             self.a8: [[self.a8c1], '--serial {}'],
             self.a9: [[None], '--window-borderless'],
-            self.b0: [[self.b0c1], '--window-title'],
+            self.b0: [[self.b0c1], '--window-title {}'],
             self.b1: [[self.b1c1, self.b1c1], '--window-x {} --window-y {}'],
             self.b2: [[self.b2c1, self.b2c2], '--window-width {} --window-height {}'],
         }
 
     def init(self):
-        for i in self.checkboxes:
-            self.checkboxes[i].clicked.connect(lambda k=i: self.updatelist(k))
-        self.upda
+        self.updatebutton.clicked.connect(self.complete)
+        self.a6d1.clicked.connect(self.filechooser)
         self.show()
+
+    def filechooser(self):
+        dialog = QFileDialog()
+        dialog.setFilter(dialog.filter() | QtCore.QDir.Hidden)
+        dialog.setDefaultSuffix('mp4')
+        dialog.setAcceptMode(QFileDialog.AcceptSave)
+        dialog.setNameFilters(['H.264 (*.mp4)', 'MKV (*.mkv)'])
+        if dialog.exec_() == QDialog.Accepted:
+            self.a6c1.setText(dialog.selectedFiles()[0])
 
     def checkboxes_act(self, args):
         pass
 
-    def updatelist(self, args):
-        # TODO Restore values
-        # ' '.join(map(str, s))
-        if self.checkboxes[args][0][0] is None:
-            self.commands.append("{}".format(self.checkboxes[args][1]))
-        else:
-            text = "{}".format(self.checkboxes[args][1])
-            x = []
-            for i in self.checkboxes[args][0]:
-                try:
-                    x.append(i.text())
-                except Exception as e:
-                    x.append(i.value())
-            self.commands.append(text.format(*x))
-        pass
-
     def complete(self):
-        pass
+        x = []
+        for i in self.checkboxes:
+            if i.isChecked():
+                box = self.checkboxes[i]
+                cmd = box[1]
+                cmd_args = []
+                for j in box[0]:
+                    if j is None:
+                        break
+                    else:
+                        try:
+                            arg = j.text()
+                            print(arg)
+                        except Exception as e:
+                            arg = j.value()
+                            print(arg)
+                        cmd_args.append(arg)
+                else:
+                    cmd = cmd.format(*cmd_args)
+                print(cmd)
+                x.append(cmd)
+        print(x)
+        self.hide()
+        self.parent.cmx = x
 
     def cancel(self):
         pass

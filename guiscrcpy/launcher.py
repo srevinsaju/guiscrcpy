@@ -146,6 +146,7 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
         Ui_MainWindow.__init__()
         self.setupUi(Ui_MainWindow)
         super(InterfaceGuiscrcpy, self).__init__()
+        self.cmx = None
         logging.debug(
             "Options received by class are : {} {} {} {} {} ".format(
                 config['bitrate'],
@@ -430,9 +431,11 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
         self.swipe_instance.init()  # show Swipe UI
         self.panel_instance.init()
         self.side_instance.init()
+        if self.cmx is not None:
+            config['cmx'] = ' '.join(map(str, self.cmx))
 
         # run scrcpy usng subprocess
-        args = "{} {}".format(self.options, config['extra'])
+        args = "{} {} {}".format(self.options, config['extra'], config['cmx'])
         scrcpy.start(scrcpy.path, args)
 
         timef = time.time()
@@ -441,6 +444,7 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
         self.progressBar.setValue(100)
 
         # handle config files
+
         cfgmgr.update_config(config)
         cfgmgr.write_file()
 

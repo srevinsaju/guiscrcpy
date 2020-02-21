@@ -27,10 +27,11 @@ from guiscrcpy.settings.settings import SettingsManager
 
 class InterfaceSettings(QMainWindow, Ui_MainWindow):
     # there was a Dialog in the bracket
-    def __init__(self):
+    def __init__(self, parent):
         QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
+        self.parent = parent
         self.commands = []
         self.checkboxes = {
             self.a1: [[None], '--always-on-top', 0],
@@ -49,6 +50,7 @@ class InterfaceSettings(QMainWindow, Ui_MainWindow):
     def init(self):
         for i in self.checkboxes:
             self.checkboxes[i].clicked.connect(lambda k=i: self.updatelist(k))
+        self.upda
         self.show()
 
     def checkboxes_act(self, args):

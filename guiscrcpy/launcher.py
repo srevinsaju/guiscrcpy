@@ -218,7 +218,10 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
         self.settings_button.clicked.connect(self.settings_mgr)
 
     def settings_mgr(self):
-        pass
+        from guiscrcpy.ux.settings import InterfaceSettings
+        self.sm = InterfaceSettings(self)
+        self.sm.init()
+        self.sm.show()
 
     def network_mgr(self):
         from guiscrcpy.ux.network import InterfaceNetwork

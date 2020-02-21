@@ -128,7 +128,7 @@
       </widget>
      </item>
      <item row="12" column="2" colspan="4">
-      <widget class="QPushButton" name="update">
+      <widget class="QPushButton" name="updatebutton">
        <property name="text">
         <string>Update</string>
        </property>

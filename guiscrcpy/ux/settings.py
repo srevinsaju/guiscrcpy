@@ -31,6 +31,7 @@ class InterfaceSettings(QMainWindow, Ui_MainWindow):
         QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
+        self.commands = []
         self.checkboxes = {
             self.a1: [[None], '--always-on-top', 0],
             self.a2: [[self.a2c1, self.a2c2], '--crop {}:{}', 1],
@@ -45,20 +46,32 @@ class InterfaceSettings(QMainWindow, Ui_MainWindow):
             self.b2: [[self.b2c1, self.b2c2], '--window-width {} --window-height {}'],
         }
 
-
     def init(self):
-        
         for i in self.checkboxes:
             self.checkboxes[i].clicked.connect(lambda k=i: self.updatelist(k))
-
         self.show()
 
     def checkboxes_act(self, args):
         pass
 
     def updatelist(self, args):
+        # TODO Restore values
+        # ' '.join(map(str, s))
+        if self.checkboxes[args][0][0] is None:
+            self.commands.append("{}".format(self.checkboxes[args][1]))
+        else:
+            text = "{}".format(self.checkboxes[args][1])
+            x = []
+            for i in self.checkboxes[args][0]:
+                try:
+                    x.append(i.text())
+                except Exception as e:
+                    x.append(i.value())
+            self.commands.append(text.format(*x))
         pass
 
     def complete(self):
         pass
 
+    def cancel(self):
+        pass

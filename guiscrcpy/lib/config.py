@@ -40,7 +40,8 @@ class InterfaceConfig:
             'bitrate': 8000,
             'fullscreen': False,
             'dispRO': False,
-            'extra': ""
+            'extra': "",
+            'cmx': []
         }
         self.jsonfile = 'guiscrcpy.json'
         self.check_file()

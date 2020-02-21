@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>441</width>
+    <height>447</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Settings</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>441</width>
+      <height>408</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item row="10" column="4" colspan="2">
+      <widget class="QLineEdit" name="b1c2"/>
+     </item>
+     <item row="11" column="3">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>h</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>w</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QCheckBox" name="a1">
+       <property name="text">
+        <string>Always on Top</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="3">
+      <widget class="QLabel" name="label_4">
+       <property name="minimumSize">
+        <size>
+         <width>25</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>y</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QCheckBox" name="a4">
+       <property name="text">
+        <string>Prefer Text</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QToolButton" name="a6d1">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="2">
+      <widget class="QLineEdit" name="b2c1"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QCheckBox" name="a3">
+       <property name="text">
+        <string>Max Frame / second (FPS)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1" colspan="5">
+      <widget class="QLineEdit" name="a8c1"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="label">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>x</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QCheckBox" name="a9">
+       <property name="text">
+        <string>Borderless Window</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>x</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="2" colspan="4">
+      <widget class="QPushButton" name="updatebutton">
+       <property name="text">
+        <string>Update</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QCheckBox" name="a6">
+       <property name="text">
+        <string>Record File</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1" colspan="5">
+      <widget class="QLineEdit" name="a5c1"/>
+     </item>
+     <item row="7" column="0">
+      <widget class="QCheckBox" name="a8">
+       <property name="text">
+        <string>Serial</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="2">
+      <widget class="QLineEdit" name="b1c1"/>
+     </item>
+     <item row="1" column="3">
+      <widget class="QLabel" name="label_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>y</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="0">
+      <widget class="QCheckBox" name="b1">
+       <property name="text">
+        <string>Window position</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLineEdit" name="a2c1">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="4" colspan="2">
+      <widget class="QLineEdit" name="b2c2"/>
+     </item>
+     <item row="11" column="0">
+      <widget class="QCheckBox" name="b2">
+       <property name="text">
+        <string>Window size</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QCheckBox" name="a2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Crop Width</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QCheckBox" name="b0">
+       <property name="text">
+        <string>Window Title</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1" colspan="5">
+      <widget class="QLineEdit" name="b0c1"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QCheckBox" name="a5">
+       <property name="text">
+        <string>Push Target</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="2" colspan="4">
+      <widget class="QLineEdit" name="a6c1"/>
+     </item>
+     <item row="1" column="4" colspan="2">
+      <widget class="QLineEdit" name="a2c2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1" colspan="5">
+      <widget class="QSpinBox" name="a3e1"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

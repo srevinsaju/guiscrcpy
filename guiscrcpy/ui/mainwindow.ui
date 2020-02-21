@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>547</width>
-    <height>497</height>
+    <height>482</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -41,75 +41,62 @@
             </string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-QPushButton {
-                        
+   <string notr="true">QPushButton {
 border-radius: 10px;
-					  
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 152, 255));
 color: rgb(0, 0, 0);
-                        
-                    }
-
+}
 QPushButton:pressed {
 border-radius: 10px;
-					  
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 152, 255));
 color: rgb(0, 0, 0);
-                        }
+}
 .QPushButton:hover {
 border-radius: 10px;
-					  
 	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 199, 199, 255), stop:1 rgba(0, 190, 113, 255));
 color: rgb(0, 0, 0);
-                        }
-
-
+ }
 .QPushButton#quit{
                         background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255), stop:1 rgba(255, 155, 0, 255));
 color: rgb(0, 0, 0);
 border-radius: 10px;
-
-                        
-                    }
-
-.QPushButton#quit:hover{
-                        
+ }
+.QPushButton#quit:hover{             
 	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(172, 0, 0, 255), stop:1 rgba(175, 106, 0, 255));
 color: rgb(0, 0, 0);
 border-radius: 10px;
-
-                        
-                    }
+ }
 .QPushButton#usbaud{
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 0, 255, 255), stop:0.901961 rgba(152, 0, 255, 255));
 color: rgb(0, 0, 0);
 border-radius: 10px;
-
-                        
-                    }
-
+}
 .QPushButton#usbaud:hover{                        
 	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(172, 0, 0, 255), stop:1 rgba(175, 106, 0, 255));
 color: rgb(0, 0, 0);
 border-radius: 10px;
-
-                        
-                    }
+}
 .QPushButton#mapnow{
 background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(253, 0, 255, 255), stop:0.990196 rgba(88, 0, 255, 255));
 color: rgb(0, 0, 0);
 border-radius: 10px;
-
-                        
-                    }
+ }
 .QPushButton#mapnow{
 background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(199, 0, 255, 255), stop:0.990196 rgba(88, 0, 255, 255));
 color: rgb(0, 0, 0);
 border-radius: 10px;
+}
+.QPushButton#network_button{
+background-color: rgb(60, 60, 60);
+color: rgb(0, 0, 0);
+border-radius: 10px;	
+ }
 
-                        
-                    }
+.QPushButton#settings_button{
+background-color: rgb(60, 60, 60);
+color: rgb(0, 0, 0);
+border-radius: 10px;	
+ }
 
 </string>
   </property>
@@ -201,7 +188,7 @@ border-radius: 10px;
            </property>
            <property name="font">
             <font>
-             <family>Trebuchet MS</family>
+             <family>Titillium Web</family>
              <pointsize>28</pointsize>
              <weight>75</weight>
              <italic>false</italic>
@@ -228,6 +215,11 @@ border-radius: 10px;
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Titillium Web</family>
+            </font>
            </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 255, 255);</string>
@@ -271,7 +263,129 @@ border-radius: 10px;
          <property name="verticalSpacing">
           <number>1</number>
          </property>
+         <item row="1" column="0" colspan="3">
+          <widget class="QCheckBox" name="displayForceOn">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Trebuchet MS</family>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string>Use your computer screen as your android device's HD Display</string>
+           </property>
+           <property name="toolTipDuration">
+            <number>2</number>
+           </property>
+           <property name="text">
+            <string>Keep display off </string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/bullseye.svg</normaloff>:/icons/icons/bullseye.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QCheckBox" name="showTouches">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Trebuchet MS</family>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Show touches</string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/hand-finger-pointing-down.svg</normaloff>:/icons/icons/hand-finger-pointing-down.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QPushButton" name="network_button">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>Launch Network Manager</string>
+           </property>
+           <property name="toolTipDuration">
+            <number>2</number>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/wifi.svg</normaloff>:/icons/icons/wifi.svg</iconset>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="3">
+          <widget class="QCheckBox" name="notifChecker">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Trebuchet MS</family>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string>Make guiscrcpy check for new notifications on your device. A status bar icon indicating new notifications will be visible. (Experimental)</string>
+           </property>
+           <property name="toolTipDuration">
+            <number>2</number>
+           </property>
+           <property name="text">
+            <string>Notification Auditor</string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/bell-musical-tool.svg</normaloff>:/icons/icons/bell-musical-tool.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
           <widget class="QCheckBox" name="recScui">
            <property name="enabled">
             <bool>true</bool>
@@ -315,8 +429,21 @@ border-radius: 10px;
            </property>
           </widget>
          </item>
+         <item row="2" column="2" colspan="3">
+          <widget class="QPushButton" name="runningNot">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="3">
-          <widget class="QCheckBox" name="showTouches">
+          <widget class="QCheckBox" name="fullscreen">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -336,15 +463,15 @@ border-radius: 10px;
             </font>
            </property>
            <property name="text">
-            <string>Show touches</string>
+            <string>Fullscreen</string>
            </property>
            <property name="icon">
             <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/hand-finger-pointing-down.svg</normaloff>:/icons/icons/hand-finger-pointing-down.svg</iconset>
+             <normaloff>:/icons/icons/increase-size-option.svg</normaloff>:/icons/icons/increase-size-option.svg</iconset>
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
+         <item row="0" column="0" colspan="3">
           <widget class="QCheckBox" name="aotop">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -379,141 +506,32 @@ border-radius: 10px;
            </property>
           </widget>
          </item>
-         <item row="1" column="2">
-          <widget class="QCheckBox" name="notifChecker">
+         <item row="2" column="1">
+          <widget class="QPushButton" name="settings_button">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="minimumSize">
-            <size>
-             <width>10</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Trebuchet MS</family>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Make guiscrcpy check for new notifications on your device. A status bar icon indicating new notifications will be visible. (Experimental)</string>
-           </property>
-           <property name="toolTipDuration">
-            <number>2</number>
-           </property>
            <property name="text">
-            <string>Notification Auditor</string>
+            <string/>
            </property>
            <property name="icon">
             <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/bell-musical-tool.svg</normaloff>:/icons/icons/bell-musical-tool.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QCheckBox" name="fullscreen">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>10</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Trebuchet MS</family>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Fullscreen</string>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/increase-size-option.svg</normaloff>:/icons/icons/increase-size-option.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QCheckBox" name="displayForceOn">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>10</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Trebuchet MS</family>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Use your computer screen as your android device's HD Display</string>
-           </property>
-           <property name="toolTipDuration">
-            <number>2</number>
-           </property>
-           <property name="text">
-            <string>Keep display off </string>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/bullseye.svg</normaloff>:/icons/icons/bullseye.svg</iconset>
+             <normaloff>:/icons/icons/gear.svg</normaloff>:/icons/icons/gear.svg</iconset>
            </property>
           </widget>
          </item>
         </layout>
        </item>
        <item>
-        <widget class="QToolButton" name="runningNot">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <family>Trebuchet MS</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="statusTip">
-          <string>Shows the status of the Scrcpy Daemon</string>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 0, 255));
-border-radius: 10px;
-color: rgb(0, 0, 0)</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item>
         <layout class="QGridLayout" name="gridLayout_3">
          <property name="spacing">
           <number>0</number>
          </property>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label">
+         <item row="1" column="1">
+          <widget class="QLabel" name="bitrateText">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -522,37 +540,32 @@ color: rgb(0, 0, 0)</string>
            </property>
            <property name="font">
             <font>
-             <family>Trebuchet MS</family>
-             <pointsize>11</pointsize>
+             <family>Titillium Web</family>
+             <pointsize>26</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
             </font>
            </property>
-           <property name="text">
-            <string>Bitrate</string>
+           <property name="statusTip">
+            <string/>
            </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QCheckBox" name="dimensionDefaultCheckbox">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <family>Trebuchet MS</family>
-             <pointsize>11</pointsize>
-             <weight>50</weight>
-             <italic>false</italic>
-             <bold>false</bold>
-            </font>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 0, 0);
+border-radius: 10px;
+
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 0, 255));</string>
            </property>
            <property name="text">
-            <string>Keep Default Dimensions</string>
+            <string>8000 KB/s</string>
            </property>
-           <property name="checked">
-            <bool>true</bool>
+           <property name="textFormat">
+            <enum>Qt::AutoText</enum>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="margin">
+            <number>8</number>
            </property>
           </widget>
          </item>
@@ -581,51 +594,6 @@ color: rgb(0, 0, 0)</string>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="dimensionText">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <family>Trebuchet MS</family>
-             <pointsize>26</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Change device dimensions. scrcpy has some rendering problems upon changing dimensions</string>
-           </property>
-           <property name="toolTipDuration">
-            <number>2</number>
-           </property>
-           <property name="statusTip">
-            <string/>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(17, 17, 17);
-border-radius: 10px;
-</string>
-           </property>
-           <property name="text">
-            <string>DEFAULT</string>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::AutoText</enum>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="margin">
-            <number>8</number>
            </property>
           </widget>
          </item>
@@ -695,8 +663,8 @@ image: url(:/res/ui/guiscrcpy_logo.png);</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="bitrateText">
+         <item row="0" column="1">
+          <widget class="QLabel" name="label">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -706,22 +674,72 @@ image: url(:/res/ui/guiscrcpy_logo.png);</string>
            <property name="font">
             <font>
              <family>Trebuchet MS</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Bitrate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QCheckBox" name="dimensionDefaultCheckbox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Trebuchet MS</family>
+             <pointsize>11</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Keep Default Dimensions</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel" name="dimensionText">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Titillium Web</family>
              <pointsize>26</pointsize>
              <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
+           <property name="toolTip">
+            <string>Change device dimensions. scrcpy has some rendering problems upon changing dimensions</string>
+           </property>
+           <property name="toolTipDuration">
+            <number>2</number>
+           </property>
            <property name="statusTip">
             <string/>
            </property>
            <property name="styleSheet">
-            <string notr="true">color: rgb(0, 0, 0);
+            <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(17, 17, 17);
 border-radius: 10px;
-
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 0, 255));</string>
+</string>
            </property>
            <property name="text">
-            <string>8000 KB/s</string>
+            <string>DEFAULT</string>
            </property>
            <property name="textFormat">
             <enum>Qt::AutoText</enum>
@@ -816,8 +834,10 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
            </property>
            <property name="font">
             <font>
-             <family>Trebuchet MS</family>
+             <family>Titillium Web</family>
              <pointsize>11</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
             </font>
            </property>
            <property name="text">
@@ -954,8 +974,11 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
            </property>
            <property name="font">
             <font>
-             <family>Trebuchet MS</family>
+             <family>Titillium Web</family>
              <pointsize>11</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
             </font>
            </property>
            <property name="statusTip">
@@ -1372,9 +1395,6 @@ selection-background-color: rgb(85, 255, 0);</string>
  </widget>
  <resources>
   <include location="rsrc.qrc"/>
-  <include location="rsrc.qrc"/>
-  <include location="rsrc.qrc"/>
-  <include location="../../resources/rsrc.qrc"/>
  </resources>
  <connections/>
 </ui>

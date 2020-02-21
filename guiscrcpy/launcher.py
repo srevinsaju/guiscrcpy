@@ -55,8 +55,6 @@ from guiscrcpy.lib.check import adb
 from guiscrcpy.lib.check import scrcpy
 from guiscrcpy.theme.style import darkstylesheet
 from guiscrcpy.ui.main import Ui_MainWindow
-from guiscrcpy.ui.toolkit import Ui_ToolbarPanel
-from guiscrcpy.ui.panel import Ui_HorizontalPanel
 from guiscrcpy.lib.toolkit import UXMapper
 from guiscrcpy.ux.panel import Panel
 from guiscrcpy.ux.swipe import SwipeUX
@@ -148,6 +146,7 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
         Ui_MainWindow.__init__()
         self.setupUi(Ui_MainWindow)
         super(InterfaceGuiscrcpy, self).__init__()
+        self.cmx = None
         logging.debug(
             "Options received by class are : {} {} {} {} {} ".format(
                 config['bitrate'],
@@ -206,7 +205,6 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
         self.swipe_instance = SwipeUX()  # Load swipe UI
         self.panel_instance = Panel()
         self.side_instance = InterfaceToolkit()
-
         self.quit.clicked.connect(self.quitAct)
         self.dimensionText.setText("DEFAULT")
         config['bitrate'] = int(self.dial.value())
@@ -217,6 +215,20 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
         self.abtgit.clicked.connect(self.opengit)
         self.usbaud.clicked.connect(self.usbaudi)
         self.mapnow.clicked.connect(self.mapp)
+        self.network_button.clicked.connect(self.network_mgr)
+        self.settings_button.clicked.connect(self.settings_mgr)
+
+    def settings_mgr(self):
+        from guiscrcpy.ux.settings import InterfaceSettings
+        self.sm = InterfaceSettings(self)
+        self.sm.init()
+        self.sm.show()
+
+    def network_mgr(self):
+        from guiscrcpy.ux.network import InterfaceNetwork
+        self.nm = InterfaceNetwork(adb.path)
+        self.nm.init()
+        self.nm.show()
 
     def mapp(self):
         if (os.path.exists(
@@ -419,9 +431,11 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
         self.swipe_instance.init()  # show Swipe UI
         self.panel_instance.init()
         self.side_instance.init()
+        if self.cmx is not None:
+            config['cmx'] = ' '.join(map(str, self.cmx))
 
         # run scrcpy usng subprocess
-        args = "{} {}".format(self.options, config['extra'])
+        args = "{} {} {}".format(self.options, config['extra'], config['cmx'])
         scrcpy.start(scrcpy.path, args)
 
         timef = time.time()
@@ -430,6 +444,7 @@ class InterfaceGuiscrcpy(Ui_MainWindow):
         self.progressBar.setValue(100)
 
         # handle config files
+
         cfgmgr.update_config(config)
         cfgmgr.write_file()
 

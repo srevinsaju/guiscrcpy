@@ -102,6 +102,9 @@
      </item>
      <item row="1" column="1">
       <widget class="QLabel" name="label">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>x</string>
        </property>
@@ -156,6 +159,9 @@
      </item>
      <item row="1" column="3">
       <widget class="QLabel" name="label_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>y</string>
        </property>
@@ -172,7 +178,11 @@
       </widget>
      </item>
      <item row="1" column="2">
-      <widget class="QLineEdit" name="a2c1"/>
+      <widget class="QLineEdit" name="a2c1">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item row="11" column="4" colspan="2">
       <widget class="QLineEdit" name="b2c2"/>
@@ -186,6 +196,9 @@
      </item>
      <item row="1" column="0">
       <widget class="QCheckBox" name="a2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Crop Width</string>
        </property>
@@ -212,7 +225,11 @@
       <widget class="QLineEdit" name="a6c1"/>
      </item>
      <item row="1" column="4" colspan="2">
-      <widget class="QLineEdit" name="a2c2"/>
+      <widget class="QLineEdit" name="a2c2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item row="3" column="1" colspan="5">
       <widget class="QSpinBox" name="a3e1"/>

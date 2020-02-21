@@ -40,7 +40,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
         self.nm_connect.pressed.connect(self.connect)
         self.nm_refresh.pressed.connect(self.refresh)
         self.nm_det.setText("Click Refresh to load IP addresses")
-        self.tcpip.connect.pressed.connect(self.tcpip_launch)
+        self.tcpip.pressed.connect(self.tcpip_launch)
 
     def tcpip_launch(self):
         adb.command(adb.path, 'tcpip')

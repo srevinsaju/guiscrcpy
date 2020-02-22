@@ -41,7 +41,7 @@ class InterfaceConfig:
             'fullscreen': False,
             'dispRO': False,
             'extra': "",
-            'cmx': []
+            'cmx': ""
         }
         self.jsonfile = 'guiscrcpy.json'
         self.check_file()

@@ -33,7 +33,17 @@ and download the artifact.
 
 guiscrcpy is a multiplatform, ready-to-use GUI layer for Android to PC screen mirroring written in the advancing programming language python3 for the most award winning open-source android screen mirroring system -- `scrcpy` located on `https://github.com/genymobile/scrcpy/` by [@rom1v](https://github.com/rom1v)
 
-## Documentation
-guiscrcpy documentation is located on https://github.com/srevinsaju/guiscrcpy-docs
+## Installation
+To install `guiscrcpy`, just type:
+```bash
+python3 -m pip install guiscrcpy
+```
+in your terminal
 
-Also guiscrcpy, ReadTheDocs is under construction
+Alternatively, download the compiled EXE from the releases for Windows Operating Systems and 
+AppImages for Linux OSes
+
+For more details on Installation instructions, head over to the Wiki
+
+## Documentation
+All detailed information are clearly laid out in the Wiki. you might need to check that out

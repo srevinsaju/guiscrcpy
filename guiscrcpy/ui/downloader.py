@@ -10,14 +10,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(222, 320)
+class Ui_Initializer(object):
+    def setupUi(self, Initializer):
+        Initializer.setObjectName("Initializer")
+        Initializer.resize(222, 320)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/res/ui/guiscrcpy_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        Dialog.setWindowIcon(icon)
-        self.widget = QtWidgets.QWidget(Dialog)
+        Initializer.setWindowIcon(icon)
+        self.widget = QtWidgets.QWidget(Initializer)
         self.widget.setGeometry(QtCore.QRect(0, 0, 221, 311))
         self.widget.setObjectName("widget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
@@ -48,12 +48,12 @@ class Ui_Dialog(object):
         self.label_3.setObjectName("label_3")
         self.verticalLayout.addWidget(self.label_3)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(Initializer)
+        QtCore.QMetaObject.connectSlotsByName(Initializer)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, Initializer):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Initializing"))
-        self.stat.setText(_translate("Dialog", "guiscrcpy"))
-        self.label_3.setText(_translate("Dialog", "Initializing"))
+        Initializer.setWindowTitle(_translate("Initializer", "Initializing"))
+        self.stat.setText(_translate("Initializer", "guiscrcpy"))
+        self.label_3.setText(_translate("Initializer", "Initializing"))
 from . import rsrc_rc

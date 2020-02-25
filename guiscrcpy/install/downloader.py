@@ -1,115 +1,76 @@
+'''
+Copyright 2014 Lloyd Konneker
+Release under the GPLv3
+'''
 
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-
-import urllib.request
-import sys
-import threading
+from PyQt5.QtCore import pyqtSignal as Signal
+from PyQt5.QtCore import QObject, QByteArray, QUrl
+from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
 
 
-dlThread = 0
-hWindow = 0
-fProgressCounter = 0.0
+class DownLoader(QObject):
+    '''
+    Asynchronous download from network, which is expected to be unreliable and possibly slow.
 
-class Form(QWidget):
-    def __init__(self, parent=None):
-        super(Form, self).__init__(parent)
+    A thin wrapper around QNetworkAccessManager()
 
-        global hWindow
-        hWindow = self
+    Qt docs: 'One QNetworkAccessManager should be enough for the whole Qt application.'
+    Similarly, one DownLoader might be enought for the whole app.
+    It is untested what happens when you create more than one.
 
-        lblUrl = QLabel("File URL:")
-        self.txtURL = QLineEdit()
-        self.bttDL = QPushButton("&Download")
-        self.pbar = QProgressBar()
+    Usage:
 
-        self.pbar.setMinimum(0)
-        self.pbar.setMaximum(100)
+      foo = Downloader(url)
+      foo.downloaded.connect(clientLoader)
 
-        buttonLayout1 = QVBoxLayout()
-        buttonLayout1.addWidget(lblUrl)
-        buttonLayout1.addWidget(self.txtURL)
-        buttonLayout1.addWidget(self.bttDL)
-        buttonLayout1.addWidget(self.pbar)
+      foo.doDownload(QUrl('http:/...'))
+      # execution continues, clientLoader slot will receive signal
 
-        self.bttDL.clicked.connect(self.bttPush)
+      def clientLoader():
+        bar = foo.downloadedData()
+        # bar is only a reference, consume it before calling doDownload() again
 
-        mainLayout = QGridLayout()
-        mainLayout.addLayout(buttonLayout1, 0, 1)
+    '''
 
-        self.setLayout(mainLayout)
-        self.setWindowTitle("pySFD")
-    def bttPush(self):
-        global dlThread
+    downloaded = Signal()
 
-        hSignals = sigHandling()
-        hSignals.dlProgress_update.connect(hSignals.pbar_incrementer)
-        hSignals.dlProgress_done.connect(hSignals.dlDone)
+    def __init__(self):  # parent not used
+        super(DownLoader, self).__init__()  # !!! init QObject
+        # private
+        self._webController = QNetworkAccessManager()
+        self._downloadedData = None
 
-        url = self.txtURL.text()
-        if url == "":
-            QMessageBox.information(self, "Empty URL",
-                    "Please enter the URL of the file you want to download.")
-            return
-        else:
-            filename = str(QFileDialog.getSaveFileName(self, 'Choose the download location and file name', '.')) ## DETECT A CANCEL
-            filename = filename[:-6]
-            filename = filename.split("('",maxsplit=1)[1]
+        # connect asynchronous result, when a request finishes
+        self._webController.finished.connect(self._fileDownloaded)
 
-        self.bttDL.setEnabled(False)
-        dlThread = threading.Thread(target=hSignals.runDL,args=(url, filename))
-        dlThread.start()
-        return
+    # private slot, no need to declare as slot
+    def _fileDownloaded(self, reply):
+        '''
+        Handle signal 'finished'.  A network request has finished.
+        '''
+        self._downloadedData = reply.readAll()
+        # prior _downloadedData is now garbage collectable
+        assert isinstance(self._downloadedData, QByteArray)
+        reply.deleteLater()  # schedule for delete from main event loop
+        # print("emitted")
+        self.downloaded.emit()
 
-    def pbarIncValue(self, val):
-        global fProgressCounter
-        #print("pbarIncValue({0})\nfProgressCounter={1}".format(val,fProgressCounter))
+    '''
+    Public API
+    '''
 
-        if self.pbar.value() >= 100:
-            self.dlProgress_done.emit()
-            return
-        if fProgressCounter > 1.0: # FIX
-            self.pbar.setValue(self.pbar.value() + 1)
-            fProgressCounter -= 1.0
-            fProgressCounter += val
-        else:
-            fProgressCounter += val
+    def doDownload(self, url):
+        assert isinstance(url, QUrl)
 
-class sigHandling(QObject):
-    dlProgress_update = pyqtSignal(float)
-    dlProgress_done = pyqtSignal()
+        request = QNetworkRequest(url)
+        self._webController.get(request)
+        # asynchronous, does not wait, execution continues
 
-    @pyqtSlot(float)
-    def pbar_incrementer(self, val):
-        hWindow.pbarIncValue(val)
+    def downloadedData(self):
+        '''
+        QByteArray that was downloaded.
 
-    @pyqtSlot()
-    def dlDone(self):
-        print("in dlDone")
-        hWindow.pbar.setValue(100)
-        hWindow.bttDL.setEnabled(True)
-
-    def runDL(self, dlLink, filename):
-        #print("in run")
-        global dlThread, hWindow
-        def report(block_count, block_size, total_size):
-            if block_count == 0:
-                #print("block_count == 0")
-                self.dlProgress_update.emit(0)
-            if (block_count * block_size) == total_size:
-                self.dlProgress_done.emit()
-            incAmount = float((100*block_size) / total_size)
-            #print("BS={0} TS={1} incAmount={2}".format(block_size,total_size,incAmount))
-            self.dlProgress_update.emit(incAmount)
-
-        urllib.request.urlretrieve(dlLink, filename, reporthook=report)
-        #print("emit dlProgress_done")
-        self.dlProgress_done.emit()
-        #print("about to leave dlThread")
-        pass
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    screen = Form()
-    screen.show()
-    sys.exit(app.exec_())
+        Call this only after receiving signal 'downloaded'.
+        Copy result before calling doDownload() again.
+        '''
+        return self._downloadedData

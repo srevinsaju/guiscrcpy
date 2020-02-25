@@ -5,7 +5,6 @@
 ![Linux](https://github.com/srevinsaju/guiscrcpy/workflows/Linux/badge.svg)
 ![Windows](https://github.com/srevinsaju/guiscrcpy/workflows/Windows/badge.svg)
 ![Mac OS](https://github.com/srevinsaju/guiscrcpy/workflows/Mac%20OS/badge.svg)
-[![codecov](https://codecov.io/gh/srevinsaju/guiscrcpy/branch/master/graph/badge.svg)](https://codecov.io/gh/srevinsaju/guiscrcpy)
 [![Updates](https://pyup.io/repos/github/srevinsaju/guiscrcpy/shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
 [![Python 3](https://pyup.io/repos/github/srevinsaju/guiscrcpy/python-3-shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/guiscrcpy?style=flat-square)

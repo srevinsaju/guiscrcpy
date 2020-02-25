@@ -474,5 +474,5 @@ class Ui_ToolbarPanel(object):
             "ToolbarPanel", "Pinch out in the screen"))
         self.potraitUI.setToolTip(_translate("ToolbarPanel", "Potrait"))
         self.landscapeUI.setToolTip(_translate("ToolbarPanel", "Landscape"))
-        self.label.setText(_translate("ToolbarPanel", "...."))
-        self.label_2.setText(_translate("ToolbarPanel", "...."))
+        self.label.setText(_translate("ToolbarPanel", "::::"))
+        self.label_2.setText(_translate("ToolbarPanel", "::::"))

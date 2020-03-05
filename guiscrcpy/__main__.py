@@ -18,6 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 
-print("Running guiscrcpy as a python module")
 from guiscrcpy.launcher import bootstrap
+print("Running guiscrcpy as a python module")
 bootstrap()

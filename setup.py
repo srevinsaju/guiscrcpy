@@ -22,12 +22,15 @@ def gen_version():
         v = "{}".format(raw_version[0])
     elif len(raw_version) == 2:
         # Release Candidate
-        v = "{major}.post{minor}".format(major=raw_version[0], minor=raw_version[1])
+        v = "{major}.post{minor}".format(
+            major=raw_version[0], minor=raw_version[1])
     else:
         # Revision Dev
-        v = "{major}.post{minor}.dev".format(major=raw_version[0], minor=raw_version[1])
+        v = "{major}.post{minor}.dev".format(
+            major=raw_version[0], minor=raw_version[1])
 
     return v
+
 
 try:
     v = gen_version()

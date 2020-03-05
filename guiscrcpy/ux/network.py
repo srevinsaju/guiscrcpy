@@ -56,7 +56,8 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
             count += 1
             readout = sp.stdout.readline().decode()
             if 'failed' in readout:
-                self.nm_det.setText('Device failed to get connected (is it an Android dev?')
+                self.nm_det.setText(
+                    'Device failed to get connected (is it an Android dev?')
                 return
             if 'connected' in readout:
                 print(readout)
@@ -65,7 +66,8 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
                 self.nm_det.setText('Device connect failed: Timeout')
             else:
                 time.sleep(1)
-        self.nm_det.setText("Connected to IP:{}:{}".format(ip, self.spinBox.value()))
+        self.nm_det.setText(
+            "Connected to IP:{}:{}".format(ip, self.spinBox.value()))
 
     def refresh(self):
         self.listView.clear()

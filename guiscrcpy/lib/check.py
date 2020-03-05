@@ -50,7 +50,8 @@ class scrcpy:
 
     @staticmethod
     def check():
-        scrcpy_path = check_existence(environment.paths(), ['scrcpy'], False, True)
+        scrcpy_path = check_existence(
+            environment.paths(), ['scrcpy'], False, True)
         if scrcpy_path and (type(scrcpy_path) is list):
             return scrcpy_path[0]
         else:
@@ -115,7 +116,6 @@ class adb:
             stderr=PIPE,
         )
         return shellx
-
 
     @staticmethod
     def devices(increment=''):

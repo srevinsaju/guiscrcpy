@@ -55,7 +55,7 @@ class Linux:
             except Exception as e:
                 logging.error(
                     "Error creating configuration file in dir {path}. Error code:{e}"
-                        .format(
+                    .format(
                         path=path,
                         e=e
                     ))

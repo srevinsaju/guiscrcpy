@@ -68,9 +68,6 @@ except FileNotFoundError:
 # create app
 
 
-
-
-
 # initialize config manager
 cfgmgr = InterfaceConfig()
 config = cfgmgr.get_config()

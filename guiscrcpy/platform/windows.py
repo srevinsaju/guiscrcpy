@@ -28,7 +28,8 @@ class Windows:
 
     @staticmethod
     def make_config():
-        path = os.path.expanduser(os.path.join("~", "AppData", "Local", "guiscrcpy"))
+        path = os.path.expanduser(os.path.join(
+            "~", "AppData", "Local", "guiscrcpy"))
         if not os.path.exists(path):
             try:
                 os.makedirs(path)

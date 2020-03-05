@@ -1,3 +1,5 @@
+import platform
+
 from setuptools import setup
 import sys
 import os
@@ -6,6 +8,7 @@ from os import path
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
+
 
 def gen_version():
     import git
@@ -32,10 +35,16 @@ except Exception as e:
     print("WARNING: {}".format(e))
     v = "3.3.x.src.dev"
 
+
+requirements = ['PyQt5==5.14.1', 'psutil', 'pynput', 'gitpython']
+if platform.system() == 'Windows':
+    requirements.append('pywin32')
+
+
 setup(
     name='guiscrcpy',
     version="{}".format(v),
-    description='An Open Source - Fast -  Android Screen Mirroring system.',
+    description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',
     license='GPL v3',
@@ -49,7 +58,7 @@ setup(
                   '.': [".git/info/*"]
                   },
     include_package_data=True,
-    install_requires=['PyQt5==5.14.1', 'psutil', 'pynput', 'gitpython'],
+    install_requires=requirements,
     scripts=["scripts/guiscrcpy", "scripts/guiscrcpy-mapper"],
     entry_points={
         'console_scripts': [

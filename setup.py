@@ -44,7 +44,8 @@ setup(
     packages=['guiscrcpy'],
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
-    package_data={'guiscrcpy': ['*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*', 'theme/*', 'ux/*', 'network/*', 'settings/*', 'install/*'],
+    package_data={'guiscrcpy': ['*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*',
+                                'theme/*', 'ux/*', 'network/*', 'settings/*', 'install/*'],
                   '.': [".git/info/*"]
                   },
     include_package_data=True,

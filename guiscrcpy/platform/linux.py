@@ -20,6 +20,22 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import logging
 import os
 
+from guiscrcpy.lib.ver import version
+
+desktop = \
+    """
+[Desktop Entry]
+Version={v}
+Name=guiscrcpy
+GenericName=guiscrcpy
+Comment=Open Source Android Screen Mirroring System
+Exec=guiscrcpy
+Icon={icon_path}
+Type=Application
+Categories=Utility;Development;
+StartupWMClass=UGENE
+"""
+
 
 class Linux:
     def __init__(self):
@@ -28,8 +44,7 @@ class Linux:
     def cfgpath(self):
         return self.make_config()
 
-    @staticmethod
-    def make_config():
+    def make_config(self):
         if os.getenv('XDG_CONFIG_HOME') is None:
             path = os.path.expanduser("~/.config/guiscrcpy/")
         else:
@@ -40,11 +55,42 @@ class Linux:
             except Exception as e:
                 logging.error(
                     "Error creating configuration file in dir {path}. Error code:{e}"
-                    .format(
+                        .format(
                         path=path,
                         e=e
                     ))
         return path
+
+    def create_desktop(self):
+        """
+        Create Desktop file for Linux in ~/.local level
+        :return:
+        """
+        v = version()
+        ver = v.get_commit()
+
+        desk = desktop.format(
+            v=ver,
+            icon_path=os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))),
+                                   'ui', 'ui', 'guiscrcpy_logo.png'))
+        if os.getenv('XDG_DESKTOP_DIR'):
+            desktop_dir = os.getenv('XDG_DESKTOP_DIR')
+        else:
+            if os.path.exists(os.path.expanduser('~/Desktop')):
+                desktop_dir = os.path.expanduser('~/Desktop')
+            elif os.path.exists(os.path.expanduser('~/desktop')):
+                desktop_dir = os.path.expanduser('~/desktop')
+            else:
+                desktop_dir = False
+        if desktop_dir:
+            with open(os.path.join(desktop_dir, 'guiscrcpy.desktop'), 'w') as w:
+                w.write(desk)
+            with open(os.path.join(os.path.expanduser('~/.local/share/applications/'), 'guiscrcpy.desktop'), 'w') as w:
+                w.write(desk)
+
+            return True
+        else:
+            return False
 
     def system(self):
         return 'Linux'

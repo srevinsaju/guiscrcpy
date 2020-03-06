@@ -9,8 +9,12 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 
 def gen_version():
+    """
+    Generates a version from the avaailable git repositories
+    If git repository is not valid, fallback to __version__
+    :return:
+    """
     import git
-
     repo = git.Repo(search_parent_directories=True)
     sha = repo.head.object.hexsha
     ver = repo.git.describe("--tags")

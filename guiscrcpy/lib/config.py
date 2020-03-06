@@ -95,6 +95,7 @@ class InterfaceConfig:
         if not os.path.exists(os.path.join(self.cfgpath, self.jsonfile)):
             if (self.os.system() == 'Linux') or (self.os.system() == 'Windows'):
                 self.os.create_desktop()
+                self.os.install_fonts()
 
             self.write_file()
         self.read_file()

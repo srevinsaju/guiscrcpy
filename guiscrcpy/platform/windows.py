@@ -37,7 +37,7 @@ class Windows:
             except Exception as e:
                 logging.error(
                     "Error creating configuration file in dir {path}. Error code:{e}"
-                    .format(
+                        .format(
                         path=path,
                         e=e
                     ))
@@ -54,6 +54,31 @@ class Windows:
 
     def paths(self):
         return ['bin']
-    
+
+    def install_fonts(self):
+        """
+        Install fonts to system directory.
+        The fonts being installed is Titillium Web ~ https://fonts.google.com/specimen/Titillium+Web
+        Open Source Approved fonts.
+        # TODO support for SystemWide Installation
+        :return: True if installation successful, else False
+        """
+        # TODO: Test it properly
+        # Likely to fail
+        cmd = r"""copy "{fontdir}" "%WINDIR%\Fonts" 
+        reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" / 
+        v "FontName (TrueType)" / t REG_SZ / d {font} / f """
+        font_dir = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
+        fonts = os.listdir(font_dir)
+        try:
+            for i in fonts:
+                # install the fonts by executing cmd and update the Windows Registry
+                print(cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
+                os.system(cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
+            return True
+        except Exception as e:
+            print("Installing fonts failed")
+            return False
+
     def create_desktop(self):
         make_shortcut()

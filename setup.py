@@ -41,9 +41,11 @@ except Exception as e:
     v = "3.3.x.src.dev"
 
 
-requirements = ['PyQt5==5.14.1', 'psutil', 'pynput', 'gitpython',  'fonttools']
+requirements = ['PyQt5==5.14.1', 'psutil', 'pynput', 'gitpython']
 if platform.system() == 'Windows':
     requirements.append('pywin32')
+elif platform.system() == 'Linux':
+    requirements.append('fonttools')
 
 
 setup(

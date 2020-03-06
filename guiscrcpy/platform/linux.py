@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import logging
 import os
+import shutil
 
 from guiscrcpy.lib.ver import version
 
@@ -92,7 +93,31 @@ class Linux:
         else:
             return False
 
-    def system(self):
+    @staticmethod
+    def install_fonts():
+        """
+        Install fonts to ~/.fonts.
+        The fonts being installed is Titillium Web ~ https://fonts.google.com/specimen/Titillium+Web
+        Open Source Approved fonts.
+        # TODO support for SystemWide Installation
+        :return: True if installation successful, else False
+        """
+        sys_font_dir = os.path.join(os.path.expanduser('~'), '.fonts')
+        if not os.path.exists(sys_font_dir):
+            os.makedirs(sys_font_dir)
+        from fontTools.ttLib import TTFont
+        font_dir = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
+        fonts = os.listdir(font_dir)
+        try:
+            for i in fonts:
+                font = TTFont(os.path.join(font_dir, i))
+                font.save(os.path.join(sys_font_dir, i))
+            return True
+        except Exception as e:
+            return False
+
+    @staticmethod
+    def system():
         return 'Linux'
 
     def increment(self):

@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import logging
 import os
+from guiscrcpy.platform.windows_tools.tools import make_shortcut
 
 
 class Windows:
@@ -53,3 +54,6 @@ class Windows:
 
     def paths(self):
         return ['bin']
+    
+    def create_desktop(self):
+        make_shortcut()

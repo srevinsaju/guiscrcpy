@@ -30,7 +30,7 @@ try:
     v = gen_version()
 except Exception as e:
     print("WARNING: {}".format(e))
-    v = "3.x.src.dev"
+    v = "3.3.x.src.dev"
 
 setup(
     name='guiscrcpy',

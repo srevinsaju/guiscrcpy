@@ -20,6 +20,12 @@
 ![Twitter Follow](https://img.shields.io/twitter/follow/srevinsaju?style=social)
 ![GitHub followers](https://img.shields.io/github/followers/srevinsaju?label=srevin%20Saju&style=social)
 
+> **IMPORTANT** : `guiscrcpy` is a free and open source android screen mirroring system. The work on guiscrcpy is driven by 
+the interest of users into it. Please feel free to let you know your thanks if this software helped you a lot, or if you like 
+some more features to be included, and paticularly ...
+
+[![Become a Patron](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/srevinsaju?fan_landing=true)
+
 For beta Windows compiled executables, click 
 ![Windows Executable](https://github.com/srevinsaju/guiscrcpy/workflows/Windows%20Executable/badge.svg)
 and download the artifact.

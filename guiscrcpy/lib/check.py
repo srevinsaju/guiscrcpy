@@ -96,7 +96,8 @@ class adb:
                 return dimValues
         else:
             logging.error(
-                "AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'")
+                "AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'"
+            )
             return False
 
     @staticmethod

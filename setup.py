@@ -38,7 +38,7 @@ try:
     v = gen_version()
 except Exception as e:
     print("WARNING: {}".format(e))
-    v = "3.4.x.src.dev"
+    v = "3.5.x.src.dev"
 
 
 requirements = ['PyQt5==5.14.1', 'psutil', 'pynput', 'gitpython']

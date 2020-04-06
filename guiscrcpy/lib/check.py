@@ -124,6 +124,7 @@ class adb:
             raise FileNotFoundError(
                 "guiscrcpy couldn't find adb. Please specify path to adb in configuration file")
         proc = Popen(_(increment + " devices"), stdout=PIPE)
-        output = decode_process(proc)[1].split('\t')
+        output = [[y.strip() for y in x.split('\t')] for x in decode_process(proc)[1:]][:-1]
+        
         logging.debug("ADB: {}".format(output))
         return output

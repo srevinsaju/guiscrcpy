@@ -337,7 +337,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.progressBar.setValue(5)
 
         devices_list = adb.devices(adb.path)
-
+        import pdb; pdb.set_trace()
         if devices_list[0] == "\n":
             self.runningNot.setText("DEVICE IS NOT CONNECTED")
             self.progressBar.setValue(0)

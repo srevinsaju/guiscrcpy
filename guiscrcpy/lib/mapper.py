@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-
+from guiscrcpy.lib.config import InterfaceConfig
+from guiscrcpy.lib.check import adb
 import argparse
 from subprocess import PIPE, Popen
 from pynput import keyboard
@@ -37,16 +38,11 @@ get1 = False
 fixedpos = [0, 0]
 finalpos = [0, 0]
 
+cfgmgr = InterfaceConfig()
+config = cfgmgr.get_config()
+adb.path = config['adb']
 
 jsong = 'guiscrcpy.mapper.json'
-if platform.system() == "Windows":
-    if os.path.isfile("./scrcpy.exe"):
-        increment = ".\\"
-        # print(bcolors.BOLD + "LOG: Found scrcpy.exe in current directory.")
-    else:
-        increment = ""
-else:
-    increment = ""
 
 print("+++++++++++++++++++++++++++++++++++++++")
 print("guiscrcpy ~ mapper by srevinsaju")
@@ -55,19 +51,10 @@ print("Make sure that your device is turned on, and connected to your PC")
 print('With USB debugging turned on.')
 print("+++++++++++++++++++++++++++++++++++++++")
 print("Waiting for device")
-po(increment + "adb wait-for-any-device", shell=True)
+adb.command(adb.path, 'wait-for-any-device')
 print("Device : OK!")
 
-
-# Declare key_a. path position
-if (platform.system() == 'Windows'):
-    cfgpath = os.path.expanduser("~/AppData/Local/guiscrcpy/")
-else:
-    if (os.getenv('XDG_CONFIG_HOME') is None):
-        cfgpath = os.path.expanduser("~/.config/guiscrcpy/")
-    else:
-        cfgpath = os.getenv('XDG_CONFIG_HOME').split(":")[0] + "/guiscrcpy/"
-
+cfgpath = cfgmgr.cfgpath
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--delay', default=10,
@@ -76,20 +63,7 @@ parser.add_argument('-r', '--reset', action="store_true",
                     help="Remove prefernces")
 args = parser.parse_args()
 
-adb_dim = po(
-    "adb shell wm size", shell=True, stdout=PIPE, stderr=PIPE
-)
-
-out = adb_dim.stdout.read()
-out_decoded = out.decode("utf-8")
-out_decoded = out_decoded[:-1]
-dimVal = out_decoded.split(": ")
-try:
-    dimensions_ = dimVal[1]
-    dimValues = dimensions_.split("x")
-    print(dimValues, " DIMENSIONS ")
-except:
-    print("Error Device not connected")
+dimensions = adb.get_dimensions(adb.path)
 
 
 class MapperUI(QtWidgets.QWidget):
@@ -181,8 +155,8 @@ class MapperUI(QtWidgets.QWidget):
         #print("REL POS :: ", fixedpos)
         relx = fixedpos[0]/self.label.width()
         rely = fixedpos[1]/self.label.height()
-        fixx = relx * int(dimValues[0])
-        fixy = rely * int(dimValues[1])
+        fixx = relx * int(dimensions[0])
+        fixy = rely * int(dimensions[1])
         print("FINALIZED POS :: ", fixx, fixy)
 
         finalpos[0] = fixx
@@ -255,7 +229,6 @@ def listen_keypress(key_a):
 
         try:
             if key.char in key_a.keys():
-
                 print(key.char)
                 print("running cmd")
                 finalpos0 = key_a[key.char]
@@ -278,15 +251,9 @@ def listen_keypress(key_a):
 
 def sth():
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     window = MapperUI()
-
     sys.exit(app.exec_())
-
-
-def sth_w0():
-    pass
 
 
 def file_check():
@@ -373,15 +340,13 @@ def file_checkm():
             )
 
     if not fileExist:
-
         # Init json file for first time use
         key_a = {"key": [], "pos": []}
-        with open(cfgpath + jsong, 'w') as f:
+        with open(os.path.join(cfgpath, jsong), 'w') as f:
             json.dump(key_a, f)
-        sth_w0()
 
     elif fileExist:
-        with open(cfgpath + jsong, 'r') as f:
+        with open(os.path.join(cfgpath, jsong), 'r') as f:
             key_a = json.load(f)
         listen_keypress(key_a)
 

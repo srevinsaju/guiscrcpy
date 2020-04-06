@@ -35,6 +35,7 @@ class InterfaceConfig:
             'paths': self.paths,
             'scrcpy': None,
             'adb': None,
+            'scrcpy-server': None,
             'dimension': None,
             'swtouches': False,
             'bitrate': 8000,
@@ -57,6 +58,8 @@ class InterfaceConfig:
             scrcpy_path = scrcpy.check()
             if scrcpy_path:
                 self.config['scrcpy'] = scrcpy_path
+        if (self.config['scrcpy-server'] is not None) and (platform.System() == "Windows"):
+            os.environ['SCRCPY_SERVER_PATH'] = self.config['scrcpy-server']
         return True
 
     def get_config(self):
@@ -90,6 +93,10 @@ class InterfaceConfig:
         if not os.path.exists(self.cfgpath):
             os.mkdir(self.cfgpath)
         if not os.path.exists(os.path.join(self.cfgpath, self.jsonfile)):
+            if (self.os.system() == 'Linux') or (self.os.system() == 'Windows'):
+                self.os.create_desktop()
+                self.os.install_fonts()
+
             self.write_file()
         self.read_file()
 

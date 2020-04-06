@@ -16,13 +16,14 @@ VSVersionInfo(
         u'040904B0',
         [StringStruct(u'CompanyName', u'Srevin Saju'),
         StringStruct(u'FileDescription', u'guiscrcpy: Open Source Android Screen Mirroring System'),
-        StringStruct(u'FileVersion', u'3.3'),
+        StringStruct(u'FileVersion', u'3.5'),
         StringStruct(u'InternalName', u'guiscrcpy'),
         StringStruct(u'LegalCopyright', u'\xa9 Srevin Saju. (c) under GNU GPL v3.'),
         StringStruct(u'OriginalFilename', u'guiscrcpy.exe'),
         StringStruct(u'ProductName', u'guiscrcpy'),
-        StringStruct(u'ProductVersion', u'3.3')])
+        StringStruct(u'ProductVersion', u'3.5')])
       ]), 
     VarFileInfo([VarStruct(u'Translation', [1033, 1200])])
   ]
 )
+

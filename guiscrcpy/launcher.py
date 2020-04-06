@@ -65,12 +65,16 @@ try:
 except FileNotFoundError:
     pass  # Its a PyInstaller compiled package
 
+# create app
+
+
 # initialize config manager
 cfgmgr = InterfaceConfig()
 config = cfgmgr.get_config()
 environment = platform.System()
 adb.path = config['adb']
 scrcpy.path = config['scrcpy']
+scrcpy.server_path = config['scrcpy-server']
 v = version()
 
 # Initialize argument parser
@@ -141,11 +145,11 @@ if args.start:
 logging.debug("Importing modules...")
 
 
-class InterfaceGuiscrcpy(Ui_MainWindow):
-    def __init__(self, Ui_MainWindow):
-        Ui_MainWindow.__init__()
-        self.setupUi(Ui_MainWindow)
-        super(InterfaceGuiscrcpy, self).__init__()
+class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
+    def __init__(self):
+        QMainWindow.__init__(self)
+        Ui_MainWindow.__init__(self)
+        self.setupUi(self)
         self.cmx = None
         logging.debug(
             "Options received by class are : {} {} {} {} {} ".format(
@@ -465,20 +469,37 @@ def bootstrap0():
     app.setStyle('Breeze')
     app.setStyleSheet(darkstylesheet())
 
-    window = QtWidgets.QMainWindow()  # Create windwo
-    prog = InterfaceGuiscrcpy(window)
-
     splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
     splash = QtWidgets.QSplashScreen(splash_pix)
     splash.setMask(splash_pix.mask())
     splash.show()
     app.processEvents()
+    cfedited = False
+
+    from guiscrcpy.install.finder import openFileNameDialog
+    if adb.path is None:
+        adb.path = openFileNameDialog(None, 'adb')
+        cfedited = True
+        config['adb'] = adb.path
+
+    if scrcpy.path is None:
+        scrcpy.path = openFileNameDialog(None, 'scrcpy')
+        cfedited = True
+        config['scrcpy'] = scrcpy.path
+
+    if (scrcpy.server_path is None) and (platform.System() == 'Windows'):
+        scrcpy.server_path = openFileNameDialog(None, 'scrcpy-server')
+        cfedited = True
+        config['scrcpy-server'] = scrcpy.server_path
+
+    if cfedited:
+        cfgmgr.update_config(config)
+        cfgmgr.write_file()
 
     adb.devices(adb.path)
-
+    prog = InterfaceGuiscrcpy()
+    prog.show()
     app.processEvents()
-
-    window.show()
     splash.hide()
     app.exec_()
     sys.exit()

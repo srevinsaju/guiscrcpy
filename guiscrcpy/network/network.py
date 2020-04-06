@@ -31,7 +31,6 @@ class NetworkManager:
             except:
                 pass
 
-
     def get_my_ip(self):
         """
         Find my IP address
@@ -42,7 +41,6 @@ class NetworkManager:
         ip = s.getsockname()[0]
         s.close()
         return ip
-
 
     def map_network(self, pool_size=255):
         """
@@ -61,7 +59,8 @@ class NetworkManager:
         jobs = multiprocessing.Queue()
         results = multiprocessing.Queue()
 
-        pool = [multiprocessing.Process(target=self.pinger, args=(jobs, results)) for i in range(pool_size)]
+        pool = [multiprocessing.Process(target=self.pinger, args=(
+            jobs, results)) for i in range(pool_size)]
 
         for p in pool:
             p.start()

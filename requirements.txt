@@ -1,3 +1,4 @@
+fontTools
 
 GitPython==3.1.0
 PyQt5>=5.14

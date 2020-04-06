@@ -30,7 +30,9 @@ def shellify(args):
     else:
         return shlex.split(args)
 
+
 _ = shellify
+
 
 def decode(raw_output):
     pass

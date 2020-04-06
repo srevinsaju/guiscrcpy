@@ -29,4 +29,4 @@ script:
   - StartupWMClass=guiscrcpy
   - EOF
   - cp usr/share/applications/io.srevinsaju.guiscrcpy.desktop .
-  - usr/bin/pip3 freeze | grep "mu-editor" | cut -d "=" -f 3 >> ../VERSION
+  - usr/bin/pip3 freeze | grep "guiscrcpy" | cut -d "=" -f 3 >> ../VERSION

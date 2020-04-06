@@ -50,7 +50,8 @@ class scrcpy:
 
     @staticmethod
     def check():
-        scrcpy_path = check_existence(environment.paths(), ['scrcpy'], False, True)
+        scrcpy_path = check_existence(
+            environment.paths(), ['scrcpy'], False, True)
         if scrcpy_path and (type(scrcpy_path) is list):
             return scrcpy_path[0]
         else:
@@ -95,7 +96,8 @@ class adb:
                 return dimValues
         else:
             logging.error(
-                "AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'")
+                "AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'"
+            )
             return False
 
     @staticmethod
@@ -115,7 +117,6 @@ class adb:
             stderr=PIPE,
         )
         return shellx
-
 
     @staticmethod
     def devices(increment=''):

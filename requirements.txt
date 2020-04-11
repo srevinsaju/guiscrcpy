@@ -1,6 +1,6 @@
 fontTools
 
-GitPython==3.1.0
+GitPython==3.1.1
 PyQt5>=5.14
 psutil==5.7.0
 pynput>=1.6

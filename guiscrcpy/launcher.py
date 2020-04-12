@@ -217,6 +217,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.mapnow.clicked.connect(self.mapp)
         self.network_button.clicked.connect(self.network_mgr)
         self.settings_button.clicked.connect(self.settings_mgr)
+        self.refreshdevices.clicked.connect(self.refresh_devices_combo)
 
     def settings_mgr(self):
         from guiscrcpy.ux.settings import InterfaceSettings
@@ -326,18 +327,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.bitrateText.setText(str(config['bitrate']) + "KB/s")
         pass
 
-    def start_act(self):
-
-        self.runningNot.setText("CHECKING DEVICE CONNECTION")
-        timei = time.time()
-        self.progressBar.setValue(5)
-
+    def refresh_devices_combo(self):
         devices_list = adb.devices(adb.path)
-        
+
         if len(devices_list) == 0:
             self.runningNot.setText("DEVICE IS NOT CONNECTED")
             self.progressBar.setValue(0)
-            return 0
+            return 0,
         else:
             valid_devices = []
             invalid_devices = []
@@ -357,7 +353,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 self.runningNot.setText("Found more than one device. Please select device in drop down box")
                 self.devices_combox.clear()
                 self.devices_combox.addItems([f"{x[0]} : {x[1]}" for x in devices_list])
-                return 0
+                return 0,
 
             else:
                 more_devices = True
@@ -365,6 +361,20 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         else:
             more_devices = False
             device_id = None
+
+        return more_devices, device_id
+
+    def start_act(self):
+
+        self.runningNot.setText("CHECKING DEVICE CONNECTION")
+        timei = time.time()
+        self.progressBar.setValue(5)
+
+        values_devices_list = self.refresh_devices_combo()
+        if len(values_devices_list) != 2:
+            return 0
+        else:
+            more_devices, device_id = values_devices_list
 
         # check if the defaultDimension is checked or not for giving signal
 
@@ -434,11 +444,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         swipe_instance = SwipeUX(ux_wrapper=ux)  # Load swipe UI
         panel_instance = Panel(ux_mapper=ux)
         side_instance = InterfaceToolkit(ux_mapper=ux)
+
         dimValues = adb.get_dimensions(adb.path, device_id=device_id)
         self.progressBar.setValue(70)
         
-        for instance in (swipe_instance, panel_instance, side_instance):
-            instance.init()
+        swipe_instance.init()
+        panel_instance.init()
+        side_instance.init()
 
         if self.cmx is not None:
             config['cmx'] = ' '.join(map(str, self.cmx))

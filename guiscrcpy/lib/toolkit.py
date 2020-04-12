@@ -33,18 +33,19 @@ except Exception as e:
 
 
 class UXMapper:
-    def __init__(self):
+    def __init__(self, device_id=None):
         logging.debug("Launching UX Mapper")
         self.has_modules = getWindowsWithTitle and auto
         logging.debug("Calculating Screen Size")
-        self.android_dimensions = adb.get_dimensions(adb.path)
+        self.android_dimensions = adb.get_dimensions(adb.path, device_id=device_id)
+        self.deviceId = device_id
 
     def do_swipe(self, x1=10, y1=10, x2=10, y2=10):
-        adb.shell_input(adb.path, "swipe {} {} {} {}".format(x1, y1, x2, y2))
+        adb.shell_input(adb.path, "swipe {} {} {} {}".format(x1, y1, x2, y2), device_id=self.deviceId)
         return True
 
     def do_keyevent(self, key):
-        adb.shell_input(adb.path, "keyevent {}".format(key))
+        adb.shell_input(adb.path, "keyevent {}".format(key), device_id=self.deviceId)
         return True
 
     def copy_devpc(self):

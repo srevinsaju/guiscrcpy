@@ -41,7 +41,7 @@ except Exception as e:
     v = "3.5.x.src.dev"
 
 
-requirements = ['PyQt5==5.14.1', 'pynput', 'gitpython']
+requirements = ['PyQt5==5.14.2', 'pynput', 'gitpython']
 if platform.system() == 'Windows':
     requirements.extend(['pywin32', 'psutil'])
 elif platform.system() == 'Linux':
@@ -58,6 +58,9 @@ setup(
     author='srevinsaju',
     author_email="srevin03@gmail.com",
     packages=['guiscrcpy'],
+    data_files = [
+        ('share/applications', ['guiscrcpy.desktop'] )
+    ],
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
     package_data={'guiscrcpy': ['*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*',

@@ -73,20 +73,26 @@ class adb:
                 environment.paths()))
 
     @staticmethod
-    def shell_input(path, command):
-        shellx = Popen(
-            _("{} shell input {}".format(path, command)),
-            stdout=PIPE,
-            stderr=PIPE,
-        )
+    def shell_input(path, command, device_id=None):
+        if device_id:
+            shellx = Popen(
+                _("{} -s {} shell input {}".format(path, device_id, command)),
+                stdout=PIPE,
+                stderr=PIPE,
+            )
+        else:
+            shellx = Popen(
+                _("{} shell input {}".format(path, command)),
+                stdout=PIPE,
+                stderr=PIPE,
+            )
 
     @staticmethod
-    def get_dimensions(path):
-        shellx = Popen(
-            _("{} shell wm size".format(path)),
-            stdout=PIPE,
-            stderr=PIPE,
-        )
+    def get_dimensions(path, device_id=None):
+        if device_id:
+            shellx = Popen(_("{} -s {} shell wm size".format(path, device_id)), stdout=PIPE, stderr=PIPE)
+        else:
+            shellx = Popen(_("{} shell wm size".format(path)), stdout=PIPE, stderr=PIPE)
         raw_dimensions = shellx.stdout.read().decode().strip('\n')
         for i in ['Override size', 'Physical size']:
             if i in raw_dimensions:
@@ -101,21 +107,19 @@ class adb:
             return False
 
     @staticmethod
-    def shell(path, command):
-        shellx = Popen(
-            _("{} shell {}".format(path, command)),
-            stdout=PIPE,
-            stderr=PIPE,
-        )
+    def shell(path, command, device_id=None):
+        if device_id:
+            shellx = Popen(_("{} -s {} shell {}".format(path, device_id, command)), stdout=PIPE, stderr=PIPE)
+        else:
+            shellx = Popen(_("{} shell {}".format(path, command)), stdout=PIPE, stderr=PIPE)
         return True
 
     @staticmethod
-    def command(path, command):
-        shellx = Popen(
-            _("{} {}".format(path, command)),
-            stdout=PIPE,
-            stderr=PIPE,
-        )
+    def command(path, command, device_id=None):
+        if device_id:
+            shellx = Popen(_("{} -s {} {}".format(path, device_id, command)), stdout=PIPE, stderr=PIPE)
+        else:
+            shellx = Popen(_("{} {}".format(path, command)), stdout=PIPE, stderr=PIPE)
         return shellx
 
     @staticmethod

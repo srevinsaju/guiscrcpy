@@ -205,10 +205,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         except:
             pass
 
-        # show subwindows
-        self.swipe_instance = SwipeUX()  # Load swipe UI
-        self.panel_instance = Panel()
-        self.side_instance = InterfaceToolkit()
         self.quit.clicked.connect(self.quitAct)
         self.dimensionText.setText("DEFAULT")
         config['bitrate'] = int(self.dial.value())
@@ -337,40 +333,40 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.progressBar.setValue(5)
 
         devices_list = adb.devices(adb.path)
-        import pdb; pdb.set_trace()
-        if devices_list[0] == "\n":
+        
+        if len(devices_list) == 0:
             self.runningNot.setText("DEVICE IS NOT CONNECTED")
             self.progressBar.setValue(0)
             return 0
-        try:
-            exc = devices_list[1].find("device")
-        except IndexError:
-            self.runningNot.setText("DEVICE IS NOT CONNECTED")
-            self.progressBar.setValue(0)
-            return 0
-
-        if exc > -1:
-            self.runningNot.setText(
-                "DEVICE " + str(devices_list[0]) + " IS CONNECTED")
-            self.progressBar.setValue(10)
-
-        elif devices_list[1][:-1] == "unauthorized":
-            self.runningNot.setText(
-                "DEVICE IS UNAUTHORIZED. PLEASE CLICK 'OK' ON DEVICE WHEN ASKED FOR"
-            )
-            self.progressBar.setValue(0)
-            return 0
-
         else:
+            valid_devices = []
+            invalid_devices = []
+            for dev, stat in devices_list:
+                if stat == "unauthorized":
+                    invalid_devices.append(f"{dev} IS UNAUTHORIZED. CLICK 'ok' when asked.")
+                elif stat == "device":
+                    valid_devices.append(dev)
+                else:
+                    invalid_devices.append(f"{dev} is connected. Failed to establish connection")
             self.runningNot.setText(
-                "DEVICE CONNECTED BUT FAILED TO ESTABLISH CONNECTION"
+                "Connected: [{}], {}".format(valid_devices, invalid_devices)
             )
-            self.progressBar.setValue(0)
-            return 0
-        # check if the defaultDimension is checked or not for giving signal
+        if len(valid_devices) > 1:
+            if self.devices_combox.currentText() == '' or self.devices_combox.currentText().isspace():
+                logging.info("Found more than one device. Please select device in drop down box")
+                self.runningNot.setText("Found more than one device. Please select device in drop down box")
+                self.devices_combox.clear()
+                self.devices_combox.addItems([f"{x[0]} : {x[1]}" for x in devices_list])
+                return 0
 
-        ux = UXMapper()
-        dimValues = adb.get_dimensions(adb.path)
+            else:
+                more_devices = True
+                device_id = self.devices_combox.currentText().split(":")[0].strip()
+        else:
+            more_devices = False
+            device_id = None
+
+        # check if the defaultDimension is checked or not for giving signal
 
         self.progressBar.setValue(15)
 
@@ -432,16 +428,26 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         logging.debug("Flags passed to scrcpy engine : " + self.options)
         self.progressBar.setValue(75)
         config['extra'] = self.flaglineedit.text()
-        self.swipe_instance.init()  # show Swipe UI
-        self.panel_instance.init()
-        self.side_instance.init()
+
+        ux = UXMapper()
+        # show subwindows
+        swipe_instance = SwipeUX()  # Load swipe UI
+        panel_instance = Panel()
+        side_instance = InterfaceToolkit()
+        dimValues = adb.get_dimensions(adb.path)
+
+        for instance in (swipe_instance, panel_instance, side_instance):
+            instance.init()
+
         if self.cmx is not None:
             config['cmx'] = ' '.join(map(str, self.cmx))
 
-        # run scrcpy usng subprocess
         args = "{} {} {}".format(self.options, config['extra'], config['cmx'])
-        scrcpy.start(scrcpy.path, args)
 
+        if more_devices:
+            args = f"-s {device_id} " + args
+
+        scrcpy.start(scrcpy.path, args)
         timef = time.time()
         eta = timef - timei
         print("SCRCPY is launched in", eta, "seconds")

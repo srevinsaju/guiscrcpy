@@ -87,13 +87,13 @@ class UXMapper:
 
     def reorientP(self):
         logging.debug("Passing REORIENT [POTRAIT]")
-        adb.shell(adb.path, 'settings put system accelerometer_rotation 0')
-        adb.shell(adb.path, "settings put system rotation 1")
+        adb.shell(adb.path, 'settings put system accelerometer_rotation 0', device_id=self.deviceId)
+        adb.shell(adb.path, "settings put system rotation 1", device_id=self.deviceId)
 
     def reorientL(self):
         logging.debug("Passing REORIENT [LANDSCAPE]")
-        adb.shell(adb.path, 'settings put system accelerometer_rotation 0')
-        adb.shell(adb.path, "settings put system rotation 1")
+        adb.shell(adb.path, 'settings put system accelerometer_rotation 0', device_id=self.deviceId)
+        adb.shell(adb.path, "settings put system rotation 1", device_id=self.deviceId)
 
     def expand_notifications(self):
         logging.debug("Passing NOTIF EXPAND")
@@ -108,7 +108,7 @@ class UXMapper:
             scrcpywindow = getWindowsWithTitle("scrcpy")[0]
             scrcpywindow.focus()
             auto.hotkey("ctrl", "shift", "c")
-            logging.warning(" NOT SUPPORTED ON WINDOWS")
+            logging.warning("NOT SUPPORTED ON WINDOWS")
         else:
             os.system(
                 "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+shift+c")

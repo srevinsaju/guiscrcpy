@@ -27,7 +27,7 @@ from guiscrcpy.ui.panel import Ui_HorizontalPanel
 
 class Panel(QMainWindow, Ui_HorizontalPanel):
     # there was a Dialog in the bracket
-    def __init__(self):
+    def __init__(self, ux_mapper=None):
         QMainWindow.__init__(self)
         Ui_HorizontalPanel.__init__(self)
         self.setupUi(self)
@@ -35,9 +35,12 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
         self.setWindowFlags(
             QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
         )
+        if ux_mapper:
+            self.ux = ux_mapper
+        else:
+            self.ux = UXMapper()
 
     def init(self):
-        self.ux = UXMapper()
         self.backk.clicked.connect(self.ux.key_back)
         self.menuUII.clicked.connect(self.ux.key_menu)
         self.homee.clicked.connect(self.ux.key_home)

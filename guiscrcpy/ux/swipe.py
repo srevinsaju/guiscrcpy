@@ -28,7 +28,7 @@ from guiscrcpy.lib.toolkit import UXMapper
 
 
 class SwipeUX(QMainWindow):
-    def __init__(self):
+    def __init__(self, ux_wrapper=None):
         QMainWindow.__init__(self)
         super(SwipeUX, self).__init__()
         self.oldPos = None
@@ -124,8 +124,13 @@ class SwipeUX(QMainWindow):
         self.swilf.pressed.connect(self.swipleft)
         self.swirt.pressed.connect(self.swipright)
 
+        # =================
+        if ux_wrapper:
+            self.ux = ux_wrapper
+        else:
+            self.ux = UXMapper()
+
     def init(self):
-        self.ux = UXMapper()
         self.show()
 
     def paintEvent(self, event):

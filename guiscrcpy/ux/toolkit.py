@@ -28,7 +28,7 @@ from guiscrcpy.ui.toolkit import Ui_ToolbarPanel
 
 
 class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
-    def __init__(self):
+    def __init__(self, ux_mapper=None):
         QMainWindow.__init__(self)
         Ui_ToolbarPanel.__init__(self)
         self.setupUi(self)
@@ -37,9 +37,12 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
         self.setWindowFlags(
             QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
         )
+        if ux_mapper:
+            self.ux = ux_mapper
+        else:
+            self.ux = UXMapper()
 
     def init(self):
-        self.ux = UXMapper()
         self.clipD2PC.clicked.connect(self.ux.copy_devpc)
         self.clipPC2D.clicked.connect(self.ux.copy_pc2dev)
         self.back.clicked.connect(self.ux.key_back)

@@ -426,16 +426,17 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         logging.debug("CONNECTION ESTABLISHED")
         self.progressBar.setValue(50)
         logging.debug("Flags passed to scrcpy engine : " + self.options)
-        self.progressBar.setValue(75)
+        self.progressBar.setValue(60)
         config['extra'] = self.flaglineedit.text()
 
-        ux = UXMapper()
         # show subwindows
-        swipe_instance = SwipeUX()  # Load swipe UI
-        panel_instance = Panel()
-        side_instance = InterfaceToolkit()
-        dimValues = adb.get_dimensions(adb.path)
-
+        ux = UXMapper(device_id=device_id)
+        swipe_instance = SwipeUX(ux_wrapper=ux)  # Load swipe UI
+        panel_instance = Panel(ux_mapper=ux)
+        side_instance = InterfaceToolkit(ux_mapper=ux)
+        dimValues = adb.get_dimensions(adb.path, device_id=device_id)
+        self.progressBar.setValue(70)
+        
         for instance in (swipe_instance, panel_instance, side_instance):
             instance.init()
 

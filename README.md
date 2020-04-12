@@ -7,18 +7,18 @@
 ![Mac OS](https://github.com/srevinsaju/guiscrcpy/workflows/Mac%20OS/badge.svg)
 [![Updates](https://pyup.io/repos/github/srevinsaju/guiscrcpy/shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
 [![Python 3](https://pyup.io/repos/github/srevinsaju/guiscrcpy/python-3-shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/guiscrcpy?style=flat-square)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/guiscrcpy?style=flat-square)
 ![PyPI](https://img.shields.io/pypi/v/guiscrcpy?style=flat-square)
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/guiscrcpy?style=flat-square)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/guiscrcpy?color=dark%20green&logo=PYPI&logoColor=Green&style=flat-square)
-![AUR version](https://img.shields.io/aur/version/guiscrcpy?label=Arch%20Linux%20Package&style=flat-square)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/guiscrcpy?color=dark%20green&logo=PYPI&logoColor=Green&style=flat-square)](https://pypi.org/project/guiscrcpy)
+[![AUR version](https://img.shields.io/aur/version/guiscrcpy?label=Arch%20Linux%20Package&style=flat-square)](https://aur.archlinux.org/packages/guiscrcpy)
 [![Snap Status](https://build.snapcraft.io/badge/srevinsaju/guiscrcpy.svg)](https://build.snapcraft.io/user/srevinsaju/guiscrcpy)
-![GitHub All Releases](https://img.shields.io/github/downloads/srevinsaju/guiscrcpy/total?style=flat-square)
+[![GitHub All Releases](https://img.shields.io/github/downloads/srevinsaju/guiscrcpy/total?style=flat-square)](https://github.com/srevinsaju/guiscrcpy/releases)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-![Twitter Follow](https://img.shields.io/twitter/follow/srevinsaju?style=social)
-![GitHub followers](https://img.shields.io/github/followers/srevinsaju?label=srevin%20Saju&style=social)
+[![Twitter Follow](https://img.shields.io/twitter/follow/srevinsaju?style=social)](https://twitter.com/srevinsaju)
+[![GitHub followers](https://img.shields.io/github/followers/srevinsaju?label=srevin%20Saju&style=social)](https://github.com/srevinsaju)
 
 > **IMPORTANT** : `guiscrcpy` is a free and open source android screen mirroring system. The work on guiscrcpy is driven by 
 the interest of users into it. Please feel free to let you know your thanks if this software helped you a lot, or if you like 

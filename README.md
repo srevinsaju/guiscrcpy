@@ -27,12 +27,12 @@ some more features to be included, and paticularly ...
 [![Become a Patron](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/srevinsaju?fan_landing=true)
 
 For beta Windows compiled executables, click 
-![Windows Executable](https://github.com/srevinsaju/guiscrcpy/workflows/Windows%20Executable/badge.svg)
+[![Windows Executable](https://github.com/srevinsaju/guiscrcpy/workflows/Windows%20Executable/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=+event%3Apush++is%3Asuccess+branch%3Amaster+workflow%3A%22Windows+Executable%22). Select the latest commit 
 and download the artifact.
 
-For beta Linux compiled AppImages, click
+~~For beta Linux compiled AppImages, click
 ![Build AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/Build%20AppImage/badge.svg)
-and download the artifact.
+and download the artifact.~~. See Issues for the failure of creating a AppImage
 
 ![image of guiscrcpy](https://raw.githubusercontent.com/srevinsaju/guiscrcpy-docs/master/docs/screen3.png)
 

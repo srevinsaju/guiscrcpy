@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=guiscrcpy
+Version=3.5
 Exec=python3 bin/guiscrcpy
 Type=Application
 Icon=guiscrcpy_logo

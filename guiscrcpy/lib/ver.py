@@ -18,13 +18,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 
-__version__ = '3.4-raw'
+__version__ = '3.5-raw'
 import logging
 try:
     import git
-except ModuleNotFoundError:
-    logging.warning(
-        'GitPython not installed. Fallback to pip3 version reading')
+except Exception as e:
+    logging.info(f'Reading version from pip. {e}')
     git = None
 
 

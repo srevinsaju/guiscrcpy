@@ -22,9 +22,8 @@ __version__ = '3.7-raw'
 import logging
 try:
     import git
-except ModuleNotFoundError:
-    logging.warning(
-        'GitPython not installed. Fallback to pip3 version reading')
+except Exception as e:
+    logging.info(f'Reading version from pip. {e}')
     git = None
 
 

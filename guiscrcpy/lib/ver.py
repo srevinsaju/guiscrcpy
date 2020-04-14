@@ -60,7 +60,7 @@ class version:
         if git:
             try:
                 repo = git.Repo(search_parent_directories=True)
-            except git.exc.InvalidGitRepositoryError:
+            except Exception as e:
                 return False
 
             self.sha = "-" + repo.head.object.hexsha

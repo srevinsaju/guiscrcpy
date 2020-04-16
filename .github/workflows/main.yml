@@ -1,0 +1,23 @@
+# This is a basic workflow to help you get started with Actions
+
+name: AppImage
+on: [push]
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ['3.8']
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.version }}
+
+    - name: Test tasmotizer
+      run: |
+        python -m python_appimage build app appimage \
+                                            --linux-tag=manylinux1_x86_64
+        test -e guiscrcpy*.AppImage -h

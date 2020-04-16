@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-    <id>guiscrcpy</id>
+	<id>guiscrcpy</id>
+	<name>guiscrcpy</name>
     <metadata_license>MIT</metadata_license>
     <project_license>GPL3+</project_license>
     <name>Tasmotizer</name>

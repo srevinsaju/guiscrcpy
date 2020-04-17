@@ -86,9 +86,6 @@ class Linux:
         if desktop_dir:
             with open(os.path.join(desktop_dir, 'guiscrcpy.desktop'), 'w') as w:
                 w.write(desk)
-            with open(os.path.join(os.path.expanduser('~/.local/share/applications/'), 'guiscrcpy.desktop'), 'w') as w:
-                w.write(desk)
-
             return True
         else:
             return False

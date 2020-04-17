@@ -19,4 +19,4 @@ jobs:
         python -m pip install python-appimage
         python -m python_appimage build app appimage \
                                             --linux-tag=manylinux1_x86_64
-        test -e guiscrcpy*.AppImage -h
+

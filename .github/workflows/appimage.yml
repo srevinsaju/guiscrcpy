@@ -1,3 +1,5 @@
+# Thanks @niess (https://github.com/niess) for python-appimage, creating appimages for Python is easy as pie!!
+
 name: AppImage
 on: [push]
 
@@ -38,6 +40,7 @@ jobs:
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/1.12.1/scrcpy
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/1.12.1/scrcpy-server
         cp scrcpy AppDir/usr/bin/.
+        chmod +x AppDir/usr/bin/scrcpy
         mkdir AppDir/usr/share/scrcpy
         cp scrcpy-server AppDir/usr/share/scrcpy/.
         
@@ -49,9 +52,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
-        # Artifact name
         name: guiscrcpy-x86_64.AppImage
-        # Directory containing files to upload
         path: guiscrcpy-x86_64.AppImage
 
     

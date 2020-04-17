@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python3
 """
 
 GUISCRCPY by srevinsaju
@@ -20,4 +20,4 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-VERSION = '3.4.post22.dev'
+VERSION = '3.4.post28.dev'

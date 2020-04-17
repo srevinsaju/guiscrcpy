@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python3
 """
 
 GUISCRCPY by srevinsaju
@@ -33,9 +33,9 @@ elif platform.system() == 'Linux':
 
 setup(
     name='guiscrcpy',
-    version='3.4.post22.dev',
+    version='3.4.post28.dev',
     description='An Open Source - Fast - Android Screen Mirroring system.',
-    long_description=<img src=https://github.com/srevinsaju/guiscrcpy/blob/master/guiscrcpy/ui/ui/guiscrcpy_logo.png width=25%>
+    long_description="""<img src=https://github.com/srevinsaju/guiscrcpy/blob/master/guiscrcpy/ui/ui/guiscrcpy_logo.png width=25%>
 
 # guiscrcpy
 
@@ -89,7 +89,7 @@ For more details on Installation instructions, head over to the Wiki
 
 ## Documentation
 All detailed information are clearly laid out in the Wiki. you might need to check that out
-,
+""",
     long_description_content_type='text/markdown',
     license='GPL v3',
     author='srevinsaju',

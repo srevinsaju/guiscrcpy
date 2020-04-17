@@ -30,7 +30,7 @@ jobs:
       run: | 
         wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip
         unzip platform-tools-latest-linux.zip -d adb
-        cp adb/adb AppDir/usr/bin/.
+        cp adb/platform-tools/adb AppDir/usr/bin/.
     
     - name: Download scrcpy
       run: |

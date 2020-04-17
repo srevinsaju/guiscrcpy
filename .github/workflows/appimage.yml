@@ -19,4 +19,39 @@ jobs:
         python -m pip install python-appimage
         python -m python_appimage build app appimage \
                                             --linux-tag=manylinux1_x86_64
+    
+    - name: Extract AppImage
+      run: |
+        ./guiscrcpy-x86_64.AppImage --appimage-extract
+        wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+        chmod +x ./appimagetool-x86_64.AppImage
+    
+    - name: Download adb
+      run: | 
+        wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip
+        unzip platform-tools-latest-linux.zip -d adb
+        cp adb/adb AppDir/usr/bin/.
+    
+    - name: Download scrcpy
+      run: |
+        wget https://dl.bintray.com/srevinsaju/guiscrcpy/1.12.1/scrcpy
+        wget https://dl.bintray.com/srevinsaju/guiscrcpy/1.12.1/scrcpy-server
+        cp scrcpy AppDir/usr/bin/.
+        mkdir AppDir/usr/share/scrcpy
+        cp scrcpy-server AppDir/usr/share/scrcpy/.
+        
+    - name: Reimage AppImage
+      run: |
+        rm ./guiscrcpy-x86_64.AppImage
+        ./appimagetool-x86_64.AppImage --comp gzip AppDir -n
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        # Artifact name
+        name: guiscrcpy-x86_64.AppImage
+        # Directory containing files to upload
+        path: guiscrcpy-x86_64.AppImage
+
+    
 

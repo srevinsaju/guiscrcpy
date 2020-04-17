@@ -1,4 +1,6 @@
+
 """
+
 GUISCRCPY by srevinsaju
 Get it on : https://github.com/srevinsaju/guiscrcpy
 Licensed under GNU Public License
@@ -15,15 +17,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 """
 
-import logging
-
-from guiscrcpy.version import VERSION
-
-class version:
-    def __init__(self):
-        self.commit = VERSION
-
-    def get_commit(self):
-        return self.commit
+VERSION = '3.4.post22.dev'

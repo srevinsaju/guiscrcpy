@@ -23,6 +23,7 @@ jobs:
     - name: Extract AppImage
       run: |
         ./guiscrcpy-x86_64.AppImage --appimage-extract
+        mv squashfs-root AppDir
         wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
         chmod +x ./appimagetool-x86_64.AppImage
     

@@ -19,9 +19,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 def darkstylesheet():
-	# DarkStyleSheet
+    # DarkStyleSheet
 
-	style = """
+    style = """
     /* ---------------------------------------------------------------------------
 
     Created by the qtsass compiler v0.1.1
@@ -1682,4 +1682,4 @@ PlotWidget {
   padding: 0px;
 }
     """
-	return style
+    return style

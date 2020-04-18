@@ -18,22 +18,22 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 try:
-	import psutil
+    import psutil
 
-	psutil_present = True
+    psutil_present = True
 except ModuleNotFoundError:
-	psutil_present = False
+    psutil_present = False
 
 
 def is_running(processName):
-	if psutil_present:
-		# Iterate over the all the running process
-		for proc in psutil.process_iter():
-			try:
-				# Check if process name contains the given name string.
-				if processName.lower() in proc.name().lower():
-					return True
-			except (
-			psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-				pass
-	return False
+    if psutil_present:
+        # Iterate over the all the running process
+        for proc in psutil.process_iter():
+            try:
+                # Check if process name contains the given name string.
+                if processName.lower() in proc.name().lower():
+                    return True
+            except (
+                    psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+    return False

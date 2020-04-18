@@ -27,119 +27,119 @@ environment = System()
 
 
 def check(binary):
-	pass
+    pass
 
 
 class scrcpy:
-	def __init__(self):
-		pass
+    def __init__(self):
+        pass
 
-	@staticmethod
-	def start(path, args):
-		Popen(
-			_("{} {}".format(path, args)),
-			stdout=PIPE,
-			stderr=PIPE,
-		)
-		return True
+    @staticmethod
+    def start(path, args):
+        Popen(
+            _("{} {}".format(path, args)),
+            stdout=PIPE,
+            stderr=PIPE,
+        )
+        return True
 
-	@staticmethod
-	def device():
-		pass
+    @staticmethod
+    def device():
+        pass
 
-	@staticmethod
-	def check():
-		scrcpy_path = check_existence(
-			environment.paths(), ['scrcpy'], False, True)
-		if scrcpy_path and (type(scrcpy_path) is list):
-			return scrcpy_path[0]
-		else:
-			logging.error(
-				'scrcpy could not be found in any of the paths {}'.format(
-					environment.paths()))
+    @staticmethod
+    def check():
+        scrcpy_path = check_existence(
+            environment.paths(), ['scrcpy'], False, True)
+        if scrcpy_path and (isinstance(scrcpy_path, list)):
+            return scrcpy_path[0]
+        else:
+            logging.error(
+                'scrcpy could not be found in any of the paths {}'.format(
+                    environment.paths()))
 
 
 class adb:
-	def __init__(self):
-		pass
+    def __init__(self):
+        pass
 
-	@staticmethod
-	def check():
-		adb_path = check_existence(environment.paths(), ['adb'], False, True)
-		if adb_path and (type(adb_path) is list):
-			return adb_path[0]
-		else:
-			logging.error(
-				'adb could not be found in any of the paths {}'.format(
-					environment.paths()))
+    @staticmethod
+    def check():
+        adb_path = check_existence(environment.paths(), ['adb'], False, True)
+        if adb_path and (isinstance(adb_path, list)):
+            return adb_path[0]
+        else:
+            logging.error(
+                'adb could not be found in any of the paths {}'.format(
+                    environment.paths()))
 
-	@staticmethod
-	def shell_input(path, command, device_id=None):
-		if device_id:
-			shellx = Popen(
-				_("{} -s {} shell input {}".format(path, device_id, command)),
-				stdout=PIPE,
-				stderr=PIPE,
-			)
-		else:
-			shellx = Popen(
-				_("{} shell input {}".format(path, command)),
-				stdout=PIPE,
-				stderr=PIPE,
-			)
+    @staticmethod
+    def shell_input(path, command, device_id=None):
+        if device_id:
+            shellx = Popen(
+                _("{} -s {} shell input {}".format(path, device_id, command)),
+                stdout=PIPE,
+                stderr=PIPE,
+            )
+        else:
+            shellx = Popen(
+                _("{} shell input {}".format(path, command)),
+                stdout=PIPE,
+                stderr=PIPE,
+            )
 
-	@staticmethod
-	def get_dimensions(path, device_id=None):
-		if device_id:
-			shellx = Popen(
-				_("{} -s {} shell wm size".format(path, device_id)),
-				stdout=PIPE, stderr=PIPE)
-		else:
-			shellx = Popen(_("{} shell wm size".format(path)),
-			               stdout=PIPE, stderr=PIPE)
-		raw_dimensions = shellx.stdout.read().decode().strip('\n')
-		for i in ['Override size', 'Physical size']:
-			if i in raw_dimensions:
-				out = raw_dimensions[raw_dimensions.find(i):]
-				out_decoded = out.split(':')[1].strip()
-				dimValues = out_decoded.split('x')
-				return dimValues
-		else:
-			logging.error(
-				"AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'"
-			)
-			return False
+    @staticmethod
+    def get_dimensions(path, device_id=None):
+        if device_id:
+            shellx = Popen(
+                _("{} -s {} shell wm size".format(path, device_id)),
+                stdout=PIPE, stderr=PIPE)
+        else:
+            shellx = Popen(_("{} shell wm size".format(path)),
+                           stdout=PIPE, stderr=PIPE)
+        raw_dimensions = shellx.stdout.read().decode().strip('\n')
+        for i in ['Override size', 'Physical size']:
+            if i in raw_dimensions:
+                out = raw_dimensions[raw_dimensions.find(i):]
+                out_decoded = out.split(':')[1].strip()
+                dimValues = out_decoded.split('x')
+                return dimValues
+        else:
+            logging.error(
+                "AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'"
+            )
+            return False
 
-	@staticmethod
-	def shell(path, command, device_id=None):
-		if device_id:
-			shellx = Popen(_("{} -s {} shell {}".format(path,
-			                                            device_id, command)),
-			               stdout=PIPE, stderr=PIPE)
-		else:
-			shellx = Popen(_("{} shell {}".format(path, command)),
-			               stdout=PIPE, stderr=PIPE)
-		return True
+    @staticmethod
+    def shell(path, command, device_id=None):
+        if device_id:
+            shellx = Popen(_("{} -s {} shell {}".format(path,
+                                                        device_id, command)),
+                           stdout=PIPE, stderr=PIPE)
+        else:
+            shellx = Popen(_("{} shell {}".format(path, command)),
+                           stdout=PIPE, stderr=PIPE)
+        return True
 
-	@staticmethod
-	def command(path, command, device_id=None):
-		if device_id:
-			shellx = Popen(
-				_("{} -s {} {}".format(path, device_id, command)), stdout=PIPE,
-				stderr=PIPE)
-		else:
-			shellx = Popen(_("{} {}".format(path, command)),
-			               stdout=PIPE, stderr=PIPE)
-		return shellx
+    @staticmethod
+    def command(path, command, device_id=None):
+        if device_id:
+            shellx = Popen(
+                _("{} -s {} {}".format(path, device_id, command)), stdout=PIPE,
+                stderr=PIPE)
+        else:
+            shellx = Popen(_("{} {}".format(path, command)),
+                           stdout=PIPE, stderr=PIPE)
+        return shellx
 
-	@staticmethod
-	def devices(increment=''):
-		if increment is None:
-			raise FileNotFoundError(
-				"guiscrcpy couldn't find adb. Please specify path to adb in configuration file")
-		proc = Popen(_(increment + " devices"), stdout=PIPE)
-		output = [[y.strip() for y in x.split('\t')]
-		          for x in decode_process(proc)[1:]][:-1]
+    @staticmethod
+    def devices(increment=''):
+        if increment is None:
+            raise FileNotFoundError(
+                "guiscrcpy couldn't find adb. Please specify path to adb in configuration file")
+        proc = Popen(_(increment + " devices"), stdout=PIPE)
+        output = [[y.strip() for y in x.split('\t')]
+                  for x in decode_process(proc)[1:]][:-1]
 
-		logging.debug("ADB: {}".format(output))
-		return output
+        logging.debug("ADB: {}".format(output))
+        return output

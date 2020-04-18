@@ -34,6 +34,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
     Scans the open IP Addresses connected on the system, on Linux and Mac only, as far as tested
     Does not work satisfactorily on Windows.
     """
+
     def __init__(self, adb_path=None):
         QMainWindow.__init__(self)
         Ui_NetworkUI.__init__(self)
@@ -50,7 +51,8 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
         self.nm_connect.pressed.connect(self.connect)
         if self.os.system() == 'Windows':
             # FIXME: Port scanning is not working on Windows at the moment.
-            self.nm_det.setText("Enter the IP address in the text box and press connect")
+            self.nm_det.setText(
+                "Enter the IP address in the text box and press connect")
             self.nm_refresh.setEnabled(False)
         else:
             self.nm_refresh.pressed.connect(self.refresh)
@@ -73,9 +75,11 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
                     return
             else:
                 if self.os.system() == 'Windows':
-                    self.nm_det.setText("Please enter an IP address in the text box")
+                    self.nm_det.setText(
+                        "Please enter an IP address in the text box")
                 else:
-                    self.nm_det.setText("Please enter an IP address in the text box. / Click refresh")
+                    self.nm_det.setText(
+                        "Please enter an IP address in the text box. / Click refresh")
                 return
 
         sp = adb.command(adb.path, 'connect {}:5555'.format(ip))

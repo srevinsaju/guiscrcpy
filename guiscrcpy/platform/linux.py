@@ -100,7 +100,8 @@ class Linux:
         if not os.path.exists(sys_font_dir):
             os.makedirs(sys_font_dir)
         from fontTools.ttLib import TTFont
-        font_dir = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
+        font_dir = os.path.join(os.path.abspath(
+            os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
         try:
             fonts = os.listdir(font_dir)
             for i in fonts:
@@ -109,8 +110,8 @@ class Linux:
             return True
         except Exception as e:
             logging.error("Error Installing the fonts. "
-                        "You might have to manually install the fonts"
-                        "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
+                          "You might have to manually install the fonts"
+                          "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
             return False
 
     @staticmethod

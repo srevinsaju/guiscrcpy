@@ -3,16 +3,17 @@
 Create desktop shortcuts for Windows
 """
 from __future__ import print_function
+from win32com.shell import shell, shellcon
+import win32com.client
 import os
 import sys
 import time
 from collections import namedtuple
 UserFolders = namedtuple("UserFolders", ("home", "desktop", "startmenu"))
-import win32com.client
-from win32com.shell import shell, shellcon
 
 scut_ext = 'lnk'
 ico_ext = 'ico'
+
 
 def get_conda_active_env():
     '''Return name of active conda environment or empty string'''
@@ -23,6 +24,7 @@ def get_conda_active_env():
         print("No conda env active, defaulting to base")
         conda_env = ""
     return conda_env
+
 
 # batch file to activate the environment
 # for Anaconda Python before running command.
@@ -75,14 +77,15 @@ def get_folders():
     """
     return UserFolders(get_homedir(), get_desktop(), get_startmenu())
 
+
 def make_shortcut():
     userfolders = get_folders()
 
     full_script = 'guiscrcpy'
     desktop, startmenu = True, True
-    for (create, folder) in ((desktop,userfolders.desktop),
+    for (create, folder) in ((desktop, userfolders.desktop),
                              (startmenu, userfolders.startmenu)):
-        
+
         if not os.path.exists(folder):
             os.makedirs(folder)
         dest = os.path.join(folder, "guiscrcpy.lnk")
@@ -93,7 +96,7 @@ def make_shortcut():
         wscript.WindowStyle = 0
         wscript.Description = "An Open Source Android Screen Mirroring System"
         wscript.IconLocation = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-                                   'ui', 'icons', 'guiscrcpy_logo_SRj_icon.ico')
+                                            'ui', 'icons', 'guiscrcpy_logo_SRj_icon.ico')
         wscript.save()
 
     return True

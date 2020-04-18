@@ -37,7 +37,7 @@ class Windows:
             except Exception as e:
                 logging.error(
                     "Error creating configuration file in dir {path}. Error code:{e}"
-                        .format(
+                    .format(
                         path=path,
                         e=e
                     ))
@@ -68,7 +68,8 @@ class Windows:
         cmd = r"""copy "{fontdir}" "%WINDIR%\Fonts"
         reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" /
         v "FontName (TrueType)" / t REG_SZ / d {font} / f """
-        font_dir = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
+        font_dir = os.path.join(os.path.abspath(
+            os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
         try:
             fonts = os.listdir(font_dir)
             for i in fonts:
@@ -79,8 +80,8 @@ class Windows:
         except Exception as e:
             print("Installing fonts failed")
             logging.error("Error Installing the fonts. "
-                        "You might have to manually install the fonts"
-                        "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
+                          "You might have to manually install the fonts"
+                          "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
             return False
 
     def create_desktop(self):

@@ -15,7 +15,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(547, 549)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
@@ -181,10 +182,12 @@ class Ui_MainWindow(object):
         self.gridLayout_4.setVerticalSpacing(1)
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.fullscreen = QtWidgets.QCheckBox(self.frame1)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.fullscreen.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.fullscreen.sizePolicy().hasHeightForWidth())
         self.fullscreen.setSizePolicy(sizePolicy)
         self.fullscreen.setMinimumSize(QtCore.QSize(10, 20))
         font = QtGui.QFont()
@@ -192,7 +195,8 @@ class Ui_MainWindow(object):
         font.setPointSize(10)
         self.fullscreen.setFont(font)
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/icons/increase-size-option.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(
+            ":/icons/icons/increase-size-option.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.fullscreen.setIcon(icon1)
         self.fullscreen.setObjectName("fullscreen")
         self.gridLayout_4.addWidget(self.fullscreen, 0, 4, 1, 1)
@@ -216,14 +220,17 @@ class Ui_MainWindow(object):
         self.showTouches.setObjectName("showTouches")
         self.gridLayout_4.addWidget(self.showTouches, 0, 5, 1, 1)
         self.settings_button = QtWidgets.QPushButton(self.frame1)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.settings_button.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.settings_button.sizePolicy().hasHeightForWidth())
         self.settings_button.setSizePolicy(sizePolicy)
         self.settings_button.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/icons/icons/gear.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/icons/icons/gear.svg"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.settings_button.setIcon(icon3)
         self.settings_button.setObjectName("settings_button")
         self.gridLayout_4.addWidget(self.settings_button, 3, 1, 1, 1)
@@ -248,10 +255,12 @@ class Ui_MainWindow(object):
         self.notifChecker.setObjectName("notifChecker")
         self.gridLayout_4.addWidget(self.notifChecker, 1, 4, 1, 1)
         self.displayForceOn = QtWidgets.QCheckBox(self.frame1)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.displayForceOn.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.displayForceOn.sizePolicy().hasHeightForWidth())
         self.displayForceOn.setSizePolicy(sizePolicy)
         self.displayForceOn.setMinimumSize(QtCore.QSize(10, 20))
         font = QtGui.QFont()
@@ -260,15 +269,18 @@ class Ui_MainWindow(object):
         self.displayForceOn.setFont(font)
         self.displayForceOn.setToolTipDuration(2)
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/icons/icons/bullseye.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap(":/icons/icons/bullseye.svg"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.displayForceOn.setIcon(icon5)
         self.displayForceOn.setObjectName("displayForceOn")
         self.gridLayout_4.addWidget(self.displayForceOn, 1, 0, 1, 4)
         self.aotop = QtWidgets.QCheckBox(self.frame1)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.aotop.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.aotop.sizePolicy().hasHeightForWidth())
         self.aotop.setSizePolicy(sizePolicy)
         self.aotop.setMinimumSize(QtCore.QSize(10, 20))
         font = QtGui.QFont()
@@ -277,7 +289,8 @@ class Ui_MainWindow(object):
         self.aotop.setFont(font)
         self.aotop.setToolTipDuration(2)
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/icons/icons/fire-symbol.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap(":/icons/icons/fire-symbol.svg"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.aotop.setIcon(icon6)
         self.aotop.setObjectName("aotop")
         self.gridLayout_4.addWidget(self.aotop, 0, 0, 1, 4)
@@ -300,26 +313,31 @@ class Ui_MainWindow(object):
         self.recScui.setFont(font)
         self.recScui.setToolTipDuration(2)
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(":/icons/icons/facetime-button.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon7.addPixmap(QtGui.QPixmap(
+            ":/icons/icons/facetime-button.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.recScui.setIcon(icon7)
         self.recScui.setObjectName("recScui")
         self.gridLayout_4.addWidget(self.recScui, 1, 5, 1, 1)
         self.checkBox = QtWidgets.QCheckBox(self.frame1)
         icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap(":/icons/icons/reorder-option.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon8.addPixmap(QtGui.QPixmap(
+            ":/icons/icons/reorder-option.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.checkBox.setIcon(icon8)
         self.checkBox.setObjectName("checkBox")
         self.gridLayout_4.addWidget(self.checkBox, 2, 0, 1, 4)
         self.network_button = QtWidgets.QPushButton(self.frame1)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.network_button.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.network_button.sizePolicy().hasHeightForWidth())
         self.network_button.setSizePolicy(sizePolicy)
         self.network_button.setToolTipDuration(2)
         self.network_button.setText("")
         icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap(":/icons/icons/wifi.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon9.addPixmap(QtGui.QPixmap(":/icons/icons/wifi.svg"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.network_button.setIcon(icon9)
         self.network_button.setObjectName("network_button")
         self.gridLayout_4.addWidget(self.network_button, 3, 0, 1, 1)
@@ -332,10 +350,12 @@ class Ui_MainWindow(object):
         self.devices_combox.setObjectName("devices_combox")
         self.gridLayout_4.addWidget(self.devices_combox, 3, 2, 1, 3)
         self.refreshdevices = QtWidgets.QPushButton(self.frame1)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.refreshdevices.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.refreshdevices.sizePolicy().hasHeightForWidth())
         self.refreshdevices.setSizePolicy(sizePolicy)
         self.refreshdevices.setObjectName("refreshdevices")
         self.gridLayout_4.addWidget(self.refreshdevices, 3, 5, 1, 1)
@@ -511,7 +531,8 @@ class Ui_MainWindow(object):
         self.quit.setStyleSheet("")
         self.quit.setText("")
         icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap(":/icons/icons/cross-mark-on-a-black-circle-background.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon10.addPixmap(QtGui.QPixmap(
+            ":/icons/icons/cross-mark-on-a-black-circle-background.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.quit.setIcon(icon10)
         self.quit.setObjectName("quit")
         self.horizontalLayout.addWidget(self.quit)
@@ -543,7 +564,8 @@ class Ui_MainWindow(object):
         self.abtgit.setMinimumSize(QtCore.QSize(45, 45))
         self.abtgit.setText("")
         icon11 = QtGui.QIcon()
-        icon11.addPixmap(QtGui.QPixmap(":/icons/icons/github.logo.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon11.addPixmap(QtGui.QPixmap(
+            ":/icons/icons/github.logo.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.abtgit.setIcon(icon11)
         self.abtgit.setIconSize(QtCore.QSize(20, 20))
         self.abtgit.setObjectName("abtgit")
@@ -559,7 +581,8 @@ class Ui_MainWindow(object):
         self.abtme.setMinimumSize(QtCore.QSize(33, 45))
         self.abtme.setText("")
         icon12 = QtGui.QIcon()
-        icon12.addPixmap(QtGui.QPixmap(":/icons/icons/ss-branding.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon12.addPixmap(QtGui.QPixmap(
+            ":/icons/icons/ss-branding.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.abtme.setIcon(icon12)
         self.abtme.setIconSize(QtCore.QSize(20, 20))
         self.abtme.setObjectName("abtme")
@@ -575,7 +598,8 @@ class Ui_MainWindow(object):
         self.usbaud.setMinimumSize(QtCore.QSize(45, 45))
         self.usbaud.setText("")
         icon13 = QtGui.QIcon()
-        icon13.addPixmap(QtGui.QPixmap(":/icons/icons/volume-up-interface-symbol.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon13.addPixmap(QtGui.QPixmap(
+            ":/icons/icons/volume-up-interface-symbol.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.usbaud.setIcon(icon13)
         self.usbaud.setObjectName("usbaud")
         self.horizontalLayout.addWidget(self.usbaud)
@@ -591,7 +615,8 @@ class Ui_MainWindow(object):
         self.mapnow.setToolTipDuration(3)
         self.mapnow.setText("")
         icon14 = QtGui.QIcon()
-        icon14.addPixmap(QtGui.QPixmap(":/icons/icons/four-black-squares.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon14.addPixmap(QtGui.QPixmap(
+            ":/icons/icons/four-black-squares.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.mapnow.setIcon(icon14)
         self.mapnow.setObjectName("mapnow")
         self.horizontalLayout.addWidget(self.mapnow)
@@ -613,7 +638,8 @@ class Ui_MainWindow(object):
         self.executeaction.setFont(font)
         self.executeaction.setStyleSheet("")
         icon15 = QtGui.QIcon()
-        icon15.addPixmap(QtGui.QPixmap(":/icons/icons/small-rocket-ship-silhouette.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon15.addPixmap(QtGui.QPixmap(
+            ":/icons/icons/small-rocket-ship-silhouette.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.executeaction.setIcon(icon15)
         self.executeaction.setIconSize(QtCore.QSize(20, 16))
         self.executeaction.setObjectName("executeaction")
@@ -799,17 +825,24 @@ class Ui_MainWindow(object):
         self.build_label.setText(_translate("MainWindow", "Build"))
         self.fullscreen.setText(_translate("MainWindow", "Fullscreen"))
         self.showTouches.setText(_translate("MainWindow", "Show touches"))
-        self.notifChecker.setToolTip(_translate("MainWindow", "Make guiscrcpy check for new notifications on your device. A status bar icon indicating new notifications will be visible. (Experimental)"))
-        self.notifChecker.setText(_translate("MainWindow", "Notification Auditor"))
-        self.displayForceOn.setToolTip(_translate("MainWindow", "Use your computer screen as your android device\'s HD Display"))
-        self.displayForceOn.setText(_translate("MainWindow", "Keep display off "))
-        self.aotop.setToolTip(_translate("MainWindow", "Keep display always on top of other windows"))
+        self.notifChecker.setToolTip(_translate(
+            "MainWindow", "Make guiscrcpy check for new notifications on your device. A status bar icon indicating new notifications will be visible. (Experimental)"))
+        self.notifChecker.setText(_translate(
+            "MainWindow", "Notification Auditor"))
+        self.displayForceOn.setToolTip(_translate(
+            "MainWindow", "Use your computer screen as your android device\'s HD Display"))
+        self.displayForceOn.setText(_translate(
+            "MainWindow", "Keep display off "))
+        self.aotop.setToolTip(_translate(
+            "MainWindow", "Keep display always on top of other windows"))
         self.aotop.setText(_translate("MainWindow", "Always on Top"))
-        self.recScui.setToolTip(_translate("MainWindow", "Record your screen mirroring to your home directory. In Linux, it is in ~guiscrcpy directory. In Windows, it is in C:Users<USER NAME> with the date in seconds, followed by .mp4"))
+        self.recScui.setToolTip(_translate(
+            "MainWindow", "Record your screen mirroring to your home directory. In Linux, it is in ~guiscrcpy directory. In Windows, it is in C:Users<USER NAME> with the date in seconds, followed by .mp4"))
         self.recScui.setStatusTip(_translate("MainWindow", "See tooltip"))
         self.recScui.setText(_translate("MainWindow", "Record screen"))
         self.checkBox.setText(_translate("MainWindow", "Side Panel"))
-        self.network_button.setToolTip(_translate("MainWindow", "Launch Network Manager"))
+        self.network_button.setToolTip(_translate(
+            "MainWindow", "Launch Network Manager"))
         self.checkBox_2.setText(_translate("MainWindow", "Bottom Panel"))
         self.refreshdevices.setText(_translate("MainWindow", "REFRESH"))
         self.bitrateText.setText(_translate("MainWindow", "8000 KB/s"))

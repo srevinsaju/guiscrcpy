@@ -336,25 +336,31 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             invalid_devices = []
             for dev, stat in devices_list:
                 if stat == "unauthorized":
-                    invalid_devices.append(f"{dev} IS UNAUTHORIZED. CLICK 'ok' when asked.")
+                    invalid_devices.append(
+                        f"{dev} IS UNAUTHORIZED. CLICK 'ok' when asked.")
                 elif stat == "device":
                     valid_devices.append(dev)
                 else:
-                    invalid_devices.append(f"{dev} is connected. Failed to establish connection")
+                    invalid_devices.append(
+                        f"{dev} is connected. Failed to establish connection")
             self.runningNot.setText(
                 "Connected: {};".format(', '.join(valid_devices))
             )
         if len(valid_devices) > 1:
             if self.devices_combox.currentText() == '' or self.devices_combox.currentText().isspace():
-                logging.info("Found more than one device. Please select device in drop down box")
-                self.runningNot.setText("Found more than one device. Please select device in drop down box")
+                logging.info(
+                    "Found more than one device. Please select device in drop down box")
+                self.runningNot.setText(
+                    "Found more than one device. Please select device in drop down box")
                 self.devices_combox.clear()
-                self.devices_combox.addItems([f"{x[0]} : {x[1]}" for x in devices_list])
+                self.devices_combox.addItems(
+                    [f"{x[0]} : {x[1]}" for x in devices_list])
                 return 0,
 
             else:
                 more_devices = True
-                device_id = self.devices_combox.currentText().split(":")[0].strip()
+                device_id = self.devices_combox.currentText().split(":")[
+                    0].strip()
         else:
             more_devices = False
             device_id = None
@@ -444,7 +450,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         dimValues = adb.get_dimensions(adb.path, device_id=device_id)
         self.progressBar.setValue(70)
-        
+
         swipe_instance.init()
         panel_instance.init()
         side_instance.init()

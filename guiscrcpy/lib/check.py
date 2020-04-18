@@ -90,9 +90,11 @@ class adb:
     @staticmethod
     def get_dimensions(path, device_id=None):
         if device_id:
-            shellx = Popen(_("{} -s {} shell wm size".format(path, device_id)), stdout=PIPE, stderr=PIPE)
+            shellx = Popen(
+                _("{} -s {} shell wm size".format(path, device_id)), stdout=PIPE, stderr=PIPE)
         else:
-            shellx = Popen(_("{} shell wm size".format(path)), stdout=PIPE, stderr=PIPE)
+            shellx = Popen(_("{} shell wm size".format(path)),
+                           stdout=PIPE, stderr=PIPE)
         raw_dimensions = shellx.stdout.read().decode().strip('\n')
         for i in ['Override size', 'Physical size']:
             if i in raw_dimensions:
@@ -109,17 +111,21 @@ class adb:
     @staticmethod
     def shell(path, command, device_id=None):
         if device_id:
-            shellx = Popen(_("{} -s {} shell {}".format(path, device_id, command)), stdout=PIPE, stderr=PIPE)
+            shellx = Popen(_("{} -s {} shell {}".format(path,
+                                                        device_id, command)), stdout=PIPE, stderr=PIPE)
         else:
-            shellx = Popen(_("{} shell {}".format(path, command)), stdout=PIPE, stderr=PIPE)
+            shellx = Popen(_("{} shell {}".format(path, command)),
+                           stdout=PIPE, stderr=PIPE)
         return True
 
     @staticmethod
     def command(path, command, device_id=None):
         if device_id:
-            shellx = Popen(_("{} -s {} {}".format(path, device_id, command)), stdout=PIPE, stderr=PIPE)
+            shellx = Popen(
+                _("{} -s {} {}".format(path, device_id, command)), stdout=PIPE, stderr=PIPE)
         else:
-            shellx = Popen(_("{} {}".format(path, command)), stdout=PIPE, stderr=PIPE)
+            shellx = Popen(_("{} {}".format(path, command)),
+                           stdout=PIPE, stderr=PIPE)
         return shellx
 
     @staticmethod
@@ -128,7 +134,8 @@ class adb:
             raise FileNotFoundError(
                 "guiscrcpy couldn't find adb. Please specify path to adb in configuration file")
         proc = Popen(_(increment + " devices"), stdout=PIPE)
-        output = [[y.strip() for y in x.split('\t')] for x in decode_process(proc)[1:]][:-1]
-        
+        output = [[y.strip() for y in x.split('\t')]
+                  for x in decode_process(proc)[1:]][:-1]
+
         logging.debug("ADB: {}".format(output))
         return output

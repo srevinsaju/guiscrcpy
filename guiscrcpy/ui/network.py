@@ -72,11 +72,14 @@ class Ui_NetworkUI(object):
         _translate = QtCore.QCoreApplication.translate
         NetworkUI.setWindowTitle(_translate("NetworkUI", "Network Manager"))
         self.label.setText(_translate("NetworkUI", "List of Network Devices"))
-        self.nm_refresh.setStatusTip(_translate("NetworkUI", "Refresh Devices list"))
+        self.nm_refresh.setStatusTip(_translate(
+            "NetworkUI", "Refresh Devices list"))
         self.nm_refresh.setText(_translate("NetworkUI", "REFRESH"))
         self.tcpip.setText(_translate("NetworkUI", "TCPIP"))
         self.spinBox.setToolTip(_translate("NetworkUI", "Port number"))
         self.spinBox.setStatusTip(_translate("NetworkUI", "Port number"))
-        self.nm_connect.setStatusTip(_translate("NetworkUI", "Establish connection"))
+        self.nm_connect.setStatusTip(_translate(
+            "NetworkUI", "Establish connection"))
         self.nm_connect.setText(_translate("NetworkUI", "CONNECT"))
-        self.lineEdit.setPlaceholderText(_translate("NetworkUI", "Cannot find your IP address? Enter it manually here"))
+        self.lineEdit.setPlaceholderText(_translate(
+            "NetworkUI", "Cannot find your IP address? Enter it manually here"))

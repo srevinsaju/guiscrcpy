@@ -19,9 +19,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import logging
 import os
-import shutil
 
-from guiscrcpy.lib.ver import version
+from guiscrcpy.version import VERSION
 
 desktop = \
     """
@@ -67,11 +66,9 @@ class Linux:
         Create Desktop file for Linux in ~/.local level
         :return:
         """
-        v = version()
-        ver = v.get_commit()
 
         desk = desktop.format(
-            v=ver,
+            v=VERSION,
             icon_path=os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))),
                                    'ui', 'ui', 'guiscrcpy_logo.png'))
         if os.getenv('XDG_DESKTOP_DIR'):

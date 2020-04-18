@@ -33,8 +33,7 @@ All rights reserved.
 
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import *
-from PyQt5 import QtCore, QtWidgets, QtGui
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
 import sys
 import argparse
@@ -48,7 +47,7 @@ import os.path
 from subprocess import PIPE
 from guiscrcpy.lib.config import InterfaceConfig
 from guiscrcpy.lib.process import is_running
-from guiscrcpy.lib.ver import version
+from guiscrcpy.version import VERSION
 from guiscrcpy.platform import platform
 from guiscrcpy.theme.decorate import header
 from guiscrcpy.lib.check import adb
@@ -65,8 +64,6 @@ try:
 except FileNotFoundError:
     pass  # Its a PyInstaller compiled package
 
-# create app
-
 
 # initialize config manager
 cfgmgr = InterfaceConfig()
@@ -75,10 +72,10 @@ environment = platform.System()
 adb.path = config['adb']
 scrcpy.path = config['scrcpy']
 scrcpy.server_path = config['scrcpy-server']
-v = version()
+
 
 # Initialize argument parser
-parser = argparse.ArgumentParser('guiscrcpy v{}'.format(v.get_commit()))
+parser = argparse.ArgumentParser('guiscrcpy v{}'.format(VERSION))
 parser.add_argument('-i', '--install', action='store_true',
                     help="Install guiscrcpy system wide on Linux")
 parser.add_argument('-s', '--start', action='store_true',
@@ -123,7 +120,7 @@ pass
 
 logging.debug("Received flag {}".format(args.start))
 
-header(v.get_commit())
+header(VERSION)
 
 if args.version:
     sys.exit(0)
@@ -188,7 +185,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # CONNECT DIMENSION CHECK BOX TO STATE CHANGE
         self.dimensionDefaultCheckbox.stateChanged.connect(
             self.dimensionChange)
-        self.build_label.setText("Build " + str(v.build))
+        self.build_label.setText("Build " + str(VERSION))
 
         # DIAL CTRL GRP
         self.dial.sliderMoved.connect(self.dial_text_refresh)
@@ -345,7 +342,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 else:
                     invalid_devices.append(f"{dev} is connected. Failed to establish connection")
             self.runningNot.setText(
-                "Connected: [{}], {}".format(valid_devices, invalid_devices)
+                "Connected: {};".format(', '.join(valid_devices))
             )
         if len(valid_devices) > 1:
             if self.devices_combox.currentText() == '' or self.devices_combox.currentText().isspace():

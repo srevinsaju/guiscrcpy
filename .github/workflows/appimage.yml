@@ -39,10 +39,10 @@ jobs:
       run: |
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy-server
-        cp scrcpy AppDir/usr/local/bin/.
-        chmod +x AppDir/usr/local/bin/scrcpy
-        mkdir AppDir/usr/local/share/scrcpy
-        cp scrcpy-server AppDir/usr/local/share/scrcpy/.
+        cp scrcpy AppDir/usr/bin/.
+        chmod +x AppDir/usr/bin/scrcpy
+        mkdir AppDir/usr/share/scrcpy
+        cp scrcpy-server AppDir/usr/share/scrcpy/.
     
     - name: Download scrcpy binary deps
       run: |

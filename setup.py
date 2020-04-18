@@ -20,22 +20,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
+import platform
+
 from setuptools import setup
-import platform 
 
 requirements = ['PyQt5==5.14.2', 'pynput']
 if platform.system() == 'Windows':
-    requirements.extend(['pywin32', 'psutil'])
+	requirements.extend(['pywin32', 'psutil'])
 elif platform.system() == 'Linux':
-    requirements.extend(['fonttools', 'psutil'])
-
-
+	requirements.extend(['fonttools', 'psutil'])
 
 setup(
-    name='guiscrcpy',
-    version='3.4.post38.dev',
-    description='An Open Source - Fast - Android Screen Mirroring system.',
-    long_description="""<img src=https://github.com/srevinsaju/guiscrcpy/blob/master/guiscrcpy/ui/ui/guiscrcpy_logo.png width=25%>
+	name='guiscrcpy',
+	version='3.4.post38.dev',
+	description='An Open Source - Fast - Android Screen Mirroring system.',
+	long_description="""<img src=https://github.com/srevinsaju/guiscrcpy/blob/master/guiscrcpy/ui/ui/guiscrcpy_logo.png width=25%>
 
 # guiscrcpy
 
@@ -90,28 +89,32 @@ For more details on Installation instructions, head over to the Wiki
 ## Documentation
 All detailed information are clearly laid out in the Wiki. you might need to check that out
 """,
-    long_description_content_type='text/markdown',
-    license='GPL v3',
-    author='srevinsaju',
-    author_email="srevin03@gmail.com",
-    packages=['guiscrcpy'],
-    data_files = [
-        ('share/applications', ['guiscrcpy.desktop'] )
-    ],
-    url="https://srevinsaju.github.io/guiscrcpy",
-    download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
-    package_data={'guiscrcpy': ['*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*', 'theme/*', 'ux/*', 'network/*', 'settings/*', 'install/*', 'platform/windows_tools/*', 'ui/icons/*', 'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*']},
-    include_package_data=True,
-    install_requires=requirements,
-    scripts=["scripts/guiscrcpy", "scripts/guiscrcpy-mapper"],
-    entry_points={'console_scripts': ['guiscrcpy = guiscrcpy.launcher:bootstrap']},
-    classifiers=['Operating System :: OS Independent',
-                 'Programming Language :: Python :: 3.7',
-                 'Programming Language :: Python :: 3.6',
-                 'Programming Language :: Python :: 3.8',
-                 'Operating System :: MacOS :: MacOS X',
-                 'Operating System :: Microsoft :: Windows',
-                 'Operating System :: POSIX',
-                 'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'],
+	long_description_content_type='text/markdown',
+	license='GPL v3',
+	author='srevinsaju',
+	author_email="srevin03@gmail.com",
+	packages=['guiscrcpy'],
+	data_files=[
+		('share/applications', ['guiscrcpy.desktop'])
+	],
+	url="https://srevinsaju.github.io/guiscrcpy",
+	download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
+	package_data={
+		'guiscrcpy': ['*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*',
+		              'theme/*', 'ux/*', 'network/*', 'settings/*',
+		              'install/*', 'platform/windows_tools/*', 'ui/icons/*',
+		              'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*']},
+	include_package_data=True,
+	install_requires=requirements,
+	scripts=["scripts/guiscrcpy", "scripts/guiscrcpy-mapper"],
+	entry_points={
+		'console_scripts': ['guiscrcpy = guiscrcpy.launcher:bootstrap']},
+	classifiers=['Operating System :: OS Independent',
+	             'Programming Language :: Python :: 3.7',
+	             'Programming Language :: Python :: 3.6',
+	             'Programming Language :: Python :: 3.8',
+	             'Operating System :: MacOS :: MacOS X',
+	             'Operating System :: Microsoft :: Windows',
+	             'Operating System :: POSIX',
+	             'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'],
 )
-

@@ -23,7 +23,7 @@ import os
 from guiscrcpy.version import VERSION
 
 desktop = \
-    """
+	"""
 [Desktop Entry]
 Version={v}
 Name=guiscrcpy
@@ -38,88 +38,90 @@ StartupWMClass=UGENE
 
 
 class Linux:
-    def __init__(self):
-        pass
+	def __init__(self):
+		pass
 
-    def cfgpath(self):
-        return self.make_config()
+	def cfgpath(self):
+		return self.make_config()
 
-    def make_config(self):
-        if os.getenv('XDG_CONFIG_HOME') is None:
-            path = os.path.expanduser("~/.config/guiscrcpy/")
-        else:
-            path = os.getenv('XDG_CONFIG_HOME').split(":")[0] + "/guiscrcpy"
-        if not os.path.exists(path):
-            try:
-                os.makedirs(path)
-            except Exception as e:
-                logging.error(
-                    "Error creating configuration file in dir {path}. Error code:{e}"
-                    .format(
-                        path=path,
-                        e=e
-                    ))
-        return path
+	def make_config(self):
+		if os.getenv('XDG_CONFIG_HOME') is None:
+			path = os.path.expanduser("~/.config/guiscrcpy/")
+		else:
+			path = os.getenv('XDG_CONFIG_HOME').split(":")[0] + "/guiscrcpy"
+		if not os.path.exists(path):
+			try:
+				os.makedirs(path)
+			except Exception as e:
+				logging.error(
+					"Error creating configuration file in dir {path}. Error code:{e}"
+						.format(
+						path=path,
+						e=e
+					))
+		return path
 
-    def create_desktop(self):
-        """
-        Create Desktop file for Linux in ~/.local level
-        :return:
-        """
+	def create_desktop(self):
+		"""
+		Create Desktop file for Linux in ~/.local level
+		:return:
+		"""
 
-        desk = desktop.format(
-            v=VERSION,
-            icon_path=os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))),
-                                   'ui', 'ui', 'guiscrcpy_logo.png'))
-        if os.getenv('XDG_DESKTOP_DIR'):
-            desktop_dir = os.getenv('XDG_DESKTOP_DIR')
-        else:
-            if os.path.exists(os.path.expanduser('~/Desktop')):
-                desktop_dir = os.path.expanduser('~/Desktop')
-            elif os.path.exists(os.path.expanduser('~/desktop')):
-                desktop_dir = os.path.expanduser('~/desktop')
-            else:
-                desktop_dir = False
-        if desktop_dir:
-            with open(os.path.join(desktop_dir, 'guiscrcpy.desktop'), 'w') as w:
-                w.write(desk)
-            return True
-        else:
-            return False
+		desk = desktop.format(
+			v=VERSION,
+			icon_path=os.path.join(
+				os.path.abspath(os.path.dirname(os.path.dirname(__file__))),
+				'ui', 'ui', 'guiscrcpy_logo.png'))
+		if os.getenv('XDG_DESKTOP_DIR'):
+			desktop_dir = os.getenv('XDG_DESKTOP_DIR')
+		else:
+			if os.path.exists(os.path.expanduser('~/Desktop')):
+				desktop_dir = os.path.expanduser('~/Desktop')
+			elif os.path.exists(os.path.expanduser('~/desktop')):
+				desktop_dir = os.path.expanduser('~/desktop')
+			else:
+				desktop_dir = False
+		if desktop_dir:
+			with open(os.path.join(desktop_dir, 'guiscrcpy.desktop'),
+			          'w') as w:
+				w.write(desk)
+			return True
+		else:
+			return False
 
-    @staticmethod
-    def install_fonts():
-        """
-        Install fonts to ~/.fonts.
-        The fonts being installed is Titillium Web ~ https://fonts.google.com/specimen/Titillium+Web
-        Open Source Approved fonts.
-        # TODO support for SystemWide Installation
-        :return: True if installation successful, else False
-        """
-        sys_font_dir = os.path.join(os.path.expanduser('~'), '.fonts')
-        if not os.path.exists(sys_font_dir):
-            os.makedirs(sys_font_dir)
-        from fontTools.ttLib import TTFont
-        font_dir = os.path.join(os.path.abspath(
-            os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
-        try:
-            fonts = os.listdir(font_dir)
-            for i in fonts:
-                font = TTFont(os.path.join(font_dir, i))
-                font.save(os.path.join(sys_font_dir, i))
-            return True
-        except Exception as e:
-            logging.error("Error Installing the fonts. "
-                          "You might have to manually install the fonts"
-                          "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
-            return False
+	@staticmethod
+	def install_fonts():
+		"""
+		Install fonts to ~/.fonts.
+		The fonts being installed is Titillium Web ~ https://fonts.google.com/specimen/Titillium+Web
+		Open Source Approved fonts.
+		# TODO support for SystemWide Installation
+		:return: True if installation successful, else False
+		"""
+		sys_font_dir = os.path.join(os.path.expanduser('~'), '.fonts')
+		if not os.path.exists(sys_font_dir):
+			os.makedirs(sys_font_dir)
+		from fontTools.ttLib import TTFont
+		font_dir = os.path.join(os.path.abspath(
+			os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
+		try:
+			fonts = os.listdir(font_dir)
+			for i in fonts:
+				font = TTFont(os.path.join(font_dir, i))
+				font.save(os.path.join(sys_font_dir, i))
+			return True
+		except Exception as e:
+			logging.error("Error Installing the fonts. "
+			              "You might have to manually install the fonts"
+			              "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
+			return False
 
-    @staticmethod
-    def system():
-        return 'Linux'
+	@staticmethod
+	def system():
+		return 'Linux'
 
-    def increment(self):
-        pass
+	def increment(self):
+		pass
 
-    def paths(self):
-        return ['bin', '/usr/bin', '~/.local/bin', '~/bin', '/usr/local/bin']
+	def paths(self):
+		return ['bin', '/usr/bin', '~/.local/bin', '~/bin', '/usr/local/bin']

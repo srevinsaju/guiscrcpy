@@ -19,70 +19,72 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import logging
 import os
+
 from guiscrcpy.platform.windows_tools.tools import make_shortcut
 
 
 class Windows:
-    def __init__(self):
-        self.make_config()
-        self._cfgpath = self.cfgpath()
+	def __init__(self):
+		self.make_config()
+		self._cfgpath = self.cfgpath()
 
-    @staticmethod
-    def make_config():
-        path = os.path.expanduser(os.path.join(
-            "~", "AppData", "Local", "guiscrcpy"))
-        if not os.path.exists(path):
-            try:
-                os.makedirs(path)
-            except Exception as e:
-                logging.error(
-                    "Error creating configuration file in dir {path}. Error code:{e}"
-                    .format(
-                        path=path,
-                        e=e
-                    ))
-        return path
+	@staticmethod
+	def make_config():
+		path = os.path.expanduser(os.path.join(
+			"~", "AppData", "Local", "guiscrcpy"))
+		if not os.path.exists(path):
+			try:
+				os.makedirs(path)
+			except Exception as e:
+				logging.error(
+					"Error creating configuration file in dir {path}. Error code:{e}"
+						.format(
+						path=path,
+						e=e
+					))
+		return path
 
-    def system(self):
-        return 'Windows'
+	def system(self):
+		return 'Windows'
 
-    def cfgpath(self):
-        return self.make_config()
+	def cfgpath(self):
+		return self.make_config()
 
-    def increment(self):
-        pass
+	def increment(self):
+		pass
 
-    def paths(self):
-        return ['bin']
+	def paths(self):
+		return ['bin']
 
-    def install_fonts(self):
-        """
-        Install fonts to system directory.
-        The fonts being installed is Titillium Web ~ https://fonts.google.com/specimen/Titillium+Web
-        Open Source Approved fonts.
-        # TODO support for SystemWide Installation
-        :return: True if installation successful, else False
-        """
-        # TODO: Test it properly
-        # Likely to fail
-        cmd = r"""copy "{fontdir}" "%WINDIR%\Fonts"
+	def install_fonts(self):
+		"""
+		Install fonts to system directory.
+		The fonts being installed is Titillium Web ~ https://fonts.google.com/specimen/Titillium+Web
+		Open Source Approved fonts.
+		# TODO support for SystemWide Installation
+		:return: True if installation successful, else False
+		"""
+		# TODO: Test it properly
+		# Likely to fail
+		cmd = r"""copy "{fontdir}" "%WINDIR%\Fonts"
         reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" /
         v "FontName (TrueType)" / t REG_SZ / d {font} / f """
-        font_dir = os.path.join(os.path.abspath(
-            os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
-        try:
-            fonts = os.listdir(font_dir)
-            for i in fonts:
-                # install the fonts by executing cmd and update the Windows Registry
-                print(cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
-                os.system(cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
-            return True
-        except Exception as e:
-            print("Installing fonts failed")
-            logging.error("Error Installing the fonts. "
-                          "You might have to manually install the fonts"
-                          "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
-            return False
+		font_dir = os.path.join(os.path.abspath(
+			os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
+		try:
+			fonts = os.listdir(font_dir)
+			for i in fonts:
+				# install the fonts by executing cmd and update the Windows Registry
+				print(cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
+				os.system(
+					cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
+			return True
+		except Exception as e:
+			print("Installing fonts failed")
+			logging.error("Error Installing the fonts. "
+			              "You might have to manually install the fonts"
+			              "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
+			return False
 
-    def create_desktop(self):
-        make_shortcut()
+	def create_desktop(self):
+		make_shortcut()

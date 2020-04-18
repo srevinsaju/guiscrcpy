@@ -40,9 +40,15 @@ jobs:
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/1.12.1/scrcpy
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/1.12.1/scrcpy-server
         cp scrcpy AppDir/usr/bin/.
-        chmod +x AppDir/usr/bin/scrcpy
-        mkdir AppDir/usr/share/scrcpy
-        cp scrcpy-server AppDir/usr/share/scrcpy/.
+        chmod +x AppDir/usr/local/bin/scrcpy
+        mkdir AppDir/usr/local/share/scrcpy
+        cp scrcpy-server AppDir/usr/local/share/scrcpy/.
+    
+    - name: Download scrcpy binary deps
+      run: |
+        wget https://dl.bintray.com/srevinsaju/guiscrcpy/1.12.1/bin.tar.gz
+        tar -xf bin.tar.gz 
+        cp bin/* AppDir/usr/lib/.
         
     - name: Reimage AppImage
       run: |

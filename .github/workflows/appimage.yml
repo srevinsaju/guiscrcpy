@@ -46,10 +46,12 @@ jobs:
     
     - name: Download scrcpy binary deps
       run: |
-        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/bin.tar.gz
-        tar -xf bin.tar.gz 
-        cp bin/* AppDir/usr/lib/.
-        
+        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy_processed.tar.gz
+        tar -xf scrcpy_processed.tar.gz
+        cp scrcpy_processed/* AppDir/usr/lib/.
+    - name: Patch Appimage to detect adb / scrcpy
+      run: |
+        sed '/APPDIR="${APPDIR:-${here}}"/aexport LD_LIBRARY_PATH="${APPDIR}/usr/lib:${LD_LIBRARY_PATH}" \nexport GUISCRCPY_SCRCPY="${APPDIR}/usr/bin/scrcpy"\nexport GUISCRCPY_ADB="${APPDIR}/usr/bin/adb"' AppRun > AppRun
     - name: Reimage AppImage
       run: |
         rm ./guiscrcpy-x86_64.AppImage

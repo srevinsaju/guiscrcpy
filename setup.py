@@ -33,7 +33,7 @@ elif platform.system() == 'Linux':
 
 setup(
     name='guiscrcpy',
-    version='3.4.post28.dev',
+    version='3.4.post38.dev',
     description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description="""<img src=https://github.com/srevinsaju/guiscrcpy/blob/master/guiscrcpy/ui/ui/guiscrcpy_logo.png width=25%>
 

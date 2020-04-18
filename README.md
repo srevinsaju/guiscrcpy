@@ -30,9 +30,9 @@ For beta Windows compiled executables, click
 [![Windows Executable](https://github.com/srevinsaju/guiscrcpy/workflows/Windows%20Executable/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=+event%3Apush++is%3Asuccess+branch%3Amaster+workflow%3A%22Windows+Executable%22). Select the latest commit 
 and download the artifact.
 
-~~For beta Linux compiled AppImages, click
-![Build AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/Build%20AppImage/badge.svg)
-and download the artifact.~~. See Issues for the failure of creating a AppImage
+For beta Linux compiled AppImages, click
+[![AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/AppImage/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=event%3Apush+branch%3Amaster+is%3Asuccess+workflow%3AAppImage+)
+and download the artifact. :tada: Thanks to @niess, guiscrcpy appimages are distributed for public use!!
 
 ![image of guiscrcpy](https://raw.githubusercontent.com/srevinsaju/guiscrcpy-docs/master/docs/screen3.png)
 

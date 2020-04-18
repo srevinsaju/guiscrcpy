@@ -24,6 +24,6 @@ from guiscrcpy.version import VERSION
 class version:
     def __init__(self):
         self.commit = VERSION
-
+  
     def get_commit(self):
         return self.commit

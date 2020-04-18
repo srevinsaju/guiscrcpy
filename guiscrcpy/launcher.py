@@ -71,8 +71,19 @@ except FileNotFoundError:
 cfgmgr = InterfaceConfig()
 config = cfgmgr.get_config()
 environment = platform.System()
-adb.path = config['adb']
-scrcpy.path = config['scrcpy']
+
+# Add precedence for guiscrcpy to check environment variables
+# for the paths of `adb` and `scrcpy` over the configuration files.
+if os.getenv('GUISCRCPY_ADB', None) is None:
+    adb.path = config['adb']
+else:
+    adb.path = os.getenv('GUISCRCPY_ADB')
+
+if os.getenv('GUISCRCPY_SCRCPY', None) is None:
+    scrcpy.path = config['scrcpy']
+else:
+    scrcpy.path = os.getenv('GUISCRCPY_SCRCPY')
+
 scrcpy.server_path = config['scrcpy-server']
 
 # Initialize argument parser
@@ -154,6 +165,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.cmx = None
         self.sm = None
         self.nm = None
+        self.swipe_instance = None
+        self.panel_instance = None
+        self.side_instance = None
         self.options = ""
         logging.debug(
             "Options received by class are : {} {} {} {} {} ".format(
@@ -435,16 +449,15 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # show subwindows
         ux = UXMapper(device_id=device_id)
-        swipe_instance = SwipeUX(ux_wrapper=ux)  # Load swipe UI
-        panel_instance = Panel(ux_mapper=ux)
-        side_instance = InterfaceToolkit(ux_mapper=ux)
+        self.swipe_instance = SwipeUX(ux_wrapper=ux)  # Load swipe UI
+        self.panel_instance = Panel(ux_mapper=ux)
+        self.side_instance = InterfaceToolkit(ux_mapper=ux)
 
-        dimValues = adb.get_dimensions(adb.path, device_id=device_id)
         self.progressBar.setValue(70)
 
-        swipe_instance.init()
-        panel_instance.init()
-        side_instance.init()
+        self.swipe_instance.init()
+        self.panel_instance.init()
+        self.side_instance.init()
 
         if self.cmx is not None:
             config['cmx'] = ' '.join(map(str, self.cmx))

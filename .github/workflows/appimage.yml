@@ -1,7 +1,15 @@
 # Thanks @niess (https://github.com/niess) for python-appimage, creating appimages for Python is easy as pie!!
 
 name: AppImage
-on: [push]
+on: 
+  push:
+    paths:
+      - 'guiscrcpy/**'
+      - '.github/workflows/appimage.yml'
+  pull_request:
+    paths:
+      - 'guiscrcpy/**'
+      - '.github/workflows/appimage.yml'
 
 jobs:
   Test:
@@ -19,6 +27,7 @@ jobs:
     - name: Test AppImage
       run: |
         python -m pip install python-appimage
+        echo $(realpath .) > appimage/requirements.txt
         python -m python_appimage build app appimage \
                                             --linux-tag=manylinux1_x86_64
     
@@ -39,12 +48,12 @@ jobs:
       run: |
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy-server
-        mkdir -p AppDir/usr/local/bin
-        cp scrcpy AppDir/usr/local/bin/.
-        chmod +x AppDir/usr/local/bin/scrcpy
-        mkdir -p AppDir/usr/local/share/scrcpy
-        cp scrcpy-server AppDir/usr/local/share/scrcpy/.
-    
+        mkdir -p AppDir/usr/bin
+        cp scrcpy AppDir/usr/bin/.
+        chmod +x AppDir/usr/bin/scrcpy
+        mkdir -p AppDir/usr/share/scrcpy
+        cp scrcpy-server AppDir/usr/share/scrcpy/.
+
     - name: Download scrcpy binary deps
       run: |
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy_processed.tar.gz
@@ -52,7 +61,7 @@ jobs:
         cp scrcpy_processed/* AppDir/usr/lib/.
     - name: Patch Appimage to detect adb / scrcpy
       run: |
-        sed -i '/APPDIR="${APPDIR:-${here}}"/aexport LD_LIBRARY_PATH="${APPDIR}/usr/lib:${LD_LIBRARY_PATH}" \nexport GUISCRCPY_SCRCPY="${APPDIR}/usr/local/bin/scrcpy"\nexport GUISCRCPY_ADB="${APPDIR}/usr/bin/adb"' AppDir/AppRun
+        sed -i '/APPDIR="${APPDIR:-${here}}"/aexport LD_LIBRARY_PATH="${APPDIR}/usr/lib:${LD_LIBRARY_PATH}" \nexport GUISCRCPY_SCRCPY="${APPDIR}/usr/bin/scrcpy"\nexport GUISCRCPY_ADB="${APPDIR}/usr/bin/adb"\nexport ADB="${APPDIR}/usr/bin/adb"\nexport SCRCPY_SERVER_PATH="${APPDIR}/usr/share/scrcpy/scrcpy-server"' AppDir/AppRun
     - name: Reimage AppImage
       run: |
         rm ./guiscrcpy-x86_64.AppImage

@@ -1,6 +1,15 @@
 name: Linux
 
-on: [push]
+on: 
+  push:
+    paths:
+      - 'guiscrcpy/**'
+      - '.github/workflows/pythonapp.yml'
+  pull_request:
+    paths:
+      - 'guiscrcpy/**'
+      - '.github/workflows/pythonapp.yml'
+
 
 jobs:
   build:

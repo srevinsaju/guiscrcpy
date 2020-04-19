@@ -29,7 +29,7 @@ jobs:
         python -m pip install python-appimage
         echo $(realpath .) > appimage/requirements.txt
         python -m python_appimage build app appimage \
-                                            --linux-tag=manylinux1_x86_64
+                                            --linux-tag=manylinux2014_x86_64
     
     - name: Extract AppImage
       run: |

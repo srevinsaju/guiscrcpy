@@ -1,6 +1,15 @@
 name: Windows
 
-on: [push]
+on: 
+  push:
+    paths:
+      - 'guiscrcpy/**'
+      - '.github/workflows/winpython.yml'
+  pull_request:
+    paths:
+      - 'guiscrcpy/**'
+      - '.github/workflows/winpython.yml'
+
 
 jobs:
   build:

@@ -37,18 +37,26 @@ jobs:
     
     - name: Download scrcpy
       run: |
-        wget https://dl.bintray.com/srevinsaju/guiscrcpy/1.12.1/scrcpy
-        wget https://dl.bintray.com/srevinsaju/guiscrcpy/1.12.1/scrcpy-server
-        cp scrcpy AppDir/usr/bin/.
-        chmod +x AppDir/usr/bin/scrcpy
-        mkdir AppDir/usr/share/scrcpy
-        cp scrcpy-server AppDir/usr/share/scrcpy/.
-        
+        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy
+        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy-server
+        mkdir -p AppDir/usr/local/bin
+        cp scrcpy AppDir/usr/local/bin/.
+        chmod +x AppDir/usr/local/bin/scrcpy
+        mkdir -p AppDir/usr/local/share/scrcpy
+        cp scrcpy-server AppDir/usr/local/share/scrcpy/.
+    
+    - name: Download scrcpy binary deps
+      run: |
+        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy_processed.tar.gz
+        tar -xf scrcpy_processed.tar.gz
+        cp scrcpy_processed/* AppDir/usr/lib/.
+    - name: Patch Appimage to detect adb / scrcpy
+      run: |
+        sed -i '/APPDIR="${APPDIR:-${here}}"/aexport LD_LIBRARY_PATH="${APPDIR}/usr/lib:${LD_LIBRARY_PATH}" \nexport GUISCRCPY_SCRCPY="${APPDIR}/usr/local/bin/scrcpy"\nexport GUISCRCPY_ADB="${APPDIR}/usr/bin/adb"' AppDir/AppRun
     - name: Reimage AppImage
       run: |
         rm ./guiscrcpy-x86_64.AppImage
         ./appimagetool-x86_64.AppImage --comp gzip AppDir -n
-
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
@@ -56,4 +64,3 @@ jobs:
         path: guiscrcpy-x86_64.AppImage
 
     
-

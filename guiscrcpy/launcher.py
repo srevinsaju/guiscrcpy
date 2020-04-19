@@ -224,7 +224,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             pass
 
         # set bottom instance and side instance as enabled by default
-        
+        self.check_bottom_panel.setChecked(True)
+        self.check_side_panel.setChecked(True)
 
         self.quit.clicked.connect(self.quit_window)
         self.dimensionText.setText("DEFAULT")
@@ -453,14 +454,17 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # show subwindows
         ux = UXMapper(device_id=device_id)
         self.swipe_instance = SwipeUX(ux_wrapper=ux)  # Load swipe UI
-        self.panel_instance = Panel(ux_mapper=ux)
-        self.side_instance = InterfaceToolkit(ux_mapper=ux)
 
         self.progressBar.setValue(70)
+        if self.check_side_panel.isChecked():
+            self.side_instance = InterfaceToolkit(ux_mapper=ux)
+            self.side_instance.init()
+
+        if self.check_bottom_panel.isChecked():
+            self.panel_instance = Panel(ux_mapper=ux)
+            self.panel_instance.init()
 
         self.swipe_instance.init()
-        self.panel_instance.init()
-        self.side_instance.init()
 
         if self.cmx is not None:
             config['cmx'] = ' '.join(map(str, self.cmx))

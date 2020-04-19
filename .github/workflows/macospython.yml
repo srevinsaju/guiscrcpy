@@ -1,6 +1,15 @@
 name: Mac OS
 
-on: [push]
+on: 
+  push:
+    paths:
+      - 'guiscrcpy/**'
+      - '.github/workflows/macospython.yml'
+  pull_request:
+    paths:
+      - 'guiscrcpy/**'
+      - '.github/workflows/macospython.yml'
+
 
 jobs:
   build:

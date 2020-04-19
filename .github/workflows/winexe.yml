@@ -1,14 +1,15 @@
 name: Windows Executable
 
-on:
+on: 
   push:
-    branches: 
-      - master
-      - develop
+    paths:
+      - 'guiscrcpy/**'
+      - '.github/workflows/winexe.yml'
   pull_request:
-    branches: 
-      - master
-      - develop
+    paths:
+      - 'guiscrcpy/**'
+      - '.github/workflows/winexe.yml'
+
 
 
 jobs:

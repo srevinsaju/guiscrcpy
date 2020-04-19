@@ -223,6 +223,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         except Exception as e:
             pass
 
+        # set bottom instance and side instance as enabled by default
+        
+
         self.quit.clicked.connect(self.quit_window)
         self.dimensionText.setText("DEFAULT")
         config['bitrate'] = int(self.dial.value())

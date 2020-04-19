@@ -488,7 +488,7 @@ border-radius: 10px;
           </widget>
          </item>
          <item row="2" column="0" colspan="4">
-          <widget class="QCheckBox" name="checkBox">
+          <widget class="QCheckBox" name="check_side_panel">
            <property name="text">
             <string>Side Panel</string>
            </property>
@@ -522,7 +522,7 @@ border-radius: 10px;
           </widget>
          </item>
          <item row="2" column="4">
-          <widget class="QCheckBox" name="checkBox_2">
+          <widget class="QCheckBox" name="check_bottom_panel">
            <property name="text">
             <string>Bottom Panel</string>
            </property>

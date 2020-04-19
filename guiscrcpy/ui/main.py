@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainwindow.ui'
+# Form implementation generated from reading ui file 'guiscrcpy/ui/mainwindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.2
 #
@@ -281,12 +281,12 @@ class Ui_MainWindow(object):
         self.recScui.setIcon(icon7)
         self.recScui.setObjectName("recScui")
         self.gridLayout_4.addWidget(self.recScui, 1, 5, 1, 1)
-        self.checkBox = QtWidgets.QCheckBox(self.frame1)
+        self.check_side_panel = QtWidgets.QCheckBox(self.frame1)
         icon8 = QtGui.QIcon()
         icon8.addPixmap(QtGui.QPixmap(":/icons/icons/reorder-option.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.checkBox.setIcon(icon8)
-        self.checkBox.setObjectName("checkBox")
-        self.gridLayout_4.addWidget(self.checkBox, 2, 0, 1, 4)
+        self.check_side_panel.setIcon(icon8)
+        self.check_side_panel.setObjectName("check_side_panel")
+        self.gridLayout_4.addWidget(self.check_side_panel, 2, 0, 1, 4)
         self.network_button = QtWidgets.QPushButton(self.frame1)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -300,10 +300,10 @@ class Ui_MainWindow(object):
         self.network_button.setIcon(icon9)
         self.network_button.setObjectName("network_button")
         self.gridLayout_4.addWidget(self.network_button, 3, 0, 1, 1)
-        self.checkBox_2 = QtWidgets.QCheckBox(self.frame1)
-        self.checkBox_2.setIcon(icon8)
-        self.checkBox_2.setObjectName("checkBox_2")
-        self.gridLayout_4.addWidget(self.checkBox_2, 2, 4, 1, 1)
+        self.check_bottom_panel = QtWidgets.QCheckBox(self.frame1)
+        self.check_bottom_panel.setIcon(icon8)
+        self.check_bottom_panel.setObjectName("check_bottom_panel")
+        self.gridLayout_4.addWidget(self.check_bottom_panel, 2, 4, 1, 1)
         self.devices_combox = QtWidgets.QComboBox(self.frame1)
         self.devices_combox.setCurrentText("")
         self.devices_combox.setObjectName("devices_combox")
@@ -739,9 +739,9 @@ class Ui_MainWindow(object):
         self.recScui.setToolTip(_translate("MainWindow", "Record your screen mirroring to your home directory. In Linux, it is in ~guiscrcpy directory. In Windows, it is in C:Users<USER NAME> with the date in seconds, followed by .mp4"))
         self.recScui.setStatusTip(_translate("MainWindow", "See tooltip"))
         self.recScui.setText(_translate("MainWindow", "Record screen"))
-        self.checkBox.setText(_translate("MainWindow", "Side Panel"))
+        self.check_side_panel.setText(_translate("MainWindow", "Side Panel"))
         self.network_button.setToolTip(_translate("MainWindow", "Launch Network Manager"))
-        self.checkBox_2.setText(_translate("MainWindow", "Bottom Panel"))
+        self.check_bottom_panel.setText(_translate("MainWindow", "Bottom Panel"))
         self.refreshdevices.setText(_translate("MainWindow", "REFRESH"))
         self.bitrateText.setText(_translate("MainWindow", "8000 KB/s"))
         self.dial.setToolTip(_translate("MainWindow", "Changing the bitrate of the screen mirrorring. Useful to show playback at normal speed without lags"))

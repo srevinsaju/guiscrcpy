@@ -42,8 +42,8 @@ class UXMapper:
 
         # each device connected is uniquely identified by the tools by
         # a salted hash. The toolkits are assigned colors based on the first
-        # 6 colors and the stylesheet is derived from 
-        self.sha = hashlib.sha1(self.deviceId.encode())
+        # 6 colors and the stylesheet is derived from
+        self.sha = hashlib.sha1(str(self.deviceId).encode()).hexdigest()
 
     def get_sha(self):
         return self.sha

@@ -34,16 +34,24 @@ class SwipeUX(QMainWindow):
         self.oldPos = None
         self.name = "swipe"
         self.uid = uuid.uuid4()
-        self.ux = None
+
+        # =================
+        if ux_wrapper:
+            self.ux = ux_wrapper
+        else:
+            self.ux = UXMapper()
+        hexdigest = self.ux.get_sha()[:6]
+
         self.setObjectName("SwipeUX")
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_NoSystemBackground, True)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
 
-        # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint)
+        # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint
+        # QtCore.Qt.FramelessWindowHint)
         self.resize(70, 70)
         # -----------------------
-        # =====================
+
         icon = QtGui.QIcon()
         icon.addPixmap(
             QtGui.QPixmap(":/res/ui/guiscrcpy_logo.png"),
@@ -52,26 +60,46 @@ class SwipeUX(QMainWindow):
         )
         self.setWindowIcon(icon)
         self.setStyleSheet(
-            "QWidget{background-color: rgba(0,0,0,0);}\nQPushButton {\n"
+            "QWidget {"
+            "background-color: rgba(0,0,0,0);}\nQPushButton {\n"
             "border-radius: 15px;\n"
-            "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.495098, fy:0.5, stop:0.887255 rgba(35, 35, 35, 255), stop:0.901961 rgba(0, 0, 0, 255));\n"
+            "background-color: qradialgradient("
+            "spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.495098, fy:0.5, "
+            "stop:0.887255 rgba(35, 35, 35, 255), "
+            "stop:0.901961 rgba(0, 0, 0, 255));\n"
             "color: rgb(0, 0, 0);\n"
-            "\n"
-            "}\\n\n"
+            "}\n\n"
             "QPushButton:pressed {\n"
             "border-radius: 15px;\n"
             "\n"
-            "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 152, 255));\n"
+            "background-color: qlineargradient("
+            "spread:pad, x1:0, y1:0, x2:1, y2:1, "
+            "stop:0 rgba(0, 255, 255, 255), "
+            "stop:1 rgba(0, 255, 152, 255));\n"
             "color: rgb(0, 0, 0);\n"
             "   }\n"
             "QMainWindow{background-color: rgba(0,0,0,30);}\n"
             "QPushButton:hover {\n"
             "border-radius: 15px;\n"
-            "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 199, 199, 255), stop:1 rgba(0, 190, 113, 255));\n"
+            "background-color: qlineargradient("
+            "spread:pad, x1:0, y1:0, x2:1, y2:1, "
+            "stop:0 rgba(0, 199, 199, 255), "
+            "stop:1 rgba(0, 190, 113, 255));\n"
             "color: rgb(0, 0, 0);\n"
-            "}")
+            "}"
+        )
         self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
+
+        self.lol = QtWidgets.QPushButton(self.centralwidget)
+        self.lol.setGeometry(QtCore.QRect(24, 24, 25, 25))
+        self.lol.setText("")
+        self.lol.setObjectName("lol")
+        self.lol.setStyleSheet(
+            "background-color: #FFFFFFFF;"
+            "border-radius: 12px; "
+        )
+        
         self.swirt = QtWidgets.QPushButton(self.centralwidget)
         self.swirt.setGeometry(QtCore.QRect(40, 20, 30, 30))
         self.swirt.setText("")
@@ -116,6 +144,7 @@ class SwipeUX(QMainWindow):
         )
         self.swiup.setIcon(icon4)
         self.swiup.setObjectName("swiup")
+
         self.setCentralWidget(self.centralwidget)
         # -----------------
         # ================
@@ -125,12 +154,6 @@ class SwipeUX(QMainWindow):
         self.swidn.pressed.connect(self.swipdn)
         self.swilf.pressed.connect(self.swipleft)
         self.swirt.pressed.connect(self.swipright)
-
-        # =================
-        if ux_wrapper:
-            self.ux = ux_wrapper
-        else:
-            self.ux = UXMapper()
 
     def init(self):
         self.show()

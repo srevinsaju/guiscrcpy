@@ -359,9 +359,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             if self.devices_combox.currentText(
             ) == '' or self.devices_combox.currentText().isspace():
                 logging.info(
-                    "Found more than one device. Please select device in drop down box")
+                    "Found more than one device. "
+                    "Please select device in drop down box")
                 self.private_message_box_adb.setText(
-                    "Found more than one device. Please select device in drop down box")
+                    "Found more than one device. "
+                    "Please select device in drop down box")
                 self.devices_combox.clear()
                 self.devices_combox.addItems(
                     [f"{x[0]} : {x[1]}" for x in devices_list])
@@ -378,6 +380,12 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         return more_devices, device_id
 
     def start_act(self):
+        stylesheet = "background-color: qlineargradient(" \
+                     "spread:pad, x1:0, y1:0, x2:1, y2:1, " \
+                     "stop:0 rgba(0, 255, 255, 255), " \
+                     "stop:1 rgba(0, 255, 152, 255)); " \
+                     "border-radius: 10px;"
+        self.private_message_box_adb.setStyleSheet(stylesheet)
 
         self.private_message_box_adb.setText("CHECKING DEVICE CONNECTION")
         initial_time = time.time()
@@ -470,6 +478,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         swipe_instance.init()
         self.child_windows.append(swipe_instance)
 
+        hexdigest = ux.get_sha()[:6]
+        stylesheet = f"background-color: #{hexdigest}; border-radius: 10px; "
+        self.private_message_box_adb.setStyleSheet(stylesheet)
+
         if self.cmx is not None:
             config['cmx'] = ' '.join(map(str, self.cmx))
 
@@ -485,6 +497,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             # its important to pass the device serial id, if more than one
             # device is found
             arguments_scrcpy = f"-s {device_id} " + arguments_scrcpy
+            # tell end users that the color of the device is this
+            self.private_message_box_adb.setText(f"Device {device_id} is "
+                                                 f"connected; (color id "
+                                                 f"matches toolkit color)")
 
         scrcpy.start(scrcpy.path, arguments_scrcpy)
         final_time = time.time()
@@ -526,20 +542,37 @@ def bootstrap0():
     app.processEvents()
     cfedited = False
 
-    if adb.path is None:
+    if (adb.path is None) or (not os.path.exists(adb.path)):
         adb.path = openFileNameDialog(None, 'adb')
         cfedited = True
         config['adb'] = adb.path
 
-    if scrcpy.path is None:
+    if (scrcpy.path is None) or (not os.path.exists(scrcpy.path)):
         scrcpy.path = openFileNameDialog(None, 'scrcpy')
         cfedited = True
         config['scrcpy'] = scrcpy.path
 
-    if (scrcpy.server_path is None) and (platform.System() == 'Windows'):
+    # on windows, users are likely not to add the scrcpy-server to the
+    # SCRCPY_SERVER_PATH
+    scrcpy_server_path_env = os.getenv('SCRCPY_SERVER_PATH', None)
+    if scrcpy_server_path_env:
+        if os.path.exists(scrcpy_server_path_env):
+            config['scrcpy-server'] = scrcpy.server_path
+        else:
+            scrcpy.server_path = openFileNameDialog(None, 'scrcpy-server')
+            cfedited = True
+            config['scrcpy-server'] = scrcpy.server_path
+            os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
+    elif ((scrcpy.server_path is None) or
+        (not os.path.exists(scrcpy.server_path))) and (
+            platform.System().system() == 'Windows'
+    ):
         scrcpy.server_path = openFileNameDialog(None, 'scrcpy-server')
         cfedited = True
         config['scrcpy-server'] = scrcpy.server_path
+        os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
+    elif platform.System().system() == "Windows":
+        os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
 
     if cfedited:
         cfgmgr.update_config(config)

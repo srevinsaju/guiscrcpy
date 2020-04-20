@@ -62,7 +62,12 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
         self.vdown.clicked.connect(self.ux.key_volume_down)
         self.potraitUI.clicked.connect(self.ux.reorientP)
         self.landscapeUI.clicked.connect(self.ux.reorientL)
+        self.colorize()  # give a unique color for each device
         self.show()
+
+    def colorize(self):
+        hexdigest = self.ux.get_sha()[:6]
+        self.tk_device_id.setStyleSheet(f"background-color: #{hexdigest};")
 
     def mousePressEvent(self, event):
         self.oldPos = event.globalPos()

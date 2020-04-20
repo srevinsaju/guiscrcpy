@@ -53,7 +53,12 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
         self.powerUII.clicked.connect(self.ux.key_power)
         self.vupp.clicked.connect(self.ux.key_volume_up)
         self.vdownn.clicked.connect(self.ux.key_volume_down)
+        self.colorize()
         self.show()
+
+    def colorize(self):
+        hexdigest = self.ux.get_sha()[:6]
+        self.bp_device_id.setStyleSheet(f"background-color: #{hexdigest};")
 
     def mousePressEvent(self, event):
         self.oldPos = event.globalPos()

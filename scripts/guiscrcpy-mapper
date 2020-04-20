@@ -10,27 +10,28 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-r', '--reset', action="store_true",
                     help="Remove prefernces")
 args = parser.parse_args()
-if (platform.system() == 'Windows'):
-    cfgpath = os.path.expanduser("~/AppData/Local/guiscrcpy/")
+if platform.system() == 'Windows':
+    config_path = os.path.expanduser("~/AppData/Local/guiscrcpy/")
 else:
-    if (os.getenv('XDG_CONFIG_HOME') is None):
-        cfgpath = os.path.expanduser("~/.config/guiscrcpy/")
+    if os.getenv('XDG_CONFIG_HOME') is None:
+        config_path = os.path.expanduser("~/.config/guiscrcpy/")
     else:
-        cfgpath = os.getenv('XDG_CONFIG_HOME').split(":")[0] + "/guiscrcpy/"
+        config_path = os.getenv('XDG_CONFIG_HOME').split(":")[0] + \
+                      "/guiscrcpy/"
 
-if (args.reset):
-    os.remove(cfgpath+"guiscrcpy.mapper.json")
+if args.reset:
+    os.remove(config_path + "guiscrcpy.mapper.json")
     print("FILE RESET")
 
     sys.exit()
 
 
-patz = list(guiscrcpy.__path__)[0]
+paths = list(guiscrcpy.__path__)[0]
 
 
-sys.path.append(patz)
+sys.path.append(paths)
 sys.path.append('')
 # print("PATH: ", sys.path)
 
 mapper.file_check()
-os.chdir(patz)
+os.chdir(paths)

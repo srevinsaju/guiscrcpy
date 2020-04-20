@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 try:
     import psutil
-
     psutil_present = True
 except ModuleNotFoundError:
     psutil_present = False
@@ -34,6 +33,9 @@ def is_running(processName):
                 if processName.lower() in proc.name().lower():
                     return True
             except (
-                    psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                    psutil.NoSuchProcess,
+                    psutil.AccessDenied,
+                    psutil.ZombieProcess
+            ):
                 pass
     return False

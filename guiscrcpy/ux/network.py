@@ -21,7 +21,7 @@ import time
 
 from PyQt5.QtWidgets import QMainWindow
 
-from guiscrcpy.lib.check import Adb
+from guiscrcpy.lib.check import adb
 from guiscrcpy.network.network import NetworkManager
 from guiscrcpy.platform.platform import System
 from guiscrcpy.ui.network import Ui_NetworkUI
@@ -30,7 +30,8 @@ from guiscrcpy.ui.network import Ui_NetworkUI
 class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
     """
     Network manager UI UX Kit for guiscrcpy
-    Scans the open IP Addresses connected on the system, on Linux and Mac only, as far as tested
+    Scans the open IP Addresses connected on the system,
+    on Linux and Mac only, as far as tested
     Does not work satisfactorily on Windows.
     """
 
@@ -39,7 +40,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
         Ui_NetworkUI.__init__(self)
         self.os = System()
         self.setupUi(self)
-        Adb.path = adb_path
+        adb.path = adb_path
         self.nm = NetworkManager()
 
     def init(self):
@@ -58,8 +59,9 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
             self.nm_det.setText("Click Refresh to load IP addresses")
         self.tcpip.pressed.connect(self.tcpip_launch)
 
-    def tcpip_launch(self):
-        Adb.command(Adb.path, 'tcpip')
+    @staticmethod
+    def tcpip_launch():
+        adb.command(adb.path, 'tcpip')
 
     def connect(self):
         try:
@@ -80,10 +82,11 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
                         "Please enter an IP address in the text box")
                 else:
                     self.nm_det.setText(
-                        "Please enter an IP address in the text box. / Click refresh")
+                        "Please enter an IP address in the text box. / "
+                        "Click refresh")
                 return
 
-        sp = Adb.command(Adb.path, 'connect {}:5555'.format(ip))
+        sp = adb.command(adb.path, 'connect {}:5555'.format(ip))
         count = 0
         while True:
             count += 1

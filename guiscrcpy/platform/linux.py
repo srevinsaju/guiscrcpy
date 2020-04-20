@@ -54,7 +54,7 @@ class Linux:
                 os.makedirs(path)
             except Exception as e:
                 logging.error(
-                    "Error creating configuration file in dir {path}. Error code:{e}"
+                    "Error creating configuration filename in dir {path}. Error code:{e}"
                     .format(
                         path=path,
                         e=e
@@ -63,7 +63,7 @@ class Linux:
 
     def create_desktop(self):
         """
-        Create Desktop file for Linux in ~/.local level
+        Create Desktop filename for Linux in ~/.local level
         :return:
         """
 

@@ -26,7 +26,7 @@ from guiscrcpy.platform.platform import System
 environment = System()
 
 
-class Scrcpy:
+class scrcpy:
     def __init__(self):
         pass
 
@@ -55,7 +55,7 @@ class Scrcpy:
                     environment.paths()))
 
 
-class Adb:
+class adb:
     def __init__(self):
         pass
 
@@ -92,7 +92,7 @@ class Adb:
                 stdout=PIPE, stderr=PIPE)
         else:
             shell_adb = Popen(_("{} shell wm size".format(path)),
-                           stdout=PIPE, stderr=PIPE)
+                              stdout=PIPE, stderr=PIPE)
         raw_dimensions = shell_adb.stdout.read().decode().strip('\n')
         for i in ['Override size', 'Physical size']:
             if i in raw_dimensions:
@@ -110,12 +110,11 @@ class Adb:
     @staticmethod
     def shell(path, command, device_id=None):
         if device_id:
-            Popen(_("{} -s {} shell {}".format(path,
-                                                        device_id, command)),
-                           stdout=PIPE, stderr=PIPE)
+            Popen(_("{} -s {} shell {}".format(path, device_id, command)),
+                  stdout=PIPE, stderr=PIPE)
         else:
             Popen(_("{} shell {}".format(path, command)),
-                           stdout=PIPE, stderr=PIPE)
+                  stdout=PIPE, stderr=PIPE)
         return True
 
     @staticmethod
@@ -126,7 +125,7 @@ class Adb:
                 stderr=PIPE)
         else:
             adb_shell_output = Popen(_("{} {}".format(path, command)),
-                                        stdout=PIPE, stderr=PIPE)
+                                     stdout=PIPE, stderr=PIPE)
         return adb_shell_output
 
     @staticmethod
@@ -134,7 +133,7 @@ class Adb:
         if increment is None:
             raise FileNotFoundError(
                 "guiscrcpy couldn't find adb. "
-                "Please specify path to adb in configuration file"
+                "Please specify path to adb in configuration filename"
             )
         proc = Popen(_(increment + " devices"), stdout=PIPE)
         output = [[y.strip() for y in x.split('\t')]

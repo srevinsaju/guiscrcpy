@@ -25,7 +25,7 @@ from subprocess import Popen, PIPE
 import pystray
 from PIL import Image, ImageDraw
 
-from guiscrcpy.lib.check import Adb
+from guiscrcpy.lib.check import adb
 
 logging.warning("Launching notification auditor")
 
@@ -39,7 +39,7 @@ class NotifyAuditor:
 
     def callback(self, icon):
         notif = Popen(
-			Adb.path +
+            adb.path +
             "adb shell dumpsys notification | grep ticker | cut -d= -f2",
             stdout=PIPE,
             shell=True,
@@ -54,7 +54,7 @@ class NotifyAuditor:
                     "Notif Auditor is experimental on Windows. If you wish to help out on this issue. Open a PR on github"
                 )
                 notif = Popen(
-					Adb.path +
+                    adb.path +
                     "adb shell dumpsys notification | findstr ticker ",
                     stdout=PIPE,
                     shell=True,
@@ -62,7 +62,7 @@ class NotifyAuditor:
             else:
                 "Notif Auditor is experimental on Linux. If you wish to help out on this issue. Open a PR on github"
                 notif = Popen(
-					Adb.path +
+                    adb.path +
                     "adb shell dumpsys notification | grep ticker | cut -d= -f2",
                     stdout=PIPE,
                     shell=True,

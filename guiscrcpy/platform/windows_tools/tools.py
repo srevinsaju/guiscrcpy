@@ -27,7 +27,7 @@ def get_conda_active_env():
     return conda_env
 
 
-# batch file to activate the environment
+# batch filename to activate the environment
 # for Anaconda Python before running command.
 conda_env = get_conda_active_env()
 ENVRUNNER = """

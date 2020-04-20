@@ -46,7 +46,7 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
             self.ux = UXMapper()
 
     def init(self):
-        self.bp_close.clicked.connect(self.quitn)
+        self.bp_close.clicked.connect(self.quit_window)
         self.backk.clicked.connect(self.ux.key_back)
         self.menuUII.clicked.connect(self.ux.key_menu)
         self.homee.clicked.connect(self.ux.key_home)
@@ -72,7 +72,7 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
         except (TypeError, AttributeError):
             pass
 
-    def quitn(self):
+    def quit_window(self):
         for instance in self.parent.child_windows:
             # We are checking for any more windows running before killing
             # the main window. self.child_windows has the list of all
@@ -86,4 +86,4 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
                 self.hide()
                 break
         else:
-            sys.exit()
+            sys.exit(0)

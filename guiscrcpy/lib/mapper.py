@@ -33,7 +33,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from pynput import keyboard
 
-from guiscrcpy.lib.check import Adb
+from guiscrcpy.lib.check import adb
 from guiscrcpy.lib.config import InterfaceConfig
 
 get1 = False
@@ -42,7 +42,7 @@ finalpos = [0, 0]
 
 cfgmgr = InterfaceConfig()
 config = cfgmgr.get_config()
-Adb.path = config['adb']
+adb.path = config['adb']
 
 jsong = 'guiscrcpy.mapper.json'
 
@@ -53,7 +53,7 @@ print("Make sure that your device is turned on, and connected to your PC")
 print('With USB debugging turned on.')
 print("+++++++++++++++++++++++++++++++++++++++")
 print("Waiting for device")
-Adb.command(Adb.path, 'wait-for-any-device')
+adb.command(adb.path, 'wait-for-any-device')
 print("Device : OK!")
 
 cfgpath = cfgmgr.cfgpath
@@ -65,7 +65,7 @@ parser.add_argument('-r', '--reset', action="store_true",
                     help="Remove prefernces")
 args = parser.parse_args()
 
-dimensions = Adb.get_dimensions(Adb.path)
+dimensions = adb.get_dimensions(adb.path)
 
 
 class MapperUI(QtWidgets.QWidget):
@@ -266,14 +266,14 @@ def file_check():
         with open(cfgpath + 'guiscrcpy.mapper.json', 'r') as f:
             key_a = json.load(f)
         fileExist = True
-        print("LOG: Key:Pos JSON Configuration file found in ",
+        print("LOG: Key:Pos JSON Configuration filename found in ",
               cfgpath, " directory")
     except FileNotFoundError:
         print("LOG: Initializing guiscrcpy.mapper() for first time use...")
         key_a = {"key": []}
         with open(cfgpath + jsong, 'w') as f:
             json.dump(key_a, f)
-        print("LOG: Key:Pos JSON Configuration file created in ",
+        print("LOG: Key:Pos JSON Configuration filename created in ",
               cfgpath, " directory")
         fileExist = False
         if platform.system() == "Windows":
@@ -293,7 +293,7 @@ def file_check():
 
     if not fileExist:
 
-        # Init json file for first time use
+        # Init json filename for first time use
         key_a = {"key": [], "pos": []}
         with open(cfgpath + jsong, 'w') as f:
             json.dump(key_a, f)
@@ -311,13 +311,13 @@ def file_checkm():
         with open(cfgpath + jsong, 'r') as f:
             key_a = json.load(f)
         fileExist = True
-        print("LOG: Key:Pos JSON Configuration file found in ",
+        print("LOG: Key:Pos JSON Configuration filename found in ",
               cfgpath, " directory")
     except FileNotFoundError:
         print("LOG: Initializing guiscrcpy.mapper() for first time use...")
         with open(cfgpath + jsong, 'w') as f:
             json.dump(key_a, f)
-        print("LOG: Key:Pos JSON Configuration file created in ",
+        print("LOG: Key:Pos JSON Configuration filename created in ",
               cfgpath, " directory")
         fileExist = False
         if (args.reset):
@@ -343,7 +343,7 @@ def file_checkm():
             )
 
     if not fileExist:
-        # Init json file for first time use
+        # Init json filename for first time use
         key_a = {"key": [], "pos": []}
         with open(os.path.join(cfgpath, jsong), 'w') as f:
             json.dump(key_a, f)

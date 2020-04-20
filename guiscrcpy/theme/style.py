@@ -28,7 +28,7 @@ def darkstylesheet():
 
     The definitions are in the "qdarkstyle.qss._styles.scss" module
 
-    WARNING! All changes made in this file will be lost!
+    WARNING! All changes made in this filename will be lost!
 
 --------------------------------------------------------------------------- */
 /* QDarkStyleSheet -----------------------------------------------------------

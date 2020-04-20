@@ -50,7 +50,7 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
         self.clipD2PC.clicked.connect(self.ux.copy_devpc)
         self.clipPC2D.clicked.connect(self.ux.copy_pc2dev)
         self.back.clicked.connect(self.ux.key_back)
-        self.screenfreeze.clicked.connect(self.quitn)
+        self.screenfreeze.clicked.connect(self.quit_window)
         self.appswi.clicked.connect(self.ux.key_switch)
         self.menuUI.clicked.connect(self.ux.key_menu)
         self.home.clicked.connect(self.ux.key_home)
@@ -80,7 +80,7 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
         except (TypeError, AttributeError):
             pass
 
-    def quitn(self):
+    def quit_window(self):
         for instance in self.parent.child_windows:
             # We are checking for any more windows running before killing
             # the main window. self.child_windows has the list of all

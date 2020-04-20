@@ -1,16 +1,16 @@
 {
-  "name": "guiscrcpy",
-  "version": "3.5",
-  "manifest_version": 2,
-  "description": "Open Source Android Screen Mirroring System",
-  
-  "icons": {
-    "16": "/docs/img/guiscrcpy_logo.png",
-    "48": "/docs/img/guiscrcpy_logo.png",
-    "128": "/docs/img/guiscrcpy_logo.png"
-  },
-  "browser_action": {
-    "default_title": "guiscrcpy",
-    "default_icon": "/docs/img/guiscrcpy_logo.png"
-  },
+    "name": "guiscrcpy",
+    "version": "3.5",
+    "manifest_version": 2,
+    "description": "Open Source Android Screen Mirroring System",
+
+    "icons": {
+        "16": "/docs/img/guiscrcpy_logo.png",
+        "48": "/docs/img/guiscrcpy_logo.png",
+        "128": "/docs/img/guiscrcpy_logo.png"
+    },
+    "browser_action": {
+        "default_title": "guiscrcpy",
+        "default_icon": "/docs/img/guiscrcpy_logo.png"
+    },
 }

@@ -152,5 +152,5 @@ with open("guiscrcpy/version.py", 'w') as w:
         version=v,
     ))
 
-print("Setup file generated.")
+print("Setup filename generated.")
 print("GUISCRCPY >> VERSION : {}".format(v))

@@ -48,10 +48,10 @@ class InterfaceSettings(QMainWindow, Ui_MainWindow):
 
     def init(self):
         self.updatebutton.clicked.connect(self.complete)
-        self.a6d1.clicked.connect(self.filechooser)
+        self.a6d1.clicked.connect(self.file_chooser)
         self.show()
 
-    def filechooser(self):
+    def file_chooser(self):
         dialog = QFileDialog()
         dialog.setFilter(dialog.filter() | QtCore.QDir.Hidden)
         dialog.setDefaultSuffix('mp4')

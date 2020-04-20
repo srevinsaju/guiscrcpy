@@ -36,10 +36,6 @@ def shellify(args):
 _ = shellify
 
 
-def decode(raw_output):
-    pass
-
-
 def decode_process(process):
     try:
         output = process.stdout.readlines()
@@ -51,10 +47,10 @@ def decode_process(process):
     return output
 
 
-def check_existence(paths, file=(), directory=True, PATH=False):
+def check_existence(paths, filename="", directory=True, PATH=False):
     for i in paths:
         j = os.path.expanduser(i)
-        if os.path.exists(j):  # direcory exists
+        if os.path.exists(j):  # directory exists
             if directory and os.path.isdir(j):
                 return [j]
             else:
@@ -63,21 +59,22 @@ def check_existence(paths, file=(), directory=True, PATH=False):
                 else:
                     append = ''
 
-                if (isinstance(file, list)) or (isinstance(file, tuple)):
-                    for exe in file:
+                if (isinstance(filename, list)) or \
+                        (isinstance(filename, tuple)):
+                    for exe in filename:
                         if os.path.exists(os.path.join(j, exe + append)):
                             return [os.path.join(j, exe + append)]
                 else:
 
-                    if os.path.exists(os.path.join(j, file + append)):
-                        return [os.path.join(j, file + append)]
+                    if os.path.exists(os.path.join(j, filename + append)):
+                        return [os.path.join(j, filename + append)]
         else:
             logging.debug("{} doesn't exist".format(i))
 
     if PATH:
         new_paths = os.getenv('PATH').split(os.pathsep)
         found_path = check_existence(
-            new_paths, file=file, directory=directory, PATH=False)
+            new_paths, filename=filename, directory=directory, PATH=False)
         if found_path:
             return found_path + ['path']
         else:

@@ -181,32 +181,32 @@ class SwipeUX(QMainWindow):
 
     def swipdn(self):
         logging.debug("Passing SWIPE DOWN")
-        dimValues = self.ux.android_dimensions
-        posy = int(dimValues[1]) - 200
-        posx = int(dimValues[0])
-        newposx = posx / 2  # find center
-        self.ux.do_swipe(newposx, 200, newposx, posy)
+        dim_values = self.ux.android_dimensions
+        pos_y = int(dim_values[1]) - 200
+        pos_x = int(dim_values[0])
+        new_pos_x = pos_x / 2  # find center
+        self.ux.do_swipe(new_pos_x, 200, new_pos_x, pos_y)
 
     def swipup(self):
         logging.debug("Passing SWIPE UP")
-        dimValues = self.ux.android_dimensions
-        posy = int(dimValues[1]) - 100
-        posx = int(dimValues[0])
-        newposx = int(posx / 2)  # find center
-        self.ux.do_swipe(newposx, posy, newposx, 200)
+        dim_values = self.ux.android_dimensions
+        pos_y = int(dim_values[1]) - 100
+        pos_x = int(dim_values[0])
+        new_pos_x = int(pos_x / 2)  # find center
+        self.ux.do_swipe(new_pos_x, pos_y, new_pos_x, 200)
 
     def swipleft(self):
         logging.debug("Passing SWIPE LEFT")
-        dimValues = self.ux.android_dimensions
-        posy = int(dimValues[1])
-        posx = int(dimValues[0]) - 10
-        newposy = int(posy / 2)  # find center
-        self.ux.do_swipe(10, newposy, posx, newposy)
+        dim_values = self.ux.android_dimensions
+        pos_y = int(dim_values[1])
+        pos_x = int(dim_values[0]) - 10
+        new_pos_y = int(pos_y / 2)  # find center
+        self.ux.do_swipe(10, new_pos_y, pos_x, new_pos_y)
 
     def swipright(self):
         logging.debug("Passing SWIPE RIGHT")
-        dimValues = self.ux.android_dimensions
-        posy = int(dimValues[1])
-        posx = int(dimValues[0]) - 10
-        newposy = int(posy / 2)  # find center
-        self.ux.do_swipe(posx, newposy, 10, newposy)
+        dim_values = self.ux.android_dimensions
+        pos_y = int(dim_values[1])
+        pos_x = int(dim_values[0]) - 10
+        new_pos_y = int(pos_y / 2)  # find center
+        self.ux.do_swipe(pos_x, new_pos_y, 10, new_pos_y)

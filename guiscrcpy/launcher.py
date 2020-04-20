@@ -47,8 +47,8 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtWidgets import QMessageBox
 
-from guiscrcpy.lib.check import Adb
-from guiscrcpy.lib.check import Scrcpy
+from guiscrcpy.lib.check import adb
+from guiscrcpy.lib.check import scrcpy
 from guiscrcpy.lib.config import InterfaceConfig
 from guiscrcpy.lib.process import is_running
 from guiscrcpy.lib.toolkit import UXMapper
@@ -75,16 +75,16 @@ environment = platform.System()
 # Add precedence for guiscrcpy to check environment variables
 # for the paths of `adb` and `scrcpy` over the configuration files.
 if os.getenv('GUISCRCPY_ADB', None) is None:
-    Adb.path = config['adb']
+    adb.path = config['adb']
 else:
-    Adb.path = os.getenv('GUISCRCPY_ADB')
+    adb.path = os.getenv('GUISCRCPY_ADB')
 
 if os.getenv('GUISCRCPY_SCRCPY', None) is None:
-    Scrcpy.path = config['scrcpy']
+    scrcpy.path = config['scrcpy']
 else:
-    Scrcpy.path = os.getenv('GUISCRCPY_SCRCPY')
+    scrcpy.path = os.getenv('GUISCRCPY_SCRCPY')
 
-Scrcpy.server_path = config['scrcpy-server']
+scrcpy.server_path = config['scrcpy-server']
 
 # Initialize argument parser
 parser = argparse.ArgumentParser('guiscrcpy v{}'.format(VERSION))
@@ -93,7 +93,7 @@ parser.add_argument('-i', '--install', action='store_true',
 parser.add_argument('-s', '--start', action='store_true',
                     help="Start scrcpy first before loading the GUI")
 parser.add_argument('-o', '--output', action='store_true',
-                    help="Show logging output in stdout and in .log file")
+                    help="Show logging output in stdout and in .log filename")
 parser.add_argument('-d', '--debug', default=3,
                     help="Set a logging level from 0,1,2,3,4,5")
 parser.add_argument('-v', '--version', action='store_true',
@@ -147,7 +147,7 @@ if args.start:
         args += " -t "
     if config['dispRO']:
         args += " --turn-screen-off "
-    Scrcpy.start(Scrcpy.path, args)
+    scrcpy.start(scrcpy.path, args)
 
 logging.debug("Importing modules...")
 
@@ -252,7 +252,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
     def network_mgr(self):
         from guiscrcpy.ux.network import InterfaceNetwork
-        self.nm = InterfaceNetwork(Adb.path)
+        self.nm = InterfaceNetwork(adb.path)
         self.nm.init()
         self.nm.show()
 
@@ -340,7 +340,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         pass
 
     def __refresh_devices_combo_box_cb(self):
-        devices_list = Adb.devices(Adb.path)
+        devices_list = adb.devices(adb.path)
 
         if len(devices_list) == 0:
             self.private_message_box_adb.setText("DEVICE IS NOT CONNECTED")
@@ -508,7 +508,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                                                  f"connected; (color id "
                                                  f"matches toolkit color)")
 
-        Scrcpy.start(Scrcpy.path, arguments_scrcpy)
+        scrcpy.start(scrcpy.path, arguments_scrcpy)
         final_time = time.time()
         eta = final_time - initial_time
         print("scrcpy launched in {:.2f}s".format(eta))
@@ -548,43 +548,43 @@ def bootstrap0():
     app.processEvents()
     cfedited = False
 
-    if (Adb.path is None) or (not os.path.exists(Adb.path)):
-        Adb.path = openFileNameDialog(None, 'adb')
+    if (adb.path is None) or (not os.path.exists(adb.path)):
+        adb.path = openFileNameDialog(None, 'adb')
         cfedited = True
-        config['adb'] = Adb.path
+        config['adb'] = adb.path
 
-    if (Scrcpy.path is None) or (not os.path.exists(Scrcpy.path)):
-        Scrcpy.path = openFileNameDialog(None, 'scrcpy')
+    if (scrcpy.path is None) or (not os.path.exists(scrcpy.path)):
+        scrcpy.path = openFileNameDialog(None, 'scrcpy')
         cfedited = True
-        config['scrcpy'] = Scrcpy.path
+        config['scrcpy'] = scrcpy.path
 
     # on windows, users are likely not to add the scrcpy-server to the
     # SCRCPY_SERVER_PATH
     scrcpy_server_path_env = os.getenv('SCRCPY_SERVER_PATH', None)
     if scrcpy_server_path_env:
         if os.path.exists(scrcpy_server_path_env):
-            config['scrcpy-server'] = Scrcpy.server_path
+            config['scrcpy-server'] = scrcpy.server_path
         else:
-            Scrcpy.server_path = openFileNameDialog(None, 'scrcpy-server')
+            scrcpy.server_path = openFileNameDialog(None, 'scrcpy-server')
             cfedited = True
-            config['scrcpy-server'] = Scrcpy.server_path
-            os.environ['SCRCPY_SERVER_PATH'] = Scrcpy.server_path
-    elif ((Scrcpy.server_path is None) or
-          (not os.path.exists(Scrcpy.server_path))) and (
+            config['scrcpy-server'] = scrcpy.server_path
+            os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
+    elif ((scrcpy.server_path is None) or
+          (not os.path.exists(scrcpy.server_path))) and (
             platform.System().system() == 'Windows'
     ):
-        Scrcpy.server_path = openFileNameDialog(None, 'scrcpy-server')
+        scrcpy.server_path = openFileNameDialog(None, 'scrcpy-server')
         cfedited = True
-        config['scrcpy-server'] = Scrcpy.server_path
-        os.environ['SCRCPY_SERVER_PATH'] = Scrcpy.server_path
+        config['scrcpy-server'] = scrcpy.server_path
+        os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
     elif platform.System().system() == "Windows":
-        os.environ['SCRCPY_SERVER_PATH'] = Scrcpy.server_path
+        os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
 
     if cfedited:
         cfgmgr.update_config(config)
         cfgmgr.write_file()
 
-    Adb.devices(Adb.path)
+    adb.devices(adb.path)
     guiscrcpy = InterfaceGuiscrcpy()
     guiscrcpy.show()
     app.processEvents()

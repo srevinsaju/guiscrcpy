@@ -40,7 +40,7 @@ class Darwin:
                 os.makedirs(path)
             except Exception as e:
                 logging.error(
-                    "Error creating configuration file in dir {path}. Error code:{e}"
+                    "Error creating configuration filename in dir {path}. Error code:{e}"
                     .format(
                         path=path,
                         e=e

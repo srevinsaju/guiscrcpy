@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import sys
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QPoint
@@ -27,11 +28,12 @@ from guiscrcpy.ui.panel import Ui_HorizontalPanel
 
 class Panel(QMainWindow, Ui_HorizontalPanel):
     # there was a Dialog in the bracket
-    def __init__(self, ux_mapper=None):
+    def __init__(self, parent=None, ux_mapper=None):
         QMainWindow.__init__(self)
         Ui_HorizontalPanel.__init__(self)
         self.setupUi(self)
-        self.oldpos = self.pos()
+        self.parent = parent
+        self.oldPos = self.pos()
         self.setWindowFlags(
             QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
         )
@@ -41,6 +43,7 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
             self.ux = UXMapper()
 
     def init(self):
+        self.bp_close.clicked.connect(self.quitn)
         self.backk.clicked.connect(self.ux.key_back)
         self.menuUII.clicked.connect(self.ux.key_menu)
         self.homee.clicked.connect(self.ux.key_home)
@@ -60,3 +63,15 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
             self.oldPos = event.globalPos()
         except (TypeError, AttributeError):
             pass
+
+    def quitn(self):
+        try:
+            if self.parent.side_instance.isHidden():
+                print("Quitting")
+                sys.exit(0)
+            else:
+                print("Toolkit hidden")
+                self.hide()
+        except AttributeError:
+            print("Quitting")
+            sys.exit(0)

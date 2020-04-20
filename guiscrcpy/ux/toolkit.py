@@ -28,10 +28,11 @@ from guiscrcpy.ui.toolkit import Ui_ToolbarPanel
 
 
 class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
-    def __init__(self, ux_mapper=None):
+    def __init__(self, ux_mapper=None, parent=None):
         QMainWindow.__init__(self)
         Ui_ToolbarPanel.__init__(self)
         self.setupUi(self)
+        self.parent = parent
         self.oldPos = None
         self.ux = None
         self.setWindowFlags(
@@ -72,5 +73,13 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
             pass
 
     def quitn(self):
-        print("Bye Bye")
-        sys.exit()
+        try:
+            if self.parent.panel_instance.isHidden():
+                print("Quitting")
+                sys.exit(0)
+            else:
+                print("Toolkit hidden")
+                self.hide()
+        except AttributeError:
+            print("Quitting")
+            sys.exit(0)

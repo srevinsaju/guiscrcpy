@@ -457,11 +457,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         self.progressBar.setValue(70)
         if self.check_side_panel.isChecked():
-            self.side_instance = InterfaceToolkit(ux_mapper=ux)
+            self.side_instance = InterfaceToolkit(parent=self, ux_mapper=ux)
             self.side_instance.init()
 
         if self.check_bottom_panel.isChecked():
-            self.panel_instance = Panel(ux_mapper=ux)
+            self.panel_instance = Panel(parent=self, ux_mapper=ux)
             self.panel_instance.init()
 
         self.swipe_instance.init()

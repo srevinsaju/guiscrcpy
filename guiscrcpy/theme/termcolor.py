@@ -22,7 +22,7 @@ from guiscrcpy.platform.platform import System
 environment = System()
 
 
-class termcolors:
+class ColorTerms:
     if environment.system() == "Linux":
         HEADER = "\033[95m"
         OKBLUE = "\033[94m"

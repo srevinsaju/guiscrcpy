@@ -17,32 +17,32 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from guiscrcpy.theme.termcolor import termcolors
+from guiscrcpy.theme.termcolor import ColorTerms
 
 
-class header:
+class Header:
     def __init__(self, commit):
         print(
-            termcolors.UNDERLINE +
+            ColorTerms.UNDERLINE +
             "                                  " +
-            termcolors.ENDC)
+            ColorTerms.ENDC)
         print()
         print("guiscrcpy")
         print("by srevinsaju")
-        print(termcolors.OKBLUE + commit + termcolors.ENDC)
+        print(ColorTerms.OKBLUE + commit + ColorTerms.ENDC)
         print(
-            termcolors.OKBLUE +
+            ColorTerms.OKBLUE +
             "Licensed under GNU GPL v3 (c) 2020  " +
-            termcolors.ENDC)
+            ColorTerms.ENDC)
         print(
-            termcolors.UNDERLINE +
+            ColorTerms.UNDERLINE +
             "                                  " +
-            termcolors.ENDC)
-        print(termcolors.OKBLUE + "" + termcolors.ENDC)
+            ColorTerms.ENDC)
+        print(ColorTerms.OKBLUE + "" + ColorTerms.ENDC)
 
         print()
         print(
             "MSG: Please ensure you have enabled",
-            termcolors.OKGREEN + "USB Debugging" + termcolors.ENDC,
+            ColorTerms.OKGREEN + "USB Debugging" + ColorTerms.ENDC,
             "on your device. See README.md for more details",
         )

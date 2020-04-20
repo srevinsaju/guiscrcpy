@@ -53,8 +53,8 @@ from guiscrcpy.lib.config import InterfaceConfig
 from guiscrcpy.lib.process import is_running
 from guiscrcpy.lib.toolkit import UXMapper
 from guiscrcpy.platform import platform
-from guiscrcpy.theme.decorate import header
-from guiscrcpy.theme.style import darkstylesheet
+from guiscrcpy.theme.decorate import Header
+from guiscrcpy.theme.style import dark_stylesheet
 from guiscrcpy.ui.main import Ui_MainWindow
 from guiscrcpy.ux.panel import Panel
 from guiscrcpy.ux.swipe import SwipeUX
@@ -130,7 +130,7 @@ except Exception as e:
 
 logging.debug("Received flag {}".format(args.start))
 
-header(VERSION)
+Header(VERSION)
 
 if args.version:
     sys.exit(0)
@@ -539,7 +539,7 @@ def bootstrap0():
     app = QtWidgets.QApplication(sys.argv)
 
     app.setStyle('Breeze')
-    app.setStyleSheet(darkstylesheet())
+    app.setStyleSheet(dark_stylesheet())
 
     splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
     splash = QtWidgets.QSplashScreen(splash_pix)

@@ -18,11 +18,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 
-def darkstylesheet():
+def dark_stylesheet():
     # DarkStyleSheet
 
     style = """
-    /* ---------------------------------------------------------------------------
+    /* ------------------------------------------------------------------------
 
     Created by the qtsass compiler v0.1.1
 

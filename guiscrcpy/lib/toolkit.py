@@ -20,7 +20,7 @@ import hashlib
 import logging
 import os
 
-from guiscrcpy.lib.check import adb
+from guiscrcpy.lib.check import Adb
 
 try:
     import pyautogui as auto
@@ -36,8 +36,8 @@ class UXMapper:
         logging.debug("Launching UX Mapper")
         self.has_modules = getWindowsWithTitle and auto
         logging.debug("Calculating Screen Size")
-        self.android_dimensions = adb.get_dimensions(
-            adb.path, device_id=device_id)
+        self.android_dimensions = Adb.get_dimensions(
+            Adb.path, device_id=device_id)
         self.deviceId = device_id
 
         # each device connected is uniquely identified by the tools by
@@ -49,13 +49,13 @@ class UXMapper:
         return self.sha
 
     def do_swipe(self, x1=10, y1=10, x2=10, y2=10):
-        adb.shell_input(adb.path, "swipe {} {} {} {}".format(
+        Adb.shell_input(Adb.path, "swipe {} {} {} {}".format(
             x1, y1, x2, y2), device_id=self.deviceId)
         return True
 
     def do_keyevent(self, key):
-        adb.shell_input(adb.path, "keyevent {}".format(key),
-                        device_id=self.deviceId)
+        Adb.shell_input(Adb.path, "keyevent {}".format(key),
+						device_id=self.deviceId)
         return True
 
     def copy_devpc(self):
@@ -97,17 +97,17 @@ class UXMapper:
 
     def reorientP(self):
         logging.debug("Passing REORIENT [POTRAIT]")
-        adb.shell(adb.path, 'settings put system accelerometer_rotation 0',
-                  device_id=self.deviceId)
-        adb.shell(adb.path, "settings put system rotation 1",
-                  device_id=self.deviceId)
+        Adb.shell(Adb.path, 'settings put system accelerometer_rotation 0',
+				  device_id=self.deviceId)
+        Adb.shell(Adb.path, "settings put system rotation 1",
+				  device_id=self.deviceId)
 
     def reorientL(self):
         logging.debug("Passing REORIENT [LANDSCAPE]")
-        adb.shell(adb.path, 'settings put system accelerometer_rotation 0',
-                  device_id=self.deviceId)
-        adb.shell(adb.path, "settings put system rotation 1",
-                  device_id=self.deviceId)
+        Adb.shell(Adb.path, 'settings put system accelerometer_rotation 0',
+				  device_id=self.deviceId)
+        Adb.shell(Adb.path, "settings put system rotation 1",
+				  device_id=self.deviceId)
 
     def expand_notifications(self):
         logging.debug("Passing NOTIF EXPAND")

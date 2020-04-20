@@ -20,8 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import json
 import os
 
-from guiscrcpy.lib.check import adb
-from guiscrcpy.lib.check import scrcpy
+from guiscrcpy.lib.check import Adb
+from guiscrcpy.lib.check import Scrcpy
 from guiscrcpy.platform import platform
 
 
@@ -51,11 +51,11 @@ class InterfaceConfig:
         # check scrcpy and adb are not None, else replace it with original
         # values
         if self.config['adb'] is None:
-            adb_path = adb.check()
+            adb_path = Adb.check()
             if adb_path:
                 self.config['adb'] = adb_path
         if self.config['scrcpy'] is None:
-            scrcpy_path = scrcpy.check()
+            scrcpy_path = Scrcpy.check()
             if scrcpy_path:
                 self.config['scrcpy'] = scrcpy_path
         if (self.config['scrcpy-server'] is not None) and (

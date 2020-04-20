@@ -26,11 +26,7 @@ from guiscrcpy.platform.platform import System
 environment = System()
 
 
-def check(binary):
-    pass
-
-
-class scrcpy:
+class Scrcpy:
     def __init__(self):
         pass
 
@@ -59,7 +55,7 @@ class scrcpy:
                     environment.paths()))
 
 
-class adb:
+class Adb:
     def __init__(self):
         pass
 
@@ -76,13 +72,13 @@ class adb:
     @staticmethod
     def shell_input(path, command, device_id=None):
         if device_id:
-            shellx = Popen(
+            Popen(
                 _("{} -s {} shell input {}".format(path, device_id, command)),
                 stdout=PIPE,
                 stderr=PIPE,
             )
         else:
-            shellx = Popen(
+            Popen(
                 _("{} shell input {}".format(path, command)),
                 stdout=PIPE,
                 stderr=PIPE,
@@ -91,52 +87,55 @@ class adb:
     @staticmethod
     def get_dimensions(path, device_id=None):
         if device_id:
-            shellx = Popen(
+            shell_adb = Popen(
                 _("{} -s {} shell wm size".format(path, device_id)),
                 stdout=PIPE, stderr=PIPE)
         else:
-            shellx = Popen(_("{} shell wm size".format(path)),
+            shell_adb = Popen(_("{} shell wm size".format(path)),
                            stdout=PIPE, stderr=PIPE)
-        raw_dimensions = shellx.stdout.read().decode().strip('\n')
+        raw_dimensions = shell_adb.stdout.read().decode().strip('\n')
         for i in ['Override size', 'Physical size']:
             if i in raw_dimensions:
                 out = raw_dimensions[raw_dimensions.find(i):]
                 out_decoded = out.split(':')[1].strip()
-                dimValues = out_decoded.split('x')
-                return dimValues
+                dimension_values = out_decoded.split('x')
+                return dimension_values
         else:
             logging.error(
-                "AndroidDeviceError: adb shell wm size did not return 'Physical Size' or 'Override Size'"
+                "AndroidDeviceError: adb shell wm size did not return "
+                "'Physical Size' or 'Override Size'"
             )
             return False
 
     @staticmethod
     def shell(path, command, device_id=None):
         if device_id:
-            shellx = Popen(_("{} -s {} shell {}".format(path,
+            Popen(_("{} -s {} shell {}".format(path,
                                                         device_id, command)),
                            stdout=PIPE, stderr=PIPE)
         else:
-            shellx = Popen(_("{} shell {}".format(path, command)),
+            Popen(_("{} shell {}".format(path, command)),
                            stdout=PIPE, stderr=PIPE)
         return True
 
     @staticmethod
     def command(path, command, device_id=None):
         if device_id:
-            shellx = Popen(
+            adb_shell_output = Popen(
                 _("{} -s {} {}".format(path, device_id, command)), stdout=PIPE,
                 stderr=PIPE)
         else:
-            shellx = Popen(_("{} {}".format(path, command)),
-                           stdout=PIPE, stderr=PIPE)
-        return shellx
+            adb_shell_output = Popen(_("{} {}".format(path, command)),
+                                        stdout=PIPE, stderr=PIPE)
+        return adb_shell_output
 
     @staticmethod
     def devices(increment=''):
         if increment is None:
             raise FileNotFoundError(
-                "guiscrcpy couldn't find adb. Please specify path to adb in configuration file")
+                "guiscrcpy couldn't find adb. "
+                "Please specify path to adb in configuration file"
+            )
         proc = Popen(_(increment + " devices"), stdout=PIPE)
         output = [[y.strip() for y in x.split('\t')]
                   for x in decode_process(proc)[1:]][:-1]

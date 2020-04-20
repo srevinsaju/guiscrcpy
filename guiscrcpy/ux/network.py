@@ -21,7 +21,7 @@ import time
 
 from PyQt5.QtWidgets import QMainWindow
 
-from guiscrcpy.lib.check import adb
+from guiscrcpy.lib.check import Adb
 from guiscrcpy.network.network import NetworkManager
 from guiscrcpy.platform.platform import System
 from guiscrcpy.ui.network import Ui_NetworkUI
@@ -39,7 +39,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
         Ui_NetworkUI.__init__(self)
         self.os = System()
         self.setupUi(self)
-        adb.path = adb_path
+        Adb.path = adb_path
         self.nm = NetworkManager()
 
     def init(self):
@@ -59,7 +59,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
         self.tcpip.pressed.connect(self.tcpip_launch)
 
     def tcpip_launch(self):
-        adb.command(adb.path, 'tcpip')
+        Adb.command(Adb.path, 'tcpip')
 
     def connect(self):
         try:
@@ -83,7 +83,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
                         "Please enter an IP address in the text box. / Click refresh")
                 return
 
-        sp = adb.command(adb.path, 'connect {}:5555'.format(ip))
+        sp = Adb.command(Adb.path, 'connect {}:5555'.format(ip))
         count = 0
         while True:
             count += 1

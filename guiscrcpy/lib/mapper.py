@@ -33,7 +33,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from pynput import keyboard
 
-from guiscrcpy.lib.check import adb
+from guiscrcpy.lib.check import Adb
 from guiscrcpy.lib.config import InterfaceConfig
 
 get1 = False
@@ -42,7 +42,7 @@ finalpos = [0, 0]
 
 cfgmgr = InterfaceConfig()
 config = cfgmgr.get_config()
-adb.path = config['adb']
+Adb.path = config['adb']
 
 jsong = 'guiscrcpy.mapper.json'
 
@@ -53,7 +53,7 @@ print("Make sure that your device is turned on, and connected to your PC")
 print('With USB debugging turned on.')
 print("+++++++++++++++++++++++++++++++++++++++")
 print("Waiting for device")
-adb.command(adb.path, 'wait-for-any-device')
+Adb.command(Adb.path, 'wait-for-any-device')
 print("Device : OK!")
 
 cfgpath = cfgmgr.cfgpath
@@ -65,7 +65,7 @@ parser.add_argument('-r', '--reset', action="store_true",
                     help="Remove prefernces")
 args = parser.parse_args()
 
-dimensions = adb.get_dimensions(adb.path)
+dimensions = Adb.get_dimensions(Adb.path)
 
 
 class MapperUI(QtWidgets.QWidget):

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>384</width>
-    <height>27</height>
+    <width>397</width>
+    <height>24</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -245,6 +245,22 @@ color: rgb(0, 0, 0);
      <normaloff>:/icons/icons/cross-mark-on-a-black-circle-background.svg</normaloff>:/icons/icons/cross-mark-on-a-black-circle-background.svg</iconset>
    </property>
   </widget>
+  <widget class="QPushButton" name="bp_device_id">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>0</y>
+     <width>20</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
   <zorder>homee</zorder>
   <zorder>backk</zorder>
   <zorder>powerUII</zorder>
@@ -253,6 +269,7 @@ color: rgb(0, 0, 0);
   <zorder>vupp</zorder>
   <zorder>label</zorder>
   <zorder>bp_close</zorder>
+  <zorder>bp_device_id</zorder>
  </widget>
  <resources>
   <include location="rsrc.qrc"/>

@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import logging
+import uuid
 
 from PyQt5 import QtGui, QtWidgets, QtCore
 from PyQt5.QtCore import Qt, QPoint
@@ -31,6 +32,8 @@ class SwipeUX(QMainWindow):
         QMainWindow.__init__(self)
         super(SwipeUX, self).__init__()
         self.oldPos = None
+        self.name = "swipe"
+        self.uid = uuid.uuid4()
         self.ux = None
         self.setObjectName("SwipeUX")
         self.setWindowFlags(Qt.FramelessWindowHint)

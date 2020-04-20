@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_HorizontalPanel(object):
     def setupUi(self, HorizontalPanel):
         HorizontalPanel.setObjectName("HorizontalPanel")
-        HorizontalPanel.resize(384, 27)
+        HorizontalPanel.resize(397, 24)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/res/ui/guiscrcpy_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         HorizontalPanel.setWindowIcon(icon)
@@ -112,6 +112,11 @@ class Ui_HorizontalPanel(object):
         icon7.addPixmap(QtGui.QPixmap(":/icons/icons/cross-mark-on-a-black-circle-background.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.bp_close.setIcon(icon7)
         self.bp_close.setObjectName("bp_close")
+        self.bp_device_id = QtWidgets.QPushButton(HorizontalPanel)
+        self.bp_device_id.setGeometry(QtCore.QRect(380, 0, 20, 31))
+        self.bp_device_id.setStyleSheet("")
+        self.bp_device_id.setText("")
+        self.bp_device_id.setObjectName("bp_device_id")
         self.homee.raise_()
         self.backk.raise_()
         self.powerUII.raise_()
@@ -120,6 +125,7 @@ class Ui_HorizontalPanel(object):
         self.vupp.raise_()
         self.label.raise_()
         self.bp_close.raise_()
+        self.bp_device_id.raise_()
 
         self.retranslateUi(HorizontalPanel)
         QtCore.QMetaObject.connectSlotsByName(HorizontalPanel)

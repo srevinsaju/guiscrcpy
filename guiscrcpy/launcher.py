@@ -168,6 +168,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.swipe_instance = None
         self.panel_instance = None
         self.side_instance = None
+        self.child_windows = list()
         self.options = ""
         logging.debug(
             "Options received by class are : {} {} {} {} {} ".format(
@@ -453,18 +454,21 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # show subwindows
         ux = UXMapper(device_id=device_id)
-        self.swipe_instance = SwipeUX(ux_wrapper=ux)  # Load swipe UI
+        swipe_instance = SwipeUX(ux_wrapper=ux)  # Load swipe UI
 
         self.progressBar.setValue(70)
         if self.check_side_panel.isChecked():
-            self.side_instance = InterfaceToolkit(parent=self, ux_mapper=ux)
-            self.side_instance.init()
+            side_instance = InterfaceToolkit(parent=self, ux_mapper=ux)
+            side_instance.init()
+            self.child_windows.append(side_instance)
 
         if self.check_bottom_panel.isChecked():
-            self.panel_instance = Panel(parent=self, ux_mapper=ux)
-            self.panel_instance.init()
+            panel_instance = Panel(parent=self, ux_mapper=ux)
+            panel_instance.init()
+            self.child_windows.append(panel_instance)
 
-        self.swipe_instance.init()
+        swipe_instance.init()
+        self.child_windows.append(swipe_instance)
 
         if self.cmx is not None:
             config['cmx'] = ' '.join(map(str, self.cmx))

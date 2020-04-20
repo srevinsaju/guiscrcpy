@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import sys
+import uuid
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QPoint
@@ -31,6 +32,8 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
     def __init__(self, ux_mapper=None, parent=None):
         QMainWindow.__init__(self)
         Ui_ToolbarPanel.__init__(self)
+        self.name = "toolkit"
+        self.uid = uuid.uuid4()
         self.setupUi(self)
         self.parent = parent
         self.oldPos = None
@@ -73,13 +76,17 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
             pass
 
     def quitn(self):
-        try:
-            if self.parent.panel_instance.isHidden():
-                print("Quitting")
-                sys.exit(0)
-            else:
-                print("Toolkit hidden")
+        for instance in self.parent.child_windows:
+            # We are checking for any more windows running before killing
+            # the main window. self.child_windows has the list of all
+            # objects spawned by the main window ui
+            # This method checks if we are the last member of the windows
+            # spawned and we ourselves are not a member of ourself by
+            # checking the uuid generated on creation
+            if not instance.isHidden() \
+                    and instance.name != "swipe" and instance.uid != \
+                    self.uid:
                 self.hide()
-        except AttributeError:
-            print("Quitting")
-            sys.exit(0)
+                break
+        else:
+            sys.exit()

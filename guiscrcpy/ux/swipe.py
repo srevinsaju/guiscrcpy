@@ -96,7 +96,7 @@ class SwipeUX(QMainWindow):
         self.lol.setText("")
         self.lol.setObjectName("lol")
         self.lol.setStyleSheet(
-            f"background-color: #{hexdigest}FF;"
+            f"background-color: #{hexdigest};"
             f"border-radius: 12px; "
         )
         

@@ -61,7 +61,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
 
     @staticmethod
     def tcpip_launch():
-        adb.command(adb.path, '-d tcpip')
+        adb.command(adb.path, '-d tcpip 5555')
 
     def connect(self):
         try:

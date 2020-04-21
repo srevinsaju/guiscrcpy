@@ -59,8 +59,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
             self.nm_det.setText("Click Refresh to load IP addresses")
         self.tcpip.pressed.connect(self.tcpip_launch)
 
-    @staticmethod
-    def tcpip_launch():
+    def tcpip_launch(self):
         adb.command(adb.path, '-d tcpip 5555')
         self.nm_det.setText(
             "Now disconnect your device, and enter the IP address, and connect"

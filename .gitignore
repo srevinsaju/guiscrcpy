@@ -14,4 +14,4 @@ build
 *.whl 
 *.dll
 *.so
-
+*.AppImage

@@ -19,11 +19,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
+import os
 from os import path
 
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
+
 
 RAW_VERSION = "3.7"
 PACKAGE_DIR = {
@@ -38,6 +40,25 @@ CONSOLE_SCRIPTS = {
     'console_scripts': [
         'guiscrcpy = guiscrcpy.launcher:bootstrap',
     ]
+}
+
+DATA_FILES_MANIPULATE = {
+    "setup.py": "",
+    "setup.py-manylinux2014-scrcpy": """
+
+def get_scrcpy_libs():
+    libs = []
+    ls = os.listdir('lib')
+    for i in ls:
+        libs.append('lib/{}'.format(i))
+    return libs
+
+if os.path.exists("bin/scrcpy") and os.path.exists("bin/adb") and os.path.exists("lib"):
+    data_files.extend([
+        ('lib', get_scrcpy_libs() ),
+        ('bin', ['bin/scrcpy', 'bin/adb'])
+    ])
+    """
 }
 
 
@@ -73,6 +94,7 @@ except Exception as e:
     print("WARNING: {}".format(e))
     v = f"{RAW_VERSION}.x.src.dev"
 
+
 # Attach requirements
 
 setupfile = \
@@ -81,6 +103,8 @@ setupfile = \
 {COPYRIGHT}
 """
 
+import os
+import sys
 from setuptools import setup
 import platform 
 
@@ -90,7 +114,11 @@ if platform.system() == 'Windows':
 elif platform.system() == 'Linux':
     requirements.extend(['fonttools', 'psutil'])
 
+data_files = [
+        ('share/applications', ['guiscrcpy.desktop'] )
+    ]
 
+{DATA_FILE_MANIPULATE}
 
 setup(
     name='guiscrcpy',
@@ -102,9 +130,7 @@ setup(
     author='srevinsaju',
     author_email="srevin03@gmail.com",
     packages=['guiscrcpy'],
-    data_files = [
-        ('share/applications', ['guiscrcpy.desktop'] )
-    ],
+    data_files = data_files,
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
     package_data={package_data},
@@ -137,14 +163,16 @@ VERSION = '{version}'
 # this was because GitPython created a lot of problems
 # hardcoding the information before each release, solved the problem
 
-with open("setup.py", 'w') as w:
-    w.write(setupfile.format(
-        COPYRIGHT=COPYRIGHT,
-        version=v,
-        package_data=PACKAGE_DIR,
-        entry_points=CONSOLE_SCRIPTS,
-        long_description=long_description,
-    ))
+for setup in ("setup.py", "setup.py-manylinux2014-scrcpy"):
+    with open(setup, 'w') as w:
+        w.write(setupfile.format(
+            COPYRIGHT=COPYRIGHT,
+            version=v,
+            package_data=PACKAGE_DIR,
+            entry_points=CONSOLE_SCRIPTS,
+            long_description=long_description,
+            DATA_FILE_MANIPULATE=DATA_FILES_MANIPULATE[setup]
+        ))
 
 with open("guiscrcpy/version.py", 'w') as w:
     w.write(VERSION_FILE.format(

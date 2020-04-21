@@ -473,16 +473,31 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.progressBar.setValue(70)
         if self.check_side_panel.isChecked():
             side_instance = InterfaceToolkit(parent=self, ux_mapper=ux)
-            side_instance.init()
-            self.child_windows.append(side_instance)
+            for instance in self.child_windows:
+                if instance.ux.get_sha() == side_instance.ux.get_sha() and \
+                    instance.name == side_instance.name:
+                    break
+            else:
+                side_instance.init()
+                self.child_windows.append(side_instance)
 
         if self.check_bottom_panel.isChecked():
             panel_instance = Panel(parent=self, ux_mapper=ux)
-            panel_instance.init()
-            self.child_windows.append(panel_instance)
+            for instance in self.child_windows:
+                if instance.ux.get_sha() == panel_instance.ux.get_sha() and \
+                    instance.name == panel_instance.name:
+                    break
+            else:
+                panel_instance.init()
+                self.child_windows.append(panel_instance)
 
-        swipe_instance.init()
-        self.child_windows.append(swipe_instance)
+        for instance in self.child_windows:
+            if instance.ux.get_sha() == swipe_instance.ux.get_sha() and \
+                instance.name == swipe_instance.name:
+                break
+        else:
+            swipe_instance.init()
+            self.child_windows.append(swipe_instance)
 
         hexdigest = ux.get_sha()[:6]
         stylesheet = f"background-color: #{hexdigest}; border-radius: 10px; "

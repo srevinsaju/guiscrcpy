@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import os
+import sys
 from os import path
 
 this_directory = path.abspath(path.dirname(__file__))
@@ -32,7 +33,8 @@ PACKAGE_DIR = {
     'guiscrcpy': [
         '*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*',
         'theme/*', 'ux/*', 'network/*', 'settings/*',
-        'install/*', 'platform/windows_tools/*', 'ui/icons/*', 'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*'
+        'install/*', 'platform/windows_tools/*', 'ui/icons/*',
+        'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*'
     ]
 }
 
@@ -73,17 +75,20 @@ def gen_version():
     sha = repo.head.object.hexsha
     ver = repo.git.describe("--tags")
     raw_version = ver.split('-')
-    if len(raw_version) == 1:
-        # Stable Release
-        v = "{}".format(raw_version[0])
-    elif len(raw_version) == 2:
-        # Release Candidate
-        v = "{major}.post{minor}".format(
-            major=raw_version[0], minor=raw_version[1])
+    if 'release' in sys.argv:
+        print(raw_version[0])
     else:
-        # Revision Dev
-        v = "{major}.post{minor}.dev".format(
-            major=raw_version[0], minor=raw_version[1])
+        if len(raw_version) == 1:
+            # Stable Release
+            v = "{}".format(raw_version[0])
+        elif len(raw_version) == 2:
+            # Release Candidate
+            v = "{major}.post{minor}".format(
+                major=raw_version[0], minor=raw_version[1])
+        else:
+            # Revision Dev
+            v = "{major}.post{minor}.dev".format(
+                major=raw_version[0], minor=raw_version[1])
 
     return v
 
@@ -106,7 +111,7 @@ setupfile = \
 import os
 import sys
 from setuptools import setup
-import platform 
+import platform
 
 requirements = ['PyQt5==5.14.2', 'pynput']
 if platform.system() == 'Windows':

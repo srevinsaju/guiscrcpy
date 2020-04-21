@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os
 import sys
 from setuptools import setup
-import platform 
+import platform
 
 requirements = ['PyQt5==5.14.2', 'pynput']
 if platform.system() == 'Windows':
@@ -39,7 +39,7 @@ data_files = [
 
 setup(
     name='guiscrcpy',
-    version='3.4.post72.dev',
+    version='3.4.post78.dev',
     description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description="""<img src=https://github.com/srevinsaju/guiscrcpy/blob/master/guiscrcpy/ui/ui/guiscrcpy_logo.png width=25%>
 

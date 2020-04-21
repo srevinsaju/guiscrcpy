@@ -39,7 +39,7 @@ data_files = [
 
 setup(
     name='guiscrcpy',
-    version='3.4.post78.dev',
+    version='3.7',
     description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description="""<img src=https://github.com/srevinsaju/guiscrcpy/blob/master/guiscrcpy/ui/ui/guiscrcpy_logo.png width=25%>
 

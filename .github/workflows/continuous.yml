@@ -32,7 +32,7 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: guiscrcpy-continuous-none-any-py3.whl
-        path: 'dist/{{ env.VERSION }}'
+        path: dist/${{ env.VERSION }}
 
   AppImage:
     runs-on: ubuntu-latest

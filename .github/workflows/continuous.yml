@@ -1,0 +1,140 @@
+
+name: AppImage
+on: 
+  push:
+    paths:
+      - 'guiscrcpy/**'
+      - '.github/workflows/appimage.yml'
+  pull_request:
+    paths:
+      - 'guiscrcpy/**'
+      - '.github/workflows/appimage.yml'
+
+jobs:
+  Wheel:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ['3.8']
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.version }}
+
+    - name: Build wheel
+      run: |
+        python -m pip install wheel
+        python setup.py wheel
+        
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        path: 'dist/guiscrcpy*.whl'
+
+  AppImage:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ['3.8']
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.version }}
+
+    - name: Test AppImage
+      run: |
+        python -m pip install python-appimage
+        echo $(realpath .) > appimage/requirements.txt
+        python -m python_appimage build app appimage \
+                                            --linux-tag=manylinux1_x86_64
+    
+    - name: Extract AppImage
+      run: |
+        ./guiscrcpy-x86_64.AppImage --appimage-extract
+        mv squashfs-root AppDir
+        wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+        chmod +x ./appimagetool-x86_64.AppImage
+    
+    - name: Download adb
+      run: | 
+        wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip
+        unzip platform-tools-latest-linux.zip -d adb
+        cp adb/platform-tools/adb AppDir/usr/bin/.
+    
+    - name: Download scrcpy
+      run: |
+        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy
+        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy-server
+        mkdir -p AppDir/usr/bin
+        cp scrcpy AppDir/usr/bin/.
+        chmod +x AppDir/usr/bin/scrcpy
+        mkdir -p AppDir/usr/share/scrcpy
+        cp scrcpy-server AppDir/usr/share/scrcpy/.
+    
+    - name: Download scrcpy binary deps
+      run: |
+        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy_processed.tar.gz
+        tar -xf scrcpy_processed.tar.gz
+        cp scrcpy_processed/* AppDir/usr/lib/.
+    - name: Patch Appimage to detect adb / scrcpy
+      run: |
+        sed -i '/APPDIR="${APPDIR:-${here}}"/aexport LD_LIBRARY_PATH="${APPDIR}/usr/lib:${LD_LIBRARY_PATH}" \nexport GUISCRCPY_SCRCPY="${APPDIR}/usr/bin/scrcpy"\nexport GUISCRCPY_ADB="${APPDIR}/usr/bin/adb"\nexport ADB="${APPDIR}/usr/bin/adb"\nexport SCRCPY_SERVER_PATH="${APPDIR}/usr/share/scrcpy/scrcpy-server"' AppDir/AppRun
+    - name: Reimage AppImage
+      run: |
+        rm ./guiscrcpy-x86_64.AppImage
+        ./appimagetool-x86_64.AppImage --comp gzip AppDir -n
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: guiscrcpy-x86_64.AppImage
+        path: guiscrcpy-x86_64.AppImage
+  Windows:
+    name: Windows
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+        
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip3 install PyInstaller
+          pip3 install -r requirements.txt
+          pip3 install . 
+          echo Done
+          
+      - name: Create .exe
+        run: |
+          python -m PyInstaller guiscrcpy-windows.spec
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          # Artifact name
+          name: guiscrcpy-continuous.exe
+          # Directory containing files to upload
+          path: dist/guiscrcpy.exe
+
+  Release:
+    needs: [Windows, AppImage, Wheel]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    strategy:
+      matrix:
+        version: [3.8]
+
+    steps:
+    - uses: actions/download-artifact@v1
+      with:
+        name: files
+
+    - name: Release
+      uses: marvinpinto/action-automatic-releases@latest
+      with:
+        automatic_release_tag: continuous
+        title: guiscrcpy continuous
+        files: |
+          files/*.*
+        repo_token: ${{ secrets.GITHUB_TOKEN }}

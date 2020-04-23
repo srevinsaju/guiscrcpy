@@ -54,6 +54,10 @@ jobs:
         mkdir -p AppDir/usr/share/scrcpy
         cp scrcpy-server AppDir/usr/share/scrcpy/.
     
+    - name: Patch PyQt5 pass travis
+      run: |
+        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/libxkbcommon.so.0
+        cp libxkbcommon.so.0 AppDir/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/lib/.
     - name: Download scrcpy binary deps
       run: |
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy_processed.tar.gz

@@ -142,7 +142,7 @@ jobs:
       uses: marvinpinto/action-automatic-releases@latest
       with:
         automatic_release_tag: continuous
-        title: guiscrcpy continuous
+        title: continuous
         files: |
           guiscrcpy-continuous.exe
           guiscrcpy-continuous-x86_64.AppImage

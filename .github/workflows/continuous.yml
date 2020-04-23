@@ -30,6 +30,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
+        name: guiscrcpy-continuous-none-any-py3.whl
         path: 'dist/guiscrcpy*.whl'
 
   AppImage:

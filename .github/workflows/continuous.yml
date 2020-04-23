@@ -130,7 +130,13 @@ jobs:
     steps:
     - uses: actions/download-artifact@v1
       with:
-        name: files
+        name: guiscrcpy-continuous.exe
+    - uses: actions/download-artifact@v1
+      with:
+        name: guiscrcpy-continuous-none-any-py3.whl
+    - uses: actions/download-artifact@v1
+      with:
+        name: guiscrcpy-continuous-x86_64.AppImage
 
     - name: Release
       uses: marvinpinto/action-automatic-releases@latest
@@ -138,5 +144,8 @@ jobs:
         automatic_release_tag: continuous
         title: guiscrcpy continuous
         files: |
-          files/*.*
+          guiscrcpy-continuous.exe
+          guiscrcpy-continuous-x86_64.AppImage
+          guiscrcpy-continuous-none-any-py3.whl
+          
         repo_token: ${{ secrets.GITHUB_TOKEN }}

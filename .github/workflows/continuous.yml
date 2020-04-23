@@ -4,11 +4,11 @@ on:
   push:
     paths:
       - 'guiscrcpy/**'
-      - '.github/workflows/appimage.yml'
+      - '.github/workflows/continuous.yml'
   pull_request:
     paths:
       - 'guiscrcpy/**'
-      - '.github/workflows/appimage.yml'
+      - '.github/workflows/continuous.yml'
 
 jobs:
   Wheel:

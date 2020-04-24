@@ -130,7 +130,7 @@ jobs:
   Release:
     needs: [Windows, AppImage, Wheel]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/beta-37'
     strategy:
       matrix:
         version: [3.8]

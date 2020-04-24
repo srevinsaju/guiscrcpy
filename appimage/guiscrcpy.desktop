@@ -5,5 +5,5 @@ Type=Application
 Icon=guiscrcpy
 Terminal=false
 Categories=Development;
-Keywords=Python;Screen;Mirroring;Android
+Keywords=Python;Screen;Mirroring;Android;
 StartupWMClass=guiscrcpy

@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import sys
+import uuid
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QPoint
@@ -28,22 +29,28 @@ from guiscrcpy.ui.toolkit import Ui_ToolbarPanel
 
 
 class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
-    def __init__(self):
+    def __init__(self, ux_mapper=None, parent=None):
         QMainWindow.__init__(self)
         Ui_ToolbarPanel.__init__(self)
+        self.name = "toolkit"
+        self.uid = uuid.uuid4()
         self.setupUi(self)
+        self.parent = parent
         self.oldPos = None
         self.ux = None
         self.setWindowFlags(
             QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
         )
+        if ux_mapper:
+            self.ux = ux_mapper
+        else:
+            self.ux = UXMapper()
 
     def init(self):
-        self.ux = UXMapper()
         self.clipD2PC.clicked.connect(self.ux.copy_devpc)
         self.clipPC2D.clicked.connect(self.ux.copy_pc2dev)
         self.back.clicked.connect(self.ux.key_back)
-        self.screenfreeze.clicked.connect(self.quitn)
+        self.screenfreeze.clicked.connect(self.quit_window)
         self.appswi.clicked.connect(self.ux.key_switch)
         self.menuUI.clicked.connect(self.ux.key_menu)
         self.home.clicked.connect(self.ux.key_home)
@@ -55,7 +62,12 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
         self.vdown.clicked.connect(self.ux.key_volume_down)
         self.potraitUI.clicked.connect(self.ux.reorientP)
         self.landscapeUI.clicked.connect(self.ux.reorientL)
+        self.colorize()  # give a unique color for each device
         self.show()
+
+    def colorize(self):
+        hexdigest = self.ux.get_sha()[:6]
+        self.tk_device_id.setStyleSheet(f"background-color: #{hexdigest};")
 
     def mousePressEvent(self, event):
         self.oldPos = event.globalPos()
@@ -68,6 +80,18 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
         except (TypeError, AttributeError):
             pass
 
-    def quitn(self):
-        print("Bye Bye")
-        sys.exit()
+    def quit_window(self):
+        for instance in self.parent.child_windows:
+            # We are checking for any more windows running before killing
+            # the main window. self.child_windows has the list of all
+            # objects spawned by the main window ui
+            # This method checks if we are the last member of the windows
+            # spawned and we ourselves are not a member of ourself by
+            # checking the uuid generated on creation
+            if not instance.isHidden() \
+                    and instance.name != "swipe" and instance.uid != \
+                    self.uid:
+                self.hide()
+                break
+        else:
+            sys.exit()

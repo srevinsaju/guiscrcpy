@@ -4,7 +4,6 @@ __pycache__
 dist
 bin
 release
-
 venv
 build
 .idea
@@ -14,4 +13,4 @@ build
 *.whl 
 *.dll
 *.so
-
+*.AppImage

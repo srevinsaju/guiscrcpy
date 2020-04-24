@@ -17,12 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 
 import os
-import sys
-import subprocess
 import platform
+import subprocess
 
 
 def check_snap():
@@ -42,7 +41,7 @@ def add_path():
     """Add home dir to path for accessing tools from a snap"""
 
     toolspath = os.environ['SNAP_COMMON']
-    #toolspath = os.path.join(home, 'tools')
+    # toolspath = os.path.join(home, 'tools')
     binpath = os.path.join(toolspath, 'bin')
     # if not os.path.exists(toolspath):
     print('you should install external tools in %s' % toolspath)
@@ -53,7 +52,7 @@ def add_path():
 
 def run_test():
     print(__file__)
-    if(platform.platform() == "Windows"):
+    if (platform.platform() == "Windows"):
         print("DETECTED OS :: WINDOWS")
         pythonexec = "python"
     else:

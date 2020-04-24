@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-
 import logging
 import platform
 import time
-import pystray
 from subprocess import Popen, PIPE
+
+import pystray
 from PIL import Image, ImageDraw
 
 from guiscrcpy.lib.check import adb

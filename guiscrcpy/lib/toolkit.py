@@ -16,8 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-
-
+import hashlib
 import logging
 import os
 
@@ -33,18 +32,30 @@ except Exception as e:
 
 
 class UXMapper:
-    def __init__(self):
+    def __init__(self, device_id=None):
         logging.debug("Launching UX Mapper")
         self.has_modules = getWindowsWithTitle and auto
         logging.debug("Calculating Screen Size")
-        self.android_dimensions = adb.get_dimensions(adb.path)
+        self.android_dimensions = adb.get_dimensions(
+            adb.path, device_id=device_id)
+        self.deviceId = device_id
+
+        # each device connected is uniquely identified by the tools by
+        # a salted hash. The toolkits are assigned colors based on the first
+        # 6 colors and the stylesheet is derived from
+        self.sha = hashlib.sha1(str(self.deviceId).encode()).hexdigest()
+
+    def get_sha(self):
+        return self.sha
 
     def do_swipe(self, x1=10, y1=10, x2=10, y2=10):
-        adb.shell_input(adb.path, "swipe {} {} {} {}".format(x1, y1, x2, y2))
+        adb.shell_input(adb.path, "swipe {} {} {} {}".format(
+            x1, y1, x2, y2), device_id=self.deviceId)
         return True
 
     def do_keyevent(self, key):
-        adb.shell_input(adb.path, "keyevent {}".format(key))
+        adb.shell_input(adb.path, "keyevent {}".format(key),
+                        device_id=self.deviceId)
         return True
 
     def copy_devpc(self):
@@ -86,13 +97,17 @@ class UXMapper:
 
     def reorientP(self):
         logging.debug("Passing REORIENT [POTRAIT]")
-        adb.shell(adb.path, 'settings put system accelerometer_rotation 0')
-        adb.shell(adb.path, "settings put system rotation 1")
+        adb.shell(adb.path, 'settings put system accelerometer_rotation 0',
+                  device_id=self.deviceId)
+        adb.shell(adb.path, "settings put system rotation 1",
+                  device_id=self.deviceId)
 
     def reorientL(self):
         logging.debug("Passing REORIENT [LANDSCAPE]")
-        adb.shell(adb.path, 'settings put system accelerometer_rotation 0')
-        adb.shell(adb.path, "settings put system rotation 1")
+        adb.shell(adb.path, 'settings put system accelerometer_rotation 0',
+                  device_id=self.deviceId)
+        adb.shell(adb.path, "settings put system rotation 1",
+                  device_id=self.deviceId)
 
     def expand_notifications(self):
         logging.debug("Passing NOTIF EXPAND")
@@ -107,7 +122,7 @@ class UXMapper:
             scrcpywindow = getWindowsWithTitle("scrcpy")[0]
             scrcpywindow.focus()
             auto.hotkey("ctrl", "shift", "c")
-            logging.warning(" NOT SUPPORTED ON WINDOWS")
+            logging.warning("NOT SUPPORTED ON WINDOWS")
         else:
             os.system(
                 "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+shift+c")

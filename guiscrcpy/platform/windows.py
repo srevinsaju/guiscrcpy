@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import logging
 import os
+
 from guiscrcpy.platform.windows_tools.tools import make_shortcut
 
 
@@ -36,8 +37,8 @@ class Windows:
                 os.makedirs(path)
             except Exception as e:
                 logging.error(
-                    "Error creating configuration file in dir {path}. Error code:{e}"
-                        .format(
+                    "Error creating configuration filename in dir {path}. Error code:{e}"
+                    .format(
                         path=path,
                         e=e
                     ))
@@ -68,19 +69,22 @@ class Windows:
         cmd = r"""copy "{fontdir}" "%WINDIR%\Fonts"
         reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" /
         v "FontName (TrueType)" / t REG_SZ / d {font} / f """
-        font_dir = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
+        font_dir = os.path.join(os.path.abspath(
+            os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
         try:
             fonts = os.listdir(font_dir)
             for i in fonts:
-                # install the fonts by executing cmd and update the Windows Registry
+                # install the fonts by executing cmd and update the Windows
+                # Registry
                 print(cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
-                os.system(cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
+                os.system(
+                    cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
             return True
         except Exception as e:
             print("Installing fonts failed")
             logging.error("Error Installing the fonts. "
-                        "You might have to manually install the fonts"
-                        "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
+                          "You might have to manually install the fonts"
+                          "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
             return False
 
     def create_desktop(self):

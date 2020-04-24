@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'settings.ui'
+# Form implementation generated from reading ui filename 'settings.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.1
 #
-# WARNING! All changes made in this file will be lost!
+# WARNING! All changes made in this filename will be lost!
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 
 
 class Ui_MainWindow(object):

@@ -1,8 +1,7 @@
-
-import socket
 import multiprocessing
-import subprocess
 import os
+import socket
+import subprocess
 
 
 class NetworkManager:
@@ -28,7 +27,7 @@ class NetworkManager:
             try:
                 subprocess.check_call(['ping', '-c1', ip], stdout=DEVNULL)
                 results_q.put(ip)
-            except:
+            except BaseException:
                 pass
 
     def get_my_ip(self):
@@ -60,7 +59,7 @@ class NetworkManager:
         results = multiprocessing.Queue()
 
         pool = [multiprocessing.Process(target=self.pinger, args=(
-            jobs, results)) for i in range(pool_size)]
+                jobs, results)) for i in range(pool_size)]
 
         for p in pool:
             p.start()

@@ -53,27 +53,22 @@ jobs:
         chmod +x AppDir/usr/bin/scrcpy
         mkdir -p AppDir/usr/share/scrcpy
         cp scrcpy-server AppDir/usr/share/scrcpy/.
-    
+
     - name: Patch PyQt5 pass travis
       run: |
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/libxkbcommon.so.0
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/libxkbcommon-x11.so.0.0.0
         cp libxkbcommon.so.0 AppDir/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/lib/.
         cp libxkbcommon-x11.so.0.0.0 AppDir/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/lib/libxkbcommon-x11.so.0
-        
     - name: Download scrcpy binary deps
       run: |
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy_processed.tar.gz
         tar -xf scrcpy_processed.tar.gz
         cp scrcpy_processed/* AppDir/usr/lib/.
-    - name: Patch Appimage to detect adb / scrcpy
-      run: |
-        sed -i '/APPDIR="${APPDIR:-${here}}"/aexport LD_LIBRARY_PATH="${APPDIR}/usr/lib:${LD_LIBRARY_PATH}" \nexport GUISCRCPY_SCRCPY="${APPDIR}/usr/bin/scrcpy"\nexport GUISCRCPY_ADB="${APPDIR}/usr/bin/adb"\nexport ADB="${APPDIR}/usr/bin/adb"\nexport SCRCPY_SERVER_PATH="${APPDIR}/usr/share/scrcpy/scrcpy-server"' AppDir/AppRun
     - name: Reimage AppImage
       run: |
         rm ./guiscrcpy-x86_64.AppImage
         ./appimagetool-x86_64.AppImage --comp gzip AppDir -n
-
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
@@ -81,4 +76,3 @@ jobs:
         path: guiscrcpy-x86_64.AppImage
 
     
-

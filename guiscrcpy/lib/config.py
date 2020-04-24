@@ -20,10 +20,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import json
 import os
 
-from guiscrcpy.lib.utils import check_existence
-from guiscrcpy.platform import platform
 from guiscrcpy.lib.check import adb
 from guiscrcpy.lib.check import scrcpy
+from guiscrcpy.platform import platform
 
 
 class InterfaceConfig:
@@ -49,7 +48,8 @@ class InterfaceConfig:
         self.validate()
 
     def validate(self):
-        # check scrcpy and adb are not None, else replace it with original values
+        # check scrcpy and adb are not None, else replace it with original
+        # values
         if self.config['adb'] is None:
             adb_path = adb.check()
             if adb_path:
@@ -58,7 +58,8 @@ class InterfaceConfig:
             scrcpy_path = scrcpy.check()
             if scrcpy_path:
                 self.config['scrcpy'] = scrcpy_path
-        if (self.config['scrcpy-server'] is not None) and (platform.System() == "Windows"):
+        if (self.config['scrcpy-server'] is not None) and (
+                platform.System() == "Windows"):
             os.environ['SCRCPY_SERVER_PATH'] = self.config['scrcpy-server']
         return True
 
@@ -93,7 +94,8 @@ class InterfaceConfig:
         if not os.path.exists(self.cfgpath):
             os.mkdir(self.cfgpath)
         if not os.path.exists(os.path.join(self.cfgpath, self.jsonfile)):
-            if (self.os.system() == 'Linux') or (self.os.system() == 'Windows'):
+            if (self.os.system() == 'Linux') or (
+                    self.os.system() == 'Windows'):
                 self.os.create_desktop()
                 self.os.install_fonts()
 

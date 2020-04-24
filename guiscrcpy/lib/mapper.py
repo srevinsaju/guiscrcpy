@@ -17,22 +17,24 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from guiscrcpy.lib.config import InterfaceConfig
-from guiscrcpy.lib.check import adb
 import argparse
-from subprocess import PIPE, Popen
-from pynput import keyboard
-from PyQt5.QtGui import QPixmap, QPen, QPainter
-from PyQt5 import QtGui, QtCore, QtWidgets
-from PyQt5.QtCore import Qt
-from subprocess import Popen as po
-from subprocess import PIPE
+import copy
+import json
 import os
 import platform
 import sys
-import json
-import copy
 import time
+from subprocess import PIPE
+from subprocess import Popen
+from subprocess import Popen as po
+
+from PyQt5 import QtGui, QtCore, QtWidgets
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPixmap
+from pynput import keyboard
+
+from guiscrcpy.lib.check import adb
+from guiscrcpy.lib.config import InterfaceConfig
 
 get1 = False
 fixedpos = [0, 0]
@@ -113,7 +115,7 @@ class MapperUI(QtWidgets.QWidget):
             stdout=PIPE,
         )
         time.sleep(2)
-        b = Popen("adb pull /sdcard/scr.png "+cfgpath +
+        b = Popen("adb pull /sdcard/scr.png " + cfgpath +
                   "scr.png", shell=True, stdout=PIPE)
         time.sleep(1)
         print(b.stdout.read().decode('utf-8'))
@@ -125,17 +127,19 @@ class MapperUI(QtWidgets.QWidget):
         self.label.resize(800, 600)
         self.setContentsMargins(0, 0, 0, 0)
         self.label.setContentsMargins(0, 0, 0, 0)
-        self.pixmap = QtGui.QPixmap(cfgpath+"scr.png")
-        self.label.resize(0.5*self.pixmap.width(), 0.5*self.pixmap.height())
-        self.resize(0.5*self.pixmap.width(), 0.5*self.pixmap.height())
+        self.pixmap = QtGui.QPixmap(cfgpath + "scr.png")
+        self.label.resize(0.5 * self.pixmap.width(),
+                          0.5 * self.pixmap.height())
+        self.resize(0.5 * self.pixmap.width(), 0.5 * self.pixmap.height())
         print("Lets Check")
         self.show()
         self.resize(self.label.size())
         self.label.setPixmap(self.pixmap)
         self.label.setMinimumSize(1, 1)
         self.label.setMaximumSize(
-            0.5*self.pixmap.width(), 0.5*self.pixmap.height())
-        self.setMaximumSize(0.5*self.pixmap.width(), 0.5*self.pixmap.height())
+            0.5 * self.pixmap.width(), 0.5 * self.pixmap.height())
+        self.setMaximumSize(0.5 * self.pixmap.width(),
+                            0.5 * self.pixmap.height())
         self.label.installEventFilter(self)
         layout = QtWidgets.QVBoxLayout(self)
         layout.addWidget(self.label)
@@ -152,9 +156,9 @@ class MapperUI(QtWidgets.QWidget):
     def keyreg(self):
         with open(cfgpath + 'guiscrcpy.mapper.json', 'r') as f:
             key_a = json.load(f)
-        #print("REL POS :: ", fixedpos)
-        relx = fixedpos[0]/self.label.width()
-        rely = fixedpos[1]/self.label.height()
+        # print("REL POS :: ", fixedpos)
+        relx = fixedpos[0] / self.label.width()
+        rely = fixedpos[1] / self.label.height()
         fixx = relx * int(dimensions[0])
         fixy = rely * int(dimensions[1])
         print("FINALIZED POS :: ", fixx, fixy)
@@ -180,7 +184,7 @@ class MapperUI(QtWidgets.QWidget):
 
             print("key_a", key_a)
 
-        except:
+        except BaseException:
             print("Special key entered, Use normal characters only")
 
     def eventFilter(self, source, event):
@@ -193,19 +197,17 @@ class MapperUI(QtWidgets.QWidget):
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-
             self.lastPoint = event.pos()
             fixedpos[0] = int(event.pos().x())
             fixedpos[1] = int(event.pos().y())
             print(self.lastPoint, "LAST")
             self.lastPoint = self.label.mapFromParent(
-                event .pos())  # this is working fine now
+                event.pos())  # this is working fine now
             # self.label.setPixmap(QPixmap.fromImage(self.image))
 
     def mouseMoveEvent(self, event):
         if (event.buttons() & Qt.LeftButton):
-
-            #painter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine, Qt.RoundCap,Qt.RoundJoin))
+            # painter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine, Qt.RoundCap,Qt.RoundJoin))
             # painter.drawLine(self.label.mapFromParent(event.pos()),self.lastPoint)
             self.lastPoint = self.label.mapFromParent(
                 event.pos())  # this is working fine now
@@ -216,12 +218,13 @@ class MapperUI(QtWidgets.QWidget):
 
     def mouseReleaseEvent(self, event):
         if event.button == Qt.LeftButton:
-            #self.drawing = False
+            # self.drawing = False
             self.label.setPixmap(QPixmap.fromImage(self.image))
 
 
 def listen_keypress(key_a):
-    print("[SERVER] LISTENING VALUES: Your keys are being listened by server. ")
+    print(
+        "[SERVER] LISTENING VALUES: Your keys are being listened by server. ")
     print(key_a)
 
     def on_press0(key):
@@ -233,7 +236,7 @@ def listen_keypress(key_a):
                 print("running cmd")
                 finalpos0 = key_a[key.char]
                 cm = "adb shell input tap " + \
-                    str(finalpos0[0]) + " " + str(finalpos0[1])
+                     str(finalpos0[0]) + " " + str(finalpos0[1])
                 print(cm)
                 c = po(cm, shell=True, stdout=PIPE)
                 print(c.stdout.read().decode('utf-8'))
@@ -263,14 +266,14 @@ def file_check():
         with open(cfgpath + 'guiscrcpy.mapper.json', 'r') as f:
             key_a = json.load(f)
         fileExist = True
-        print("LOG: Key:Pos JSON Configuration file found in ",
+        print("LOG: Key:Pos JSON Configuration filename found in ",
               cfgpath, " directory")
     except FileNotFoundError:
         print("LOG: Initializing guiscrcpy.mapper() for first time use...")
         key_a = {"key": []}
         with open(cfgpath + jsong, 'w') as f:
             json.dump(key_a, f)
-        print("LOG: Key:Pos JSON Configuration file created in ",
+        print("LOG: Key:Pos JSON Configuration filename created in ",
               cfgpath, " directory")
         fileExist = False
         if platform.system() == "Windows":
@@ -290,7 +293,7 @@ def file_check():
 
     if not fileExist:
 
-        # Init json file for first time use
+        # Init json filename for first time use
         key_a = {"key": [], "pos": []}
         with open(cfgpath + jsong, 'w') as f:
             json.dump(key_a, f)
@@ -308,17 +311,17 @@ def file_checkm():
         with open(cfgpath + jsong, 'r') as f:
             key_a = json.load(f)
         fileExist = True
-        print("LOG: Key:Pos JSON Configuration file found in ",
+        print("LOG: Key:Pos JSON Configuration filename found in ",
               cfgpath, " directory")
     except FileNotFoundError:
         print("LOG: Initializing guiscrcpy.mapper() for first time use...")
         with open(cfgpath + jsong, 'w') as f:
             json.dump(key_a, f)
-        print("LOG: Key:Pos JSON Configuration file created in ",
+        print("LOG: Key:Pos JSON Configuration filename created in ",
               cfgpath, " directory")
         fileExist = False
         if (args.reset):
-            os.remove(cfgpath+"guiscrcpy.mapper.json")
+            os.remove(cfgpath + "guiscrcpy.mapper.json")
             print("FILE RESET")
             sys.exit()
         print("WAITING FOR ", args.delay, "s")
@@ -340,7 +343,7 @@ def file_checkm():
             )
 
     if not fileExist:
-        # Init json file for first time use
+        # Init json filename for first time use
         key_a = {"key": [], "pos": []}
         with open(os.path.join(cfgpath, jsong), 'w') as f:
             json.dump(key_a, f)

@@ -31,60 +31,69 @@ All rights reserved.
 
 """
 
-from PyQt5.QtWidgets import QMainWindow, QApplication
-from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import *
-from PyQt5 import QtCore, QtWidgets, QtGui
-from PyQt5.QtGui import QPixmap
-import sys
 import argparse
 import logging
-import webbrowser
-import time
-from datetime import datetime
-from subprocess import Popen as po
 import os
 import os.path
+import sys
+import time
+import webbrowser
+from datetime import datetime
 from subprocess import PIPE
-from guiscrcpy.lib.config import InterfaceConfig
-from guiscrcpy.lib.process import is_running
-from guiscrcpy.lib.ver import version
-from guiscrcpy.platform import platform
-from guiscrcpy.theme.decorate import header
+from subprocess import Popen as po
+
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtWidgets import QMessageBox
+
 from guiscrcpy.lib.check import adb
 from guiscrcpy.lib.check import scrcpy
-from guiscrcpy.theme.style import darkstylesheet
-from guiscrcpy.ui.main import Ui_MainWindow
+from guiscrcpy.lib.config import InterfaceConfig
+from guiscrcpy.lib.process import is_running
 from guiscrcpy.lib.toolkit import UXMapper
+from guiscrcpy.platform import platform
+from guiscrcpy.theme.decorate import Header
+from guiscrcpy.theme.style import dark_stylesheet
+from guiscrcpy.ui.main import Ui_MainWindow
 from guiscrcpy.ux.panel import Panel
 from guiscrcpy.ux.swipe import SwipeUX
 from guiscrcpy.ux.toolkit import InterfaceToolkit
+from guiscrcpy.version import VERSION
+from guiscrcpy.install.finder import openFileNameDialog
 
 try:
     os.chdir(os.path.dirname(__file__))
 except FileNotFoundError:
     pass  # Its a PyInstaller compiled package
 
-# create app
-
-
 # initialize config manager
 cfgmgr = InterfaceConfig()
 config = cfgmgr.get_config()
 environment = platform.System()
-adb.path = config['adb']
-scrcpy.path = config['scrcpy']
+
+# Add precedence for guiscrcpy to check environment variables
+# for the paths of `adb` and `scrcpy` over the configuration files.
+if os.getenv('GUISCRCPY_ADB', None) is None:
+    adb.path = config['adb']
+else:
+    adb.path = os.getenv('GUISCRCPY_ADB')
+
+if os.getenv('GUISCRCPY_SCRCPY', None) is None:
+    scrcpy.path = config['scrcpy']
+else:
+    scrcpy.path = os.getenv('GUISCRCPY_SCRCPY')
+
 scrcpy.server_path = config['scrcpy-server']
-v = version()
 
 # Initialize argument parser
-parser = argparse.ArgumentParser('guiscrcpy v{}'.format(v.get_commit()))
+parser = argparse.ArgumentParser('guiscrcpy v{}'.format(VERSION))
 parser.add_argument('-i', '--install', action='store_true',
                     help="Install guiscrcpy system wide on Linux")
 parser.add_argument('-s', '--start', action='store_true',
                     help="Start scrcpy first before loading the GUI")
 parser.add_argument('-o', '--output', action='store_true',
-                    help="Show logging output in stdout as well as in .log file")
+                    help="Show logging output in stdout and in .log filename")
 parser.add_argument('-d', '--debug', default=3,
                     help="Set a logging level from 0,1,2,3,4,5")
 parser.add_argument('-v', '--version', action='store_true',
@@ -99,8 +108,10 @@ else:
 
 # configure logging settings
 logging.basicConfig(
-    filename=os.path.join(cfgmgr.get_cfgpath(),
-                          'guiscrcpy_log_{}.log'.format(datetime.now().strftime("%Y%m%d_%H%M%S"))),
+    filename=os.path.join(
+        cfgmgr.get_cfgpath(),
+        'guiscrcpy_log_{}.log'.format(datetime.now().strftime("%Y%m%d_%H%M%S"))
+    ),
     filemode='w',
     level=logging_priority,
     format='%(levelname)s :: %(message)s'
@@ -117,13 +128,9 @@ except Exception as e:
     logging.warning("Running from tty, pass. E:{}".format(e))
     keyboard = None
 
-
-# FIXME move to version.py
-pass
-
 logging.debug("Received flag {}".format(args.start))
 
-header(v.get_commit())
+Header(VERSION)
 
 if args.version:
     sys.exit(0)
@@ -146,11 +153,23 @@ logging.debug("Importing modules...")
 
 
 class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
+    """
+    Main class for guiscrcpy object.
+    All the processes to spawn to scrcpy are handled here
+    """
+
     def __init__(self):
         QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
         self.cmx = None
+        self.sm = None
+        self.nm = None
+        self.swipe_instance = None
+        self.panel_instance = None
+        self.side_instance = None
+        self.child_windows = list()
+        self.options = ""
         logging.debug(
             "Options received by class are : {} {} {} {} {} ".format(
                 config['bitrate'],
@@ -180,19 +199,19 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.fullscreen.setChecked(False)
         if is_running("scrcpy"):
             logging.debug("SCRCPY RUNNING")
-            self.runningNot.setText("SCRCPY SERVER RUNNING")
+            self.private_message_box_adb.setText("SCRCPY SERVER RUNNING")
         else:
             logging.debug("SCRCPY SERVER IS INACTIVE")
-            self.runningNot.setText("SCRCPY SERVER NOT RUNNING")
+            self.private_message_box_adb.setText("SCRCPY SERVER NOT RUNNING")
 
         # CONNECT DIMENSION CHECK BOX TO STATE CHANGE
         self.dimensionDefaultCheckbox.stateChanged.connect(
-            self.dimensionChange)
-        self.build_label.setText("Build " + str(v.build))
+            self.__dimension_change_cb)
+        self.build_label.setText("Build " + str(VERSION))
 
         # DIAL CTRL GRP
-        self.dial.sliderMoved.connect(self.dial_text_refresh)
-        self.dial.sliderReleased.connect(self.dial_text_refresh)
+        self.dial.sliderMoved.connect(self.__dial_change_cb)
+        self.dial.sliderReleased.connect(self.__dial_change_cb)
         # DIAL CTRL GRP
 
         # MAIN EXECUTE ACTION
@@ -202,25 +221,28 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 self.flaglineedit.setText(config['extra'])
             else:
                 pass
-        except:
+        except Exception as err:
+            logging.debug(f"Exception: flaglineedit.text(config[extra]) {err}")
             pass
 
-        # show subwindows
-        self.swipe_instance = SwipeUX()  # Load swipe UI
-        self.panel_instance = Panel()
-        self.side_instance = InterfaceToolkit()
-        self.quit.clicked.connect(self.quitAct)
+        # set bottom instance and side instance as enabled by default
+        self.check_bottom_panel.setChecked(True)
+        self.check_side_panel.setChecked(True)
+
+        self.quit.clicked.connect(self.quit_window)
         self.dimensionText.setText("DEFAULT")
         config['bitrate'] = int(self.dial.value())
         self.bitrateText.setText(" " + str(config['bitrate']) + "KB/s")
         self.pushButton.setText("RESET")
         self.pushButton.clicked.connect(self.reset)
-        self.abtme.clicked.connect(self.openme)
-        self.abtgit.clicked.connect(self.opengit)
-        self.usbaud.clicked.connect(self.usbaudi)
+        self.abtme.clicked.connect(self.launch_web_srevinsaju)
+        self.abtgit.clicked.connect(self.launch_web_github)
+        self.usbaud.clicked.connect(self.launch_usb_audio)
         self.mapnow.clicked.connect(self.mapp)
         self.network_button.clicked.connect(self.network_mgr)
         self.settings_button.clicked.connect(self.settings_mgr)
+        self.refreshdevices.clicked.connect(
+            self.__refresh_devices_combo_box_cb)
 
     def settings_mgr(self):
         from guiscrcpy.ux.settings import InterfaceSettings
@@ -241,69 +263,56 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             mapper.file_check()
         else:
             logging.warning(
-                "guiscrcpy ~ mapper is not initialized. Initialize by running" +
-                "$ guiscrcpy-mapper" + "reset points by" + "$ guiscrcpy-mapper -r")
+                "guiscrcpy ~ mapper is not initialized. "
+                "Initialize by running" +
+                "$ guiscrcpy-mapper" + "reset points by" +
+                "$ guiscrcpy-mapper -r"
+            )
 
-    def fin(self):
-        result = []
-        try:
-            from guiscrcpy import __path__ as xz
-            str1 = xz
-        except:
-            str1 = []
-        for path in os.getenv('PATH').split(":") + str1:
-            logging.debug("PATH: {}".format(path))
-            for files in os.listdir(path):
-                logging.debug("FILE: {}".format(files))
-                if "mapper.py" in files:
-                    result.append(os.path.join(path, "mapper.py"))
-                    break
-            else:
-                logging.debug("Mapper.py not found")
-
-        return result
-
-    def usbaudi(self):
+    @staticmethod
+    def launch_usb_audio():
         logging.debug("Called usbaudio")
-        runnow = po("usbaudio", shell=True, stdout=PIPE, stderr=PIPE)
+        po("usbaudio", shell=True, stdout=PIPE, stderr=PIPE)
 
-    def openme(self):
+    @staticmethod
+    def launch_web_srevinsaju():
         webbrowser.open("https://srevinsaju.github.io")
 
-    def opengit(self):
+    @staticmethod
+    def launch_web_github():
         webbrowser.open("https://github.com/srevinsaju/guiscrcpy")
 
     def about(self):
-        abtBox = QMessageBox().window()
-        abtBox.about(
+        about_message_box = QMessageBox().window()
+        about_message_box.about(
             self.pushButton,
             "Info",
-            "Please restart guiscrcpy to reset the settings. guiscrcpy will now exit",
+            "Please restart guiscrcpy to reset the settings. "
+            "guiscrcpy will now exit",
         )
-        abtBox.addButton("OK", abtBox.hide())
-        abtBox.show()
+        about_message_box.addButton("OK", about_message_box.hide())
+        about_message_box.show()
 
     def reset(self):
 
         cfgmgr.reset_config()
         logging.debug("CONFIGURATION FILE REMOVED SUCCESSFULLY")
         logging.debug("RESTART")
-        msgBox = QMessageBox().window()
-        msgBox.about(
+        message_box = QMessageBox().window()
+        message_box.about(
             self.pushButton,
             "Info",
-            "Please restart guiscrcpy to reset the settings. guiscrcpy will now exit",
+            "Please restart guiscrcpy to reset the settings. "
+            "guiscrcpy will now exit",
         )
-        msgBox.addButton("OK", self.quitAct())
-        msgBox.show()
+        message_box.addButton("OK", self.quit_window())
+        message_box.show()
 
-    def quitAct(self):
+    @staticmethod
+    def quit_window():
         sys.exit()
 
-    def menu_about(self):
-        pass
-
-    def dimensionChange(self):
+    def __dimension_change_cb(self):
         if self.dimensionDefaultCheckbox.isChecked():
             self.dimensionSlider.setEnabled(False)
             config['dimension'] = None
@@ -316,61 +325,85 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.dimensionText.setText(
                 " " + str(config['dimension']) + "px")
             self.dimensionSlider.sliderMoved.connect(
-                self.slider_text_refresh)
+                self.__slider_change_cb)
             self.dimensionSlider.sliderReleased.connect(
-                self.slider_text_refresh)
+                self.__slider_change_cb)
 
-    def slider_text_refresh(self):
+    def __slider_change_cb(self):
         config['dimension'] = int(self.dimensionSlider.value())
         self.dimensionText.setText(str(config['dimension']) + "px")
         pass
 
-    def dial_text_refresh(self):
+    def __dial_change_cb(self):
         config['bitrate'] = int(self.dial.value())
         self.bitrateText.setText(str(config['bitrate']) + "KB/s")
         pass
 
-    def start_act(self):
-
-        self.runningNot.setText("CHECKING DEVICE CONNECTION")
-        timei = time.time()
-        self.progressBar.setValue(5)
-
+    def __refresh_devices_combo_box_cb(self):
         devices_list = adb.devices(adb.path)
 
-        if devices_list[0] == "\n":
-            self.runningNot.setText("DEVICE IS NOT CONNECTED")
+        if len(devices_list) == 0:
+            self.private_message_box_adb.setText("DEVICE IS NOT CONNECTED")
             self.progressBar.setValue(0)
-            return 0
-        try:
-            exc = devices_list[1].find("device")
-        except IndexError:
-            self.runningNot.setText("DEVICE IS NOT CONNECTED")
-            self.progressBar.setValue(0)
-            return 0
-
-        if exc > -1:
-            self.runningNot.setText(
-                "DEVICE " + str(devices_list[0]) + " IS CONNECTED")
-            self.progressBar.setValue(10)
-
-        elif devices_list[1][:-1] == "unauthorized":
-            self.runningNot.setText(
-                "DEVICE IS UNAUTHORIZED. PLEASE CLICK 'OK' ON DEVICE WHEN ASKED FOR"
-            )
-            self.progressBar.setValue(0)
-            return 0
-
+            return 0,
         else:
-            self.runningNot.setText(
-                "DEVICE CONNECTED BUT FAILED TO ESTABLISH CONNECTION"
+            valid_devices = []
+            invalid_devices = []
+            for dev, stat in devices_list:
+                if stat == "unauthorized":
+                    invalid_devices.append(
+                        f"{dev} IS UNAUTHORIZED. CLICK 'ok' when asked.")
+                elif stat == "device":
+                    valid_devices.append(dev)
+                else:
+                    invalid_devices.append(
+                        f"{dev} is connected. Failed to establish connection")
+            self.private_message_box_adb.setText(
+                "Connected: {};".format(', '.join(valid_devices))
             )
-            self.progressBar.setValue(0)
-            return 0
-        # check if the defaultDimension is checked or not for giving signal
+        if len(valid_devices) > 1:
+            if self.devices_combox.currentText(
+            ) == '' or self.devices_combox.currentText().isspace():
+                logging.info(
+                    "Found more than one device. "
+                    "Please select device in drop down box")
+                self.private_message_box_adb.setText(
+                    "Found more than one device. "
+                    "Please select device in drop down box")
+                self.devices_combox.clear()
+                self.devices_combox.addItems(
+                    [f"{x[0]} : {x[1]}" for x in devices_list])
+                return 0,
 
-        ux = UXMapper()
-        dimValues = adb.get_dimensions(adb.path)
+            else:
+                more_devices = True
+                device_id = self.devices_combox.currentText().split(":")[
+                    0].strip()
+        else:
+            more_devices = False
+            device_id = None
+
+        return more_devices, device_id
+
+    def start_act(self):
+        stylesheet = "background-color: qlineargradient(" \
+                     "spread:pad, x1:0, y1:0, x2:1, y2:1, " \
+                     "stop:0 rgba(0, 255, 255, 255), " \
+                     "stop:1 rgba(0, 255, 152, 255)); " \
+                     "border-radius: 10px;"
+        self.private_message_box_adb.setStyleSheet(stylesheet)
+
+        self.private_message_box_adb.setText("CHECKING DEVICE CONNECTION")
+        initial_time = time.time()
+        self.progressBar.setValue(5)
+
+        values_devices_list = self.__refresh_devices_combo_box_cb()
+        if len(values_devices_list) != 2:
+            return 0
+        else:
+            more_devices, device_id = values_devices_list
+
+        # check if the defaultDimension is checked or not for giving signal
 
         self.progressBar.setValue(15)
 
@@ -430,21 +463,70 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         logging.debug("CONNECTION ESTABLISHED")
         self.progressBar.setValue(50)
         logging.debug("Flags passed to scrcpy engine : " + self.options)
-        self.progressBar.setValue(75)
+        self.progressBar.setValue(60)
         config['extra'] = self.flaglineedit.text()
-        self.swipe_instance.init()  # show Swipe UI
-        self.panel_instance.init()
-        self.side_instance.init()
+
+        # show subwindows
+        ux = UXMapper(device_id=device_id)
+        swipe_instance = SwipeUX(ux_wrapper=ux)  # Load swipe UI
+
+        self.progressBar.setValue(70)
+        if self.check_side_panel.isChecked():
+            side_instance = InterfaceToolkit(parent=self, ux_mapper=ux)
+            for instance in self.child_windows:
+                if instance.ux.get_sha() == side_instance.ux.get_sha() and \
+                    instance.name == side_instance.name:
+                    break
+            else:
+                side_instance.init()
+                self.child_windows.append(side_instance)
+
+        if self.check_bottom_panel.isChecked():
+            panel_instance = Panel(parent=self, ux_mapper=ux)
+            for instance in self.child_windows:
+                if instance.ux.get_sha() == panel_instance.ux.get_sha() and \
+                    instance.name == panel_instance.name:
+                    break
+            else:
+                panel_instance.init()
+                self.child_windows.append(panel_instance)
+
+        for instance in self.child_windows:
+            if instance.ux.get_sha() == swipe_instance.ux.get_sha() and \
+                instance.name == swipe_instance.name:
+                break
+        else:
+            swipe_instance.init()
+            self.child_windows.append(swipe_instance)
+
+        hexdigest = ux.get_sha()[:6]
+        stylesheet = f"background-color: #{hexdigest}; border-radius: 10px; "
+        self.private_message_box_adb.setStyleSheet(stylesheet)
+
         if self.cmx is not None:
             config['cmx'] = ' '.join(map(str, self.cmx))
 
-        # run scrcpy usng subprocess
-        args = "{} {} {}".format(self.options, config['extra'], config['cmx'])
-        scrcpy.start(scrcpy.path, args)
+        arguments_scrcpy = "{} {} {}".format(
+            self.options,
+            config['extra'],
+            config['cmx']
+        )
 
-        timef = time.time()
-        eta = timef - timei
-        print("SCRCPY is launched in", eta, "seconds")
+        if more_devices:
+            # guiscrcpy found more devices
+            # scrcpy will fail if more than one device is found
+            # its important to pass the device serial id, if more than one
+            # device is found
+            arguments_scrcpy = f"-s {device_id} " + arguments_scrcpy
+            # tell end users that the color of the device is this
+            self.private_message_box_adb.setText(f"Device {device_id} is "
+                                                 f"connected; (color id "
+                                                 f"matches toolkit color)")
+
+        scrcpy.start(scrcpy.path, arguments_scrcpy)
+        final_time = time.time()
+        eta = final_time - initial_time
+        print("scrcpy launched in {:.2f}s".format(eta))
         self.progressBar.setValue(100)
 
         # handle config files
@@ -453,6 +535,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         cfgmgr.write_file()
 
         if self.notifChecker.isChecked():
+            # call notification auditor if notification_auditor is checked only
             from guiscrcpy.lib.notify import NotifyAuditor
             NotifyAuditor()
 
@@ -460,14 +543,18 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
 
 def bootstrap0():
-    # enable highdpi scaling
+    """
+    Launch the guiscrcpy window
+    :return:
+    """
+    # enable High DPI scaling
     QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(
-        QtCore.Qt.AA_UseHighDpiPixmaps, True)  # use highdpi icons
+        QtCore.Qt.AA_UseHighDpiPixmaps, True)  # use HIGH DPI icons
     app = QtWidgets.QApplication(sys.argv)
 
     app.setStyle('Breeze')
-    app.setStyleSheet(darkstylesheet())
+    app.setStyleSheet(dark_stylesheet())
 
     splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
     splash = QtWidgets.QSplashScreen(splash_pix)
@@ -476,29 +563,45 @@ def bootstrap0():
     app.processEvents()
     cfedited = False
 
-    from guiscrcpy.install.finder import openFileNameDialog
-    if adb.path is None:
+    if (adb.path is None) or (not os.path.exists(adb.path)):
         adb.path = openFileNameDialog(None, 'adb')
         cfedited = True
         config['adb'] = adb.path
 
-    if scrcpy.path is None:
+    if (scrcpy.path is None) or (not os.path.exists(scrcpy.path)):
         scrcpy.path = openFileNameDialog(None, 'scrcpy')
         cfedited = True
         config['scrcpy'] = scrcpy.path
 
-    if (scrcpy.server_path is None) and (platform.System() == 'Windows'):
+    # on windows, users are likely not to add the scrcpy-server to the
+    # SCRCPY_SERVER_PATH
+    scrcpy_server_path_env = os.getenv('SCRCPY_SERVER_PATH', None)
+    if scrcpy_server_path_env:
+        if os.path.exists(scrcpy_server_path_env):
+            config['scrcpy-server'] = scrcpy.server_path
+        else:
+            scrcpy.server_path = openFileNameDialog(None, 'scrcpy-server')
+            cfedited = True
+            config['scrcpy-server'] = scrcpy.server_path
+            os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
+    elif ((scrcpy.server_path is None) or
+          (not os.path.exists(scrcpy.server_path))) and (
+            platform.System().system() == 'Windows'
+    ):
         scrcpy.server_path = openFileNameDialog(None, 'scrcpy-server')
         cfedited = True
         config['scrcpy-server'] = scrcpy.server_path
+        os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
+    elif platform.System().system() == "Windows":
+        os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
 
     if cfedited:
         cfgmgr.update_config(config)
         cfgmgr.write_file()
 
     adb.devices(adb.path)
-    prog = InterfaceGuiscrcpy()
-    prog.show()
+    guiscrcpy = InterfaceGuiscrcpy()
+    guiscrcpy.show()
     app.processEvents()
     splash.hide()
     app.exec_()
@@ -507,15 +610,18 @@ def bootstrap0():
 
 if __name__ == "__main__":
     try:
+        # workaround the inability to locate pixmaps
         from guiscrcpy import __path__
-
-        patz = list(__path__)[0]
-        sys.path.append(patz)
+        paths = list(__path__)[0]
+        sys.path.append(paths)
         sys.path.append('')
-    except ModuleNotFoundError:
-        pass
+    except Exception as e:
+        logging.debug(f"E:{e}. Continuing to run guiscrcpy.")
+
+    # add current path to PATH
     sys.path.append('')
 
+    # bootstrap guiscrcpy
     bootstrap0()
 
 

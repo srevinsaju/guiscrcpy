@@ -1,4 +1,3 @@
-
 """
 GUISCRCPY by srevinsaju
 Get it on : https://github.com/srevinsaju/guiscrcpy
@@ -19,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import logging
+import uuid
 
 from PyQt5 import QtGui, QtWidgets, QtCore
 from PyQt5.QtCore import Qt, QPoint
@@ -28,20 +28,30 @@ from guiscrcpy.lib.toolkit import UXMapper
 
 
 class SwipeUX(QMainWindow):
-    def __init__(self):
+    def __init__(self, ux_wrapper=None):
         QMainWindow.__init__(self)
         super(SwipeUX, self).__init__()
         self.oldPos = None
-        self.ux = None
+        self.name = "swipe"
+        self.uid = uuid.uuid4()
+
+        # =================
+        if ux_wrapper:
+            self.ux = ux_wrapper
+        else:
+            self.ux = UXMapper()
+        hexdigest = self.ux.get_sha()[:6]
+
         self.setObjectName("SwipeUX")
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_NoSystemBackground, True)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
 
-        # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint)
+        # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint
+        # QtCore.Qt.FramelessWindowHint)
         self.resize(70, 70)
         # -----------------------
-        # =====================
+
         icon = QtGui.QIcon()
         icon.addPixmap(
             QtGui.QPixmap(":/res/ui/guiscrcpy_logo.png"),
@@ -50,26 +60,46 @@ class SwipeUX(QMainWindow):
         )
         self.setWindowIcon(icon)
         self.setStyleSheet(
-            "QWidget{background-color: rgba(0,0,0,0);}\nQPushButton {\n"
+            "QWidget {"
+            "background-color: rgba(0,0,0,0);}\nQPushButton {\n"
             "border-radius: 15px;\n"
-            "    background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.495098, fy:0.5, stop:0.887255 rgba(35, 35, 35, 255), stop:0.901961 rgba(0, 0, 0, 255));\n"
+            "background-color: qradialgradient("
+            "spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.495098, fy:0.5, "
+            "stop:0.887255 rgba(35, 35, 35, 255), "
+            "stop:0.901961 rgba(0, 0, 0, 255));\n"
             "color: rgb(0, 0, 0);\n"
-            "\n"
-            "}\\n\n"
+            "}\n\n"
             "QPushButton:pressed {\n"
             "border-radius: 15px;\n"
             "\n"
-            "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 255, 255, 255), stop:1 rgba(0, 255, 152, 255));\n"
+            "background-color: qlineargradient("
+            "spread:pad, x1:0, y1:0, x2:1, y2:1, "
+            "stop:0 rgba(0, 255, 255, 255), "
+            "stop:1 rgba(0, 255, 152, 255));\n"
             "color: rgb(0, 0, 0);\n"
             "   }\n"
             "QMainWindow{background-color: rgba(0,0,0,30);}\n"
             "QPushButton:hover {\n"
             "border-radius: 15px;\n"
-            "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 199, 199, 255), stop:1 rgba(0, 190, 113, 255));\n"
+            "background-color: qlineargradient("
+            "spread:pad, x1:0, y1:0, x2:1, y2:1, "
+            "stop:0 rgba(0, 199, 199, 255), "
+            "stop:1 rgba(0, 190, 113, 255));\n"
             "color: rgb(0, 0, 0);\n"
-            "}")
+            "}"
+        )
         self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
+
+        self.lol = QtWidgets.QPushButton(self.centralwidget)
+        self.lol.setGeometry(QtCore.QRect(24, 24, 25, 25))
+        self.lol.setText("")
+        self.lol.setObjectName("lol")
+        self.lol.setStyleSheet(
+            f"background-color: #{hexdigest};"
+            f"border-radius: 12px; "
+        )
+        
         self.swirt = QtWidgets.QPushButton(self.centralwidget)
         self.swirt.setGeometry(QtCore.QRect(40, 20, 30, 30))
         self.swirt.setText("")
@@ -114,6 +144,7 @@ class SwipeUX(QMainWindow):
         )
         self.swiup.setIcon(icon4)
         self.swiup.setObjectName("swiup")
+
         self.setCentralWidget(self.centralwidget)
         # -----------------
         # ================
@@ -125,7 +156,6 @@ class SwipeUX(QMainWindow):
         self.swirt.pressed.connect(self.swipright)
 
     def init(self):
-        self.ux = UXMapper()
         self.show()
 
     def paintEvent(self, event):
@@ -151,32 +181,32 @@ class SwipeUX(QMainWindow):
 
     def swipdn(self):
         logging.debug("Passing SWIPE DOWN")
-        dimValues = self.ux.android_dimensions
-        posy = int(dimValues[1]) - 200
-        posx = int(dimValues[0])
-        newposx = posx / 2  # find center
-        self.ux.do_swipe(newposx, 200, newposx, posy)
+        dim_values = self.ux.android_dimensions
+        pos_y = int(dim_values[1]) - 200
+        pos_x = int(dim_values[0])
+        new_pos_x = pos_x / 2  # find center
+        self.ux.do_swipe(new_pos_x, 200, new_pos_x, pos_y)
 
     def swipup(self):
         logging.debug("Passing SWIPE UP")
-        dimValues = self.ux.android_dimensions
-        posy = int(dimValues[1]) - 100
-        posx = int(dimValues[0])
-        newposx = int(posx / 2)  # find center
-        self.ux.do_swipe(newposx, posy, newposx, 200)
+        dim_values = self.ux.android_dimensions
+        pos_y = int(dim_values[1]) - 100
+        pos_x = int(dim_values[0])
+        new_pos_x = int(pos_x / 2)  # find center
+        self.ux.do_swipe(new_pos_x, pos_y, new_pos_x, 200)
 
     def swipleft(self):
         logging.debug("Passing SWIPE LEFT")
-        dimValues = self.ux.android_dimensions
-        posy = int(dimValues[1])
-        posx = int(dimValues[0]) - 10
-        newposy = int(posy / 2)  # find center
-        self.ux.do_swipe(10, newposy, posx, newposy)
+        dim_values = self.ux.android_dimensions
+        pos_y = int(dim_values[1])
+        pos_x = int(dim_values[0]) - 10
+        new_pos_y = int(pos_y / 2)  # find center
+        self.ux.do_swipe(10, new_pos_y, pos_x, new_pos_y)
 
     def swipright(self):
         logging.debug("Passing SWIPE RIGHT")
-        dimValues = self.ux.android_dimensions
-        posy = int(dimValues[1])
-        posx = int(dimValues[0]) - 10
-        newposy = int(posy / 2)  # find center
-        self.ux.do_swipe(posx, newposy, 10, newposy)
+        dim_values = self.ux.android_dimensions
+        pos_y = int(dim_values[1])
+        pos_x = int(dim_values[0]) - 10
+        new_pos_y = int(pos_y / 2)  # find center
+        self.ux.do_swipe(pos_x, new_pos_y, 10, new_pos_y)

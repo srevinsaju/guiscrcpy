@@ -4,7 +4,6 @@
 	<name>guiscrcpy</name>
     <metadata_license>MIT</metadata_license>
     <project_license>GPL3+</project_license>
-    <name>Tasmotizer</name>
     <summary>Android Screen Mirroring Software</summary>
     <description>
         <p> The open source android screen mirroring system built for the award winning scrcpy 

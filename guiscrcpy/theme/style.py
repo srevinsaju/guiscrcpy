@@ -18,17 +18,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 
-def darkstylesheet():
+def dark_stylesheet():
     # DarkStyleSheet
 
     style = """
-    /* ---------------------------------------------------------------------------
+    /* ------------------------------------------------------------------------
 
     Created by the qtsass compiler v0.1.1
 
     The definitions are in the "qdarkstyle.qss._styles.scss" module
 
-    WARNING! All changes made in this file will be lost!
+    WARNING! All changes made in this filename will be lost!
 
 --------------------------------------------------------------------------- */
 /* QDarkStyleSheet -----------------------------------------------------------

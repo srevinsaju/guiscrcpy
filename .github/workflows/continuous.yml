@@ -2,10 +2,15 @@
 name: AppImage
 on: 
   push:
+    branches: 
+      - 'master'
+      - 'beta-**'
     paths:
       - 'guiscrcpy/**'
       - '.github/workflows/continuous.yml'
   pull_request:
+    branches-ignore: 
+      - 'beta-**'
     paths:
       - 'guiscrcpy/**'
       - '.github/workflows/continuous.yml'
@@ -130,7 +135,6 @@ jobs:
   Release:
     needs: [Windows, AppImage, Wheel]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/beta-37'
     strategy:
       matrix:
         version: [3.8]

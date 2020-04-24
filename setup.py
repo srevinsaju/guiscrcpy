@@ -39,7 +39,7 @@ data_files = [
 
 setup(
     name='guiscrcpy',
-    version='3.7',
+    version='3.7.post13.dev',
     description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description="""<img src=https://github.com/srevinsaju/guiscrcpy/blob/master/guiscrcpy/ui/ui/guiscrcpy_logo.png width=25%>
 
@@ -48,6 +48,7 @@ setup(
 ![Linux](https://github.com/srevinsaju/guiscrcpy/workflows/Linux/badge.svg)
 ![Windows](https://github.com/srevinsaju/guiscrcpy/workflows/Windows/badge.svg)
 ![Mac OS](https://github.com/srevinsaju/guiscrcpy/workflows/Mac%20OS/badge.svg)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fae1b0eabec24722929e055a88622e1b)](https://app.codacy.com/manual/srevinsaju/guiscrcpy?utm_source=github.com&utm_medium=referral&utm_content=srevinsaju/guiscrcpy&utm_campaign=Badge_Grade_Settings)
 [![Updates](https://pyup.io/repos/github/srevinsaju/guiscrcpy/shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
 [![Python 3](https://pyup.io/repos/github/srevinsaju/guiscrcpy/python-3-shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/guiscrcpy?style=flat-square)

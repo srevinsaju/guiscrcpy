@@ -60,6 +60,7 @@ jobs:
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/libxkbcommon-x11.so.0.0.0
         cp libxkbcommon.so.0 AppDir/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/lib/.
         cp libxkbcommon-x11.so.0.0.0 AppDir/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/lib/libxkbcommon-x11.so.0
+
     - name: Download scrcpy binary deps
       run: |
         wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy_processed.tar.gz

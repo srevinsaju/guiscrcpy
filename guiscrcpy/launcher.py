@@ -92,6 +92,10 @@ parser.add_argument('-i', '--install', action='store_true',
                     help="Install guiscrcpy system wide on Linux")
 parser.add_argument('-s', '--start', action='store_true',
                     help="Start scrcpy first before loading the GUI")
+parser.add_argument('-r', '--reset', action='store_true',
+                    help="Reset the guiscrcpy configuration files to default")
+parser.add_argument('-w', '--disable-swipe', action='store_true',
+                    help="Disable the swipe panel")
 parser.add_argument('-f', '--force_window_frame', action='store_true',
                     help="Force display desktop window manager for toolkit without frames")
 parser.add_argument('-o', '--output', action='store_true',
@@ -136,6 +140,10 @@ Header(VERSION)
 
 if args.version:
     sys.exit(0)
+
+if args.reset:
+    cfgmgr.reset_config()
+    print("Configuration files resetted successfully.")
 
 logging.debug("Current Working Directory {}".format(os.getcwd()))
 
@@ -550,7 +558,12 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         if self.notifChecker.isChecked():
             # call notification auditor if notification_auditor is checked only
             from guiscrcpy.lib.notify import NotifyAuditor
-            NotifyAuditor()
+            try: 
+                NotifyAuditor()
+            except AttributeError, NameError, ValueError: 
+                self.notifChecker.setChecked(False)
+                print("guiscrcpy notification auditor failed. ")
+                print("Your OS / Desktop Environment might not support it atm")
 
         return True
 

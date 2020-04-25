@@ -24,7 +24,7 @@ export PYTHON # pass the variable to sub-makefiles through the environment
 default: uic
 
 uic: 
-	pyrcc5 guiscrcpy/ui/rsrc.qrc -o rsrc_rc.py
+	pyrcc5 guiscrcpy/ui/rsrc.qrc -o guiscrcpy/ui/rsrc_rc.py
 	pyuic5 guiscrcpy/ui/mainwindow.ui -o guiscrcpy/ui/main.py --from-imports
 	pyuic5 guiscrcpy/ui/downloader.ui -o guiscrcpy/ui/downloader.py --from-imports
 	pyuic5 guiscrcpy/ui/bottompanelui.ui -o guiscrcpy/ui/panel.py --from-imports

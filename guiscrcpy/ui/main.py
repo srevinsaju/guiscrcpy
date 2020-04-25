@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui filename 'guiscrcpy/ui/mainwindow.ui'
+# Form implementation generated from reading ui file 'guiscrcpy/ui/mainwindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.2
 #
-# WARNING! All changes made in this filename will be lost!
+# WARNING! All changes made in this file will be lost!
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -316,6 +316,9 @@ class Ui_MainWindow(object):
         self.refreshdevices.setSizePolicy(sizePolicy)
         self.refreshdevices.setObjectName("refreshdevices")
         self.gridLayout_4.addWidget(self.refreshdevices, 3, 5, 1, 1)
+        self.check_swipe_panel = QtWidgets.QCheckBox(self.frame1)
+        self.check_swipe_panel.setObjectName("check_swipe_panel")
+        self.gridLayout_4.addWidget(self.check_swipe_panel, 2, 5, 1, 1)
         self.verticalLayout.addLayout(self.gridLayout_4)
         self.private_message_box_adb = QtWidgets.QPushButton(self.frame1)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -743,6 +746,7 @@ class Ui_MainWindow(object):
         self.network_button.setToolTip(_translate("MainWindow", "Launch Network Manager"))
         self.check_bottom_panel.setText(_translate("MainWindow", "Bottom Panel"))
         self.refreshdevices.setText(_translate("MainWindow", "REFRESH"))
+        self.check_swipe_panel.setText(_translate("MainWindow", "Swipe Panel"))
         self.bitrateText.setText(_translate("MainWindow", "8000 KB/s"))
         self.dial.setToolTip(_translate("MainWindow", "Changing the bitrate of the screen mirrorring. Useful to show playback at normal speed without lags"))
         self.dial.setStatusTip(_translate("MainWindow", "Adjust Bitrate. Leave it untouched for defualts"))

@@ -235,7 +235,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             logging.debug(f"Exception: flaglineedit.text(config[extra]) {err}")
             pass
 
-        # set bottom instance and side instance as enabled by default
+        # set swipe instance, bottom instance and 
+        # side instance as enabled by default
+        self.check_swipe_panel.setChecked(True)
         self.check_bottom_panel.setChecked(True)
         self.check_side_panel.setChecked(True)
 
@@ -478,10 +480,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # show subwindows
         ux = UXMapper(device_id=device_id)
-        swipe_instance = SwipeUX(
-            ux_wrapper=ux, 
-            frame=args.force_window_frame
-        )  # Load swipe UI
 
         self.progressBar.setValue(70)
         if self.check_side_panel.isChecked():
@@ -511,14 +509,19 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             else:
                 panel_instance.init()
                 self.child_windows.append(panel_instance)
-
-        for instance in self.child_windows:
-            if instance.ux.get_sha() == swipe_instance.ux.get_sha() and \
-                instance.name == swipe_instance.name:
-                break
-        else:
-            swipe_instance.init()
-            self.child_windows.append(swipe_instance)
+        
+        if self.check_swipe_panel.isChecked():
+            swipe_instance = SwipeUX(
+                ux_wrapper=ux, 
+                frame=args.force_window_frame
+            )  # Load swipe UI
+            for instance in self.child_windows:
+                if instance.ux.get_sha() == swipe_instance.ux.get_sha() and \
+                    instance.name == swipe_instance.name:
+                    break
+            else:
+                swipe_instance.init()
+                self.child_windows.append(swipe_instance)
 
         hexdigest = ux.get_sha()[:6]
         stylesheet = f"background-color: #{hexdigest}; border-radius: 10px; "
@@ -560,7 +563,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             from guiscrcpy.lib.notify import NotifyAuditor
             try: 
                 NotifyAuditor()
-            except AttributeError, NameError, ValueError: 
+            except (AttributeError, NameError, ValueError): 
                 self.notifChecker.setChecked(False)
                 print("guiscrcpy notification auditor failed. ")
                 print("Your OS / Desktop Environment might not support it atm")

@@ -552,6 +552,13 @@ border-radius: 10px;
            </property>
           </widget>
          </item>
+         <item row="2" column="5">
+          <widget class="QCheckBox" name="check_swipe_panel">
+           <property name="text">
+            <string>Swipe Panel</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui filename 'guiscrcpy/ui/downloader.ui'
+# Form implementation generated from reading ui file 'guiscrcpy/ui/downloader.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.14.2
 #
-# WARNING! All changes made in this filename will be lost!
+# WARNING! All changes made in this file will be lost!
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -15,8 +15,7 @@ class Ui_Initializer(object):
         Initializer.setObjectName("Initializer")
         Initializer.resize(222, 320)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/res/ui/guiscrcpy_logo.png"),
-                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/res/ui/guiscrcpy_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Initializer.setWindowIcon(icon)
         self.widget = QtWidgets.QWidget(Initializer)
         self.widget.setGeometry(QtCore.QRect(0, 0, 221, 311))
@@ -57,3 +56,4 @@ class Ui_Initializer(object):
         Initializer.setWindowTitle(_translate("Initializer", "Initializing"))
         self.stat.setText(_translate("Initializer", "guiscrcpy"))
         self.label_3.setText(_translate("Initializer", "Initializing"))
+from . import rsrc_rc

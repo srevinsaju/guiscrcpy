@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui filename 'guiscrcpy/ui/bottompanelui.ui'
+# Form implementation generated from reading ui file 'guiscrcpy/ui/bottompanelui.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.2
 #
-# WARNING! All changes made in this filename will be lost!
+# WARNING! All changes made in this file will be lost!
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets

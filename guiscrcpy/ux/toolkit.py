@@ -29,7 +29,7 @@ from guiscrcpy.ui.toolkit import Ui_ToolbarPanel
 
 
 class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
-    def __init__(self, ux_mapper=None, parent=None):
+    def __init__(self, ux_mapper=None, parent=None, frame=False):
         QMainWindow.__init__(self)
         Ui_ToolbarPanel.__init__(self)
         self.name = "toolkit"
@@ -38,9 +38,10 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
         self.parent = parent
         self.oldPos = None
         self.ux = None
-        self.setWindowFlags(
-            QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
-        )
+        if not frame:
+            self.setWindowFlags(
+                QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
+            )
         if ux_mapper:
             self.ux = ux_mapper
         else:

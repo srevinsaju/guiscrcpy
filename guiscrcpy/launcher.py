@@ -92,6 +92,8 @@ parser.add_argument('-i', '--install', action='store_true',
                     help="Install guiscrcpy system wide on Linux")
 parser.add_argument('-s', '--start', action='store_true',
                     help="Start scrcpy first before loading the GUI")
+parser.add_argument('-f', '--force_window_frame', action='store_true',
+                    help="Force display desktop window manager for toolkit without frames")
 parser.add_argument('-o', '--output', action='store_true',
                     help="Show logging output in stdout and in .log filename")
 parser.add_argument('-d', '--debug', default=3,
@@ -468,11 +470,18 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # show subwindows
         ux = UXMapper(device_id=device_id)
-        swipe_instance = SwipeUX(ux_wrapper=ux)  # Load swipe UI
+        swipe_instance = SwipeUX(
+            ux_wrapper=ux, 
+            frame=args.force_window_frame
+        )  # Load swipe UI
 
         self.progressBar.setValue(70)
         if self.check_side_panel.isChecked():
-            side_instance = InterfaceToolkit(parent=self, ux_mapper=ux)
+            side_instance = InterfaceToolkit(
+                parent=self, 
+                ux_mapper=ux,
+                frame=args.force_window_frame
+            )
             for instance in self.child_windows:
                 if instance.ux.get_sha() == side_instance.ux.get_sha() and \
                     instance.name == side_instance.name:
@@ -482,7 +491,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 self.child_windows.append(side_instance)
 
         if self.check_bottom_panel.isChecked():
-            panel_instance = Panel(parent=self, ux_mapper=ux)
+            panel_instance = Panel(
+                parent=self, 
+                ux_mapper=ux,
+                frame=args.force_window_frame
+            )
             for instance in self.child_windows:
                 if instance.ux.get_sha() == panel_instance.ux.get_sha() and \
                     instance.name == panel_instance.name:

@@ -28,7 +28,7 @@ from guiscrcpy.lib.toolkit import UXMapper
 
 
 class SwipeUX(QMainWindow):
-    def __init__(self, ux_wrapper=None):
+    def __init__(self, ux_wrapper=None, frame=False):
         QMainWindow.__init__(self)
         super(SwipeUX, self).__init__()
         self.oldPos = None
@@ -43,9 +43,10 @@ class SwipeUX(QMainWindow):
         hexdigest = self.ux.get_sha()[:6]
 
         self.setObjectName("SwipeUX")
-        self.setWindowFlags(Qt.FramelessWindowHint)
-        self.setAttribute(Qt.WA_NoSystemBackground, True)
-        self.setAttribute(Qt.WA_TranslucentBackground, True)
+        if not frame:
+            self.setWindowFlags(Qt.FramelessWindowHint)
+            self.setAttribute(Qt.WA_NoSystemBackground, True)
+            self.setAttribute(Qt.WA_TranslucentBackground, True)
 
         # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint
         # QtCore.Qt.FramelessWindowHint)

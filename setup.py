@@ -108,6 +108,10 @@ All detailed information are clearly laid out in the Wiki. you might need to che
     package_data={'guiscrcpy': ['*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*', 'theme/*', 'ux/*', 'network/*', 'settings/*', 'install/*', 'platform/windows_tools/*', 'ui/icons/*', 'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*']},
     include_package_data=True,
     install_requires=requirements,
+    extras_require={
+        "pyside2": "PySide2",
+        "pyqt5": "PyQt5",   
+    },
     scripts=["scripts/guiscrcpy", "scripts/guiscrcpy-mapper"],
     entry_points={'console_scripts': ['guiscrcpy = guiscrcpy.launcher:bootstrap']},
     classifiers=['Operating System :: OS Independent',

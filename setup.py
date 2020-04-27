@@ -20,8 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-import os
-import sys
 from setuptools import setup
 import platform
 
@@ -39,7 +37,7 @@ data_files = [
 
 setup(
     name='guiscrcpy',
-    version='3.7.post14.dev',
+    version='3.7.post27.dev',
     description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description="""<img src=https://github.com/srevinsaju/guiscrcpy/blob/master/guiscrcpy/ui/ui/guiscrcpy_logo.png width=25%>
 
@@ -103,15 +101,12 @@ All detailed information are clearly laid out in the Wiki. you might need to che
     author_email="srevin03@gmail.com",
     packages=['guiscrcpy'],
     data_files = data_files,
+    extras_require={'pyside2': 'PySide2', 'pyqt5': 'PyQt5'},
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
     package_data={'guiscrcpy': ['*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*', 'theme/*', 'ux/*', 'network/*', 'settings/*', 'install/*', 'platform/windows_tools/*', 'ui/icons/*', 'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*']},
     include_package_data=True,
     install_requires=requirements,
-    extras_require={
-        "pyside2": "PySide2",
-        "pyqt5": "PyQt5",   
-    },
     scripts=["scripts/guiscrcpy", "scripts/guiscrcpy-mapper"],
     entry_points={'console_scripts': ['guiscrcpy = guiscrcpy.launcher:bootstrap']},
     classifiers=['Operating System :: OS Independent',

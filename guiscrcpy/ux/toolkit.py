@@ -30,6 +30,12 @@ from guiscrcpy.ui.toolkit import Ui_ToolbarPanel
 
 class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
     def __init__(self, ux_mapper=None, parent=None, frame=False):
+        """
+        Side panel toolkit for guiscrcpy main window
+        :param ux_mapper:
+        :param parent:
+        :param frame:
+        """
         QMainWindow.__init__(self)
         Ui_ToolbarPanel.__init__(self)
         self.name = "toolkit"

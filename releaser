@@ -63,6 +63,11 @@ if os.path.exists("bin/scrcpy") and os.path.exists("bin/adb") and os.path.exists
     """
 }
 
+EXTRAS_REQUIRE = {
+    "pyside2": "PySide2",
+    "pyqt5": "PyQt5",
+}
+
 
 def gen_version():
     """
@@ -141,10 +146,7 @@ setup(
     author_email="srevin03@gmail.com",
     packages=['guiscrcpy'],
     data_files = data_files,
-    extras_require={
-        "pyside2": "PySide2",
-        "pyqt5": "PyQt5",
-    },
+    extras_require={extras},
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
     package_data={package_data},
@@ -185,6 +187,7 @@ for setup in ("setup.py", "setup.py-manylinux2014-scrcpy"):
             package_data=PACKAGE_DIR,
             entry_points=CONSOLE_SCRIPTS,
             long_description=long_description,
+            extras=EXTRAS_REQUIRE,
             DATA_FILE_MANIPULATE=DATA_FILES_MANIPULATE[setup]
         ))
 

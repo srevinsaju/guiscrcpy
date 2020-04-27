@@ -236,7 +236,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.check_swipe_panel.setChecked(True)
         self.check_bottom_panel.setChecked(True)
         self.check_side_panel.setChecked(True)
-        
+
         self.quit.clicked.connect(self.quit_window)
         self.dimensionText.setText("DEFAULT")
         config['bitrate'] = int(self.dial.value())
@@ -642,7 +642,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         if self.notifChecker.isChecked():
             # call notification auditor if notification_auditor is checked only
             from guiscrcpy.lib.notify import NotifyAuditor
-            try: 
+            try:
                 NotifyAuditor()
             except (AttributeError, NameError, ValueError):
                 self.notifChecker.setChecked(False)

@@ -33,6 +33,12 @@ except Exception as e:
 
 class UXMapper:
     def __init__(self, device_id=None):
+        """
+        The main class for UXMapper and adb shell spawn to device
+        The guiscrcpy client passes information ot the UXMapper which
+        spawns adb subprocesses to handle button and tap events
+        :param device_id:
+        """
         logging.debug("Launching UX Mapper")
         self.has_modules = getWindowsWithTitle and auto
         logging.debug("Calculating Screen Size")
@@ -43,17 +49,34 @@ class UXMapper:
         # each device connected is uniquely identified by the tools by
         # a salted hash. The toolkits are assigned colors based on the first
         # 6 colors and the stylesheet is derived from
-        self.sha = hashlib.sha1(str(self.deviceId).encode()).hexdigest()
+        self.__sha = hashlib.sha1(str(self.deviceId).encode()).hexdigest()
 
     def get_sha(self):
-        return self.sha
+        """
+        A method which returns the unique UUID of the the device
+        :return: The hexdigest of a salted hash
+        """
+        return self.__sha
 
     def do_swipe(self, x1=10, y1=10, x2=10, y2=10):
+        """
+        Performs a basic swipe operation
+        :param x1: x1 coordinate
+        :param y1: y1 coordinate
+        :param x2: x2 coordinate
+        :param y2: y2 coordinate
+        :return: Boolean True, in success
+        """
         adb.shell_input(adb.path, "swipe {} {} {} {}".format(
             x1, y1, x2, y2), device_id=self.deviceId)
         return True
 
     def do_keyevent(self, key):
+        """
+        Performs a key event on adb
+        :param key: The ADB predefined keycode
+        :return:
+        """
         adb.shell_input(adb.path, "keyevent {}".format(key),
                         device_id=self.deviceId)
         return True

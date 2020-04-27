@@ -115,8 +115,6 @@ setupfile = \
 {COPYRIGHT}
 """
 
-import os
-import sys
 from setuptools import setup
 import platform
 
@@ -143,6 +141,10 @@ setup(
     author_email="srevin03@gmail.com",
     packages=['guiscrcpy'],
     data_files = data_files,
+    extras_require={
+        "pyside2": "PySide2",
+        "pyqt5": "PyQt5",
+    },
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
     package_data={package_data},

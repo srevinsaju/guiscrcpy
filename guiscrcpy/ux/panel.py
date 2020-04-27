@@ -30,6 +30,12 @@ from guiscrcpy.ui.panel import Ui_HorizontalPanel
 class Panel(QMainWindow, Ui_HorizontalPanel):
     # there was a Dialog in the bracket
     def __init__(self, parent=None, ux_mapper=None, frame=False):
+        """
+        The bottom panel subwindow class for guiscrcpy
+        :param parent: The caller of the function
+        :param ux_mapper: The UX Mapper toolkit
+        :param frame: Boolean (Frame window / Frameless Window)
+        """
         QMainWindow.__init__(self)
         Ui_HorizontalPanel.__init__(self)
         self.name = "panel"

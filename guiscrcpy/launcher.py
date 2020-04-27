@@ -38,9 +38,8 @@ import os.path
 import sys
 import time
 import webbrowser
-from datetime import datetime
 from subprocess import PIPE
-from subprocess import Popen as po
+from subprocess import Popen
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QPixmap
@@ -62,16 +61,20 @@ from guiscrcpy.ux.toolkit import InterfaceToolkit
 from guiscrcpy.version import VERSION
 from guiscrcpy.install.finder import openFileNameDialog
 
+# ============================================================================
+# Change directory so that the pixmaps are available to PyQt windows
 try:
     os.chdir(os.path.dirname(__file__))
 except FileNotFoundError:
     pass  # Its a PyInstaller compiled package
 
+# ============================================================================
 # initialize config manager
 cfgmgr = InterfaceConfig()
 config = cfgmgr.get_config()
 environment = platform.System()
 
+# ============================================================================
 # Add precedence for guiscrcpy to check environment variables
 # for the paths of `adb` and `scrcpy` over the configuration files.
 if os.getenv('GUISCRCPY_ADB', None) is None:
@@ -86,6 +89,8 @@ else:
 
 scrcpy.server_path = config['scrcpy-server']
 
+# ============================================================================
+# ARGUMENT PARSER
 # Initialize argument parser
 parser = argparse.ArgumentParser(
     'guiscrcpy v{}'.format(VERSION)
@@ -226,7 +231,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             logger.debug(f"Exception: flaglineedit.text(config[extra]) {err}")
             pass
 
-        # set swipe instance, bottom instance and 
+        # set swipe instance, bottom instance and
         # side instance as enabled by default
         self.check_swipe_panel.setChecked(True)
         self.check_bottom_panel.setChecked(True)
@@ -275,7 +280,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
     @staticmethod
     def launch_usb_audio():
         logger.debug("Called usbaudio")
-        po("usbaudio", shell=True, stdout=PIPE, stderr=PIPE)
+        for path in environment.paths():
+            if os.path.exists(os.path.join(path, 'usbaudio')):
+                path_to_usbaudio = os.path.join(path, 'usbaudio')
+                break
+        else:
+            return
+        Popen(path_to_usbaudio, stdout=PIPE, stderr=PIPE)
 
     @staticmethod
     def launch_web_srevinsaju():
@@ -325,7 +336,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         else:
             self.dimensionSlider.setEnabled(True)
             config['dimension'] = int(self.dimensionSlider.value())
-        
             self.dimensionText.setText(
                 " " + str(config['dimension']) + "px")
             self.dimensionSlider.sliderMoved.connect(
@@ -525,7 +535,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # 12: Init side_panel if necessary
         if self.check_side_panel.isChecked():
             side_instance = InterfaceToolkit(
-                parent=self, 
+                parent=self,
                 ux_mapper=ux,
                 frame=args.force_window_frame
             )
@@ -542,7 +552,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # 13: Init bottom_panel if necessary
         if self.check_bottom_panel.isChecked():
             panel_instance = Panel(
-                parent=self, 
+                parent=self,
                 ux_mapper=ux,
                 frame=args.force_window_frame
             )
@@ -559,7 +569,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # 14: Init swipe panel if necessary
         if self.check_swipe_panel.isChecked():
             swipe_instance = SwipeUX(
-                ux_wrapper=ux, 
+                ux_wrapper=ux,
                 frame=args.force_window_frame
             )  # Load swipe UI
             for instance in self.child_windows:
@@ -634,7 +644,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             from guiscrcpy.lib.notify import NotifyAuditor
             try: 
                 NotifyAuditor()
-            except (AttributeError, NameError, ValueError): 
+            except (AttributeError, NameError, ValueError):
                 self.notifChecker.setChecked(False)
                 print("guiscrcpy notification auditor failed. ")
                 print("Your OS / Desktop Environment might not support it atm")

@@ -100,7 +100,6 @@ class SwipeUX(QMainWindow):
             f"background-color: #{hexdigest};"
             f"border-radius: 12px; "
         )
-        
         self.swirt = QtWidgets.QPushButton(self.centralwidget)
         self.swirt.setGeometry(QtCore.QRect(40, 20, 30, 30))
         self.swirt.setText("")
@@ -145,11 +144,7 @@ class SwipeUX(QMainWindow):
         )
         self.swiup.setIcon(icon4)
         self.swiup.setObjectName("swiup")
-
         self.setCentralWidget(self.centralwidget)
-        # -----------------
-        # ================
-
         self.oldpos = self.pos()
         self.swiup.pressed.connect(self.swipup)
         self.swidn.pressed.connect(self.swipdn)

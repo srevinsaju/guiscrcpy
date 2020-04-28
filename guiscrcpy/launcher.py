@@ -300,20 +300,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 		self.nm.init()
 		self.nm.show()
 
-    def reset(self):
-
-        cfgmgr.reset_config()
-        logger.debug("CONFIGURATION FILE REMOVED SUCCESSFULLY")
-        logger.debug("RESTART")
-        message_box = QMessageBox().window()
-        message_box.about(
-            self.pushButton,
-            "Info",
-            "Please restart guiscrcpy to reset the settings. "
-            "guiscrcpy will now exit",
-        )
-        message_box.addButton("OK", self.quit_window())
-        message_box.show()
 
     @staticmethod
     def quit_window():
@@ -540,6 +526,20 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 		about_message_box.addButton("OK", about_message_box.hide())
 		about_message_box.show()
 
+	def reset(self):
+
+		cfgmgr.reset_config()
+		logger.debug("CONFIGURATION FILE REMOVED SUCCESSFULLY")
+		logger.debug("RESTART")
+		message_box = QMessageBox().window()
+		message_box.about(
+			self.pushButton,
+			"Info",
+			"Please restart guiscrcpy to reset the settings. "
+			"guiscrcpy will now exit",
+		)
+		message_box.addButton("OK", self.quit_window())
+		message_box.show()
             '{str(self.bitrateText.text().split()[1][0])}'. " \
                                f"Please use only K, M, T only"
             print(multiplier_error)

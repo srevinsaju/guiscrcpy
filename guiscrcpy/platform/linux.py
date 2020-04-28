@@ -44,7 +44,8 @@ class Linux:
     def cfgpath(self):
         return self.make_config()
 
-    def make_config(self):
+    @staticmethod
+    def make_config():
         if os.getenv('XDG_CONFIG_HOME') is None:
             path = os.path.expanduser("~/.config/guiscrcpy/")
         else:

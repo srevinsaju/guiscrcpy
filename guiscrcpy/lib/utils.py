@@ -47,7 +47,7 @@ def decode_process(process):
     return output
 
 
-def check_existence(paths, filename="", directory=True, PATH=False):
+def check_existence(paths, filename="", directory=True, path=False):
     for i in paths:
         j = os.path.expanduser(i)
         if os.path.exists(j):  # directory exists
@@ -71,10 +71,10 @@ def check_existence(paths, filename="", directory=True, PATH=False):
         else:
             logging.debug("{} doesn't exist".format(i))
 
-    if PATH:
+    if path:
         new_paths = os.getenv('PATH').split(os.pathsep)
         found_path = check_existence(
-            new_paths, filename=filename, directory=directory, PATH=False)
+            new_paths, filename=filename, directory=directory, path=False)
         if found_path:
             return found_path + ['path']
         else:

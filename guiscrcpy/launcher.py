@@ -91,6 +91,14 @@ scrcpy.server_path = config['scrcpy-server']
 
 # ============================================================================
 # ARGUMENT PARSER
+
+sys_argv = []
+for arg in sys.argv:
+    if not arg.startswith('/'):
+        sys_argv.append(arg)
+
+sys.argv = sys_argv
+
 # Initialize argument parser
 parser = argparse.ArgumentParser(
     'guiscrcpy v{}'.format(VERSION)

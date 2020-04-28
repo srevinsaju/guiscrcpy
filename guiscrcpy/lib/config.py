@@ -27,6 +27,9 @@ from guiscrcpy.platform import platform
 
 class InterfaceConfig:
     def __init__(self):
+        """
+        Manages guiscrcpy's configuration files
+        """
         self.os = platform.System()
         self.cfgpath = self.os.cfgpath()
         self.paths = self.os.paths()

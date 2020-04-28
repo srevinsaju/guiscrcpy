@@ -27,7 +27,8 @@ class NetworkManager:
                 break
 
             try:
-                subprocess.check_call(['ping', '-c1', ip], stdout=devnull)
+                subprocess.check_call(['ping', '-c1', ip], stdout=devnull,
+                                      shell=True)
                 results_q.put(ip)
             except BaseException as e:
                 logging.info("Error in ping: {}".format(e))

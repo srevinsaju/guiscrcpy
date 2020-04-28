@@ -42,12 +42,13 @@ elif platform.system() == 'Linux':
     requirements.extend(['fonttools', 'psutil'])
 
 data_files = [
-        ('share/applications', ['guiscrcpy.desktop'])
+        ('share/applications', ['guiscrcpy.desktop']),
+        ('share/icons/hicolor/scalable/apps', ['guiscrcpy.png'])
     ]
 
 setup(
     name='guiscrcpy',
-    version='3.7.post85.dev',
+    version='3.7.post88.dev',
     description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',

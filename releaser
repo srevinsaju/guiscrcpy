@@ -38,6 +38,20 @@ CONSOLE_SCRIPTS = {
     ]
 }
 
+DESKTOP_FILE = \
+"""[Desktop Entry]
+Version={v}
+Name=guiscrcpy
+GenericName=guiscrcpy
+Comment=Open Source Android Screen Mirroring System
+Exec=guiscrcpy
+Icon={icon_path}
+Type=Application
+Categories=Utility;Development;
+StartupWMClass=UGENE
+"""
+
+
 DATA_FILES_MANIPULATE = {
     "setup.py": "",
     "setup.py-manylinux2014-scrcpy": """
@@ -132,7 +146,8 @@ elif platform.system() == 'Linux':
     requirements.extend(['fonttools', 'psutil'])
 
 data_files = [
-        ('share/applications', ['guiscrcpy.desktop'])
+        ('share/applications', ['guiscrcpy.desktop']),
+        ('share/icons/hicolor/scalable/apps', ['guiscrcpy.png'])
     ]
 {DATA_FILE_MANIPULATE}
 setup(
@@ -196,6 +211,10 @@ with open("guiscrcpy/version.py", 'w') as w:
         COPYRIGHT=COPYRIGHT,
         version=v,
     ))
+
+
+with open('guiscrcpy.desktop', 'w') as w:
+    w.write(DESKTOP_FILE.format(v=v, icon_path='guiscrcpy'))
 
 print("Setup filename generated.")
 print("GUISCRCPY >> VERSION : {}".format(v))

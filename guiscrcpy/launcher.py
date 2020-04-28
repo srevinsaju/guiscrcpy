@@ -194,10 +194,11 @@ logger.debug("Importing modules...")
 
 
 class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
-    """
-    Main class for guiscrcpy object.
-    All the processes to spawn to scrcpy are handled here
-    """
+	"""
+	Main class for guiscrcpy object.
+	All the processes to spawn to scrcpy are handled here
+	"""
+
 	def settings_mgr(self):
 		from guiscrcpy.ux.settings import InterfaceSettings
 		self.sm = InterfaceSettings(self)

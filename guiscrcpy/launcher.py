@@ -64,9 +64,9 @@ from guiscrcpy.version import VERSION
 # ============================================================================
 # Change directory so that the pixmaps are available to PyQt windows
 try:
-    os.chdir(os.path.dirname(__file__))
+	os.chdir(os.path.dirname(__file__))
 except FileNotFoundError:
-    pass  # Its a PyInstaller compiled package
+	pass  # Its a PyInstaller compiled package
 
 # ============================================================================
 # initialize config manager

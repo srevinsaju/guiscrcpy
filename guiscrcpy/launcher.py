@@ -153,42 +153,42 @@ args = parser.parse_args()
 
 # set argument debug level
 if args.debug:
-    logging_priority = int(args.debug) * 10
+	logging_priority = int(args.debug) * 10
 else:
-    logging_priority = 30
+	logging_priority = 30
 logger = logging.Logger('guiscrcpy', logging_priority)
 
 # try using pynput, if exception handling not done here, it might fail in CI
 try:
-    from pynput import keyboard
+	from pynput import keyboard
 except Exception as e:
-    logger.warning("Running from tty, pass. E:{}".format(e))
-    keyboard = None
+	logger.warning("Running from tty, pass. E:{}".format(e))
+	keyboard = None
 
 logger.debug("Received flag {}".format(args.start))
 
 Header(VERSION)
 
 if args.version:
-    sys.exit(0)
+	sys.exit(0)
 
 if args.reset:
-    cfgmgr.reset_config()
-    print("Configuration files resetted successfully.")
+	cfgmgr.reset_config()
+	print("Configuration files resetted successfully.")
 
 logger.debug("Current Working Directory {}".format(os.getcwd()))
 
 if args.start:
-    logger.debug("RUNNING SCRCPY DIRECTLY")
-    args = ""
-    args += " -b " + str(config['bitrate'])
-    if config['fullscreen']:
-        args += " -f "
-    if config['swtouches']:
-        args += " -t "
-    if config['dispRO']:
-        args += " --turn-screen-off "
-    scrcpy.start(scrcpy.path, args)
+	logger.debug("RUNNING SCRCPY DIRECTLY")
+	args = ""
+	args += " -b " + str(config['bitrate'])
+	if config['fullscreen']:
+		args += " -f "
+	if config['swtouches']:
+		args += " -t "
+	if config['dispRO']:
+		args += " --turn-screen-off "
+	scrcpy.start(scrcpy.path, args)
 
 logger.debug("Importing modules...")
 
@@ -765,12 +765,15 @@ if __name__ == "__main__":
     # add current path to PATH
     sys.path.append('')
 
-    # bootstrap guiscrcpy
-    bootstrap0()
+	# add current path to path
+	sys.path.append('')
+
+	# bootstrap guiscrcpy
+	bootstrap0()
 
 
 def bootstrap():
-    from guiscrcpy import __path__
-    patz1 = list(__path__)[0]
-    sys.path.append(patz1)
-    bootstrap0()
+	from guiscrcpy import __path__
+	patz1 = list(__path__)[0]
+	sys.path.append(patz1)
+	bootstrap0()

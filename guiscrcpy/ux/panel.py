@@ -36,6 +36,7 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
         :param ux_mapper: The UX Mapper toolkit
         :param frame: Boolean (Frame window / Frameless Window)
         """
+        # noinspection PyArgumentList
         QMainWindow.__init__(self)
         Ui_HorizontalPanel.__init__(self)
         self.name = "panel"

@@ -199,6 +199,95 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 	All the processes to spawn to scrcpy are handled here
 	"""
 
+	# noinspection PyArgumentList
+	def __init__(self):
+		QMainWindow.__init__(self)
+		Ui_MainWindow.__init__(self)
+		self.setupUi(self)
+		self.cmx = None
+		self.sm = None
+		self.nm = None
+		self.swipe_instance = None
+		self.panel_instance = None
+		self.side_instance = None
+		self.child_windows = list()
+		self.options = ""
+		logger.debug(
+			"Options received by class are : {} {} {} {} {} ".format(
+				config['bitrate'],
+				config['dimension'],
+				config['swtouches'],
+				config['dispRO'],
+				config['fullscreen'],
+			))
+		self.dial.setValue(int(config['bitrate']))
+		if config['swtouches']:
+			self.showTouches.setChecked(True)
+		else:
+			self.showTouches.setChecked(False)
+		if config['dispRO']:
+			self.displayForceOn.setChecked(True)
+		else:
+			self.displayForceOn.setChecked(False)
+		if config['dimension'] is not None:
+			self.dimensionDefaultCheckbox.setChecked(False)
+			try:
+				self.dimensionSlider.setValue(config['dimension'])
+			except TypeError:
+				self.dimensionDefaultCheckbox.setChecked(True)
+		if config['fullscreen']:
+			self.fullscreen.setChecked(True)
+		else:
+			self.fullscreen.setChecked(False)
+		if is_running("scrcpy"):
+			logger.debug("SCRCPY RUNNING")
+			self.private_message_box_adb.setText("SCRCPY SERVER RUNNING")
+		else:
+			logger.debug("SCRCPY SERVER IS INACTIVE")
+			self.private_message_box_adb.setText("SCRCPY SERVER NOT RUNNING")
+
+		# CONNECT DIMENSION CHECK BOX TO STATE CHANGE
+		self.dimensionDefaultCheckbox.stateChanged.connect(
+			self.__dimension_change_cb)
+		self.build_label.setText("Build " + str(VERSION))
+
+		# DIAL CTRL GRP
+		self.dial.sliderMoved.connect(self.__dial_change_cb)
+		self.dial.sliderReleased.connect(self.__dial_change_cb)
+		# DIAL CTRL GRP
+
+		# MAIN EXECUTE ACTION
+		self.executeaction.clicked.connect(self.start_act)
+		try:
+			if config['extra']:
+				self.flaglineedit.setText(config['extra'])
+			else:
+				pass
+		except Exception as err:
+			logger.debug(f"Exception: flaglineedit.text(config[extra]) {err}")
+			pass
+
+		# set swipe instance, bottom instance and
+		# side instance as enabled by default
+		self.check_swipe_panel.setChecked(True)
+		self.check_bottom_panel.setChecked(True)
+		self.check_side_panel.setChecked(True)
+
+		self.quit.clicked.connect(self.quit_window)
+		self.dimensionText.setText("DEFAULT")
+		config['bitrate'] = int(self.dial.value())
+		self.bitrateText.setText(" " + str(config['bitrate']) + "KB/s")
+		self.pushButton.setText("RESET")
+		self.pushButton.clicked.connect(self.reset)
+		self.abtme.clicked.connect(self.launch_web_srevinsaju)
+		self.abtgit.clicked.connect(self.launch_web_github)
+		self.usbaud.clicked.connect(self.launch_usb_audio)
+		self.mapnow.clicked.connect(self.bootstrap_mapper)
+		self.network_button.clicked.connect(self.network_mgr)
+		self.settings_button.clicked.connect(self.settings_mgr)
+		self.refreshdevices.clicked.connect(
+			self.__refresh_devices_combo_box_cb)
+
 	def settings_mgr(self):
 		from guiscrcpy.ux.settings import InterfaceSettings
 		self.sm = InterfaceSettings(self)
@@ -211,93 +300,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 		self.nm.init()
 		self.nm.show()
 
-    def __init__(self):
-        QMainWindow.__init__(self)
-        Ui_MainWindow.__init__(self)
-        self.setupUi(self)
-        self.cmx = None
-        self.sm = None
-        self.nm = None
-        self.swipe_instance = None
-        self.panel_instance = None
-        self.side_instance = None
-        self.child_windows = list()
-        self.options = ""
-        logger.debug(
-            "Options received by class are : {} {} {} {} {} ".format(
-                config['bitrate'],
-                config['dimension'],
-                config['swtouches'],
-                config['dispRO'],
-                config['fullscreen'],
-            ))
-        self.dial.setValue(int(config['bitrate']))
-        if config['swtouches']:
-            self.showTouches.setChecked(True)
-        else:
-            self.showTouches.setChecked(False)
-        if config['dispRO']:
-            self.displayForceOn.setChecked(True)
-        else:
-            self.displayForceOn.setChecked(False)
-        if config['dimension'] is not None:
-            self.dimensionDefaultCheckbox.setChecked(False)
-            try:
-                self.dimensionSlider.setValue(config['dimension'])
-            except TypeError:
-                self.dimensionDefaultCheckbox.setChecked(True)
-        if config['fullscreen']:
-            self.fullscreen.setChecked(True)
-        else:
-            self.fullscreen.setChecked(False)
-        if is_running("scrcpy"):
-            logger.debug("SCRCPY RUNNING")
-            self.private_message_box_adb.setText("SCRCPY SERVER RUNNING")
-        else:
-            logger.debug("SCRCPY SERVER IS INACTIVE")
-            self.private_message_box_adb.setText("SCRCPY SERVER NOT RUNNING")
-
-        # CONNECT DIMENSION CHECK BOX TO STATE CHANGE
-        self.dimensionDefaultCheckbox.stateChanged.connect(
-            self.__dimension_change_cb)
-        self.build_label.setText("Build " + str(VERSION))
-
-        # DIAL CTRL GRP
-        self.dial.sliderMoved.connect(self.__dial_change_cb)
-        self.dial.sliderReleased.connect(self.__dial_change_cb)
-        # DIAL CTRL GRP
-
-        # MAIN EXECUTE ACTION
-        self.executeaction.clicked.connect(self.start_act)
-        try:
-            if config['extra']:
-                self.flaglineedit.setText(config['extra'])
-            else:
-                pass
-        except Exception as err:
-            logger.debug(f"Exception: flaglineedit.text(config[extra]) {err}")
-            pass
-
-        # set swipe instance, bottom instance and
-        # side instance as enabled by default
-        self.check_swipe_panel.setChecked(True)
-        self.check_bottom_panel.setChecked(True)
-        self.check_side_panel.setChecked(True)
-
-        self.quit.clicked.connect(self.quit_window)
-        self.dimensionText.setText("DEFAULT")
-        config['bitrate'] = int(self.dial.value())
-        self.bitrateText.setText(" " + str(config['bitrate']) + "KB/s")
-        self.pushButton.setText("RESET")
-        self.pushButton.clicked.connect(self.reset)
-        self.abtme.clicked.connect(self.launch_web_srevinsaju)
-        self.abtgit.clicked.connect(self.launch_web_github)
-        self.usbaud.clicked.connect(self.launch_usb_audio)
-        self.mapnow.clicked.connect(self.mapp)
-        self.network_button.clicked.connect(self.network_mgr)
-        self.settings_button.clicked.connect(self.settings_mgr)
-        self.refreshdevices.clicked.connect(
-            self.__refresh_devices_combo_box_cb)
     @staticmethod
     def launch_web_srevinsaju():
         webbrowser.open("https://srevinsaju.github.io")

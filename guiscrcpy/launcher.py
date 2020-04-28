@@ -300,25 +300,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 		self.nm.init()
 		self.nm.show()
 
-    @staticmethod
-    def launch_web_srevinsaju():
-        webbrowser.open("https://srevinsaju.github.io")
-
-    @staticmethod
-    def launch_web_github():
-        webbrowser.open("https://github.com/srevinsaju/guiscrcpy")
-
-    def about(self):
-        about_message_box = QMessageBox().window()
-        about_message_box.about(
-            self.pushButton,
-            "Info",
-            "Please restart guiscrcpy to reset the settings. "
-            "guiscrcpy will now exit",
-        )
-        about_message_box.addButton("OK", about_message_box.hide())
-        about_message_box.show()
-
     def reset(self):
 
         cfgmgr.reset_config()
@@ -539,6 +520,26 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 		else:
 			return
 		Popen(path_to_usbaudio, stdout=PIPE, stderr=PIPE)
+
+	@staticmethod
+	def launch_web_srevinsaju():
+		webbrowser.open("https://srevinsaju.github.io")
+
+	@staticmethod
+	def launch_web_github():
+		webbrowser.open("https://github.com/srevinsaju/guiscrcpy")
+
+	def about(self):
+		about_message_box = QMessageBox().window()
+		about_message_box.about(
+			self.pushButton,
+			"Info",
+			"Please restart guiscrcpy to reset the settings. "
+			"guiscrcpy will now exit",
+		)
+		about_message_box.addButton("OK", about_message_box.hide())
+		about_message_box.show()
+
             '{str(self.bitrateText.text().split()[1][0])}'. " \
                                f"Please use only K, M, T only"
             print(multiplier_error)

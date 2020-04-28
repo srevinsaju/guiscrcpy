@@ -36,8 +36,8 @@ from guiscrcpy.lib.check import adb
 from guiscrcpy.lib.config import InterfaceConfig
 
 get1 = False
-fixedpos = [0, 0]
-finalpos = [0, 0]
+fixed_pos = [0.0, 0.0]
+final_pos = [0.0, 0.0]
 
 cfgmgr = InterfaceConfig()
 config = cfgmgr.get_config()

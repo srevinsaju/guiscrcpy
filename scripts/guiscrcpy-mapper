@@ -31,7 +31,7 @@ paths = list(guiscrcpy.__path__)[0]
 
 sys.path.append(paths)
 sys.path.append('')
-# print("PATH: ", sys.path)
+# print("path: ", sys.path)
 
 mapper.file_check()
 os.chdir(paths)

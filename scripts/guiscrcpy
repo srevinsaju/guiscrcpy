@@ -8,5 +8,5 @@ patz = list(guiscrcpy.__path__)[0]
 
 sys.path.append(patz)
 sys.path.append('')
-# print("PATH: ", sys.path)
+# print("path: ", sys.path)
 bootstrap()

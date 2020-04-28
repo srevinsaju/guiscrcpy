@@ -16,3 +16,5 @@ build
 *.AppImage
 .coverage
 .codacy-coverage
+*.snap
+prime

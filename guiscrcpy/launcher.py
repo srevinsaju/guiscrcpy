@@ -753,17 +753,15 @@ def bootstrap0():
 
 
 if __name__ == "__main__":
-    try:
-        # workaround the inability to locate pixmaps
-        from guiscrcpy import __path__
-        paths = list(__path__)[0]
-        sys.path.append(paths)
-        sys.path.append('')
-    except Exception as e:
-        logger.debug(f"E:{e}. Continuing to run guiscrcpy.")
+	try:
+		# workaround the inability to locate pixmaps
+		from guiscrcpy import __path__
 
-    # add current path to PATH
-    sys.path.append('')
+		paths = list(__path__)[0]
+		sys.path.append(paths)
+		sys.path.append('')
+	except Exception as e:
+		logger.debug(f"E:{e}. Continuing to run guiscrcpy.")
 
 	# add current path to path
 	sys.path.append('')

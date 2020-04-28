@@ -46,6 +46,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtWidgets import QMessageBox
 
+from guiscrcpy.install.finder import open_exe_name_dialog
 from guiscrcpy.lib.check import adb
 from guiscrcpy.lib.check import scrcpy
 from guiscrcpy.lib.config import InterfaceConfig
@@ -59,7 +60,6 @@ from guiscrcpy.ux.panel import Panel
 from guiscrcpy.ux.swipe import SwipeUX
 from guiscrcpy.ux.toolkit import InterfaceToolkit
 from guiscrcpy.version import VERSION
-from guiscrcpy.install.finder import openFileNameDialog
 
 # ============================================================================
 # Change directory so that the pixmaps are available to PyQt windows

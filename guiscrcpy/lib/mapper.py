@@ -124,7 +124,7 @@ class MapperUI(QtWidgets.QWidget):
         time.sleep(1)
         print(b.stdout.read().decode('utf-8'))
         print(a.stdout.read().decode('utf-8'))
-        b = Popen("adb shell rm /sdcard/scr.png", shell=True, stdout=PIPE)
+        Popen("adb shell rm /sdcard/scr.png", shell=True, stdout=PIPE)
         self.label.setSizePolicy(
             QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored
         )

@@ -222,7 +222,7 @@ class MapperUI(QtWidgets.QWidget):
 
     def mouseMoveEvent(self, event):
         if event.buttons() & Qt.LeftButton:
-            # painter.setPen(QPen(self.brushColor, 
+            # painter.setPen(QPen(self.brushColor,
             # self.brushSize, Qt.SolidLine, Qt.RoundCap,Qt.RoundJoin))
             # painter.drawLine(
             # self.label.mapFromParent(event.pos()),self.last_found_point)
@@ -251,7 +251,7 @@ def listen_keypress(key_a):
                 print("running cmd")
                 finalpos0 = key_a[key.char]
                 cm = "adb shell input tap " + \
-                     str(finalpos0[0]) + " " + str(finalpos0[1])
+                    str(finalpos0[0]) + " " + str(finalpos0[1])
                 print(cm)
                 c = Popen(cm, shell=True, stdout=PIPE)
                 print(c.stdout.read().decode('utf-8'))

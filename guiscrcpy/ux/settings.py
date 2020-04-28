@@ -77,7 +77,7 @@ class InterfaceSettings(QMainWindow, Ui_MainWindow):
                         try:
                             arg = j.text()
                             print(arg)
-                        except Exception as e:
+                        except (AttributeError, NameError, ValueError):
                             arg = j.value()
                             print(arg)
                         cmd_args.append(arg)

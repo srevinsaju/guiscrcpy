@@ -29,76 +29,76 @@ from guiscrcpy.ui.toolkit import Ui_ToolbarPanel
 
 
 class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
-	def __init__(self, ux_mapper=None, parent=None, frame=False):
-		"""
-		Side panel toolkit for guiscrcpy main window
-		:param ux_mapper:
-		:param parent:
-		:param frame:
-		"""
-		QMainWindow.__init__(self)
-		Ui_ToolbarPanel.__init__(self)
-		self.name = "toolkit"
-		self.uid = uuid.uuid4()
-		self.setupUi(self)
-		self.parent = parent
-		self.oldPos = None
-		self.ux = None
-		if not frame:
-			self.setWindowFlags(
-				QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
-			)
-		if ux_mapper:
-			self.ux = ux_mapper
-		else:
-			self.ux = UXMapper()
+    def __init__(self, ux_mapper=None, parent=None, frame=False):
+        """
+        Side panel toolkit for guiscrcpy main window
+        :param ux_mapper:
+        :param parent:
+        :param frame:
+        """
+        QMainWindow.__init__(self)
+        Ui_ToolbarPanel.__init__(self)
+        self.name = "toolkit"
+        self.uid = uuid.uuid4()
+        self.setupUi(self)
+        self.parent = parent
+        self.oldPos = None
+        self.ux = None
+        if not frame:
+            self.setWindowFlags(
+                QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
+            )
+        if ux_mapper:
+            self.ux = ux_mapper
+        else:
+            self.ux = UXMapper()
 
-	def init(self):
-		self.clipD2PC.clicked.connect(self.ux.copy_devpc)
-		self.clipPC2D.clicked.connect(self.ux.copy_pc2dev)
-		self.back.clicked.connect(self.ux.key_back)
-		self.screenfreeze.clicked.connect(self.quit_window)
-		self.appswi.clicked.connect(self.ux.key_switch)
-		self.menuUI.clicked.connect(self.ux.key_menu)
-		self.home.clicked.connect(self.ux.key_home)
-		self.notif_pull.clicked.connect(self.ux.expand_notifications)
-		self.notif_collapse.clicked.connect(self.ux.collapse_notifications)
-		self.fullscreenUI.clicked.connect(self.ux.fullscreen)
-		self.powerUI.clicked.connect(self.ux.key_power)
-		self.vup.clicked.connect(self.ux.key_volume_up)
-		self.vdown.clicked.connect(self.ux.key_volume_down)
-		self.potraitUI.clicked.connect(self.ux.reorient_portrait)
-		self.landscapeUI.clicked.connect(self.ux.reorient_landscape)
-		self.colorize()  # give a unique color for each device
-		self.show()
+    def init(self):
+        self.clipD2PC.clicked.connect(self.ux.copy_devpc)
+        self.clipPC2D.clicked.connect(self.ux.copy_pc2dev)
+        self.back.clicked.connect(self.ux.key_back)
+        self.screenfreeze.clicked.connect(self.quit_window)
+        self.appswi.clicked.connect(self.ux.key_switch)
+        self.menuUI.clicked.connect(self.ux.key_menu)
+        self.home.clicked.connect(self.ux.key_home)
+        self.notif_pull.clicked.connect(self.ux.expand_notifications)
+        self.notif_collapse.clicked.connect(self.ux.collapse_notifications)
+        self.fullscreenUI.clicked.connect(self.ux.fullscreen)
+        self.powerUI.clicked.connect(self.ux.key_power)
+        self.vup.clicked.connect(self.ux.key_volume_up)
+        self.vdown.clicked.connect(self.ux.key_volume_down)
+        self.potraitUI.clicked.connect(self.ux.reorient_portrait)
+        self.landscapeUI.clicked.connect(self.ux.reorient_landscape)
+        self.colorize()  # give a unique color for each device
+        self.show()
 
-	def colorize(self):
-		hexdigest = self.ux.get_sha()[:6]
-		self.tk_device_id.setStyleSheet(f"background-color: #{hexdigest};")
+    def colorize(self):
+        hexdigest = self.ux.get_sha()[:6]
+        self.tk_device_id.setStyleSheet(f"background-color: #{hexdigest};")
 
-	def mousePressEvent(self, event):
-		self.oldPos = event.globalPos()
+    def mousePressEvent(self, event):
+        self.oldPos = event.globalPos()
 
-	def mouseMoveEvent(self, event):
-		try:
-			delta = QPoint(event.globalPos() - self.oldPos)
-			self.move(self.x() + delta.x(), self.y() + delta.y())
-			self.oldPos = event.globalPos()
-		except (TypeError, AttributeError):
-			pass
+    def mouseMoveEvent(self, event):
+        try:
+            delta = QPoint(event.globalPos() - self.oldPos)
+            self.move(self.x() + delta.x(), self.y() + delta.y())
+            self.oldPos = event.globalPos()
+        except (TypeError, AttributeError):
+            pass
 
-	def quit_window(self):
-		for instance in self.parent.child_windows:
-			# We are checking for any more windows running before killing
-			# the main window. self.child_windows has the list of all
-			# objects spawned by the main window ui
-			# This method checks if we are the last member of the windows
-			# spawned and we ourselves are not a member of ourself by
-			# checking the uuid generated on creation
-			if not instance.isHidden() \
-					and instance.name != "swipe" and instance.uid != \
-					self.uid:
-				self.hide()
-				break
-		else:
-			sys.exit()
+    def quit_window(self):
+        for instance in self.parent.child_windows:
+            # We are checking for any more windows running before killing
+            # the main window. self.child_windows has the list of all
+            # objects spawned by the main window ui
+            # This method checks if we are the last member of the windows
+            # spawned and we ourselves are not a member of ourself by
+            # checking the uuid generated on creation
+            if not instance.isHidden() \
+                    and instance.name != "swipe" and instance.uid != \
+                    self.uid:
+                self.hide()
+                break
+        else:
+            sys.exit()

@@ -20,4 +20,4 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-VERSION = '3.7.post27.dev'
+VERSION = '3.7.post83.dev'

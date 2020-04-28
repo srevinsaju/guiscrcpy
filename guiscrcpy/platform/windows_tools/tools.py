@@ -71,10 +71,6 @@ def get_folders():
     Named tuple with fields 'home', 'desktop', 'startmenu'
     Example:
     -------
-    >>> from pyshortcuts import get_folders
-    >>> folders = get_folders()
-    >>> print("Home, Desktop, StartMenu ",
-    ...       folders.home, folders.desktop, folders.startmenu)
     """
     return UserFolders(get_homedir(), get_desktop(), get_startmenu())
 
@@ -82,7 +78,6 @@ def get_folders():
 def make_shortcut():
     userfolders = get_folders()
 
-    full_script = 'guiscrcpy'
     desktop, startmenu = True, True
     for (create, folder) in ((desktop, userfolders.desktop),
                              (startmenu, userfolders.startmenu)):

@@ -657,7 +657,7 @@ QGraphicsView:disabled {
 }
 
 QGraphicsView:hover, QGraphicsView:!hover, QGraphicsView::selected,
-QGraphicsView::pressed { border: 1px solid #32414B; } 
+QGraphicsView::pressed { border: 1px solid #32414B; }
 
 /* QCalendarWidget --------------------------------------------------------
 

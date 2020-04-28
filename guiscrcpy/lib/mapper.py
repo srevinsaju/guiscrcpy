@@ -69,6 +69,8 @@ dimensions = adb.get_dimensions(adb.path)
 
 class MapperUI(QtWidgets.QWidget):
     def __init__(self):
+        self.last_found_point = None
+        self.image = None
         QtWidgets.QWidget.__init__(self)
         self.label = QtWidgets.QLabel(self)
         self.drawing = False

@@ -26,7 +26,6 @@ import sys
 import time
 from subprocess import PIPE
 from subprocess import Popen
-from subprocess import Popen as po
 
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtCore import Qt

@@ -163,7 +163,9 @@ class MapperUI(QtWidgets.QWidget):
         self.pushButton.setText("OK")
         self.label0.setWordWrap(True)
         self.label0.setText(
-            "Click the point, and enter char in textbox and press OK to continue.")
+            "Click the point, and enter char in textbox and "
+            "press OK to continue."
+        )
 
     def keyreg(self):
         with open(cfgpath + 'guiscrcpy.mapper.json', 'r') as f:
@@ -177,18 +179,18 @@ class MapperUI(QtWidgets.QWidget):
         final_pos[0] = fixx
         final_pos[1] = fixy
         self.label0.setText(
-            "SUCCESS! Add a new point and enter char; close the window to finish adding.")
+            "SUCCESS! "
+            "Add a new point and enter char; "
+            "close the window to finish adding."
+        )
 
         print("FINAL LIST == ", final_pos)
         keylisten = self.lineEdit.text()
 
         try:
             # keylisten = input("Enter key : ")
-
             print('YES THE KEY IS == ', keylisten)
-
-            key_a[keylisten] = copy.copy(finalpos)
-
+            key_a[keylisten] = copy.copy(final_pos)
             print(key_a)
             with open(cfgpath + jsong, 'w') as f:
                 json.dump(key_a, f)
@@ -252,11 +254,11 @@ def listen_keypress(key_a):
                 cm = "adb shell input tap " + \
                      str(finalpos0[0]) + " " + str(finalpos0[1])
                 print(cm)
-                c = po(cm, shell=True, stdout=PIPE)
+                c = Popen(cm, shell=True, stdout=PIPE)
                 print(c.stdout.read().decode('utf-8'))
                 print("COMPLETED")
-        except AttributeError:
-            print("E:")
+        except AttributeError as e:
+            print("E: {}".format(e))
 
     with keyboard.Listener(on_press=on_press0) as listener:
         listener.join()

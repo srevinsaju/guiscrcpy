@@ -6,11 +6,8 @@ summary: An opensource GUI for android screen mirroring# 79 char long summary
 description: |
   A full fledged GUI integration for the award winning open source scrcpy, for 
   Android Screen mirroring
-
-grade: stable # must be 'stable' to release into candidate/stable channels
-confinement: strict #use 'strict' once you have the right plugs and slots
-# plugs: ['desktop','framebuffer', 'home', 'opengl', 'x11', 'desktop-legacy']
-
+grade: stable 
+confinement: strict 
 
 base: core18
 
@@ -26,19 +23,70 @@ apps:
       LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/android:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:/var/lib/snapd/lib/gl"
       MESA_GLSL_CACHE_DIR: "$SNAP_USER_DATA"
       LIBGL_DRIVERS_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri"
+      SCRCPY_SERVER_PATH: "$SNAP/usr/local/share/scrcpy/scrcpy-server"
+
   adb:  
     command: usr/bin/adb
     environment:
       LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/android/"
+
   guiscrcpy:
-    command: usr/bin/guiscrcpy
+    command: bin/guiscrcpy
+    environment: 
+      PATH: $SNAP/lib:$SNAP/usr/lib:$SNAP/bin:$SNAP/usr/bin:$SNAP/usr/local/bin:$PATH
+      GUISCRCPY_SCRCPY: "$SNAP/usr/local/bin/scrcpy"
+      GUISCRCPY_ADB: "$SNAP/usr/bin/adb"
+      SCRCPY_SERVER_PATH: "$SNAP/usr/local/share/scrcpy/scrcpy-server"
+    command-chain: &command-chain-common
+    - bin/debian-multiarch-triplet-provider-launch
+    - bin/classic-launch
+    - bin/desktop-launch
+    - bin/guiscrcpy
+    desktop: share/applications/guiscrcpy.desktop
+    icon: share/icons/hicolor/scalable/apps/guiscrcpy.png
 
-
-layout:
-  /usr/local/share/scrcpy:
-    bind: $SNAP/usr/local/share/scrcpy
 
 parts:
+
+  debian-multiarch-triplet-provider-launch:
+    plugin: nil
+    stage-snaps:
+    - debian-multiarch-triplet-provider-launch
+
+  classic-launch:
+    plugin: nil
+    stage-snaps:
+    - classic-launch
+
+  # Remote part for support of various desktop technologies
+  # Refer: https://github.com/ubuntu/snapcraft-desktop-helpers/blob/master/snapcraft.yaml
+  desktop-qt5:
+    build-packages:
+    - build-essential
+    - qtbase5-dev
+    - dpkg-dev
+    make-parameters:
+    - FLAVOR=qt5
+    plugin: make
+    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+    source-subdir: qt
+    stage-packages:
+    - libxkbcommon0
+    - ttf-ubuntu-font-family
+    - dmz-cursor-theme
+    - light-themes
+    - adwaita-icon-theme
+    - gnome-themes-standard
+    - shared-mime-info
+    - libqt5gui5
+    - libgdk-pixbuf2.0-0
+    - libqt5svg5
+    - try:
+      - appmenu-qt5
+    - locales-all
+    - xdg-user-dirs
+    - fcitx-frontend-qt5
+
   scrcpy-server:
     plugin: nil
     override-pull:
@@ -74,16 +122,13 @@ parts:
       - libslang2
       - libglu1-mesa
       - adb
+
   guiscrcpy:
-    
+    after: [desktop-qt5, classic-launch, debian-multiarch-triplet-provider-launch]
     # See 'snapcraft plugins'
     plugin: python
     python-version: python3
-    source: https://github.com/srevinsaju/guiscrcpy/archive/master.zip
-    #requirements: requirements.txt
-    build-packages: [python3-pip]
-    python-packages: [PyQt5, psutil,qdarkstyle]
-    stage-packages: [python3-pyqt5, python3]
+    source: .
 
 plugs:
   adb-support:

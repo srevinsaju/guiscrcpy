@@ -216,6 +216,10 @@ with open("guiscrcpy/version.py", 'w') as w:
 with open('guiscrcpy.desktop', 'w') as w:
     w.write(DESKTOP_FILE.format(v=v, icon_path='guiscrcpy'))
 
+with open('snap/gui/guiscrcpy.desktop', 'w') as w:
+    w.write(DESKTOP_FILE.format(v=v, icon_path='${SNAP}/meta/gui/guiscrcpy.png'))
+
+
 print("Setup filename generated.")
 print("GUISCRCPY >> VERSION : {}".format(v))
 

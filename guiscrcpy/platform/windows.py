@@ -19,13 +19,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import logging
 import os
+
 from guiscrcpy.platform.windows_tools.tools import make_shortcut
 
 
 class Windows:
     def __init__(self):
         self.make_config()
-        self._cfgpath = self.cfgpath()
 
     @staticmethod
     def make_config():
@@ -36,14 +36,13 @@ class Windows:
                 os.makedirs(path)
             except Exception as e:
                 logging.error(
-                    "Error creating configuration file in dir {path}. Error code:{e}"
-                        .format(
-                        path=path,
-                        e=e
-                    ))
+                    "Error creating configuration filename in dir {path}. "
+                    "Error code:{e}".format(path=path, e=e)
+                )
         return path
 
-    def system(self):
+    @staticmethod
+    def system():
         return 'Windows'
 
     def cfgpath(self):
@@ -52,36 +51,53 @@ class Windows:
     def increment(self):
         pass
 
-    def paths(self):
+    @staticmethod
+    def paths():
         return ['bin']
 
-    def install_fonts(self):
+    @staticmethod
+    def install_fonts():
         """
         Install fonts to system directory.
-        The fonts being installed is Titillium Web ~ https://fonts.google.com/specimen/Titillium+Web
+        The fonts being installed is Titillium Web ~
+        https://fonts.google.com/specimen/Titillium+Web
         Open Source Approved fonts.
         # TODO support for SystemWide Installation
         :return: True if installation successful, else False
         """
         # TODO: Test it properly
         # Likely to fail
-        cmd = r"""copy "{fontdir}" "%WINDIR%\Fonts"
+        cmd = r"""copy "{fontdir}" "%WINDIR%\Fonts
         reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" /
         v "FontName (TrueType)" / t REG_SZ / d {font} / f """
-        font_dir = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
+
+        font_dir = os.path.join(
+            os.path.abspath(
+                os.path.dirname(os.path.dirname(__file__))
+            ),
+            'ui',
+            'fonts'
+        )
         try:
             fonts = os.listdir(font_dir)
             for i in fonts:
-                # install the fonts by executing cmd and update the Windows Registry
+                # install the fonts by executing cmd and update the Windows
+                # Registry
                 print(cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
-                os.system(cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
+                os.system(
+                    cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
             return True
         except Exception as e:
             print("Installing fonts failed")
-            logging.error("Error Installing the fonts. "
-                        "You might have to manually install the fonts"
-                        "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
+            logging.error(
+                "Error Installing the fonts. "
+                "You might have to manually install the fonts"
+                "Titillium Web : "
+                "https://fonts.google.com/specimen/Titillium+Web"
+                "Error: {}".format(e)
+            )
             return False
 
-    def create_desktop(self):
+    @staticmethod
+    def create_desktop():
         make_shortcut()

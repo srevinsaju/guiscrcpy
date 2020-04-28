@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>328</width>
-    <height>26</height>
+    <width>397</width>
+    <height>24</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,7 +46,7 @@ color: rgb(0, 0, 0);
    </property>
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>230</x>
      <y>0</y>
      <width>51</width>
      <height>25</height>
@@ -74,7 +74,7 @@ color: rgb(0, 0, 0);
     <rect>
      <x>20</x>
      <y>0</y>
-     <width>61</width>
+     <width>81</width>
      <height>25</height>
     </rect>
    </property>
@@ -101,7 +101,7 @@ color: rgb(0, 0, 0);
    </property>
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>110</x>
      <y>0</y>
      <width>51</width>
      <height>25</height>
@@ -127,7 +127,7 @@ color: rgb(0, 0, 0);
    </property>
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>290</x>
      <y>0</y>
      <width>31</width>
      <height>25</height>
@@ -153,7 +153,7 @@ color: rgb(0, 0, 0);
    </property>
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>160</x>
      <y>0</y>
      <width>71</width>
      <height>25</height>
@@ -179,7 +179,7 @@ color: rgb(0, 0, 0);
    </property>
    <property name="geometry">
     <rect>
-     <x>300</x>
+     <x>320</x>
      <y>0</y>
      <width>31</width>
      <height>25</height>
@@ -222,6 +222,45 @@ color: rgb(0, 0, 0);
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <widget class="QPushButton" name="bp_close">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>0</y>
+     <width>31</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="rsrc.qrc">
+     <normaloff>:/icons/icons/cross-mark-on-a-black-circle-background.svg</normaloff>:/icons/icons/cross-mark-on-a-black-circle-background.svg</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="bp_device_id">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>0</y>
+     <width>20</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
   <zorder>homee</zorder>
   <zorder>backk</zorder>
   <zorder>powerUII</zorder>
@@ -229,6 +268,8 @@ color: rgb(0, 0, 0);
   <zorder>vdownn</zorder>
   <zorder>vupp</zorder>
   <zorder>label</zorder>
+  <zorder>bp_close</zorder>
+  <zorder>bp_device_id</zorder>
  </widget>
  <resources>
   <include location="rsrc.qrc"/>

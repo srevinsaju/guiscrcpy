@@ -24,7 +24,9 @@ import os
 class Darwin:
     def __init__(self):
         logging.error(
-            "MacOS is untested. guiscrcpy is trying to use Linux config on Mac")
+            "MacOS is untested. "
+            "guiscrcpy is trying to use Linux config on Mac"
+        )
 
     def cfgpath(self):
         return self.make_config()
@@ -40,18 +42,21 @@ class Darwin:
                 os.makedirs(path)
             except Exception as e:
                 logging.error(
-                    "Error creating configuration file in dir {path}. Error code:{e}"
+                    "Error creating configuration filename in dir {path}. "
+                    "Error code:{e}"
                     .format(
                         path=path,
                         e=e
                     ))
         return path
 
-    def system(self):
+    @staticmethod
+    def system():
         return 'Darwin'
 
     def increment(self):
         pass
 
-    def paths(self):
+    @staticmethod
+    def paths():
         return ['bin', '/usr/bin', '~/.local/bin', '~/bin', '/usr/local/bin']

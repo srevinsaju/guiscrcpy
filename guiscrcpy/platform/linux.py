@@ -19,9 +19,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import logging
 import os
-import shutil
 
-from guiscrcpy.lib.ver import version
+from guiscrcpy.version import VERSION
 
 desktop = \
     """
@@ -45,7 +44,8 @@ class Linux:
     def cfgpath(self):
         return self.make_config()
 
-    def make_config(self):
+    @staticmethod
+    def make_config():
         if os.getenv('XDG_CONFIG_HOME') is None:
             path = os.path.expanduser("~/.config/guiscrcpy/")
         else:
@@ -55,25 +55,25 @@ class Linux:
                 os.makedirs(path)
             except Exception as e:
                 logging.error(
-                    "Error creating configuration file in dir {path}. Error code:{e}"
+                    "Error creating configuration filename in dir {path}. "
+                    "Error code:{e}"
                     .format(
                         path=path,
                         e=e
                     ))
         return path
 
-    def create_desktop(self):
+    @staticmethod
+    def create_desktop():
         """
-        Create Desktop file for Linux in ~/.local level
+        Create Desktop filename for Linux in ~/.local level
         :return:
         """
-        v = version()
-        ver = v.get_commit()
-
         desk = desktop.format(
-            v=ver,
-            icon_path=os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))),
-                                   'ui', 'ui', 'guiscrcpy_logo.png'))
+            v=VERSION,
+            icon_path=os.path.join(
+                os.path.abspath(os.path.dirname(os.path.dirname(__file__))),
+                'ui', 'ui', 'guiscrcpy_logo.png'))
         if os.getenv('XDG_DESKTOP_DIR'):
             desktop_dir = os.getenv('XDG_DESKTOP_DIR')
         else:
@@ -84,11 +84,9 @@ class Linux:
             else:
                 desktop_dir = False
         if desktop_dir:
-            with open(os.path.join(desktop_dir, 'guiscrcpy.desktop'), 'w') as w:
+            with open(os.path.join(desktop_dir, 'guiscrcpy.desktop'),
+                      'w') as w:
                 w.write(desk)
-            with open(os.path.join(os.path.expanduser('~/.local/share/applications/'), 'guiscrcpy.desktop'), 'w') as w:
-                w.write(desk)
-
             return True
         else:
             return False
@@ -97,7 +95,8 @@ class Linux:
     def install_fonts():
         """
         Install fonts to ~/.fonts.
-        The fonts being installed is Titillium Web ~ https://fonts.google.com/specimen/Titillium+Web
+        The fonts being installed is Titillium Web ~
+        https://fonts.google.com/specimen/Titillium+Web
         Open Source Approved fonts.
         # TODO support for SystemWide Installation
         :return: True if installation successful, else False
@@ -105,8 +104,21 @@ class Linux:
         sys_font_dir = os.path.join(os.path.expanduser('~'), '.fonts')
         if not os.path.exists(sys_font_dir):
             os.makedirs(sys_font_dir)
-        from fontTools.ttLib import TTFont
-        font_dir = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
+
+        try:
+            from fontTools.ttLib import TTFont
+        except ModuleNotFoundError as e:
+            logging.error(
+                "Error Installing the fonts. "
+                "You might have to manually install the fonts"
+                "Titillium Web : "
+                "https://fonts.google.com/specimen/Titillium+Web "
+                "Error: {}".format(e)
+            )
+            return False
+
+        font_dir = os.path.join(os.path.abspath(
+            os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
         try:
             fonts = os.listdir(font_dir)
             for i in fonts:
@@ -114,9 +126,13 @@ class Linux:
                 font.save(os.path.join(sys_font_dir, i))
             return True
         except Exception as e:
-            logging.error("Error Installing the fonts. "
-                        "You might have to manually install the fonts"
-                        "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
+            logging.error(
+                "Error Installing the fonts. "
+                "You might have to manually install the fonts"
+                "Titillium Web : "
+                "https://fonts.google.com/specimen/Titillium+Web "
+                "Error: {}".format(e)
+            )
             return False
 
     @staticmethod
@@ -126,5 +142,6 @@ class Linux:
     def increment(self):
         pass
 
-    def paths(self):
+    @staticmethod
+    def paths():
         return ['bin', '/usr/bin', '~/.local/bin', '~/bin', '/usr/local/bin']

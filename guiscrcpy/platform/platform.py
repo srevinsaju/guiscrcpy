@@ -32,6 +32,6 @@ elif platform.system() == "Darwin":
 else:
     logging.warning("Attempting to run guiscrcpy on utested OS")
     from guiscrcpy.platform.linux import Linux as System
-    # Other OSes should benefit from Linux config
+# Other OSes should benefit from Linux config
 
 System()

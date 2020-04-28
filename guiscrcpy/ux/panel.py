@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import sys
+import uuid
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QPoint
@@ -27,24 +29,44 @@ from guiscrcpy.ui.panel import Ui_HorizontalPanel
 
 class Panel(QMainWindow, Ui_HorizontalPanel):
     # there was a Dialog in the bracket
-    def __init__(self):
+    def __init__(self, parent=None, ux_mapper=None, frame=False):
+        """
+        The bottom panel subwindow class for guiscrcpy
+        :param parent: The caller of the function
+        :param ux_mapper: The UX Mapper toolkit
+        :param frame: Boolean (Frame window / Frameless Window)
+        """
+        # noinspection PyArgumentList
         QMainWindow.__init__(self)
         Ui_HorizontalPanel.__init__(self)
+        self.name = "panel"
+        self.uid = uuid.uuid4()
         self.setupUi(self)
-        self.oldpos = self.pos()
-        self.setWindowFlags(
-            QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
-        )
+        self.parent = parent
+        self.oldPos = self.pos()
+        if not frame:
+            self.setWindowFlags(
+                QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
+            )
+        if ux_mapper:
+            self.ux = ux_mapper
+        else:
+            self.ux = UXMapper()
 
     def init(self):
-        self.ux = UXMapper()
+        self.bp_close.clicked.connect(self.quit_window)
         self.backk.clicked.connect(self.ux.key_back)
         self.menuUII.clicked.connect(self.ux.key_menu)
         self.homee.clicked.connect(self.ux.key_home)
         self.powerUII.clicked.connect(self.ux.key_power)
         self.vupp.clicked.connect(self.ux.key_volume_up)
         self.vdownn.clicked.connect(self.ux.key_volume_down)
+        self.colorize()
         self.show()
+
+    def colorize(self):
+        hexdigest = self.ux.get_sha()[:6]
+        self.bp_device_id.setStyleSheet(f"background-color: #{hexdigest};")
 
     def mousePressEvent(self, event):
         self.oldPos = event.globalPos()
@@ -57,3 +79,19 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
             self.oldPos = event.globalPos()
         except (TypeError, AttributeError):
             pass
+
+    def quit_window(self):
+        for instance in self.parent.child_windows:
+            # We are checking for any more windows running before killing
+            # the main window. self.child_windows has the list of all
+            # objects spawned by the main window ui
+            # This method checks if we are the last member of the windows
+            # spawned and we ourselves are not a member of ourself by
+            # checking the uuid generated on creation
+            if not instance.isHidden() \
+                    and instance.name != "swipe" and instance.uid != \
+                    self.uid:
+                self.hide()
+                break
+        else:
+            sys.exit(0)

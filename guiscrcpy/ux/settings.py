@@ -16,14 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import os
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import QPoint
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QDialog
 
 from guiscrcpy.ui.settings import Ui_MainWindow
-from guiscrcpy.settings.settings import SettingsManager
 
 
 class InterfaceSettings(QMainWindow, Ui_MainWindow):
@@ -45,15 +42,16 @@ class InterfaceSettings(QMainWindow, Ui_MainWindow):
             self.a9: [[None], '--window-borderless'],
             self.b0: [[self.b0c1], '--window-title {}'],
             self.b1: [[self.b1c1, self.b1c1], '--window-x {} --window-y {}'],
-            self.b2: [[self.b2c1, self.b2c2], '--window-width {} --window-height {}'],
+            self.b2: [[self.b2c1, self.b2c2],
+                      '--window-width {} --window-height {}'],
         }
 
     def init(self):
         self.updatebutton.clicked.connect(self.complete)
-        self.a6d1.clicked.connect(self.filechooser)
+        self.a6d1.clicked.connect(self.file_chooser)
         self.show()
 
-    def filechooser(self):
+    def file_chooser(self):
         dialog = QFileDialog()
         dialog.setFilter(dialog.filter() | QtCore.QDir.Hidden)
         dialog.setDefaultSuffix('mp4')
@@ -79,7 +77,7 @@ class InterfaceSettings(QMainWindow, Ui_MainWindow):
                         try:
                             arg = j.text()
                             print(arg)
-                        except Exception as e:
+                        except (AttributeError, NameError, ValueError):
                             arg = j.value()
                             print(arg)
                         cmd_args.append(arg)

@@ -16,35 +16,75 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-
-
+import hashlib
 import logging
 import os
 
 from guiscrcpy.lib.check import adb
+from guiscrcpy.platform.platform import System
 
-try:
-    import pyautogui as auto
-    from pygetwindow import getWindowsWithTitle
-except Exception as e:
-    logging.debug("pygetwindow, pyautogui failed with error code {}".format(e))
+if System.system() == "Windows":
+    try:
+        import pyautogui as auto
+        from pygetwindow import getWindowsWithTitle
+    except ModuleNotFoundError as e:
+        logging.debug("pygetwindow, pyautogui "
+                      "failed with error code {}".format(e))
+        auto = None
+        getWindowsWithTitle = None
+else:
     auto = None
     getWindowsWithTitle = None
 
 
 class UXMapper:
-    def __init__(self):
+    def __init__(self, device_id=None):
+        """
+        The main class for UXMapper and adb shell spawn to device
+        The guiscrcpy client passes information ot the UXMapper which
+        spawns adb sub processes to handle button and tap events
+        :param device_id:
+        """
         logging.debug("Launching UX Mapper")
         self.has_modules = getWindowsWithTitle and auto
         logging.debug("Calculating Screen Size")
-        self.android_dimensions = adb.get_dimensions(adb.path)
+        self.android_dimensions = adb.get_dimensions(
+            adb.path, device_id=device_id)
+        self.deviceId = device_id
+
+        # each device connected is uniquely identified by the tools by
+        # a salted hash. The toolkits are assigned colors based on the first
+        # 6 colors and the stylesheet is derived from
+        self.__sha = hashlib.sha256(str(self.deviceId).encode()).hexdigest()
+
+    def get_sha(self):
+        """
+        A method which returns the unique UUID of the the device
+        :return: The hexdigest of a salted hash
+        """
+        return self.__sha
 
     def do_swipe(self, x1=10, y1=10, x2=10, y2=10):
-        adb.shell_input(adb.path, "swipe {} {} {} {}".format(x1, y1, x2, y2))
+        """
+        Performs a basic swipe operation
+        :param x1: x1 coordinate
+        :param y1: y1 coordinate
+        :param x2: x2 coordinate
+        :param y2: y2 coordinate
+        :return: Boolean True, in success
+        """
+        adb.shell_input(adb.path, "swipe {} {} {} {}".format(
+            x1, y1, x2, y2), device_id=self.deviceId)
         return True
 
     def do_keyevent(self, key):
-        adb.shell_input(adb.path, "keyevent {}".format(key))
+        """
+        Performs a key event on adb
+        :param key: The ADB predefined keycode
+        :return:
+        """
+        adb.shell_input(adb.path, "keyevent {}".format(key),
+                        device_id=self.deviceId)
         return True
 
     def copy_devpc(self):
@@ -84,15 +124,23 @@ class UXMapper:
         logging.debug("Passing APP_SWITCH")
         self.do_keyevent("KEYCODE_APP_SWITCH")
 
-    def reorientP(self):
+    def reorient_portrait(self):
         logging.debug("Passing REORIENT [POTRAIT]")
-        adb.shell(adb.path, 'settings put system accelerometer_rotation 0')
-        adb.shell(adb.path, "settings put system rotation 1")
+        adb.shell(adb.path, 'settings put system accelerometer_rotation 0',
+                  device_id=self.deviceId)
+        adb.shell(adb.path, "settings put system rotation 1",
+                  device_id=self.deviceId)
 
-    def reorientL(self):
+    def reorient_landscape(self):
         logging.debug("Passing REORIENT [LANDSCAPE]")
-        adb.shell(adb.path, 'settings put system accelerometer_rotation 0')
-        adb.shell(adb.path, "settings put system rotation 1")
+        adb.shell(
+            adb.path,
+            'settings put system accelerometer_rotation 0',
+            device_id=self.deviceId
+        )
+        adb.shell(
+            adb.path, "settings put system rotation 1",
+            device_id=self.deviceId)
 
     def expand_notifications(self):
         logging.debug("Passing NOTIF EXPAND")
@@ -107,16 +155,20 @@ class UXMapper:
             scrcpywindow = getWindowsWithTitle("scrcpy")[0]
             scrcpywindow.focus()
             auto.hotkey("ctrl", "shift", "c")
-            logging.warning(" NOT SUPPORTED ON WINDOWS")
+            logging.warning("NOT SUPPORTED ON WINDOWS")
         else:
             os.system(
-                "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+shift+c")
+                "wmctrl -x -a  scrcpy && "
+                "xdotool key --clearmodifiers ctrl+shift+c"
+            )
 
     def fullscreen(self):
         if self.has_modules:
-            scrcpywindow = getWindowsWithTitle("scrcpy")[0]
-            scrcpywindow.focus()
+            scrcpy_window = getWindowsWithTitle("scrcpy")[0]
+            scrcpy_window.focus()
             auto.hotkey("ctrl", "f")
         else:
             os.system(
-                "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+f")
+                "wmctrl -x -a  scrcpy && "
+                "xdotool key --clearmodifiers ctrl+f"
+            )

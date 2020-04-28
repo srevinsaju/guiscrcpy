@@ -1,8 +1,8 @@
-
-import socket
+import logging
 import multiprocessing
-import subprocess
 import os
+import socket
+import subprocess
 
 
 class NetworkManager:
@@ -10,14 +10,15 @@ class NetworkManager:
     def __init__(self):
         pass
 
-    def pinger(self, job_q, results_q):
+    @staticmethod
+    def pinger(job_q, results_q):
         """
         Do Ping
         :param job_q:
         :param results_q:
         :return:
         """
-        DEVNULL = open(os.devnull, 'w')
+        devnull = open(os.devnull, 'w')
         while True:
 
             ip = job_q.get()
@@ -26,12 +27,15 @@ class NetworkManager:
                 break
 
             try:
-                subprocess.check_call(['ping', '-c1', ip], stdout=DEVNULL)
+                subprocess.check_call(['ping', '-c1', ip], stdout=devnull,
+                                      shell=True)
                 results_q.put(ip)
-            except:
-                pass
+            except BaseException as e:
+                logging.info("Error in ping: {}".format(e))
+                return  # Fix guiscrcpy ping error on Windows systems
 
-    def get_my_ip(self):
+    @staticmethod
+    def get_my_ip():
         """
         Find my IP address
         :return:
@@ -60,7 +64,7 @@ class NetworkManager:
         results = multiprocessing.Queue()
 
         pool = [multiprocessing.Process(target=self.pinger, args=(
-            jobs, results)) for i in range(pool_size)]
+                jobs, results)) for _ in range(pool_size)]
 
         for p in pool:
             p.start()
@@ -69,7 +73,7 @@ class NetworkManager:
         for i in range(1, 255):
             jobs.put(base_ip + '{0}'.format(i))
 
-        for p in pool:
+        for _ in pool:
             jobs.put(None)
 
         for p in pool:

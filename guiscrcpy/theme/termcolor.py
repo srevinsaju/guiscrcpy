@@ -18,10 +18,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 from guiscrcpy.platform.platform import System
+
 environment = System()
 
 
-class termcolors:
+class ColorTerms:
     if environment.system() == "Linux":
         HEADER = "\033[95m"
         OKBLUE = "\033[94m"

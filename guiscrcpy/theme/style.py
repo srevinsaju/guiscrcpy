@@ -18,17 +18,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 
-def darkstylesheet():
+def dark_stylesheet():
     # DarkStyleSheet
 
     style = """
-    /* ---------------------------------------------------------------------------
+    /* ------------------------------------------------------------------------
 
     Created by the qtsass compiler v0.1.1
 
     The definitions are in the "qdarkstyle.qss._styles.scss" module
 
-    WARNING! All changes made in this file will be lost!
+    WARNING! All changes made in this filename will be lost!
 
 --------------------------------------------------------------------------- */
 /* QDarkStyleSheet -----------------------------------------------------------
@@ -340,8 +340,7 @@ QMenu::indicator {
   width: 12px;
   height: 12px;
   padding-left: 6px;
-  /* non-exclusive indicator = check box style indicator (see QActionGroup::setExclusive) */
-  /* exclusive indicator = radio button style indicator (see QActionGroup::setExclusive) */
+
 }
 
 
@@ -635,7 +634,8 @@ QTextBrowser:disabled {
   border-radius: 4px;
 }
 
-QTextBrowser:hover, QTextBrowser:!hover, QTextBrowser::selected, QTextBrowser::pressed {
+QTextBrowser:hover, QTextBrowser:!hover,
+QTextBrowser::selected, QTextBrowser::pressed {
   border: 1px solid #32414B;
 }
 
@@ -656,9 +656,8 @@ QGraphicsView:disabled {
   border-radius: 4px;
 }
 
-QGraphicsView:hover, QGraphicsView:!hover, QGraphicsView::selected, QGraphicsView::pressed {
-  border: 1px solid #32414B;
-}
+QGraphicsView:hover, QGraphicsView:!hover, QGraphicsView::selected,
+QGraphicsView::pressed { border: 1px solid #32414B; }
 
 /* QCalendarWidget --------------------------------------------------------
 
@@ -807,9 +806,7 @@ QToolButton {
   border-radius: 4px;
   margin: 0px;
   padding: 2px;
-  /* The subcontrols below are used only in the DelayedPopup mode */
-  /* The subcontrols below are used only in the MenuButtonPopup mode */
-  /* The subcontrol below is used only in the InstantPopup or DelayedPopup mode */
+
 }
 
 QToolButton:checked {
@@ -1488,7 +1485,8 @@ QHeaderView::section::horizontal {
   border-left: 1px solid #19232D;
 }
 
-QHeaderView::section::horizontal::first, QHeaderView::section::horizontal::only-one {
+QHeaderView::section::horizontal::first,
+QHeaderView::section::horizontal::only-one {
   border-left: 1px solid #32414B;
 }
 
@@ -1502,7 +1500,8 @@ QHeaderView::section::vertical {
   border-top: 1px solid #19232D;
 }
 
-QHeaderView::section::vertical::first, QHeaderView::section::vertical::only-one {
+QHeaderView::section::vertical::first,
+QHeaderView::section::vertical::only-one {
   border-top: 1px solid #32414B;
 }
 

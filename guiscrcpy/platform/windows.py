@@ -42,8 +42,9 @@ class Windows:
 				)
 		return path
 
-    def system(self):
-        return 'Windows'
+	@staticmethod
+	def system():
+		return 'Windows'
 
     def cfgpath(self):
         return self.make_config()

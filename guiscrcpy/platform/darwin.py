@@ -50,7 +50,8 @@ class Darwin:
                     ))
         return path
 
-    def system(self):
+    @staticmethod
+    def system():
         return 'Darwin'
 
     def increment(self):

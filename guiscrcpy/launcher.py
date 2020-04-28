@@ -300,22 +300,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 		self.nm.init()
 		self.nm.show()
 
-    def __dimension_change_cb(self):
-        if self.dimensionDefaultCheckbox.isChecked():
-            self.dimensionSlider.setEnabled(False)
-            config['dimension'] = None
-            self.dimensionText.setInputMask("")
-            self.dimensionText.setText("DEFAULT")
-
-        else:
-            self.dimensionSlider.setEnabled(True)
-            config['dimension'] = int(self.dimensionSlider.value())
-            self.dimensionText.setText(
-                " " + str(config['dimension']) + "px")
-            self.dimensionSlider.sliderMoved.connect(
-                self.__slider_change_cb)
-            self.dimensionSlider.sliderReleased.connect(
-                self.__slider_change_cb)
 
     def __slider_change_cb(self):
         config['dimension'] = int(self.dimensionSlider.value())
@@ -540,6 +524,22 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 	def quit_window():
 		sys.exit()
 
+	def __dimension_change_cb(self):
+		if self.dimensionDefaultCheckbox.isChecked():
+			self.dimensionSlider.setEnabled(False)
+			config['dimension'] = None
+			self.dimensionText.setInputMask("")
+			self.dimensionText.setText("DEFAULT")
+
+		else:
+			self.dimensionSlider.setEnabled(True)
+			config['dimension'] = int(self.dimensionSlider.value())
+			self.dimensionText.setText(
+				" " + str(config['dimension']) + "px")
+			self.dimensionSlider.sliderMoved.connect(
+				self.__slider_change_cb)
+			self.dimensionSlider.sliderReleased.connect(
+				self.__slider_change_cb)
             '{str(self.bitrateText.text().split()[1][0])}'. " \
                                f"Please use only K, M, T only"
             print(multiplier_error)

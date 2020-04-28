@@ -51,8 +51,9 @@ class Windows:
     def increment(self):
         pass
 
-    def paths(self):
-        return ['bin']
+	@staticmethod
+	def paths():
+		return ['bin']
 
 	@staticmethod
 	def install_fonts():

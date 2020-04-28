@@ -53,5 +53,6 @@ class Darwin:
     def increment(self):
         pass
 
-    def paths(self):
+    @staticmethod
+    def paths():
         return ['bin', '/usr/bin', '~/.local/bin', '~/bin', '/usr/local/bin']

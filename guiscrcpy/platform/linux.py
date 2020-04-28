@@ -69,7 +69,6 @@ class Linux:
         Create Desktop filename for Linux in ~/.local level
         :return:
         """
-
         desk = desktop.format(
             v=VERSION,
             icon_path=os.path.join(
@@ -143,5 +142,6 @@ class Linux:
     def increment(self):
         pass
 
-    def paths(self):
+    @staticmethod
+    def paths():
         return ['bin', '/usr/bin', '~/.local/bin', '~/bin', '/usr/local/bin']

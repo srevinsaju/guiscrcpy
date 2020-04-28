@@ -26,7 +26,7 @@ from guiscrcpy.platform import platform
 
 
 class InterfaceConfig:
-    def __init__(self, mode='w'):
+    def __init__(self):
         self.os = platform.System()
         self.cfgpath = self.os.cfgpath()
         self.paths = self.os.paths()
@@ -43,7 +43,7 @@ class InterfaceConfig:
             'extra': "",
             'cmx': ""
         }
-        self.jsonfile = 'guiscrcpy.json'
+        self.json_file = 'guiscrcpy.json'
         self.check_file()
         self.validate()
 
@@ -82,18 +82,19 @@ class InterfaceConfig:
         return self.cfgpath
 
     def read_file(self):
-        with open(os.path.join(self.cfgpath, self.jsonfile), 'r') as f:
+        with open(os.path.join(self.cfgpath, self.json_file), 'r') as f:
             config = json.load(f)
         self.update_config(config)
 
     def write_file(self):
-        with open(os.path.join(self.cfgpath, self.jsonfile), 'w') as f:
+        with open(os.path.join(self.cfgpath, self.json_file), 'w') as f:
             json.dump(self.config, f, indent=4, sort_keys=True)
 
     def check_file(self):
+
         if not os.path.exists(self.cfgpath):
-            os.mkdir(self.cfgpath)
-        if not os.path.exists(os.path.join(self.cfgpath, self.jsonfile)):
+            os.makedirs(self.cfgpath)
+        if not os.path.exists(os.path.join(self.cfgpath, self.json_file)):
             if (self.os.system() == 'Linux') or (
                     self.os.system() == 'Windows'):
                 self.os.create_desktop()
@@ -109,5 +110,5 @@ class InterfaceConfig:
                     self.config[i] = new_conf[i]
 
     def reset_config(self):
-        os.remove(os.path.join(self.get_cfgpath(), self.jsonfile))
+        os.remove(os.path.join(self.get_cfgpath(), self.json_file))
         return True

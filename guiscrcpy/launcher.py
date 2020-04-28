@@ -198,6 +198,17 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
     Main class for guiscrcpy object.
     All the processes to spawn to scrcpy are handled here
     """
+	def settings_mgr(self):
+		from guiscrcpy.ux.settings import InterfaceSettings
+		self.sm = InterfaceSettings(self)
+		self.sm.init()
+		self.sm.show()
+
+	def network_mgr(self):
+		from guiscrcpy.ux.network import InterfaceNetwork
+		self.nm = InterfaceNetwork(adb.path)
+		self.nm.init()
+		self.nm.show()
 
     def __init__(self):
         QMainWindow.__init__(self)
@@ -286,21 +297,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.settings_button.clicked.connect(self.settings_mgr)
         self.refreshdevices.clicked.connect(
             self.__refresh_devices_combo_box_cb)
-
-    def settings_mgr(self):
-        from guiscrcpy.ux.settings import InterfaceSettings
-        self.sm = InterfaceSettings(self)
-        self.sm.init()
-        self.sm.show()
-
-    def network_mgr(self):
-        from guiscrcpy.ux.network import InterfaceNetwork
-        self.nm = InterfaceNetwork(adb.path)
-        self.nm.init()
-        self.nm.show()
-
-
-
     @staticmethod
     def launch_web_srevinsaju():
         webbrowser.open("https://srevinsaju.github.io")

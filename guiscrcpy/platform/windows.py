@@ -24,9 +24,8 @@ from guiscrcpy.platform.windows_tools.tools import make_shortcut
 
 
 class Windows:
-    def __init__(self):
-        self.make_config()
-        self._cfgpath = self.cfgpath()
+	def __init__(self):
+		self.make_config()
 
 	@staticmethod
 	def make_config():
@@ -46,11 +45,11 @@ class Windows:
 	def system():
 		return 'Windows'
 
-    def cfgpath(self):
-        return self.make_config()
+	def cfgpath(self):
+		return self.make_config()
 
-    def increment(self):
-        pass
+	def increment(self):
+		pass
 
 	@staticmethod
 	def paths():

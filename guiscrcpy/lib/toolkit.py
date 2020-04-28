@@ -21,12 +21,18 @@ import logging
 import os
 
 from guiscrcpy.lib.check import adb
+from guiscrcpy.platform.platform import System
 
-try:
-    import pyautogui as auto
-    from pygetwindow import getWindowsWithTitle
-except Exception as e:
-    logging.debug("pygetwindow, pyautogui failed with error code {}".format(e))
+if System.system() == "Windows":
+    try:
+        import pyautogui as auto
+        from pygetwindow import getWindowsWithTitle
+    except ModuleNotFoundError as e:
+        logging.debug("pygetwindow, pyautogui "
+                      "failed with error code {}".format(e))
+        auto = None
+        getWindowsWithTitle = None
+else:
     auto = None
     getWindowsWithTitle = None
 
@@ -36,7 +42,7 @@ class UXMapper:
         """
         The main class for UXMapper and adb shell spawn to device
         The guiscrcpy client passes information ot the UXMapper which
-        spawns adb subprocesses to handle button and tap events
+        spawns adb sub processes to handle button and tap events
         :param device_id:
         """
         logging.debug("Launching UX Mapper")
@@ -118,14 +124,14 @@ class UXMapper:
         logging.debug("Passing APP_SWITCH")
         self.do_keyevent("KEYCODE_APP_SWITCH")
 
-    def reorientP(self):
+    def reorient_portrait(self):
         logging.debug("Passing REORIENT [POTRAIT]")
         adb.shell(adb.path, 'settings put system accelerometer_rotation 0',
                   device_id=self.deviceId)
         adb.shell(adb.path, "settings put system rotation 1",
                   device_id=self.deviceId)
 
-    def reorientL(self):
+    def reorient_landscape(self):
         logging.debug("Passing REORIENT [LANDSCAPE]")
         adb.shell(adb.path, 'settings put system accelerometer_rotation 0',
                   device_id=self.deviceId)
@@ -148,13 +154,17 @@ class UXMapper:
             logging.warning("NOT SUPPORTED ON WINDOWS")
         else:
             os.system(
-                "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+shift+c")
+                "wmctrl -x -a  scrcpy && "
+                "xdotool key --clearmodifiers ctrl+shift+c"
+            )
 
     def fullscreen(self):
         if self.has_modules:
-            scrcpywindow = getWindowsWithTitle("scrcpy")[0]
-            scrcpywindow.focus()
+            scrcpy_window = getWindowsWithTitle("scrcpy")[0]
+            scrcpy_window.focus()
             auto.hotkey("ctrl", "f")
         else:
             os.system(
-                "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+f")
+                "wmctrl -x -a  scrcpy && "
+                "xdotool key --clearmodifiers ctrl+f"
+            )

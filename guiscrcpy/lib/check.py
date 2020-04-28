@@ -27,6 +27,8 @@ environment = System()
 
 
 class scrcpy:
+    path = None
+
     def __init__(self):
         pass
 
@@ -56,6 +58,8 @@ class scrcpy:
 
 
 class adb:
+    path = None
+
     def __init__(self):
         pass
 

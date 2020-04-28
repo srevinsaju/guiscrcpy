@@ -311,52 +311,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.bitrateText.setText(str(config['bitrate']) + "KB/s")
         pass
 
-    def __refresh_devices_combo_box_cb(self):
-        devices_list = adb.devices(adb.path)
-
-        if len(devices_list) == 0:
-            self.private_message_box_adb.setText("DEVICE IS NOT CONNECTED")
-            self.progressBar.setValue(0)
-            return 0,
-        else:
-            valid_devices = []
-            invalid_devices = []
-            for dev, stat in devices_list:
-                if stat == "unauthorized":
-                    invalid_devices.append(
-                        f"{dev} IS UNAUTHORIZED. CLICK 'ok' when asked.")
-                elif stat == "device":
-                    valid_devices.append(dev)
-                else:
-                    invalid_devices.append(
-                        f"{dev} is connected. Failed to establish connection")
-            self.private_message_box_adb.setText(
-                "Connected: {};".format(', '.join(valid_devices))
-            )
-        if len(valid_devices) > 1:
-            if self.devices_combox.currentText(
-            ) == '' or self.devices_combox.currentText().isspace():
-                logger.info(
-                    "Found more than one device. "
-                    "Please select device in drop down box")
-                self.private_message_box_adb.setText(
-                    "Found more than one device. "
-                    "Please select device in drop down box")
-                self.devices_combox.clear()
-                self.devices_combox.addItems(
-                    [f"{x[0]} : {x[1]}" for x in devices_list])
-                return 0,
-
-            else:
-                more_devices = True
-                device_id = self.devices_combox.currentText().split(":")[
-                    0].strip()
-        else:
-            more_devices = False
-            device_id = None
-
-        return more_devices, device_id
-
     def progress(self, val):
         self.progressBar.setValue(val)
         if (val + 4) >= 100:
@@ -540,6 +494,52 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 				self.__slider_change_cb)
 			self.dimensionSlider.sliderReleased.connect(
 				self.__slider_change_cb)
+	def __refresh_devices_combo_box_cb(self):
+		devices_list = adb.devices(adb.path)
+
+		if len(devices_list) == 0:
+			self.private_message_box_adb.setText("DEVICE IS NOT CONNECTED")
+			self.progressBar.setValue(0)
+			return 0,
+		else:
+			valid_devices = []
+			invalid_devices = []
+			for dev, stat in devices_list:
+				if stat == "unauthorized":
+					invalid_devices.append(
+						f"{dev} IS UNAUTHORIZED. CLICK 'ok' when asked.")
+				elif stat == "device":
+					valid_devices.append(dev)
+				else:
+					invalid_devices.append(
+						f"{dev} is connected. Failed to establish connection")
+			self.private_message_box_adb.setText(
+				"Connected: {};".format(', '.join(valid_devices))
+			)
+		if len(valid_devices) > 1:
+			if self.devices_combox.currentText(
+			) == '' or self.devices_combox.currentText().isspace():
+				logger.info(
+					"Found more than one device. "
+					"Please select device in drop down box")
+				self.private_message_box_adb.setText(
+					"Found more than one device. "
+					"Please select device in drop down box")
+				self.devices_combox.clear()
+				self.devices_combox.addItems(
+					[f"{x[0]} : {x[1]}" for x in devices_list])
+				return 0,
+
+			else:
+				more_devices = True
+				device_id = self.devices_combox.currentText().split(":")[
+					0].strip()
+		else:
+			more_devices = False
+			device_id = None
+
+		return more_devices, device_id
+
             '{str(self.bitrateText.text().split()[1][0])}'. " \
                                f"Please use only K, M, T only"
             print(multiplier_error)

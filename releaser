@@ -3,7 +3,7 @@ import sys
 from os import path
 
 COPYRIGHT = \
-    """
+	"""
 GUISCRCPY by srevinsaju
 Get it on : https://github.com/srevinsaju/guiscrcpy
 Licensed under GNU Public License
@@ -22,31 +22,25 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-
-this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
-
-
 RAW_VERSION = "3.7"
 PACKAGE_DIR = {
-    'guiscrcpy': [
-        '*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*',
-        'theme/*', 'ux/*', 'network/*', 'settings/*',
-        'install/*', 'platform/windows_tools/*', 'ui/icons/*',
-        'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*'
-    ]
+	'guiscrcpy': [
+		'*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*',
+		'theme/*', 'ux/*', 'network/*', 'settings/*',
+		'install/*', 'platform/windows_tools/*', 'ui/icons/*',
+		'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*'
+	]
 }
 
 CONSOLE_SCRIPTS = {
-    'console_scripts': [
-        'guiscrcpy = guiscrcpy.launcher:bootstrap',
-    ]
+	'console_scripts': [
+		'guiscrcpy = guiscrcpy.launcher:bootstrap',
+	]
 }
 
 DATA_FILES_MANIPULATE = {
-    "setup.py": "",
-    "setup.py-manylinux2014-scrcpy": """
+	"setup.py": "",
+	"setup.py-manylinux2014-scrcpy": """
 
 def get_scrcpy_libs():
     libs = []
@@ -64,112 +58,118 @@ and os.path.exists("lib"):
     """
 }
 
-EXTRAS_REQUIRE = {
-    "pyside2": "PySide2",
-    "pyqt5": "PyQt5",
-}
+EXTRAS_REQUIRE = {"pyqt5": "PyQt5", "pyside2": "PySide2"}
 
 
 def gen_version():
-    """
-    Generates a version from the available git repositories
-    If git repository is not valid, fallback to __version__
-    :return:
-    """
-    import git
-    repo = git.Repo(search_parent_directories=True)
-    ver = repo.git.describe("--tags")
-    raw_version = ver.split('-')
-    if 'release' in sys.argv:
-        print("Checking out guiscrcpy to release")
-        if "releaser" in sys.argv[0] and len(sys.argv) >= 3:
-            pass
-        elif "releaser" in sys.argv[1] and len(sys.argv) >= 4:
-            pass
-        else:
-            raise Exception("Invalid data provided.")
-        print("Releasing", sys.argv[-1])
-        return str(sys.argv[-1])
-    else:
-        if len(raw_version) == 1:
-            # Stable Release
-            git_version = "{}".format(raw_version[0])
-        elif len(raw_version) == 2:
-            # Release Candidate
-            git_version = "{major}.post{minor}".format(
-                major=raw_version[0], minor=raw_version[1])
-        else:
-            # Revision Dev
-            git_version = "{major}.post{minor}.dev".format(
-                major=raw_version[0], minor=raw_version[1])
-    return git_version
+	"""
+	Generates a version from the available git repositories
+	If git repository is not valid, fallback to __version__
+	:return:
+	"""
+	import git
+	repo = git.Repo(search_parent_directories=True)
+	ver = repo.git.describe("--tags")
+	raw_version = ver.split('-')
+	if 'release' in sys.argv:
+		print("Checking out guiscrcpy to release")
+		if "releaser" in sys.argv[0] and len(sys.argv) >= 3:
+			pass
+		elif "releaser" in sys.argv[1] and len(sys.argv) >= 4:
+			pass
+		else:
+			raise Exception("Invalid data provided.")
+		print("Releasing", sys.argv[-1])
+		return str(sys.argv[-1])
+	else:
+		if len(raw_version) == 1:
+			# Stable Release
+			git_version = "{}".format(raw_version[0])
+		elif len(raw_version) == 2:
+			# Release Candidate
+			git_version = "{major}.post{minor}".format(
+				major=raw_version[0], minor=raw_version[1])
+		else:
+			# Revision Dev
+			git_version = "{major}.post{minor}.dev".format(
+				major=raw_version[0], minor=raw_version[1])
+	return git_version
 
 
 try:
-    v = gen_version()
+	v = gen_version()
 except Exception as e:
-    print("WARNING: {}".format(e))
-    v = f"{RAW_VERSION}.x.src.dev"
-
+	print("WARNING: {}".format(e))
+	v = f"{RAW_VERSION}.x.src.dev"
 
 # Attach requirements
 
 setupfile = \
-    '''#!/usr/bin/env python3
+	'''#!/usr/bin/env python3
 """
 {COPYRIGHT}
 """
 
 from setuptools import setup
+import os
 import platform
+
+try:
+	this_directory = os.path.abspath(os.path.dirname(__file__))
+	with open(
+		os.path.join(this_directory, 'README.md'),
+		encoding='utf-8'
+	) as f:
+		long_description = f.read()
+except FileNotFoundError:
+	long_description = \\
+		"Open Source Android Screen Mirroring System by @srevinsaju"
 
 requirements = ['PyQt5==5.14.2', 'pynput']
 if platform.system() == 'Windows':
-    requirements.extend(['pywin32', 'psutil'])
+	requirements.extend(['pywin32', 'psutil'])
 elif platform.system() == 'Linux':
-    requirements.extend(['fonttools', 'psutil'])
+	requirements.extend(['fonttools', 'psutil'])
 
 data_files = [
-        ('share/applications', ['guiscrcpy.desktop'] )
-    ]
-
+		('share/applications', ['guiscrcpy.desktop'])
+	]
 {DATA_FILE_MANIPULATE}
-
 setup(
-    name='guiscrcpy',
-    version='{version}',
-    description='An Open Source - Fast - Android Screen Mirroring system.',
-    long_description="""{long_description}""",
-    long_description_content_type='text/markdown',
-    license='GPL v3',
-    author='srevinsaju',
-    author_email="srevin03@gmail.com",
-    packages=['guiscrcpy'],
-    data_files = data_files,
-    extras_require={extras},
-    url="https://srevinsaju.github.io/guiscrcpy",
-    download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
-    package_data={package_data},
-    include_package_data=True,
-    install_requires=requirements,
-    scripts=["scripts/guiscrcpy", "scripts/guiscrcpy-mapper"],
-    entry_points={entry_points},
-    classifiers=[
-        'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.8',
-        'Operating System :: MacOS :: MacOS X',
-        'Operating System :: Microsoft :: Windows',
-        'Operating System :: POSIX',
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'
-    ],
+	name='guiscrcpy',
+	version='{version}',
+	description='An Open Source - Fast - Android Screen Mirroring system.',
+	long_description=long_description,
+	long_description_content_type='text/markdown',
+	license='GPL v3',
+	author='srevinsaju',
+	author_email="srevin03@gmail.com",
+	packages=['guiscrcpy'],
+	data_files = data_files,
+	extras_require={extras},
+	url="https://srevinsaju.github.io/guiscrcpy",
+	download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
+	package_data={package_data},
+	include_package_data=True,
+	install_requires=requirements,
+	scripts=["scripts/guiscrcpy", "scripts/guiscrcpy-mapper"],
+	entry_points={entry_points},
+	classifiers=[
+		'Operating System :: OS Independent',
+		'Programming Language :: Python :: 3.7',
+		'Programming Language :: Python :: 3.6',
+		'Programming Language :: Python :: 3.8',
+		'Operating System :: MacOS :: MacOS X',
+		'Operating System :: Microsoft :: Windows',
+		'Operating System :: POSIX',
+		'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'
+	],
 )
 
 '''
 
 VERSION_FILE = \
-    '''#!/usr/bin/env python3
+	'''#!/usr/bin/env python3
 """
 {COPYRIGHT}
 """
@@ -182,22 +182,25 @@ VERSION = '{version}'
 # hardcoding the information before each release, solved the problem
 
 for setup in ("setup.py", "setup.py-manylinux2014-scrcpy"):
-    with open(setup, 'w') as w:
-        w.write(setupfile.format(
-            COPYRIGHT=COPYRIGHT,
-            version=v,
-            package_data=PACKAGE_DIR,
-            entry_points=CONSOLE_SCRIPTS,
-            long_description=long_description,
-            extras=EXTRAS_REQUIRE,
-            DATA_FILE_MANIPULATE=DATA_FILES_MANIPULATE[setup]
-        ))
+	with open(setup, 'w') as w:
+		w.write(setupfile.format(
+			COPYRIGHT=COPYRIGHT,
+			version=v,
+			package_data=PACKAGE_DIR,
+			entry_points=CONSOLE_SCRIPTS,
+			extras=EXTRAS_REQUIRE,
+			DATA_FILE_MANIPULATE=DATA_FILES_MANIPULATE[setup]
+		))
 
 with open("guiscrcpy/version.py", 'w') as w:
-    w.write(VERSION_FILE.format(
-        COPYRIGHT=COPYRIGHT,
-        version=v,
-    ))
+	w.write(VERSION_FILE.format(
+		COPYRIGHT=COPYRIGHT,
+		version=v,
+	))
 
 print("Setup filename generated.")
 print("GUISCRCPY >> VERSION : {}".format(v))
+
+# Issue #82, #80
+# https://stackoverflow.com/questions/25284879/ \
+# install-desktop-file-with-setup-py/44462146#44462146

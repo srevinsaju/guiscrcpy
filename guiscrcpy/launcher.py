@@ -300,17 +300,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 		self.nm.init()
 		self.nm.show()
 
-
-    def __slider_change_cb(self):
-        config['dimension'] = int(self.dimensionSlider.value())
-        self.dimensionText.setText(str(config['dimension']) + "px")
-        pass
-
-    def __dial_change_cb(self):
-        config['bitrate'] = int(self.dial.value())
-        self.bitrateText.setText(str(config['bitrate']) + "KB/s")
-        pass
-
     def progress(self, val):
         self.progressBar.setValue(val)
         if (val + 4) >= 100:
@@ -494,6 +483,17 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 				self.__slider_change_cb)
 			self.dimensionSlider.sliderReleased.connect(
 				self.__slider_change_cb)
+
+	def __slider_change_cb(self):
+		config['dimension'] = int(self.dimensionSlider.value())
+		self.dimensionText.setText(str(config['dimension']) + "px")
+		pass
+
+	def __dial_change_cb(self):
+		config['bitrate'] = int(self.dial.value())
+		self.bitrateText.setText(str(config['bitrate']) + "KB/s")
+		pass
+
 	def __refresh_devices_combo_box_cb(self):
 		devices_list = adb.devices(adb.path)
 

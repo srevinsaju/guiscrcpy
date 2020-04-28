@@ -312,16 +312,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 "$ guiscrcpy-mapper -r"
             )
 
-    @staticmethod
-    def launch_usb_audio():
-        logger.debug("Called usbaudio")
-        for path in environment.paths():
-            if os.path.exists(os.path.join(path, 'usbaudio')):
-                path_to_usbaudio = os.path.join(path, 'usbaudio')
-                break
-        else:
-            return
-        Popen(path_to_usbaudio, stdout=PIPE, stderr=PIPE)
 
     @staticmethod
     def launch_web_srevinsaju():
@@ -538,6 +528,17 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         else:
             # do not proceed. Invalid file size multiplier
             multiplier_error = f"Invalid file size multiplier \
+
+	@staticmethod
+	def launch_usb_audio():
+		logger.debug("Called usbaudio")
+		for path in environment.paths():
+			if os.path.exists(os.path.join(path, 'usbaudio')):
+				path_to_usbaudio = os.path.join(path, 'usbaudio')
+				break
+		else:
+			return
+		Popen(path_to_usbaudio, stdout=PIPE, stderr=PIPE)
             '{str(self.bitrateText.text().split()[1][0])}'. " \
                                f"Please use only K, M, T only"
             print(multiplier_error)

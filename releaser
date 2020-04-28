@@ -147,7 +147,7 @@ elif platform.system() == 'Linux':
 
 data_files = [
         ('share/applications', ['guiscrcpy.desktop']),
-        ('share/icons/hicolor/scalable/apps', ['guiscrcpy.png'])
+        ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png'])
     ]
 {DATA_FILE_MANIPULATE}
 setup(

@@ -31,7 +31,7 @@ apps:
       LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/android/"
 
   guiscrcpy:
-    command: bin/guiscrcpy
+    command: usr/bin/python3 -s bin/guiscrcpy
     environment: 
       PATH: $SNAP/lib:$SNAP/usr/lib:$SNAP/bin:$SNAP/usr/bin:$SNAP/usr/local/bin:$PATH
       GUISCRCPY_SCRCPY: "$SNAP/usr/local/bin/scrcpy"
@@ -43,8 +43,6 @@ apps:
     - bin/desktop-launch
     - bin/guiscrcpy
     desktop: share/applications/guiscrcpy.desktop
-    icon: share/icons/hicolor/scalable/apps/guiscrcpy.png
-
 
 parts:
 
@@ -129,6 +127,7 @@ parts:
     plugin: python
     python-version: python3
     source: .
+
 
 plugs:
   adb-support:

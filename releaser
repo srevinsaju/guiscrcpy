@@ -219,6 +219,13 @@ with open('guiscrcpy.desktop', 'w') as w:
 with open('snap/gui/guiscrcpy.desktop', 'w') as w:
     w.write(DESKTOP_FILE.format(v=v, icon_path='${SNAP}/meta/gui/guiscrcpy.png'))
 
+with open('snap/local/snapcraft.yaml', 'r') as r:
+    SNAPCRAFT_FILE = r.read()
+
+with open('snap/snapcraft.yaml', 'w') as w:
+    w.write("name: guiscrcpy\n")
+    w.write("version: {}\n".format(v))
+    w.write(SNAPCRAFT_FILE)
 
 print("Setup filename generated.")
 print("GUISCRCPY >> VERSION : {}".format(v))

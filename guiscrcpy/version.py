@@ -1,8 +1,8 @@
 #! /usr/bin/env python3
 """
-GUISCRCPY by srevinsaju
-Get it on : https://github.com/srevinsaju/guiscrcpy
-Licensed under GNU Public License
+guiscrcpy by @srevinsaju.
+Get it on : https://github.com/srevinsaju/guiscrcpy.
+Licensed under GNU Public License.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

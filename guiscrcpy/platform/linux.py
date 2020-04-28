@@ -62,7 +62,8 @@ class Linux:
                     ))
         return path
 
-    def create_desktop(self):
+    @staticmethod
+    def create_desktop():
         """
         Create Desktop filename for Linux in ~/.local level
         :return:

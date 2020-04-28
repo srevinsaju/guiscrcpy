@@ -54,36 +54,49 @@ class Windows:
     def paths(self):
         return ['bin']
 
-    def install_fonts(self):
-        """
-        Install fonts to system directory.
-        The fonts being installed is Titillium Web ~ https://fonts.google.com/specimen/Titillium+Web
-        Open Source Approved fonts.
-        # TODO support for SystemWide Installation
-        :return: True if installation successful, else False
-        """
-        # TODO: Test it properly
-        # Likely to fail
-        cmd = r"""copy "{fontdir}" "%WINDIR%\Fonts"
-        reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" /
-        v "FontName (TrueType)" / t REG_SZ / d {font} / f """
-        font_dir = os.path.join(os.path.abspath(
-            os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
-        try:
-            fonts = os.listdir(font_dir)
-            for i in fonts:
-                # install the fonts by executing cmd and update the Windows
-                # Registry
-                print(cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
-                os.system(
-                    cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
-            return True
-        except Exception as e:
-            print("Installing fonts failed")
-            logging.error("Error Installing the fonts. "
-                          "You might have to manually install the fonts"
-                          "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
-            return False
+	@staticmethod
+	def install_fonts():
+		"""
+		Install fonts to system directory.
+		The fonts being installed is Titillium Web ~
+		https://fonts.google.com/specimen/Titillium+Web
+		Open Source Approved fonts.
+		# TODO support for SystemWide Installation
+		:return: True if installation successful, else False
+		"""
+		# TODO: Test it properly
+		# Likely to fail
+		cmd = r"""copy "{fontdir}" "%WINDIR%\Fonts
+		reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" /
+		v "FontName (TrueType)" / t REG_SZ / d {font} / f """
 
-    def create_desktop(self):
-        make_shortcut()
+		font_dir = os.path.join(
+			os.path.abspath(
+				os.path.dirname(os.path.dirname(__file__))
+			),
+			'ui',
+			'fonts'
+		)
+		try:
+			fonts = os.listdir(font_dir)
+			for i in fonts:
+				# install the fonts by executing cmd and update the Windows
+				# Registry
+				print(cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
+				os.system(
+					cmd.format(font=i, fontdir=os.path.join(font_dir, i)))
+			return True
+		except Exception as e:
+			print("Installing fonts failed")
+			logging.error(
+				"Error Installing the fonts. "
+				"You might have to manually install the fonts"
+				"Titillium Web : "
+				"https://fonts.google.com/specimen/Titillium+Web"
+				"Error: {}".format(e)
+			)
+			return False
+
+	@staticmethod
+	def create_desktop():
+		make_shortcut()

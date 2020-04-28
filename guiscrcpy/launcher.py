@@ -78,14 +78,14 @@ environment = platform.System()
 # Add precedence for guiscrcpy to check environment variables
 # for the paths of `adb` and `scrcpy` over the configuration files.
 if os.getenv('GUISCRCPY_ADB', None) is None:
-    adb.path = config['adb']
+	adb.path = config['adb']
 else:
-    adb.path = os.getenv('GUISCRCPY_ADB')
+	adb.path = os.getenv('GUISCRCPY_ADB')
 
 if os.getenv('GUISCRCPY_SCRCPY', None) is None:
-    scrcpy.path = config['scrcpy']
+	scrcpy.path = config['scrcpy']
 else:
-    scrcpy.path = os.getenv('GUISCRCPY_SCRCPY')
+	scrcpy.path = os.getenv('GUISCRCPY_SCRCPY')
 
 scrcpy.server_path = config['scrcpy-server']
 
@@ -93,27 +93,62 @@ scrcpy.server_path = config['scrcpy-server']
 # ARGUMENT PARSER
 # Initialize argument parser
 parser = argparse.ArgumentParser(
-    'guiscrcpy v{}'.format(VERSION)
+	'guiscrcpy v{}'.format(VERSION)
 )
-parser.add_argument('-i', '--install', action='store_true',
-                    help="Install guiscrcpy system wide on Linux")
-parser.add_argument('-s', '--start', action='store_true',
-                    help="Start scrcpy first before loading the GUI")
-parser.add_argument('-r', '--reset', action='store_true',
-                    help="Reset the guiscrcpy configuration files to default")
-parser.add_argument('-w', '--disable-swipe', action='store_true',
-                    help="Disable the swipe panel")
-parser.add_argument('-q', '--noscrcpy', action='store_true',
-                    help="Disable scrcpy processes (For debugging only)")
-parser.add_argument('-f', '--force_window_frame', action='store_true',
-                    help="Force display desktop window manager "
-                         "for toolkit without frames")
-parser.add_argument('-o', '--output', action='store_true',
-                    help="Show logging output in stdout and in .log filename")
-parser.add_argument('-d', '--debug', default=3,
-                    help="Set a logging level from 0,1,2,3,4,5")
-parser.add_argument('-v', '--version', action='store_true',
-                    help="Display guiscrcpy version")
+parser.add_argument(
+	'-i',
+	'--install',
+	action='store_true',
+	help="Install guiscrcpy system wide on Linux"
+)
+parser.add_argument(
+	'-s',
+	'--start',
+	action='store_true',
+	help="Start scrcpy first before loading the GUI"
+)
+parser.add_argument(
+	'-r',
+	'--reset',
+	action='store_true',
+	help="Reset the guiscrcpy configuration files to default"
+)
+parser.add_argument(
+	'-w',
+	'--disable-swipe',
+	action='store_true',
+	help="Disable the swipe panel"
+)
+parser.add_argument(
+	'-q',
+	'--noscrcpy',
+	action='store_true',
+	help="Disable scrcpy processes (For debugging only)"
+)
+parser.add_argument(
+	'-f',
+	'--force_window_frame',
+	action='store_true',
+	help="Force display desktop window manager for toolkit without frames"
+)
+parser.add_argument(
+	'-o',
+	'--output',
+	action='store_true',
+	help="Show logging output in stdout and in .log filename"
+)
+parser.add_argument(
+	'-d',
+	'--debug',
+	default=3,
+	help="Set a logging level from 0,1,2,3,4,5"
+)
+parser.add_argument(
+	'-v',
+	'--version',
+	action='store_true',
+	help="Display guiscrcpy version"
+)
 args = parser.parse_args()
 
 # set argument debug level

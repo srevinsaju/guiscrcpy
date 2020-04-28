@@ -83,13 +83,13 @@ class MapperUI(QtWidgets.QWidget):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.lineEdit = QtWidgets.QLineEdit(self.widget)
-        sizePolicy = QtWidgets.QSizePolicy(
+        size_policy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
+        size_policy.setHorizontalStretch(0)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(
             self.lineEdit.sizePolicy().hasHeightForWidth())
-        self.lineEdit.setSizePolicy(sizePolicy)
+        self.lineEdit.setSizePolicy(size_policy)
         self.lineEdit.setMinimumSize(QtCore.QSize(25, 25))
         self.lineEdit.setMaximumSize(QtCore.QSize(25, 16777215))
         self.lineEdit.setMaxLength(1)
@@ -101,10 +101,13 @@ class MapperUI(QtWidgets.QWidget):
         self.horizontalLayout.addWidget(self.pushButton)
         self.label0 = QtWidgets.QLabel(self.widget)
         self.label0.setMinimumSize(QtCore.QSize(25, 25))
-        self.label0.setStyleSheet("color: rgb(0, 0, 0);\n"
-                                  "border-radius: 10px;\n"
-                                  "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(61, 255, 0, 255), stop:1 rgba(226, 255, 0, 255));\n"
-                                  "")
+        self.label0.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "border-radius: 10px;\n"
+            "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, "
+            "y2:1, stop:0 rgba(61, 255, 0, 255), stop:1 rgba(226, 255, 0, "
+            "255));\n "
+        )
         self.label0.setAlignment(QtCore.Qt.AlignCenter)
         self.label0.setObjectName("label")
         self.horizontalLayout.addWidget(self.label0)

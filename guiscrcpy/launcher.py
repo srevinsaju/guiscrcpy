@@ -687,69 +687,71 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
 
 def bootstrap0():
-    """
-    Launch the guiscrcpy window
-    :return:
-    """
-    # enable High DPI scaling
-    QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-    QApplication.setAttribute(
-        QtCore.Qt.AA_UseHighDpiPixmaps, True)  # use HIGH DPI icons
-    app = QtWidgets.QApplication(sys.argv)
+	"""
+	Launch the guiscrcpy window
+	:return:
+	"""
+	# enable High DPI scaling
+	QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+	QApplication.setAttribute(
+		QtCore.Qt.AA_UseHighDpiPixmaps, True)  # use HIGH DPI icons
+	app = QtWidgets.QApplication(sys.argv)
 
-    app.setStyle('Breeze')
-    app.setStyleSheet(dark_stylesheet())
+	app.setStyle('Breeze')
+	app.setStyleSheet(dark_stylesheet())
 
-    splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
-    splash = QtWidgets.QSplashScreen(splash_pix)
-    splash.setMask(splash_pix.mask())
-    splash.show()
-    app.processEvents()
-    cfg_edited = False
+	splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
+	splash = QtWidgets.QSplashScreen(splash_pix)
+	splash.setMask(splash_pix.mask())
+	splash.show()
+	app.processEvents()
+	cfg_edited = False
 
-    if (adb.path is None) or (not os.path.exists(adb.path)):
-        adb.path = openFileNameDialog(None, 'adb')
-        cfg_edited = True
-        config['adb'] = adb.path
+	if (adb.path is None) or (not os.path.exists(adb.path)):
+		adb.path = open_exe_name_dialog(None, 'adb')
+		cfg_edited = True
+		config['adb'] = adb.path
 
-    if (scrcpy.path is None) or (not os.path.exists(scrcpy.path)):
-        scrcpy.path = openFileNameDialog(None, 'scrcpy')
-        cfg_edited = True
-        config['scrcpy'] = scrcpy.path
+	if (scrcpy.path is None) or (not os.path.exists(scrcpy.path)):
+		scrcpy.path = open_exe_name_dialog(None, 'scrcpy')
+		cfg_edited = True
+		config['scrcpy'] = scrcpy.path
 
-    # on windows, users are likely not to add the scrcpy-server to the
-    # SCRCPY_SERVER_PATH
-    scrcpy_server_path_env = os.getenv('SCRCPY_SERVER_PATH', None)
-    if scrcpy_server_path_env:
-        if os.path.exists(scrcpy_server_path_env):
-            config['scrcpy-server'] = scrcpy.server_path
-        else:
-            scrcpy.server_path = openFileNameDialog(None, 'scrcpy-server')
-            cfg_edited = True
-            config['scrcpy-server'] = scrcpy.server_path
-            os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
-    elif ((scrcpy.server_path is None) or
-          (not os.path.exists(scrcpy.server_path))) and (
-            platform.System().system() == 'Windows'
-    ):
-        scrcpy.server_path = openFileNameDialog(None, 'scrcpy-server')
-        cfg_edited = True
-        config['scrcpy-server'] = scrcpy.server_path
-        os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
-    elif platform.System().system() == "Windows":
-        os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
+	# on windows, users are likely not to add the scrcpy-server to the
+	# SCRCPY_SERVER_PATH
+	scrcpy_server_path_env = os.getenv('SCRCPY_SERVER_PATH', None)
+	if scrcpy_server_path_env:
+		if os.path.exists(scrcpy_server_path_env):
+			config['scrcpy-server'] = scrcpy.server_path
+		else:
+			scrcpy.server_path = open_exe_name_dialog(None, 'scrcpy-server')
+			cfg_edited = True
+			config['scrcpy-server'] = scrcpy.server_path
+			os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
+	elif (
+			(scrcpy.server_path is None) or
+			(not os.path.exists(scrcpy.server_path))
+	) and (
+			platform.System().system() == 'Windows'
+	):
+		scrcpy.server_path = open_exe_name_dialog(None, 'scrcpy-server')
+		cfg_edited = True
+		config['scrcpy-server'] = scrcpy.server_path
+		os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
+	elif platform.System().system() == "Windows":
+		os.environ['SCRCPY_SERVER_PATH'] = scrcpy.server_path
 
-    if cfg_edited:
-        cfgmgr.update_config(config)
-        cfgmgr.write_file()
+	if cfg_edited:
+		cfgmgr.update_config(config)
+		cfgmgr.write_file()
 
-    adb.devices(adb.path)
-    guiscrcpy = InterfaceGuiscrcpy()
-    guiscrcpy.show()
-    app.processEvents()
-    splash.hide()
-    app.exec_()
-    sys.exit()
+	adb.devices(adb.path)
+	guiscrcpy = InterfaceGuiscrcpy()
+	guiscrcpy.show()
+	app.processEvents()
+	splash.hide()
+	app.exec_()
+	sys.exit()
 
 
 if __name__ == "__main__":

@@ -300,103 +300,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 		self.nm.init()
 		self.nm.show()
 
-    def start_act(self):
-        # prepare launch of scrcpy,
-        # reset colors
-        # reset vars
-
-        # 1: reset
-        progress = self.progress(0)
-        stylesheet = "background-color: qlineargradient(" \
-                     "spread:pad, x1:0, y1:0, x2:1, y2:1, " \
-                     "stop:0 rgba(0, 255, 255, 255), " \
-                     "stop:1 rgba(0, 255, 152, 255)); " \
-                     "border-radius: 10px;"
-        self.private_message_box_adb.setStyleSheet(stylesheet)
-
-        # ====================================================================
-        # 2: Update UI to start checking
-        self.private_message_box_adb.setText("CHECKING DEVICE CONNECTION")
-        initial_time = time.time()
-        progress = self.progress(progress)
-
-        # ====================================================================
-        # 3: Check devices
-        values_devices_list = self.__refresh_devices_combo_box_cb()
-        if len(values_devices_list) != 2:
-            return 0
-        else:
-            more_devices, device_id = values_devices_list
-        progress = self.progress(progress)
-
-        # ====================================================================
-        # 4: Parse dimension slider
-        # check if the defaultDimension is checked or not for giving signal
-        if self.dimensionDefaultCheckbox.isChecked():
-            self.dimensionSlider.setEnabled(False)
-            self.dimensionText.setText("DEFAULT")
-            config['dimension'] = None
-
-        else:
-            self.dimensionSlider.setEnabled(True)
-            config['dimension'] = int(self.dimensionSlider.value())
-            self.dimensionSlider.setValue(config['dimension'])
-            self.dimensionText.setText(str(config['dimension']) + "px")
-        # edit configuration files to update dimension key
-        if config['dimension'] is None:
-            self.options = " "
-            pass
-        elif config['dimension'] is not None:
-            self.options = " -m " + str(config['dimension'])
-        else:
-            self.options = ""
-        progress = self.progress(progress)
-
-        # ====================================================================
-        # 5: Check if always_on and fullscreen switches are on
-        if self.aotop.isChecked():
-            self.options += " --always-on-top"
-        if self.fullscreen.isChecked():
-            self.options += " -f"
-            config['fullscreen'] = True
-        else:
-            config['fullscreen'] = False
-        progress = self.progress(progress)
-
-        # ====================================================================
-        # 6: Check if show touches / recording are on
-        if self.showTouches.isChecked():
-            self.options += " --show-touches"
-            config['swtouches'] = True
-        else:
-            config['swtouches'] = False
-        progress = self.progress(progress)
-
-        # ====================================================================
-        # 7: Check if the record option is selected
-        if self.recScui.isChecked():
-            self.options += " -r " + str(int(time.time())) + ".mp4 "
-        progress = self.progress(progress)
-
-        # ====================================================================
-        # 8: Check if the display is forced to be on
-        if self.displayForceOn.isChecked():
-            self.options += " -S"
-            config['dispRO'] = True
-        else:
-            config['dispRO'] = False
-        progress = self.progress(progress)
-
-        # ====================================================================
-        # 9: Parse bitrate
-        # Bitrate is parsed, by editing the bitrate mask
-        if self.bitrateText.text().split()[1][0] in ['K', 'M', 'T']:
-            bitrate_multiplier = str(self.bitrateText.text().split()[1][0])
-        elif self.bitrateText.text().split()[1][0] == "B":
-            bitrate_multiplier = "B"
-        else:
-            # do not proceed. Invalid file size multiplier
-            multiplier_error = f"Invalid file size multiplier \
 	@staticmethod
 	def bootstrap_mapper():
 		if (os.path.exists(
@@ -540,152 +443,250 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 		else:
 			return val + 100 / 20
 
+	def start_act(self):
+		# prepare launch of scrcpy,
+		# reset colors
+		# reset vars
+
+		# 1: reset
+		progress = self.progress(0)
+		stylesheet = \
+			"background-color: qlineargradient(" \
+			"spread:pad, x1:0, y1:0, x2:1, y2:1, " \
+			"stop:0 rgba(0, 255, 255, 255), " \
+			"stop:1 rgba(0, 255, 152, 255)); " \
+			"border-radius: 10px;"
+		self.private_message_box_adb.setStyleSheet(stylesheet)
+
+		# ====================================================================
+		# 2: Update UI to start checking
+		self.private_message_box_adb.setText("CHECKING DEVICE CONNECTION")
+		initial_time = time.time()
+		progress = self.progress(progress)
+
+		# ====================================================================
+		# 3: Check devices
+		values_devices_list = self.__refresh_devices_combo_box_cb()
+		if len(values_devices_list) != 2:
+			return 0
+		else:
+			more_devices, device_id = values_devices_list
+		progress = self.progress(progress)
+
+		# ====================================================================
+		# 4: Parse dimension slider
+		# check if the defaultDimension is checked or not for giving signal
+		if self.dimensionDefaultCheckbox.isChecked():
+			self.dimensionSlider.setEnabled(False)
+			self.dimensionText.setText("DEFAULT")
+			config['dimension'] = None
+
+		else:
+			self.dimensionSlider.setEnabled(True)
+			config['dimension'] = int(self.dimensionSlider.value())
+			self.dimensionSlider.setValue(config['dimension'])
+			self.dimensionText.setText(str(config['dimension']) + "px")
+		# edit configuration files to update dimension key
+		if config['dimension'] is None:
+			self.options = " "
+			pass
+		elif config['dimension'] is not None:
+			self.options = " -m " + str(config['dimension'])
+		else:
+			self.options = ""
+		progress = self.progress(progress)
+
+		# ====================================================================
+		# 5: Check if always_on and fullscreen switches are on
+		if self.aotop.isChecked():
+			self.options += " --always-on-top"
+		if self.fullscreen.isChecked():
+			self.options += " -f"
+			config['fullscreen'] = True
+		else:
+			config['fullscreen'] = False
+		progress = self.progress(progress)
+
+		# ====================================================================
+		# 6: Check if show touches / recording are on
+		if self.showTouches.isChecked():
+			self.options += " --show-touches"
+			config['swtouches'] = True
+		else:
+			config['swtouches'] = False
+		progress = self.progress(progress)
+
+		# ====================================================================
+		# 7: Check if the record option is selected
+		if self.recScui.isChecked():
+			self.options += " -r " + str(int(time.time())) + ".mp4 "
+		progress = self.progress(progress)
+
+		# ====================================================================
+		# 8: Check if the display is forced to be on
+		if self.displayForceOn.isChecked():
+			self.options += " -S"
+			config['dispRO'] = True
+		else:
+			config['dispRO'] = False
+		progress = self.progress(progress)
+
+		# ====================================================================
+		# 9: Parse bitrate
+		# Bitrate is parsed, by editing the bitrate mask
+		if self.bitrateText.text().split()[1][0] in ['K', 'M', 'T']:
+			bitrate_multiplier = str(self.bitrateText.text().split()[1][0])
+		elif self.bitrateText.text().split()[1][0] == "B":
+			bitrate_multiplier = "B"
+		else:
+			# do not proceed. Invalid file size multiplier
+			multiplier_error = f"Invalid file size multiplier \
             '{str(self.bitrateText.text().split()[1][0])}'. " \
-                               f"Please use only K, M, T only"
-            print(multiplier_error)
-            self.private_message_box_adb.setText(multiplier_error)
-            return False
-        if self.bitrateText.text().split()[0].isdigit():
-            bitrate_integer = int(self.bitrateText.text().split()[0])
-        else:
-            bitrate_integer = 8000
-        self.options += " -b {}{}".format(bitrate_integer, bitrate_multiplier)
-        config['bitrate'] = bitrate_integer
-        progress = self.progress(progress)
+							f"Please use only K, M, T only"
+			print(multiplier_error)
+			self.private_message_box_adb.setText(multiplier_error)
+			return False
+		if self.bitrateText.text().split()[0].isdigit():
+			bitrate_integer = int(self.bitrateText.text().split()[0])
+		else:
+			bitrate_integer = 8000
+		self.options += " -b {}{}".format(bitrate_integer, bitrate_multiplier)
+		config['bitrate'] = bitrate_integer
+		progress = self.progress(progress)
 
-        # ====================================================================
-        # 10: Make user aware that there were no problems in connection
-        # or in the data provided by the user
-        logger.debug("CONNECTION ESTABLISHED")
-        self.progressBar.setValue(50)
-        logger.debug("Flags passed to scrcpy engine : " + self.options)
-        self.progressBar.setValue(60)
-        config['extra'] = self.flaglineedit.text()
-        progress = self.progress(progress)
+		# ====================================================================
+		# 10: Make user aware that there were no problems in connection
+		# or in the data provided by the user
+		logger.debug("CONNECTION ESTABLISHED")
+		self.progressBar.setValue(50)
+		logger.debug("Flags passed to scrcpy engine : " + self.options)
+		self.progressBar.setValue(60)
+		config['extra'] = self.flaglineedit.text()
+		progress = self.progress(progress)
 
-        # ====================================================================
-        # 11: Initialize User Experience Mapper
-        ux = UXMapper(device_id=device_id)
-        progress = self.progress(progress)
+		# ====================================================================
+		# 11: Initialize User Experience Mapper
+		ux = UXMapper(device_id=device_id)
+		progress = self.progress(progress)
 
-        # ====================================================================
-        # 12: Init side_panel if necessary
-        if self.check_side_panel.isChecked():
-            side_instance = InterfaceToolkit(
-                parent=self,
-                ux_mapper=ux,
-                frame=args.force_window_frame
-            )
-            for instance in self.child_windows:
-                if instance.ux.get_sha() == side_instance.ux.get_sha() and \
-                        instance.name == side_instance.name:
-                    break
-            else:
-                side_instance.init()
-                self.child_windows.append(side_instance)
-        progress = self.progress(progress)
+		# ====================================================================
+		# 12: Init side_panel if necessary
+		if self.check_side_panel.isChecked():
+			side_instance = InterfaceToolkit(
+				parent=self,
+				ux_mapper=ux,
+				frame=args.force_window_frame
+			)
+			for instance in self.child_windows:
+				if instance.ux.get_sha() == side_instance.ux.get_sha() and \
+						instance.name == side_instance.name:
+					break
+			else:
+				side_instance.init()
+				self.child_windows.append(side_instance)
+		progress = self.progress(progress)
 
-        # ====================================================================
-        # 13: Init bottom_panel if necessary
-        if self.check_bottom_panel.isChecked():
-            panel_instance = Panel(
-                parent=self,
-                ux_mapper=ux,
-                frame=args.force_window_frame
-            )
-            for instance in self.child_windows:
-                if instance.ux.get_sha() == panel_instance.ux.get_sha() and \
-                        instance.name == panel_instance.name:
-                    break
-            else:
-                panel_instance.init()
-                self.child_windows.append(panel_instance)
-        progress = self.progress(progress)
+		# ====================================================================
+		# 13: Init bottom_panel if necessary
+		if self.check_bottom_panel.isChecked():
+			panel_instance = Panel(
+				parent=self,
+				ux_mapper=ux,
+				frame=args.force_window_frame
+			)
+			for instance in self.child_windows:
+				if instance.ux.get_sha() == panel_instance.ux.get_sha() and \
+						instance.name == panel_instance.name:
+					break
+			else:
+				panel_instance.init()
+				self.child_windows.append(panel_instance)
+		progress = self.progress(progress)
 
-        # ====================================================================
-        # 14: Init swipe panel if necessary
-        if self.check_swipe_panel.isChecked():
-            swipe_instance = SwipeUX(
-                ux_wrapper=ux,
-                frame=args.force_window_frame
-            )  # Load swipe UI
-            for instance in self.child_windows:
-                if instance.ux.get_sha() == swipe_instance.ux.get_sha() and \
-                        instance.name == swipe_instance.name:
-                    break
-            else:
-                swipe_instance.init()
-                self.child_windows.append(swipe_instance)
-        progress = self.progress(progress)
+		# ====================================================================
+		# 14: Init swipe panel if necessary
+		if self.check_swipe_panel.isChecked():
+			swipe_instance = SwipeUX(
+				ux_wrapper=ux,
+				frame=args.force_window_frame
+			)  # Load swipe UI
+			for instance in self.child_windows:
+				if instance.ux.get_sha() == swipe_instance.ux.get_sha() and \
+						instance.name == swipe_instance.name:
+					break
+			else:
+				swipe_instance.init()
+				self.child_windows.append(swipe_instance)
+		progress = self.progress(progress)
 
-        # ====================================================================
-        # 15: Generate uuid for device and set uuid color for PMBA
-        hexdigest = ux.get_sha()[:6]
-        stylesheet = f"background-color: #{hexdigest}; border-radius: 10px; "
-        self.private_message_box_adb.setStyleSheet(stylesheet)
-        progress = self.progress(progress)
+		# ====================================================================
+		# 15: Generate uuid for device and set uuid color for PMBA
+		hexdigest = ux.get_sha()[:6]
+		stylesheet = f"background-color: #{hexdigest}; border-radius: 10px; "
+		self.private_message_box_adb.setStyleSheet(stylesheet)
+		progress = self.progress(progress)
 
-        # ====================================================================
-        # 16: Parse scrcpy arguments
-        if self.cmx is not None:
-            config['cmx'] = ' '.join(map(str, self.cmx))
+		# ====================================================================
+		# 16: Parse scrcpy arguments
+		if self.cmx is not None:
+			config['cmx'] = ' '.join(map(str, self.cmx))
 
-        arguments_scrcpy = "{} {} {}".format(
-            self.options,
-            config['extra'],
-            config['cmx']
-        )
-        progress = self.progress(progress)
+		arguments_scrcpy = "{} {} {}".format(
+			self.options,
+			config['extra'],
+			config['cmx']
+		)
+		progress = self.progress(progress)
 
-        # ====================================================================
-        # 17: Handle more devices
-        if more_devices:
-            # guiscrcpy found more devices
-            # scrcpy will fail if more than one device is found
-            # its important to pass the device serial id, if more than one
-            # device is found
-            arguments_scrcpy = f"-s {device_id} {arguments_scrcpy}"
-            # tell end users that the color of the device is this
-            self.private_message_box_adb.setText(
-                f"Device {device_id} is connected; (color id matches "
-                f"toolkit color)"
-            )
-        progress = self.progress(progress)
+		# ====================================================================
+		# 17: Handle more devices
+		if more_devices:
+			# guiscrcpy found more devices
+			# scrcpy will fail if more than one device is found
+			# its important to pass the device serial id, if more than one
+			# device is found
+			arguments_scrcpy = f"-s {device_id} {arguments_scrcpy}"
+			# tell end users that the color of the device is this
+			self.private_message_box_adb.setText(
+				f"Device {device_id} is connected; (color id matches "
+				f"toolkit color)"
+			)
+		progress = self.progress(progress)
 
-        # ====================================================================
-        # 18: Return
-        if args.noscrcpy:
-            # for debugging purposes, its important to not start scrcpy
-            # every time
-            return False
-        progress = self.progress(progress)
+		# ====================================================================
+		# 18: Return
+		if args.noscrcpy:
+			# for debugging purposes, its important to not start scrcpy
+			# every time
+			return False
+		progress = self.progress(progress)
 
-        # ====================================================================
-        # 19: Start Scrcpy
-        scrcpy.start(scrcpy.path, arguments_scrcpy)
-        final_time = time.time()
-        eta = final_time - initial_time
-        print("scrcpy launched in {:.2f}s".format(eta))
-        progress = self.progress(progress)
+		# ====================================================================
+		# 19: Start Scrcpy
+		scrcpy.start(scrcpy.path, arguments_scrcpy)
+		final_time = time.time()
+		eta = final_time - initial_time
+		print("scrcpy launched in {:.2f}s".format(eta))
+		progress = self.progress(progress)
 
-        # ====================================================================
-        # 20: Update configuration
-        cfgmgr.update_config(config)
-        cfgmgr.write_file()
-        progress = self.progress(progress)
+		# ====================================================================
+		# 20: Update configuration
+		cfgmgr.update_config(config)
+		cfgmgr.write_file()
+		progress = self.progress(progress)
 
-        # ====================================================================
-        # 21: Finish (optional: notification aduitor
-        if self.notifChecker.isChecked():
-            # call notification auditor if notification_auditor is checked only
-            from guiscrcpy.lib.notify import NotifyAuditor
-            try:
-                NotifyAuditor()
-            except (AttributeError, NameError, ValueError):
-                self.notifChecker.setChecked(False)
-                print("guiscrcpy notification auditor failed. ")
-                print("Your OS / Desktop Environment might not support it atm")
-        return self.progress(progress)
+		# ====================================================================
+		# 21: Finish (optional: notification aduitor
+		if self.notifChecker.isChecked():
+			# call notification auditor if notification_auditor is checked only
+			from guiscrcpy.lib.notify import NotifyAuditor
+			try:
+				NotifyAuditor()
+			except (AttributeError, NameError, ValueError):
+				self.notifChecker.setChecked(False)
+				print("guiscrcpy notification auditor failed. ")
+				print("Your OS / Desktop Environment might not support it atm")
+		return self.progress(progress)
 
 
 def bootstrap0():

@@ -299,18 +299,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.nm.init()
         self.nm.show()
 
-    def mapp(self):
-        if (os.path.exists(
-                os.path.join(cfgmgr.get_cfgpath() + "guiscrcpy.mapper.json"))):
-            from guiscrcpy.lib import mapper
-            mapper.file_check()
-        else:
-            logger.warning(
-                "guiscrcpy ~ mapper is not initialized. "
-                "Initialize by running" +
-                "$ guiscrcpy-mapper" + "reset points by" +
-                "$ guiscrcpy-mapper -r"
-            )
 
 
     @staticmethod
@@ -528,6 +516,19 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         else:
             # do not proceed. Invalid file size multiplier
             multiplier_error = f"Invalid file size multiplier \
+	@staticmethod
+	def bootstrap_mapper():
+		if (os.path.exists(
+				os.path.join(cfgmgr.get_cfgpath() + "guiscrcpy.mapper.json"))):
+			from guiscrcpy.lib import mapper
+			mapper.file_check()
+		else:
+			logger.warning(
+				"guiscrcpy ~ mapper is not initialized. "
+				"Initialize by running" +
+				"$ guiscrcpy-mapper" + "reset points by" +
+				"$ guiscrcpy-mapper -r"
+			)
 
 	@staticmethod
 	def launch_usb_audio():

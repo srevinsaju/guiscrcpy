@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
+#! /usr/bin/env python3
 """
-
 GUISCRCPY by srevinsaju
 Get it on : https://github.com/srevinsaju/guiscrcpy
 Licensed under GNU Public License
@@ -17,7 +16,5 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 """
-
 VERSION = '3.7.post85.dev'

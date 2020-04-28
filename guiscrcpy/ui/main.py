@@ -759,7 +759,7 @@ class Ui_MainWindow(object):
         self.pushButton.setStatusTip(_translate("MainWindow", "Reset guiscrcpy configuration files"))
         self.pushButton.setText(_translate("MainWindow", "  RESET  "))
         self.abtgit.setStatusTip(_translate("MainWindow", "Check me out on Github"))
-        self.usbaud.setStatusTip(_translate("MainWindow", "Start @rom1v\'s usbaudio. Needs usbaudio to be on PATH"))
+        self.usbaud.setStatusTip(_translate("MainWindow", "Start @rom1v\'s usbaudio. Needs usbaudio to be on path"))
         self.mapnow.setToolTip(_translate("MainWindow", "Device Point to Key mapping launcher. Click to register keys for the first time. For the subsequent launches, the button will start key listeners"))
         self.mapnow.setStatusTip(_translate("MainWindow", "Device Point to Key mapping launcher. Click to register keys for the first time. For the subsequent launches, the button will start key listeners"))
         self.executeaction.setStatusTip(_translate("MainWindow", "Start Scrcpy Executable right now. Please check if Scrcpy is added to path"))

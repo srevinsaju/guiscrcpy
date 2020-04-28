@@ -132,18 +132,26 @@ class MapperUI(QtWidgets.QWidget):
         self.setContentsMargins(0, 0, 0, 0)
         self.label.setContentsMargins(0, 0, 0, 0)
         self.pixmap = QtGui.QPixmap(cfgpath + "scr.png")
-        self.label.resize(0.5 * self.pixmap.width(),
-                          0.5 * self.pixmap.height())
-        self.resize(0.5 * self.pixmap.width(), 0.5 * self.pixmap.height())
+        self.label.resize(
+            int(0.5 * self.pixmap.width()),
+            int(0.5 * self.pixmap.height())
+        )
+        self.resize(
+            int(0.5 * self.pixmap.width()),
+            int(0.5 * self.pixmap.height())
+        )
         print("Lets Check")
         self.show()
         self.resize(self.label.size())
         self.label.setPixmap(self.pixmap)
         self.label.setMinimumSize(1, 1)
         self.label.setMaximumSize(
-            0.5 * self.pixmap.width(), 0.5 * self.pixmap.height())
-        self.setMaximumSize(0.5 * self.pixmap.width(),
-                            0.5 * self.pixmap.height())
+            int(0.5 * self.pixmap.width()), int(0.5 * self.pixmap.height())
+        )
+        self.setMaximumSize(
+            int(0.5 * self.pixmap.width()),
+            int(0.5 * self.pixmap.height())
+        )
         self.label.installEventFilter(self)
         layout = QtWidgets.QVBoxLayout(self)
         layout.addWidget(self.label)
@@ -160,19 +168,18 @@ class MapperUI(QtWidgets.QWidget):
     def keyreg(self):
         with open(cfgpath + 'guiscrcpy.mapper.json', 'r') as f:
             key_a = json.load(f)
-        # print("REL POS :: ", fixedpos)
-        relx = fixedpos[0] / self.label.width()
-        rely = fixedpos[1] / self.label.height()
+        # print("REL POS :: ", fixed_pos)
+        relx = fixed_pos[0] / self.label.width()
+        rely = fixed_pos[1] / self.label.height()
         fixx = relx * int(dimensions[0])
         fixy = rely * int(dimensions[1])
         print("FINALIZED POS :: ", fixx, fixy)
-
-        finalpos[0] = fixx
-        finalpos[1] = fixy
+        final_pos[0] = fixx
+        final_pos[1] = fixy
         self.label0.setText(
             "SUCCESS! Add a new point and enter char; close the window to finish adding.")
 
-        print("FINAL LIST == ", finalpos)
+        print("FINAL LIST == ", final_pos)
         keylisten = self.lineEdit.text()
 
         try:
@@ -204,23 +211,25 @@ class MapperUI(QtWidgets.QWidget):
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            self.lastPoint = event.pos()
-            fixedpos[0] = int(event.pos().x())
-            fixedpos[1] = int(event.pos().y())
-            print(self.lastPoint, "LAST")
-            self.lastPoint = self.label.mapFromParent(
+            self.last_found_point = event.pos()
+            fixed_pos[0] = int(event.pos().x())
+            fixed_pos[1] = int(event.pos().y())
+            print(self.last_found_point, "LAST")
+            self.last_found_point = self.label.mapFromParent(
                 event.pos())  # this is working fine now
             # self.label.setPixmap(QPixmap.fromImage(self.image))
 
     def mouseMoveEvent(self, event):
-        if (event.buttons() & Qt.LeftButton):
-            # painter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine, Qt.RoundCap,Qt.RoundJoin))
-            # painter.drawLine(self.label.mapFromParent(event.pos()),self.lastPoint)
-            self.lastPoint = self.label.mapFromParent(
+        if event.buttons() & Qt.LeftButton:
+            # painter.setPen(QPen(self.brushColor, 
+            # self.brushSize, Qt.SolidLine, Qt.RoundCap,Qt.RoundJoin))
+            # painter.drawLine(
+            # self.label.mapFromParent(event.pos()),self.last_found_point)
+            self.last_found_point = self.label.mapFromParent(
                 event.pos())  # this is working fine now
-            print(self.lastPoint, "MOVE")
-            fixedpos[0] = int(event.pos().x())
-            fixedpos[1] = int(event.pos().y())
+            print(self.last_found_point, "MOVE")
+            fixed_pos[0] = int(event.pos().x())
+            fixed_pos[1] = int(event.pos().y())
             # self.label.setPixmap(QPixmap.fromImage(self.image))
 
     def mouseReleaseEvent(self, event):
@@ -235,8 +244,6 @@ def listen_keypress(key_a):
     print(key_a)
 
     def on_press0(key):
-        finalpos = [0, 0]
-
         try:
             if key.char in key_a.keys():
                 print(key.char)

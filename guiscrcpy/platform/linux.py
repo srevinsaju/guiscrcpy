@@ -55,7 +55,8 @@ class Linux:
                 os.makedirs(path)
             except Exception as e:
                 logging.error(
-                    "Error creating configuration filename in dir {path}. Error code:{e}"
+                    "Error creating configuration filename in dir {path}. "
+                    "Error code:{e}"
                     .format(
                         path=path,
                         e=e
@@ -95,7 +96,8 @@ class Linux:
     def install_fonts():
         """
         Install fonts to ~/.fonts.
-        The fonts being installed is Titillium Web ~ https://fonts.google.com/specimen/Titillium+Web
+        The fonts being installed is Titillium Web ~
+        https://fonts.google.com/specimen/Titillium+Web
         Open Source Approved fonts.
         # TODO support for SystemWide Installation
         :return: True if installation successful, else False
@@ -103,7 +105,19 @@ class Linux:
         sys_font_dir = os.path.join(os.path.expanduser('~'), '.fonts')
         if not os.path.exists(sys_font_dir):
             os.makedirs(sys_font_dir)
-        from fontTools.ttLib import TTFont
+
+        try:
+            from fontTools.ttLib import TTFont
+        except ModuleNotFoundError as e:
+            logging.error(
+                "Error Installing the fonts. "
+                "You might have to manually install the fonts"
+                "Titillium Web : "
+                "https://fonts.google.com/specimen/Titillium+Web "
+                "Error: {}".format(e)
+            )
+            return False
+
         font_dir = os.path.join(os.path.abspath(
             os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
         try:
@@ -113,9 +127,13 @@ class Linux:
                 font.save(os.path.join(sys_font_dir, i))
             return True
         except Exception as e:
-            logging.error("Error Installing the fonts. "
-                          "You might have to manually install the fonts"
-                          "Titillium Web : https://fonts.google.com/specimen/Titillium+Web")
+            logging.error(
+                "Error Installing the fonts. "
+                "You might have to manually install the fonts"
+                "Titillium Web : "
+                "https://fonts.google.com/specimen/Titillium+Web "
+                "Error: {}".format(e)
+            )
             return False
 
     @staticmethod

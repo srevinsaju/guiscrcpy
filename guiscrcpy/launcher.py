@@ -300,11 +300,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 		self.nm.init()
 		self.nm.show()
 
-
-    @staticmethod
-    def quit_window():
-        sys.exit()
-
     def __dimension_change_cb(self):
         if self.dimensionDefaultCheckbox.isChecked():
             self.dimensionSlider.setEnabled(False)
@@ -540,6 +535,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 		)
 		message_box.addButton("OK", self.quit_window())
 		message_box.show()
+
+	@staticmethod
+	def quit_window():
+		sys.exit()
+
             '{str(self.bitrateText.text().split()[1][0])}'. " \
                                f"Please use only K, M, T only"
             print(multiplier_error)

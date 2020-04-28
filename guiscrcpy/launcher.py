@@ -300,13 +300,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 		self.nm.init()
 		self.nm.show()
 
-    def progress(self, val):
-        self.progressBar.setValue(val)
-        if (val + 4) >= 100:
-            return 100
-        else:
-            return val + 100/20
-
     def start_act(self):
         # prepare launch of scrcpy,
         # reset colors
@@ -539,6 +532,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 			device_id = None
 
 		return more_devices, device_id
+
+	def progress(self, val):
+		self.progressBar.setValue(val)
+		if (val + 4) >= 100:
+			return 100
+		else:
+			return val + 100 / 20
 
             '{str(self.bitrateText.text().split()[1][0])}'. " \
                                f"Please use only K, M, T only"

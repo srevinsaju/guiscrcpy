@@ -184,8 +184,11 @@ class MapperUI(QtWidgets.QWidget):
 
             print("key_a", key_a)
 
-        except BaseException:
-            print("Special key entered, Use normal characters only")
+        except BaseException as e:
+            print(
+                "Special key entered, Use normal characters only: {}"
+                .format(e)
+            )
 
     def eventFilter(self, source, event):
         if source is self.label and event.type() == QtCore.QEvent.Resize:

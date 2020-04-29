@@ -15,9 +15,10 @@ PYTHON      := /cygdrive/c/Program\ Files/Python37/python.exe
 PYTHON37    := /cygdrive/c/Program\ Files/Python37/python.exe
 endif
 
-ifdef LEVEL
-INSTALL_OPTS += "$(LEVEL)"
+ifneq ($(EUID),0)
+INSTALL_OPTS += "--user"
 endif
+
 
 export PYTHON # pass the variable to sub-makefiles through the environment
 

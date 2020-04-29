@@ -13,7 +13,7 @@
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/guiscrcpy?style=flat-square)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/guiscrcpy?color=dark%20green&logo=PYPI&logoColor=Green&style=flat-square)](https://pypi.org/project/guiscrcpy)
 [![AUR version](https://img.shields.io/aur/version/guiscrcpy?label=Arch%20Linux%20Package&style=flat-square)](https://aur.archlinux.org/packages/guiscrcpy)
-[![Snap Status](https://build.snapcraft.io/badge/srevinsaju/guiscrcpy.svg)](https://build.snapcraft.io/user/srevinsaju/guiscrcpy)
+[![guiscrcpy](https://snapcraft.io//guiscrcpy/badge.svg)](https://snapcraft.io/guiscrcpy)
 [![GitHub All Releases](https://img.shields.io/github/downloads/srevinsaju/guiscrcpy/total?style=flat-square)](https://github.com/srevinsaju/guiscrcpy/releases)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -34,7 +34,7 @@ These are the common methods of installation. To see more interesting ways, chec
 | Package Type  | Platforms                                                    | Status                                                       | Command / Link                |
 | ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------------------- |
 | PyPI (`pip`)  | <img src="https://guiscrcpy.github.io/img/linux.png" height=15px><img src="https://guiscrcpy.github.io/img/windows.png" height=15px><img src="https://guiscrcpy.github.io/img/darwin.jpeg" height=15px style="border-radius: 50%"> | ![Linux](https://github.com/srevinsaju/guiscrcpy/workflows/Linux/badge.svg) | `pip3 install -U guiscrcpy`   |
-| Snap Store    | <img src="https://guiscrcpy.github.io/img/linux.png" height=15px> | [![Snap Status](https://build.snapcraft.io/badge/srevinsaju/guiscrcpy.svg)](https://build.snapcraft.io/user/srevinsaju/guiscrcpy) | `sudo snap install guiscrcpy` |
+| Snap Store    | <img src="https://guiscrcpy.github.io/img/linux.png" height=15px> | [![guiscrcpy](https://snapcraft.io//guiscrcpy/badge.svg)](https://snapcraft.io/guiscrcpy) | `sudo snap install guiscrcpy` |
 | AUR           | <img src="https://raw.githubusercontent.com/guiscrcpy/guiscrcpy.github.io/master/img/archlinux.png" height=15px> | [![AUR version](https://img.shields.io/aur/version/guiscrcpy?label=Arch%20Linux%20Package&style=flat-square)](https://aur.archlinux.org/packages/guiscrcpy) | `yay -S guiscrcpy`            |
 | Windows (exe) | <img src="https://guiscrcpy.github.io/img/windows.png" height=15px> | [![Windows Executable](https://github.com/srevinsaju/guiscrcpy/workflows/Windows%20Executable/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=+event%3Apush++is%3Asuccess+branch%3Amaster+workflow%3A%22Windows+Executable%22) | `Click on the Status Badge`   |
 | AppImage      | <img src="https://guiscrcpy.github.io/img/linux.png" height=15px> | [![AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/AppImage/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=event%3Apush+branch%3Amaster+is%3Asuccess+workflow%3AAppImage+) | `Click on the Status Badge`   |

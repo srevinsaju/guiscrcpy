@@ -27,13 +27,19 @@ some more features to be included, and paticularly ...
 
 [![Become a Patron](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/srevinsaju?fan_landing=true)
 
-For beta Windows compiled executables, click 
-[![Windows Executable](https://github.com/srevinsaju/guiscrcpy/workflows/Windows%20Executable/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=+event%3Apush++is%3Asuccess+branch%3Amaster+workflow%3A%22Windows+Executable%22). Select the latest commit 
+[![Windows Executable](https://github.com/srevinsaju/guiscrcpy/workflows/Windows%20Executable/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=+event%3Apush++is%3Asuccess+branch%3Amaster+workflow%3A%22Windows+Executable%22)
+
+For beta Windows compiled executables, click the above button. Select the latest commit 
 and download the artifact.
 
-For beta Linux compiled AppImages, click
 [![AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/AppImage/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=event%3Apush+branch%3Amaster+is%3Asuccess+workflow%3AAppImage+)
+
+For beta Linux compiled AppImages, click the above button; 
 and download the artifact. :tada: Thanks to @niess, guiscrcpy appimages are distributed for public use!!
+
+For prebuilt `guiscrcpy` + `scrcpy` + `adb` to run out of the box as a **snap** package:
+
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/guiscrcpy)
 
 ![image of guiscrcpy](https://raw.githubusercontent.com/srevinsaju/guiscrcpy-docs/master/docs/screen3.png)
 

@@ -5,7 +5,7 @@
 ![Linux](https://github.com/srevinsaju/guiscrcpy/workflows/Linux/badge.svg)
 ![Windows](https://github.com/srevinsaju/guiscrcpy/workflows/Windows/badge.svg)
 ![Mac OS](https://github.com/srevinsaju/guiscrcpy/workflows/Mac%20OS/badge.svg)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fae1b0eabec24722929e055a88622e1b)](https://app.codacy.com/manual/srevinsaju/guiscrcpy?utm_source=github.com&utm_medium=referral&utm_content=srevinsaju/guiscrcpy&utm_campaign=Badge_Grade_Settings)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/59c0214b5f2140e0be7af62f14ebdc42)](https://www.codacy.com/manual/srevinsaju/guiscrcpy?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=srevinsaju/guiscrcpy&amp;utm_campaign=Badge_Grade)
 [![Updates](https://pyup.io/repos/github/srevinsaju/guiscrcpy/shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
 [![Python 3](https://pyup.io/repos/github/srevinsaju/guiscrcpy/python-3-shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/guiscrcpy?style=flat-square)
@@ -27,35 +27,23 @@ some more features to be included, and paticularly ...
 
 [![Become a Patron](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/srevinsaju?fan_landing=true)
 
-[![Windows Executable](https://github.com/srevinsaju/guiscrcpy/workflows/Windows%20Executable/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=+event%3Apush++is%3Asuccess+branch%3Amaster+workflow%3A%22Windows+Executable%22)
+## Installation
 
-For beta Windows compiled executables, click the above button. Select the latest commit 
-and download the artifact.
+These are the common methods of installation. To see more interesting ways, checkout [Installation wiki](docs/INSTALL.md) page for more information, and to find a compatible installtion method for your device and device architecture
 
-[![AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/AppImage/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=event%3Apush+branch%3Amaster+is%3Asuccess+workflow%3AAppImage+)
-
-For beta Linux compiled AppImages, click the above button; 
-and download the artifact. :tada: Thanks to @niess, guiscrcpy appimages are distributed for public use!!
-
-For prebuilt `guiscrcpy` + `scrcpy` + `adb` to run out of the box as a **snap** package:
-
-[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/guiscrcpy)
+| Package Type  | Platforms                                                    | Status                                                       | Command / Link                |
+| ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------------------- |
+| PyPI (`pip`)  | <img src="https://guiscrcpy.github.io/img/linux.png" height=15px><img src="https://guiscrcpy.github.io/img/windows.png" height=15px><img src="https://guiscrcpy.github.io/img/darwin.jpeg" height=15px style="border-radius: 50%"> | ![Linux](https://github.com/srevinsaju/guiscrcpy/workflows/Linux/badge.svg) | `pip3 install -U guiscrcpy`   |
+| Snap Store    | <img src="https://guiscrcpy.github.io/img/linux.png" height=15px> | [![Snap Status](https://build.snapcraft.io/badge/srevinsaju/guiscrcpy.svg)](https://build.snapcraft.io/user/srevinsaju/guiscrcpy) | `sudo snap install guiscrcpy` |
+| AUR           | <img src="https://raw.githubusercontent.com/guiscrcpy/guiscrcpy.github.io/master/img/archlinux.png" height=15px> | [![AUR version](https://img.shields.io/aur/version/guiscrcpy?label=Arch%20Linux%20Package&style=flat-square)](https://aur.archlinux.org/packages/guiscrcpy) | `yay -S guiscrcpy`            |
+| Windows (exe) | <img src="https://guiscrcpy.github.io/img/windows.png" height=15px> | [![Windows Executable](https://github.com/srevinsaju/guiscrcpy/workflows/Windows%20Executable/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=+event%3Apush++is%3Asuccess+branch%3Amaster+workflow%3A%22Windows+Executable%22) | `Click on the Status Badge`   |
+| AppImage      | <img src="https://guiscrcpy.github.io/img/linux.png" height=15px> | [![AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/AppImage/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=event%3Apush+branch%3Amaster+is%3Asuccess+workflow%3AAppImage+) | `Click on the Status Badge`   |
 
 ![image of guiscrcpy](https://raw.githubusercontent.com/srevinsaju/guiscrcpy-docs/master/docs/screen3.png)
 
 guiscrcpy is a multiplatform, ready-to-use GUI layer for Android to PC screen mirroring written in the advancing programming language python3 for the most award winning open-source android screen mirroring system -- `scrcpy` located on `https://github.com/genymobile/scrcpy/` by [@rom1v](https://github.com/rom1v)
 
-## Installation
-To install `guiscrcpy`, just type:
-```bash
-python3 -m pip install guiscrcpy
-```
-in your terminal
 
-Alternatively, download the compiled EXE from the releases for Windows Operating Systems and 
-AppImages for Linux OSes
-
-For more details on Installation instructions, head over to the Wiki
 
 ## Documentation
 All detailed information are clearly laid out in the Wiki. you might need to check that out

@@ -142,9 +142,9 @@ jobs:
         name: guiscrcpy-continuous-x86_64.AppImage
     - name: Generate SHA256s
       run: |
-          mv guiscrcpy-continuous.exe guiscrcpy-$(git log --pretty=format:'%h' -n 1).exe
-          mv guiscrcpy-continuous-x86_64.AppImage guiscrcpy-$(git log --pretty=format:'%h' -n 1)-x86_64.AppImage
-          mv guiscrcpy-continuous-none-any-py3.whl guiscrcpy-$(git log --pretty=format:'%h' -n 1)-none-any-py3.whl
+          mv guiscrcpy-continuous.exe guiscrcpy-$GITHUB_SHA.exe
+          mv guiscrcpy-continuous-x86_64.AppImage guiscrcpy-$GITHUB_SHA-x86_64.AppImage
+          mv guiscrcpy-continuous-none-any-py3.whl guiscrcpy-$GITHUB_SHA-none-any-py3.whl
           sha256sum guiscrcpy-*.exe/* > SHA256SUMS.txt
           sha256sum guiscrcpy-*-x86_64.AppImage/* >> SHA256SUMS.txt
           sha256sum guiscrcpy-*-none-any-py3.whl/* >> SHA256SUMS.txt

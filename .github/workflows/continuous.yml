@@ -52,7 +52,7 @@ jobs:
         python-version: ${{ matrix.version }}
     - name: Download dependencies
       run: |
-        sudo apt install libxkbcommon0 libxcb-xkb-dev 
+        sudo apt install libxkbcommon0 libxcb-xkb-dev libxkbcommon-x11-0
     - name: Test AppImage
       run: |
         python -m pip install python-appimage

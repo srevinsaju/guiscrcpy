@@ -154,8 +154,8 @@ jobs:
         automatic_release_tag: continuous
         title: continuous
         files: |
-          guiscrcpy-*.exe
-          guiscrcpy-*-x86_64.AppImage
-          guiscrcpy-*-none-any-py3.whl
+          guiscrcpy-{{ env.GITHUB_SHA }}.exe
+          guiscrcpy-{{ env.GITHUB_SHA }}-x86_64.AppImage
+          guiscrcpy-{{ env.GITHUB_SHA }}-none-any-py3.whl
           SHA256SUMS.txt
         repo_token: ${{ secrets.GITHUB_TOKEN }}

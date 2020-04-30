@@ -147,17 +147,20 @@ jobs:
         name: guiscrcpy-continuous-x86_64.AppImage
     - name: Generate SHA256s
       run: |
-          sha256sum guiscrcpy-continuous.exe/* > SHA256SUMS.txt
-          sha256sum guiscrcpy-continuous-x86_64.AppImage/* >> SHA256SUMS.txt
-          sha256sum guiscrcpy-continuous-none-any-py3.whl/* >> SHA256SUMS.txt
+          mv guiscrcpy-continuous.exe guiscrcpy-$(git log --pretty=format:'%h' -n 1).exe
+          mv guiscrcpy-continuous-x86_64.AppImage guiscrcpy-$(git log --pretty=format:'%h' -n 1)-x86_64.AppImage
+          mv guiscrcpy-continuous-none-any-py3.whl guiscrcpy-$(git log --pretty=format:'%h' -n 1)-none-any-py3.whl
+          sha256sum guiscrcpy-*.exe/* > SHA256SUMS.txt
+          sha256sum guiscrcpy-*-x86_64.AppImage/* >> SHA256SUMS.txt
+          sha256sum guiscrcpy-*-none-any-py3.whl/* >> SHA256SUMS.txt
     - name: Release
       uses: marvinpinto/action-automatic-releases@latest
       with:
         automatic_release_tag: continuous
         title: continuous
         files: |
-          guiscrcpy-continuous.exe
-          guiscrcpy-continuous-x86_64.AppImage
-          guiscrcpy-continuous-none-any-py3.whl
+          guiscrcpy-*.exe
+          guiscrcpy-*-x86_64.AppImage
+          guiscrcpy-*-none-any-py3.whl
           SHA256SUMS.txt
         repo_token: ${{ secrets.GITHUB_TOKEN }}

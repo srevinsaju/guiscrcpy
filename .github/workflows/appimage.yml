@@ -13,7 +13,7 @@ on:
 
 jobs:
   Test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     strategy:
       matrix:
         version: ['3.8']
@@ -39,20 +39,20 @@ jobs:
         chmod +x ./appimagetool-x86_64.AppImage
     
     - name: Download adb
-      run: | 
+      run: |
         wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip
         unzip platform-tools-latest-linux.zip -d adb
         cp adb/platform-tools/adb AppDir/usr/bin/.
     
     - name: Download scrcpy
       run: |
-        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy
-        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy-server
+        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy113.tar.gz
+        tar -xf scrcpy113.tar.gz
         mkdir -p AppDir/usr/bin
-        cp scrcpy AppDir/usr/bin/.
+        cp scrcpy113/scrcpy AppDir/usr/bin/.
         chmod +x AppDir/usr/bin/scrcpy
         mkdir -p AppDir/usr/share/scrcpy
-        cp scrcpy-server AppDir/usr/share/scrcpy/.
+        cp scrcpy113/scrcpy-server AppDir/usr/share/scrcpy/.
 
     - name: Patch PyQt5 pass travis
       run: |
@@ -63,9 +63,7 @@ jobs:
 
     - name: Download scrcpy binary deps
       run: |
-        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy_processed.tar.gz
-        tar -xf scrcpy_processed.tar.gz
-        cp scrcpy_processed/* AppDir/usr/lib/.
+        cp scrcpy113/lib/* AppDir/usr/lib/.
     - name: Reimage AppImage
       run: |
         rm ./guiscrcpy-x86_64.AppImage
@@ -76,4 +74,3 @@ jobs:
         name: guiscrcpy-x86_64.AppImage
         path: guiscrcpy-x86_64.AppImage
 
-    

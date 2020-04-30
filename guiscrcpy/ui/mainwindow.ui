@@ -263,116 +263,6 @@ border-radius: 10px;
          <property name="verticalSpacing">
           <number>1</number>
          </property>
-         <item row="0" column="4">
-          <widget class="QCheckBox" name="fullscreen">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>10</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Titillium Web</family>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Fullscreen</string>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/increase-size-option.svg</normaloff>:/icons/icons/increase-size-option.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QCheckBox" name="showTouches">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>10</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Titillium Web</family>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Show touches</string>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/hand-finger-pointing-down.svg</normaloff>:/icons/icons/hand-finger-pointing-down.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QPushButton" name="settings_button">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/gear.svg</normaloff>:/icons/icons/gear.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="4">
-          <widget class="QCheckBox" name="notifChecker">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>10</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Titillium Web</family>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Make guiscrcpy check for new notifications on your device. A status bar icon indicating new notifications will be visible. (Experimental)</string>
-           </property>
-           <property name="toolTipDuration">
-            <number>2</number>
-           </property>
-           <property name="text">
-            <string>Notification Auditor</string>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/bell-musical-tool.svg</normaloff>:/icons/icons/bell-musical-tool.svg</iconset>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="0" colspan="4">
           <widget class="QCheckBox" name="displayForceOn">
            <property name="sizePolicy">
@@ -443,6 +333,117 @@ border-radius: 10px;
            </property>
           </widget>
          </item>
+         <item row="6" column="5">
+          <widget class="QPushButton" name="refreshdevices">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>REFRESH</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QPushButton" name="settings_button">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/gear.svg</normaloff>:/icons/icons/gear.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" colspan="4">
+          <widget class="QCheckBox" name="check_side_panel">
+           <property name="text">
+            <string>Side Panel</string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/reorder-option.svg</normaloff>:/icons/icons/reorder-option.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="4">
+          <widget class="QCheckBox" name="check_bottom_panel">
+           <property name="text">
+            <string>Bottom Panel</string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/reorder-option.svg</normaloff>:/icons/icons/reorder-option.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="2" colspan="3">
+          <widget class="QComboBox" name="devices_combox">
+           <property name="currentText">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QCheckBox" name="fullscreen">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Titillium Web</family>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Fullscreen</string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/increase-size-option.svg</normaloff>:/icons/icons/increase-size-option.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QPushButton" name="network_button">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>Launch Network Manager</string>
+           </property>
+           <property name="toolTipDuration">
+            <number>2</number>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/wifi.svg</normaloff>:/icons/icons/wifi.svg</iconset>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="5">
           <widget class="QCheckBox" name="recScui">
            <property name="enabled">
@@ -487,68 +488,32 @@ border-radius: 10px;
            </property>
           </widget>
          </item>
-         <item row="2" column="0" colspan="4">
-          <widget class="QCheckBox" name="check_side_panel">
-           <property name="text">
-            <string>Side Panel</string>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/reorder-option.svg</normaloff>:/icons/icons/reorder-option.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QPushButton" name="network_button">
+         <item row="0" column="5">
+          <widget class="QCheckBox" name="showTouches">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="toolTip">
-            <string>Launch Network Manager</string>
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
            </property>
-           <property name="toolTipDuration">
-            <number>2</number>
+           <property name="font">
+            <font>
+             <family>Titillium Web</family>
+             <pointsize>10</pointsize>
+            </font>
            </property>
            <property name="text">
-            <string/>
+            <string>Show touches</string>
            </property>
            <property name="icon">
             <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/wifi.svg</normaloff>:/icons/icons/wifi.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="4">
-          <widget class="QCheckBox" name="check_bottom_panel">
-           <property name="text">
-            <string>Bottom Panel</string>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/reorder-option.svg</normaloff>:/icons/icons/reorder-option.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="2" colspan="3">
-          <widget class="QComboBox" name="devices_combox">
-           <property name="currentText">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="5">
-          <widget class="QPushButton" name="refreshdevices">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>REFRESH</string>
+             <normaloff>:/icons/icons/hand-finger-pointing-down.svg</normaloff>:/icons/icons/hand-finger-pointing-down.svg</iconset>
            </property>
           </widget>
          </item>
@@ -557,6 +522,81 @@ border-radius: 10px;
            <property name="text">
             <string>Swipe Panel</string>
            </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QCheckBox" name="notifChecker">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Titillium Web</family>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string>Make guiscrcpy check for new notifications on your device. A status bar icon indicating new notifications will be visible. (Experimental)</string>
+           </property>
+           <property name="toolTipDuration">
+            <number>2</number>
+           </property>
+           <property name="text">
+            <string>Notification Auditor</string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/bell-musical-tool.svg</normaloff>:/icons/icons/bell-musical-tool.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="5">
+          <widget class="QCheckBox" name="lock_rotation">
+           <property name="text">
+            <string>Lock Rotation</string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/reorder-option.svg</normaloff>:/icons/icons/reorder-option.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="5">
+          <widget class="QComboBox" name="device_rotation">
+           <item>
+            <property name="text">
+             <string>Default Rotation</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Potrait</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Landscape</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Potrait (flipped)</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Landscape (flipped)</string>
+            </property>
+           </item>
           </widget>
          </item>
         </layout>
@@ -725,7 +765,7 @@ image: url(:/res/ui/guiscrcpy_logo.png);</string>
          <item row="0" column="5">
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>       </string>
+            <string/>
            </property>
           </widget>
          </item>

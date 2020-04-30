@@ -139,7 +139,7 @@ except FileNotFoundError:
     long_description = \\
         "Open Source Android Screen Mirroring System by @srevinsaju"
 
-requirements = ['PyQt5==5.14', 'pynput']
+requirements = ['PyQt5>=5.14,<5.15', 'pynput']
 if platform.system() == 'Windows':
     requirements.extend(['pywin32', 'psutil'])
 elif platform.system() == 'Linux':

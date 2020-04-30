@@ -145,7 +145,11 @@ jobs:
     - uses: actions/download-artifact@v1
       with:
         name: guiscrcpy-continuous-x86_64.AppImage
-
+    - name: Generate SHA256s
+      run: |
+          sha256sum guiscrcpy-continuous.exe > SHA256SUMS.txt
+          sha256sum guiscrcpy-continuous-x86_64.AppImage >> SHA256SUMS.txt
+          sha256sum guiscrcpy-continuous-none-any-py3.whl >> SHA256SUMS.txt
     - name: Release
       uses: marvinpinto/action-automatic-releases@latest
       with:
@@ -155,5 +159,5 @@ jobs:
           guiscrcpy-continuous.exe
           guiscrcpy-continuous-x86_64.AppImage
           guiscrcpy-continuous-none-any-py3.whl
-          
+          SHA256SUMS.txt
         repo_token: ${{ secrets.GITHUB_TOKEN }}

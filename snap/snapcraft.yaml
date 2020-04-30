@@ -1,5 +1,5 @@
 name: guiscrcpy
-version: 3.7.post96.dev
+version: 3.7.post112.dev
 summary: An opensource GUI for android screen mirroring# 79 char long summary
 description: |
   A full fledged GUI integration for the award winning open source scrcpy, for 
@@ -10,7 +10,9 @@ confinement: strict
 base: core18
 
 architectures:
+- build-on: i386
 - build-on: amd64
+- build-on: armhf
 
 apps:
   scrcpy:
@@ -84,10 +86,10 @@ parts:
   scrcpy-server:
     plugin: nil
     override-pull:
-      wget https://github.com/Genymobile/scrcpy/releases/download/v1.12.1/scrcpy-server-v1.12.1
+      wget https://github.com/Genymobile/scrcpy/releases/download/v1.13/scrcpy-server-v1.13
     override-build: |
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/
-      cp scrcpy-server-v1.12.1 $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/scrcpy-server
+      cp scrcpy-server-v1.13 $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/scrcpy-server
   scrcpy:
     source: https://github.com/Genymobile/scrcpy.git
     plugin: meson

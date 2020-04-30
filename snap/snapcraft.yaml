@@ -1,5 +1,5 @@
 name: guiscrcpy
-version: 3.7.post96.dev
+version: 3.7.post113.dev
 summary: An opensource GUI for android screen mirroring# 79 char long summary
 description: |
   A full fledged GUI integration for the award winning open source scrcpy, for 
@@ -10,7 +10,9 @@ confinement: strict
 base: core18
 
 architectures:
+- build-on: i386
 - build-on: amd64
+- build-on: armhf
 
 apps:
   scrcpy:

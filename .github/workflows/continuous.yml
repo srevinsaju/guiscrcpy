@@ -8,12 +8,7 @@ on:
     paths:
       - 'guiscrcpy/**'
       - '.github/workflows/continuous.yml'
-  pull_request:
-    branches-ignore: 
-      - 'beta-**'
-    paths:
-      - 'guiscrcpy/**'
-      - '.github/workflows/continuous.yml'
+
 
 jobs:
   Wheel:
@@ -52,7 +47,7 @@ jobs:
         python-version: ${{ matrix.version }}
     - name: Download dependencies
       run: |
-        sudo apt install libxkbcommon0 libxcb-xkb-dev libxkbcommon-x11-0
+        sudo apt install libxkbcommon0 libxcb-xkb-dev libxkbcommon-x11-0 libxcb-xkb1
     - name: Test AppImage
       run: |
         python -m pip install python-appimage
@@ -66,6 +61,11 @@ jobs:
         mv squashfs-root AppDir
         wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
         chmod +x ./appimagetool-x86_64.AppImage
+        
+    - name: Patch PyQt5
+      run: |
+        cp -L /usr/lib/x86_64-linux-gnu/libxkbcommon* AppDir/usr/lib/.
+        cp -L /usr/lib/x86_64-linux-gnu/libxcb-xkb.so.1 AppDir/usr/lib/.
     
     - name: Download adb
       run: |

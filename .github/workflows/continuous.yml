@@ -64,7 +64,7 @@ jobs:
         
     - name: Patch PyQt5
       run: |
-        cp -L /usr/lib/x86_64-linux-gnu/libxkbcommon* AppDir/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/lib/.
+        cp -L /usr/lib/x86_64-linux-gnu/libxkbcommon* AppDir/usr/lib/.
     
     - name: Download adb
       run: |

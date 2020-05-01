@@ -640,7 +640,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # ====================================================================
         # 17: Parse rotation (scrcpy v1.13+)
         rotation_index = self.device_rotation.currentIndex() - 1
-        if not self.lock_rotation.isChecked():
+        if self.lock_rotation.isChecked():
             rotation_parameter = "--lock-video-orientation"
         else:
             rotation_parameter = "--rotation"

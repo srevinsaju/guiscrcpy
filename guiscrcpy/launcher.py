@@ -228,6 +228,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 config['dispRO'],
                 config['fullscreen'],
             ))
+        # ====================================================================
+        # Rotation; read config, update UI
+        self.device_rotation.setCurrentIndex(config.get("rotation", 0))
         self.dial.setValue(int(config['bitrate']))
         if config['swtouches']:
             self.showTouches.setChecked(True)
@@ -635,6 +638,20 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         progress = self.progress(progress)
 
         # ====================================================================
+        # 17: Parse rotation (scrcpy v1.13+)
+        rotation_index = self.device_rotation.currentIndex() - 1
+        if not self.lock_rotation.isChecked():
+            rotation_parameter = "--lock-video-orientation"
+        else:
+            rotation_parameter = "--rotation"
+        print(rotation_index, self.device_rotation.currentIndex())
+        if rotation_index != -1:
+            self.options += " {} {}".format(rotation_parameter, rotation_index)
+            config['rotation'] = rotation_index + 1
+        else:
+            config['rotation'] = 0
+
+        # ====================================================================
         # 16: Parse scrcpy arguments
         if self.cmx is not None:
             config['cmx'] = ' '.join(map(str, self.cmx))
@@ -647,7 +664,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         progress = self.progress(progress)
 
         # ====================================================================
-        # 17: Handle more devices
+        # 18: Handle more devices
         if more_devices:
             # guiscrcpy found more devices
             # scrcpy will fail if more than one device is found
@@ -662,7 +679,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         progress = self.progress(progress)
 
         # ====================================================================
-        # 18: Return
+        # 19: Return
         if args.noscrcpy:
             # for debugging purposes, its important to not start scrcpy
             # every time
@@ -670,7 +687,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         progress = self.progress(progress)
 
         # ====================================================================
-        # 19: Start Scrcpy
+        # 20: Start Scrcpy
         scrcpy.start(scrcpy.path, arguments_scrcpy)
         final_time = time.time()
         eta = final_time - initial_time
@@ -678,13 +695,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         progress = self.progress(progress)
 
         # ====================================================================
-        # 20: Update configuration
+        # 21: Update configuration
         cfgmgr.update_config(config)
         cfgmgr.write_file()
         progress = self.progress(progress)
 
         # ====================================================================
-        # 21: Finish (optional: notification aduitor
+        # 22: Finish (optional: notification aduitor
         if self.notifChecker.isChecked():
             # call notification auditor if notification_auditor is checked only
             from guiscrcpy.lib.notify import NotifyAuditor

@@ -37,6 +37,7 @@ class InterfaceConfig:
             'paths': self.paths,
             'scrcpy': None,
             'adb': None,
+            'rotation': 0,
             'scrcpy-server': None,
             'dimension': None,
             'swtouches': False,

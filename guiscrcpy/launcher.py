@@ -644,7 +644,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             rotation_parameter = "--lock-video-orientation"
         else:
             rotation_parameter = "--rotation"
-        print(rotation_index, self.device_rotation.currentIndex())
         if rotation_index != -1:
             self.options += " {} {}".format(rotation_parameter, rotation_index)
             config['rotation'] = rotation_index + 1

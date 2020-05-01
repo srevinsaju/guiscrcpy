@@ -33,6 +33,7 @@ apps:
       GUISCRCPY_SCRCPY: "$SNAP/usr/local/bin/scrcpy"
       GUISCRCPY_ADB: "$SNAP/usr/bin/adb"
       SCRCPY_SERVER_PATH: "$SNAP/usr/local/share/scrcpy/scrcpy-server"
+      GUISCRCPY_SNAP: "TRUE"
     command-chain: &command-chain-common
     - bin/debian-multiarch-triplet-provider-launch
     - bin/classic-launch

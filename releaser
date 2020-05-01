@@ -195,7 +195,7 @@ VERSION = '{version}'
 # this was because GitPython created a lot of problems
 # hardcoding the information before each release, solved the problem
 
-for setup in ("setup.py", "setup.py-manylinux2014-scrcpy"):
+for setup in ("setup.py", ):
     with open(setup, 'w') as w:
         w.write(setupfile.format(
             COPYRIGHT=COPYRIGHT,

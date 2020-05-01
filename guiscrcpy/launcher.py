@@ -260,7 +260,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # CONNECT DIMENSION CHECK BOX TO STATE CHANGE
         self.dimensionDefaultCheckbox.stateChanged.connect(
             self.__dimension_change_cb)
-        self.build_label.setText("Build " + str(VERSION))
+        self.build_label.setText("Build {} by srevinsaju".format(VERSION))
 
         # DIAL CTRL GRP
         self.dial.sliderMoved.connect(self.__dial_change_cb)

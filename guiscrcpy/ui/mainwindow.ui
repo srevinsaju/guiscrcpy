@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>547</width>
-    <height>549</height>
+    <height>570</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -32,7 +32,7 @@
    <string>guiscrcpy</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="rsrc.qrc">
+   <iconset>
     <normaloff>:/res/ui/guiscrcpy_logo.png</normaloff>:/res/ui/guiscrcpy_logo.png</iconset>
   </property>
   <property name="statusTip">
@@ -163,7 +163,7 @@ border-radius: 10px;
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="rsrc.qrc">:/res/ui/guiscrcpy_logo.png</pixmap>
+          <pixmap>:/res/ui/guiscrcpy_logo.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -293,7 +293,7 @@ border-radius: 10px;
             <string>Keep display off </string>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/bullseye.svg</normaloff>:/icons/icons/bullseye.svg</iconset>
            </property>
           </widget>
@@ -328,7 +328,7 @@ border-radius: 10px;
             <string>Always on Top</string>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/fire-symbol.svg</normaloff>:/icons/icons/fire-symbol.svg</iconset>
            </property>
           </widget>
@@ -358,7 +358,7 @@ border-radius: 10px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/gear.svg</normaloff>:/icons/icons/gear.svg</iconset>
            </property>
           </widget>
@@ -369,7 +369,7 @@ border-radius: 10px;
             <string>Side Panel</string>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/reorder-option.svg</normaloff>:/icons/icons/reorder-option.svg</iconset>
            </property>
           </widget>
@@ -380,7 +380,7 @@ border-radius: 10px;
             <string>Bottom Panel</string>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/reorder-option.svg</normaloff>:/icons/icons/reorder-option.svg</iconset>
            </property>
           </widget>
@@ -416,7 +416,7 @@ border-radius: 10px;
             <string>Fullscreen</string>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/increase-size-option.svg</normaloff>:/icons/icons/increase-size-option.svg</iconset>
            </property>
           </widget>
@@ -439,7 +439,7 @@ border-radius: 10px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/wifi.svg</normaloff>:/icons/icons/wifi.svg</iconset>
            </property>
           </widget>
@@ -483,7 +483,7 @@ border-radius: 10px;
             <string>Record screen</string>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/facetime-button.svg</normaloff>:/icons/icons/facetime-button.svg</iconset>
            </property>
           </widget>
@@ -512,7 +512,7 @@ border-radius: 10px;
             <string>Show touches</string>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/hand-finger-pointing-down.svg</normaloff>:/icons/icons/hand-finger-pointing-down.svg</iconset>
            </property>
           </widget>
@@ -554,7 +554,7 @@ border-radius: 10px;
             <string>Notification Auditor</string>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/bell-musical-tool.svg</normaloff>:/icons/icons/bell-musical-tool.svg</iconset>
            </property>
           </widget>
@@ -565,7 +565,7 @@ border-radius: 10px;
             <string>Lock Rotation</string>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/reorder-option.svg</normaloff>:/icons/icons/reorder-option.svg</iconset>
            </property>
           </widget>
@@ -897,7 +897,7 @@ border-radius: 10px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/cross-mark-on-a-black-circle-background.svg</normaloff>:/icons/icons/cross-mark-on-a-black-circle-background.svg</iconset>
            </property>
           </widget>
@@ -956,7 +956,7 @@ border-radius: 10px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/github.logo.svg</normaloff>:/icons/icons/github.logo.svg</iconset>
            </property>
            <property name="iconSize">
@@ -988,7 +988,7 @@ border-radius: 10px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/ss-branding.png</normaloff>:/icons/icons/ss-branding.png</iconset>
            </property>
            <property name="iconSize">
@@ -1020,7 +1020,7 @@ border-radius: 10px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/volume-up-interface-symbol.svg</normaloff>:/icons/icons/volume-up-interface-symbol.svg</iconset>
            </property>
           </widget>
@@ -1052,7 +1052,7 @@ border-radius: 10px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/four-black-squares.svg</normaloff>:/icons/icons/four-black-squares.svg</iconset>
            </property>
           </widget>
@@ -1090,7 +1090,7 @@ border-radius: 10px;
             <string>START SCRCPY</string>
            </property>
            <property name="icon">
-            <iconset resource="rsrc.qrc">
+            <iconset>
              <normaloff>:/icons/icons/small-rocket-ship-silhouette.svg</normaloff>:/icons/icons/small-rocket-ship-silhouette.svg</iconset>
            </property>
            <property name="iconSize">

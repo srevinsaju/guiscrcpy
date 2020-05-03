@@ -627,11 +627,14 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             else:
                 side_instance.init()
                 self.child_windows.append(side_instance)
+        else:
+            config['panels']['toolkit'] = False
         progress = self.progress(progress)
 
         # ====================================================================
         # 13: Init bottom_panel if necessary
         if self.check_bottom_panel.isChecked():
+            config['panels']['bottom'] = True
             panel_instance = Panel(
                 parent=self,
                 ux_mapper=ux,
@@ -644,11 +647,14 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             else:
                 panel_instance.init()
                 self.child_windows.append(panel_instance)
+        else:
+            config['panels']['bottom'] = False
         progress = self.progress(progress)
 
         # ====================================================================
         # 14: Init swipe panel if necessary
         if self.check_swipe_panel.isChecked():
+            config['panels']['swipe'] = True
             swipe_instance = SwipeUX(
                 ux_wrapper=ux,
                 frame=args.force_window_frame
@@ -660,6 +666,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             else:
                 swipe_instance.init()
                 self.child_windows.append(swipe_instance)
+        else:
+            config['panels']['swipe'] = False
         progress = self.progress(progress)
 
         # ====================================================================

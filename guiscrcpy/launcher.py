@@ -314,7 +314,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.bitrateText.setText(" " + str(config['bitrate']) + "KB/s")
         self.pushButton.setText("RESET")
         self.pushButton.clicked.connect(self.reset)
-        self.abtme.clicked.connect(self.launch_web_srevinsaju)
         self.abtgit.clicked.connect(self.launch_web_github)
         self.usbaud.clicked.connect(self.launch_usb_audio)
         self.mapnow.clicked.connect(self.bootstrap_mapper)

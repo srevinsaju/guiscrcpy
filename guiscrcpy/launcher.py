@@ -561,8 +561,15 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # ====================================================================
         # 3: Check devices
-        values_devices_list = self.__refresh_devices_combo_box_cb()
-        if len(values_devices_list) != 2:
+        values_devices_list = self.scan_devices_update_list_view()
+        if len(values_devices_list) == 0:
+            self.private_message_box_adb.setText("Could not find any devices")
+            return 0
+        elif self.devices_view.currentIndex() is None and \
+                len(values_devices_list) != 1:
+            self.private_message_box_adb.setText(
+                "Please select a device below."
+            )
             return 0
         else:
             more_devices, device_id = values_devices_list

@@ -75,6 +75,11 @@ config = cfgmgr.get_config()
 environment = platform.System()
 
 # ============================================================================
+# Load cairosvg conditionally
+if environment.system() == "Linux":
+    from cairosvg import svg2png
+
+# ============================================================================
 # Add precedence for guiscrcpy to check environment variables
 # for the paths of `adb` and `scrcpy` over the configuration files.
 if os.getenv('GUISCRCPY_ADB', None) is None:

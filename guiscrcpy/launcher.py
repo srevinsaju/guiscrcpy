@@ -553,6 +553,14 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             )
             self.ping_paired_device()
 
+    def current_device_identifier(self):
+        if self.devices_view.currentItem():
+            return \
+                self.devices_view.currentItem().text().split()[0], \
+                self.devices_view.currentItem().text().split()[1]
+        else:
+            raise ValueError("No item is selected in QListView")
+
     def __dimension_change_cb(self):
         if self.dimensionDefaultCheckbox.isChecked():
             self.dimensionSlider.setEnabled(False)

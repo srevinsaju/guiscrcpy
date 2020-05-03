@@ -722,11 +722,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         progress = self.progress(progress)
 
         # ====================================================================
-        # 19: Return
-        if args.noscrcpy:
+        # 19: spawn scrcpy
+        if not args.noscrcpy:
             # for debugging purposes, its important to not start scrcpy
             # every time
-            return False
+            scrcpy.start(scrcpy.path, arguments_scrcpy)
         progress = self.progress(progress)
 
         # ====================================================================

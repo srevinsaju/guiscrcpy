@@ -81,7 +81,7 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
             pass
 
     def quit_window(self):
-        for instance in self.parent.child_windows:
+        for instance in self.parent.child_windows:  # noqa
             # We are checking for any more windows running before killing
             # the main window. self.child_windows has the list of all
             # objects spawned by the main window ui

@@ -385,7 +385,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         about_message_box.show()
 
     def reset(self):
-
+        """
+        Remove configuration files; Reset the mapper and guiscrcpy.json
+        :return:
+        """
         cfgmgr.reset_config()
         logger.debug("CONFIGURATION FILE REMOVED SUCCESSFULLY")
         logger.debug("RESTART")

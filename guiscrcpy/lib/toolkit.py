@@ -62,7 +62,7 @@ class UXMapper:
         A method which returns the unique UUID of the the device
         :return: The hexdigest of a salted hash
         """
-        return self.__sha
+        return self.__sha[5:5+6]
 
     def do_swipe(self, x1=10, y1=10, x2=10, y2=10):
         """

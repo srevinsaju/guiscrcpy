@@ -39,7 +39,7 @@ requirements = ['PyQt5>=5.14,<5.15', 'pynput']
 if platform.system() == 'Windows':
     requirements.extend(['pywin32', 'psutil'])
 elif platform.system() == 'Linux':
-    requirements.extend(['fonttools', 'psutil'])
+    requirements.extend(['fonttools', 'psutil', 'cairosvg'])
 
 data_files = [
         ('share/applications', ['guiscrcpy.desktop']),

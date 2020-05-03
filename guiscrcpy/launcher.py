@@ -32,6 +32,7 @@ All rights reserved.
 """
 
 import argparse
+import hashlib
 import logging
 import os
 import os.path

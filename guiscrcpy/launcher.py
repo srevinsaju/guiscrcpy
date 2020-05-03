@@ -743,17 +743,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         cfgmgr.write_file()
         progress = self.progress(progress)
 
-        # ====================================================================
-        # 22: Finish (optional: notification aduitor
-        if self.notifChecker.isChecked():
-            # call notification auditor if notification_auditor is checked only
-            from guiscrcpy.lib.notify import NotifyAuditor
-            try:
-                NotifyAuditor()
-            except (AttributeError, NameError, ValueError):
-                self.notifChecker.setChecked(False)
-                print("guiscrcpy notification auditor failed. ")
-                print("Your OS / Desktop Environment might not support it atm")
         return self.progress(progress)
 
 

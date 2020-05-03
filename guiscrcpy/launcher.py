@@ -43,8 +43,9 @@ from subprocess import PIPE
 from subprocess import Popen
 
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtCore import QModelIndex, QPoint
+from PyQt5.QtGui import QPixmap, QIcon, QFont
+from PyQt5.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QMenu
 from PyQt5.QtWidgets import QMessageBox
 
 from guiscrcpy.install.finder import open_exe_name_dialog

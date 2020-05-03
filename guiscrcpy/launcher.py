@@ -736,9 +736,16 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             rotation_parameter = "--rotation"
         if rotation_index != -1:
             self.options += " {} {}".format(rotation_parameter, rotation_index)
-            config['rotation'] = rotation_index + 1
+            config['device'][identifier]['rotation'] = \
+                rotation_index + 1
         else:
-            config['rotation'] = 0
+            config['device'][identifier]['rotation'] = 0
+
+        # ====================================================================
+        # 18: Update device specific configuration
+        if identifier.count('.') >= 3 and identifier[-1].isdigit():
+            config['device'][identifier]['wifi'] = True
+            config['device'][identifier]['model'] = model
 
         # ====================================================================
         # 16: Parse scrcpy arguments
@@ -776,15 +783,14 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         progress = self.progress(progress)
 
         # ====================================================================
-        # 20: Start Scrcpy
-        scrcpy.start(scrcpy.path, arguments_scrcpy)
+        # 20: Calculate time
         final_time = time.time()
         eta = final_time - initial_time
         print("scrcpy launched in {:.2f}s".format(eta))
         progress = self.progress(progress)
 
         # ====================================================================
-        # 21: Update configuration
+        # 22: Update configuration
         cfgmgr.update_config(config)
         cfgmgr.write_file()
         progress = self.progress(progress)

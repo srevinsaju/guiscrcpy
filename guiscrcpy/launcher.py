@@ -322,7 +322,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.network_button.clicked.connect(self.network_mgr)
         self.settings_button.clicked.connect(self.settings_mgr)
         self.refreshdevices.clicked.connect(
-            self.__refresh_devices_combo_box_cb)
+            self.scan_devices_update_list_view
+        )
+        self.devices_view.itemClicked.connect(self.more_options_device_view)
+        self.devices_view.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.scan_config_devices_update_list_view()
+        self.refresh_devices()
+
     def refresh_devices(self):
         """
         A slot for refreshing the QListView
@@ -568,6 +574,37 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         else:
             raise ValueError("No item is selected in QListView")
 
+    def scan_config_devices_update_list_view(self):
+        """
+        Scans for saved devices
+        :return:
+        """
+        self.devices_view.clear()
+        paired_devices = config['device']
+        for i in paired_devices:
+            if paired_devices[i].get('wifi'):
+                icon = ':/icons/icons/portrait_mobile_disconnect.svg'
+                devices_view_list_item = QListWidgetItem(
+                        QIcon(icon),
+                        "{device}\n{mode}\n{status}".format(
+                            device=paired_devices[i].get('model'),
+                            mode=i,
+                            status='Disconnected'
+                        )
+                    )
+
+                devices_view_list_item.setToolTip(
+                    "Device: {d}\n"
+                    "Status: {s}".format(
+                        d=i,
+                        s="Disconnected. Right click 'ping' to attempt "
+                          "reconnect",
+                    )
+                )
+                devices_view_list_item.setFont(QFont('Noto Sans', pointSize=8))
+                self.devices_view.addItem(devices_view_list_item)
+        return paired_devices
+
     def scan_devices_update_list_view(self):
         """
         Scan for new devices; and update the list view
@@ -653,7 +690,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             config['dimension'] = None
             self.dimensionText.setInputMask("")
             self.dimensionText.setText("DEFAULT")
-
         else:
             self.dimensionSlider.setEnabled(True)
             config['dimension'] = int(self.dimensionSlider.value())

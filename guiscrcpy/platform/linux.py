@@ -64,16 +64,26 @@ class Linux:
         return path
 
     @staticmethod
-    def create_desktop():
+    def create_desktop(desktop_file=None,
+                       desktop_file_name='guiscrcpy.desktop'):
         """
         Create Desktop filename for Linux in ~/.local level
         :return:
         """
-        desk = desktop.format(
-            v=VERSION,
-            icon_path=os.path.join(
-                os.path.abspath(os.path.dirname(os.path.dirname(__file__))),
-                'ui', 'ui', 'guiscrcpy_logo.png'))
+        if desktop_file:
+            desk = desktop_file
+        else:
+            desk = desktop.format(
+                v=VERSION,
+                icon_path=os.path.join(
+                    os.path.abspath(
+                        os.path.dirname(
+                            os.path.dirname(__file__)
+                        )
+                    ),
+                    'ui', 'ui', 'guiscrcpy_logo.png'
+                )
+            )
         if os.getenv('XDG_DESKTOP_DIR'):
             desktop_dir = os.getenv('XDG_DESKTOP_DIR')
         else:
@@ -84,10 +94,10 @@ class Linux:
             else:
                 desktop_dir = False
         if desktop_dir:
-            with open(os.path.join(desktop_dir, 'guiscrcpy.desktop'),
+            with open(os.path.join(desktop_dir, desktop_file_name),
                       'w') as w:
                 w.write(desk)
-            return True
+            return desktop_dir
         else:
             return False
 

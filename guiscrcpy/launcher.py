@@ -248,6 +248,22 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.displayForceOn.setChecked(True)
         else:
             self.displayForceOn.setChecked(False)
+
+        # panels
+        if config['panels'].get('swipe'):
+            self.check_swipe_panel.setChecked(True)
+        else:
+            self.check_swipe_panel.setChecked(False)
+        if config['panels'].get('tookit'):
+            self.check_side_panel.setChecked(True)
+        else:
+            self.check_side_panel.setChecked(False)
+        if config['panels'].get('bottom'):
+            self.check_bottom_panel.setChecked(True)
+        else:
+            self.check_bottom_panel.setChecked(False)
+
+        # dimension
         if config['dimension'] is not None:
             self.dimensionDefaultCheckbox.setChecked(False)
             try:

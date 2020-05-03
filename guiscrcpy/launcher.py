@@ -321,6 +321,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.settings_button.clicked.connect(self.settings_mgr)
         self.refreshdevices.clicked.connect(
             self.__refresh_devices_combo_box_cb)
+    def update_rotation_combo_cb(self):
+        """
+        A proposed method for refreshing the rotation combobox on item
+        change in the QListBox
+        :return:
+        """
+        raise NotImplementedError("Maybe try waiting for me to finish it")
 
     def settings_mgr(self):
         from guiscrcpy.ux.settings import InterfaceSettings

@@ -369,6 +369,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         webbrowser.open("https://github.com/srevinsaju/guiscrcpy")
 
     def about(self):
+        """
+        Reset message box is based on aboutWindow object
+        For some reason, I did not get time to fix that
+        :return:
+        """
         about_message_box = QMessageBox().window()
         about_message_box.about(
             self.pushButton,

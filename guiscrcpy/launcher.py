@@ -430,6 +430,32 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             return popped_device
         except KeyError:
             return False
+
+    def more_options_device_view(self, button):
+        if 'Disconnect' in button.text():
+            menu = QMenu("Menu", self)
+            menu.addAction("Pair / Ping", self.ping_paired_device)
+            menu.addAction("Attempt TCPIP on device", self.ping_paired_device)
+            menu.addAction("Forget device", self.forget_paired_device)
+        else:
+            menu = QMenu("Menu", self)
+            menu.addAction("Attempt reconnection", self.ping_paired_device)
+            menu.addAction("Refresh", self.refresh_devices)
+        _, identifier = self.current_device_identifier()
+        if platform.System.system() == "Linux" and identifier.count('.') >= 3:
+            menu.addAction(
+                "Add Desktop Shortcut to this device",
+                self.create_desktop_shortcut_linux_os
+            )
+        menu.exec_(
+            self.devices_view.mapToGlobal(
+                QPoint(
+                    self.devices_view.visualItemRect(button).x() + 22,
+                    self.devices_view.visualItemRect(button).y() + 22
+                )
+            )
+        )
+
     def __dimension_change_cb(self):
         if self.dimensionDefaultCheckbox.isChecked():
             self.dimensionSlider.setEnabled(False)

@@ -18,3 +18,4 @@ build
 .codacy-coverage
 *.snap
 prime
+/.run/guiscrcpy.sh

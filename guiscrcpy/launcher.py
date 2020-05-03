@@ -511,6 +511,34 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         print("Desktop file generated successfully")
         self.private_message_box_adb.setText("Desktop file has been created")
 
+    def ping_paired_device(self):
+        # update the configuration file first
+        _, identifier = self.current_device_identifier()
+        if identifier.count('.') == 3:
+            wifi_device = True
+        else:
+            wifi_device = False
+
+        config['device'][identifier]['wifi'] = wifi_device
+
+        if wifi_device:
+            ip = self.current_device_identifier()[1]
+            output = adb.command(adb.path, 'connect {}'.format(ip))
+            out, err = output.communicate()
+            if 'failed' in out.decode() or 'failed' in err.decode():
+                self.private_message_box_adb.setText(
+                    "Failed to connect to {}. See the logs for more "
+                    "information".format(ip)
+                )
+                print("adb:", out.decode(), err.decode())
+            else:
+                self.private_message_box_adb.setText(
+                    "Connection command completed successfully"
+                )
+        else:
+            adb.command(adb.path, 'reconnect offline')
+        # As we have attempted to connect; refresh the panel
+        self.refresh_devices()
     def __dimension_change_cb(self):
         if self.dimensionDefaultCheckbox.isChecked():
             self.dimensionSlider.setEnabled(False)

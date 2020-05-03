@@ -26,6 +26,13 @@ from guiscrcpy.platform.platform import System
 environment = System()
 
 
+def log(*args, **kwargs):
+    if os.getenv('GUISCRCPY_DEBUG', False):
+        print(*args, **kwargs)
+    else:
+        logging.debug(str(args))
+
+
 def shellify(args):
     if environment.system() == 'Windows':
         return args

@@ -54,6 +54,7 @@ from guiscrcpy.lib.check import scrcpy
 from guiscrcpy.lib.config import InterfaceConfig
 from guiscrcpy.lib.process import is_running
 from guiscrcpy.lib.toolkit import UXMapper
+from guiscrcpy.lib.utils import log
 from guiscrcpy.platform import platform
 from guiscrcpy.theme.decorate import Header
 from guiscrcpy.theme.style import dark_stylesheet

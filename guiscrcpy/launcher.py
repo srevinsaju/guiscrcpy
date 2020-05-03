@@ -539,6 +539,20 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             adb.command(adb.path, 'reconnect offline')
         # As we have attempted to connect; refresh the panel
         self.refresh_devices()
+
+    def tcpip_paired_device(self):
+        ecode = adb.tcpip(adb.path)
+        if ecode != 0:
+            self.private_message_box_adb.setText(
+                "TCP/IP failed on device. "
+                "Please reconnect USB and try again"
+            )
+        else:
+            self.private_message_box_adb.setText(
+                "TCP/IP completed successfully."
+            )
+            self.ping_paired_device()
+
     def __dimension_change_cb(self):
         if self.dimensionDefaultCheckbox.isChecked():
             self.dimensionSlider.setEnabled(False)

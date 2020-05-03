@@ -57,6 +57,8 @@ from guiscrcpy.lib.toolkit import UXMapper
 from guiscrcpy.lib.utils import log
 from guiscrcpy.platform import platform
 from guiscrcpy.theme.decorate import Header
+from guiscrcpy.theme.desktop_shortcut import desktop_device_shortcut_svg
+from guiscrcpy.theme.linux_desktop_shortcut_template import GUISCRCPY_DEVICE
 from guiscrcpy.theme.style import dark_stylesheet
 from guiscrcpy.ui.main import Ui_MainWindow
 from guiscrcpy.ux.panel import Panel

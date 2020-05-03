@@ -32,6 +32,15 @@ uic:
 	pyuic5 guiscrcpy/ui/toolkit_ui.ui -o guiscrcpy/ui/toolkit.py --from-imports
 	pyuic5 guiscrcpy/ui/network.ui -o guiscrcpy/ui/network.py --from-imports
 	pyuic5 guiscrcpy/ui/settings.ui -o guiscrcpy/ui/settings.py --from-imports
+	rm guiscrcpy/theme/desktop_shortcut.py
+	echo '#!/usr/bin/env/python\n' > guiscrcpy/theme/desktop_shortcut.py
+	echo '# flake8: noqa' >> guiscrcpy/theme/desktop_shortcut.py
+	echo 'def desktop_device_shortcut_svg():' >> guiscrcpy/theme/desktop_shortcut.py
+	printf '    a="""' >> guiscrcpy/theme/desktop_shortcut.py
+	cat guiscrcpy/ui/ui/guiscrcpy_shortcut.svg >> guiscrcpy/theme/desktop_shortcut.py
+	echo '"""' >> guiscrcpy/theme/desktop_shortcut.py
+	echo '    return a' >> guiscrcpy/theme/desktop_shortcut.py
+	sed -i 's/#ffdc00/{}/g' guiscrcpy/theme/desktop_shortcut.py
 	
 install: 
 	$(PYTHON) setup.py install --user

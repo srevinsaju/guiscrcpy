@@ -416,6 +416,20 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         """
         sys.exit()
 
+    def forget_paired_device(self):
+        """
+        Forgets / Removes the configuration for saved
+        :return: popped item / False
+        """
+        try:
+            _, identifier = self.current_device_identifier()
+            popped_device = config['device'].pop(identifier)
+            self.refresh_devices()
+            cfgmgr.update_config(config)
+            cfgmgr.write_file()
+            return popped_device
+        except KeyError:
+            return False
     def __dimension_change_cb(self):
         if self.dimensionDefaultCheckbox.isChecked():
             self.dimensionSlider.setEnabled(False)

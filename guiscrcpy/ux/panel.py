@@ -94,4 +94,9 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
                 self.hide()
                 break
         else:
-            sys.exit(0)
+            for instance in self.parent.child_windows:  # noqa
+                if instance.name == 'swipe' and instance.ux.get_sha() == \
+                        self.ux.get_sha():
+                    instance.hide()
+            else:
+                self.hide()

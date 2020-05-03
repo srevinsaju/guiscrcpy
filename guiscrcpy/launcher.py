@@ -797,7 +797,20 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             )
             return 0
         else:
-            more_devices, device_id = values_devices_list
+            if len(values_devices_list) == 1:
+                self.devices_view.setCurrentIndex(
+                    QModelIndex(self.devices_view.model().index(0, 0))
+                )
+                _, device_id = self.current_device_identifier()
+                more_devices = False
+            elif self.devices_view.currentItem() is None:
+                self.private_message_box_adb.setText("Please select a device "
+                                                     "below.")
+                return 0
+            else:
+                _, device_id = self.current_device_identifier()
+                log("Device_id = {}".format(device_id))
+                more_devices = True
         progress = self.progress(progress)
 
         # ====================================================================
@@ -899,6 +912,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # ====================================================================
         # 12: Init side_panel if necessary
         if self.check_side_panel.isChecked():
+            config['panels']['toolkit'] = True
             side_instance = InterfaceToolkit(
                 parent=self,
                 ux_mapper=ux,
@@ -961,6 +975,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.private_message_box_adb.setStyleSheet(stylesheet)
         progress = self.progress(progress)
 
+        # ====================================================================
+        # 16: Update device specific configuration
+        model, identifier = self.current_device_identifier()
         # ====================================================================
         # 17: Parse rotation (scrcpy v1.13+)
         rotation_index = self.device_rotation.currentIndex() - 1

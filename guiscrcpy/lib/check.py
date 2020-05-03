@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import logging
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, call
 
 from guiscrcpy.lib.utils import decode_process, check_existence, shellify as _
 from guiscrcpy.platform.platform import System
@@ -131,6 +131,15 @@ class adb:
             adb_shell_output = Popen(_("{} {}".format(path, command)),
                                      stdout=PIPE, stderr=PIPE)
         return adb_shell_output
+
+    @staticmethod
+    def tcpip(path, port=5555):
+        exit_code = call(
+            _("{} -d tcpip {}".format(path, port)),
+            stdout=PIPE,
+            stderr=PIPE
+        )
+        return exit_code
 
     @staticmethod
     def devices(increment=''):

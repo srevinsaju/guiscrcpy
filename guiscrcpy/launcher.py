@@ -404,6 +404,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
     @staticmethod
     def quit_window():
+        """
+        A method to quit the main window
+        :return:
+        """
         sys.exit()
 
     def __dimension_change_cb(self):

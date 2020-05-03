@@ -6,8 +6,8 @@ bin
 release
 venv
 build
-.idea
 .vscode
+.idea
 *.egg-info
 *.tar.gz
 *.whl 

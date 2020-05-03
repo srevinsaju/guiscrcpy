@@ -458,6 +458,59 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             )
         )
 
+    def create_desktop_shortcut_linux_os(self):
+        # get device specific configuration
+        model, identifier = self.current_device_identifier()
+        picture_file_path = cfgmgr.get_cfgpath()
+        sha = hashlib.sha256(str(identifier).encode()).hexdigest()[5:5+6]
+        log(f"Creating desktop shortcut sha: {sha}")
+        path_to_image = os.path.join(picture_file_path, identifier+'.png')
+        svg2png(
+            bytestring=desktop_device_shortcut_svg().format(f"#{sha}"),
+            write_to=path_to_image
+        )
+
+        # go through all args; break when we find guiscrcpy
+        for args in range(len(sys.argv)):
+            if 'guiscrcpy' in sys.argv[args]:
+                aend = args + 1
+                break
+        else:
+            aend = None
+            pass
+        sys_args_desktop = sys.argv[:aend]
+
+        # check if its a python file
+        # experimental support for AppImages / snaps
+        # I am not sure; if it would work indeed
+        for i in sys_args_desktop:
+            if i.endswith('.py'):
+                needs_python = True
+                break
+        else:
+            needs_python = False
+        if needs_python:
+            sys_args_desktop = ['python3'] + sys_args_desktop
+
+        # convert the list into a string
+        sys_args_desktop = ' '.join(sys_args_desktop)
+
+        # create the desktop file using linux's desktop file gen method
+        path_to_desktop_file = platform.System().create_desktop(
+            desktop_file=GUISCRCPY_DEVICE.format(
+                identifier=model,
+                command=f'{adb.path} connect {identifier}; '
+                        f'{sys_args_desktop}',
+                icon_path=path_to_image
+            ),
+            desktop_file_name=f'{model}.guiscrcpy.desktop'
+        )
+
+        # announce it to developers / users
+        log(f"Path to desktop file : {path_to_desktop_file}")
+        print("Desktop file generated successfully")
+        self.private_message_box_adb.setText("Desktop file has been created")
+
     def __dimension_change_cb(self):
         if self.dimensionDefaultCheckbox.isChecked():
             self.dimensionSlider.setEnabled(False)

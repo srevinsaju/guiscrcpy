@@ -323,6 +323,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.settings_button.clicked.connect(self.settings_mgr)
         self.refreshdevices.clicked.connect(
             self.__refresh_devices_combo_box_cb)
+    def refresh_devices(self):
+        """
+        A slot for refreshing the QListView
+        :return:
+        """
+        self.scan_devices_update_list_view()
+
     def update_rotation_combo_cb(self):
         """
         A proposed method for refreshing the rotation combobox on item

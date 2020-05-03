@@ -37,6 +37,11 @@ class InterfaceConfig:
             'paths': self.paths,
             'scrcpy': None,
             'adb': None,
+            'panels': {
+                'swipe': True,
+                'bottom': True,
+                'toolkit': True
+            },
             'scrcpy-server': None,
             'dimension': None,
             'swtouches': False,

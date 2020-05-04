@@ -26,6 +26,13 @@ from guiscrcpy.platform.platform import System
 environment = System()
 
 
+def get(ls, idx, default=""):
+    try:
+        return ls[idx]
+    except IndexError:
+        return default
+
+
 class scrcpy:
     path = None
 
@@ -170,10 +177,10 @@ class adb:
             description = {
                 'identifier': device[0],
                 'status': device[1],
-                'product': device[2].split(':')[1],
-                'model': device[3].split(':')[1],
-                'device': device[4].split(':')[1],
-                'transport_id': device[5].split(':')[1]
+                'product': get(device, 2, ':').split(':')[1],
+                'model': get(device, 3, ':').split(':')[1],
+                'device': get(device, 4, ':').split(':')[1],
+                'transport_id': get(device, 5, ':').split(':')[1]
             }
             devices_found.append(description)
         logging.debug("ADB: {}".format(devices_found))

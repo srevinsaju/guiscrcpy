@@ -156,6 +156,13 @@ parser.add_argument(
     help="Show logging output in stdout and in .log filename"
 )
 parser.add_argument(
+    '-k',
+    '--killserver',
+    action='store_true',
+    help="Kills adb server if exists any and restarts server. (Disconnects "
+         "any connected device over LAN)"
+)
+parser.add_argument(
     '-d',
     '--debug',
     default=3,
@@ -1063,7 +1070,12 @@ def bootstrap0():
         cfgmgr.update_config(config)
         cfgmgr.write_file()
 
-    adb.devices(adb.path)
+    if args.killserver:
+        adb.command(adb.path, 'kill-server')
+        adb.command(adb.path, 'start-server')
+    else:
+        adb.devices(adb.path)
+
     guiscrcpy = InterfaceGuiscrcpy()
     guiscrcpy.show()
     app.processEvents()

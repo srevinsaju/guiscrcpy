@@ -104,5 +104,4 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
                 if instance.name == 'swipe' and instance.ux.get_sha() == \
                         self.ux.get_sha():
                     instance.hide()
-            else:
-                self.hide()
+            self.hide()

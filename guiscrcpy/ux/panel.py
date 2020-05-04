@@ -97,5 +97,4 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
                 if instance.name == 'swipe' and instance.ux.get_sha() == \
                         self.ux.get_sha():
                     instance.hide()
-            else:
-                self.hide()
+            self.hide()

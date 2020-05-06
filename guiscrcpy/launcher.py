@@ -538,8 +538,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             wifi_device = True
         else:
             wifi_device = False
-
-        config['device'][identifier]['wifi'] = wifi_device
+        try:
+            config['device'][identifier]['wifi'] = wifi_device
+        except KeyError:
+            log(f"Failed writing the configuration 'wifi' key to {identifier}")
 
         if wifi_device:
             ip = self.current_device_identifier()[1]
@@ -638,26 +640,56 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 icon = ':/icons/icons/portrait_mobile_white.svg'
             else:
                 icon = ':/icons/icons/landscape_mobile_white.svg'
-
             if i['status'] == 'offline':
                 icon = ':/icons/icons/portrait_mobile_error.svg'
             elif i['status'] == 'unauthorized':
                 icon = ':/icons/icons/portrait_mobile_warning.svg'
 
-            # check if device is paired
-            # if yes, just update the list item
-            if not device_paired_and_exists:
+            # Check if device is unauthorized
+
+            if i['status'] == "unauthorized":
+                log("unauthorized device detected: Click Allow on your device")
+                # The device is connected; and might/might't paired in the past
+                # And is connected to the same IP address
+                # It is possibly a bug with the connection;
+                # Temporarily create a new QListItem to display the
+                # device with the error
                 paired = False
-                devices_view_list_item = QListWidgetItem(QIcon(icon), '')
+                device_paired_and_exists = False
+                # Unauthorized device cannot be considered as a paired device
+                devices_view_list_item = QListWidgetItem()
             else:
-                for paired_device in paired_devices:
-                    if paired_device.text().split()[0] == i['model']:
-                        paired = True
-                        devices_view_list_item = paired_device
-                        break
-                else:
+                # check if device is paired
+                # if yes, just update the list item
+                if not device_paired_and_exists:
                     paired = False
-                    devices_view_list_item = QListWidgetItem(QIcon(icon), '')
+                    devices_view_list_item = QListWidgetItem()
+                else:
+                    for paired_device in paired_devices:
+                        if paired_device.text().split()[0] == i['model']:
+                            paired = True
+                            devices_view_list_item = paired_device
+                            # as we have found a paired device
+                            # we know by assumption; there cannot be two
+                            # devices with the same local IP address;
+                            # lets scan the devices_view once more in a loop
+                            # to check for any device with the same
+                            # identifier and remove them; based on this same
+                            # assumption
+                            self.remove_device_device_view(
+                                i['identifier'],
+                                statuses=['offline', 'unauthorized']
+                            )
+                            break
+                        elif paired_device.text().split()[1] ==\
+                                i['identifier']:
+
+                            devices_view_list_item = QListWidgetItem()
+                            paired = False
+                            break
+                    else:
+                        paired = False
+                        devices_view_list_item = QListWidgetItem()
 
             devices_view_list_item.setIcon(QIcon(icon))
 
@@ -691,6 +723,21 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             # If and only if the device doesn't exist; add it
             self.devices_view.addItem(devices_view_list_item)
         return devices
+
+    def remove_device_device_view(self, identifier: str = '', statuses=[]):
+        """
+        Removes all QListWidgetItems from the device_view for all matching
+        identifier
+        :param identifier: str
+        :return:
+        """
+        for index in range(self.devices_view.count() - 1, -1, -1):
+            for status in statuses:
+                if str(identifier) in self.devices_view.item(index).text() \
+                        and \
+                        str(status) in self.devices_view.item(index).text():
+                    self.devices_view.takeItem(index)
+        return
 
     def __dimension_change_cb(self):
         if self.dimensionDefaultCheckbox.isChecked():

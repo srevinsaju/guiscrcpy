@@ -656,6 +656,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 # device with the error
                 paired = False
                 device_paired_and_exists = False
+
+                # Remove other devices with the same id and offline and
+                # unauthorized
+                self.remove_device_device_view(
+                    i['identifier'],
+                    statuses=['offline', 'unauthorized']
+                )
                 # Unauthorized device cannot be considered as a paired device
                 devices_view_list_item = QListWidgetItem()
             else:

@@ -491,9 +491,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         )
 
         # go through all args; break when we find guiscrcpy
-        for args in range(len(sys.argv)):
-            if 'guiscrcpy' in sys.argv[args]:
-                aend = args + 1
+        for args_i in range(len(sys.argv)):
+            if 'guiscrcpy' in sys.argv[args_i]:
+                aend = args_i + 1
                 break
         else:
             aend = None
@@ -731,11 +731,12 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.devices_view.addItem(devices_view_list_item)
         return devices
 
-    def remove_device_device_view(self, identifier: str = '', statuses=[]):
+    def remove_device_device_view(self, identifier: str = '', statuses=()):
         """
         Removes all QListWidgetItems from the device_view for all matching
         identifier
         :param identifier: str
+        :param statuses: Iterable
         :return:
         """
         for index in range(self.devices_view.count() - 1, -1, -1):

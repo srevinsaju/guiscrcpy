@@ -645,9 +645,19 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             elif i['status'] == 'unauthorized':
                 icon = ':/icons/icons/portrait_mobile_warning.svg'
 
+            if i['status'] == 'no_permission':
+                # https://stackoverflow.com/questions/
+                # 53887322/adb-devices-no-permissions-user-in-
+                # plugdev-group-are-your-udev-rules-wrong
+                udev_error = "Error connecting to device. Your udev rules are"\
+                    " incorrect. See https://stackoverflow.com/questions"\
+                    "/53887322/adb-devices-no-permissions-user-in-plugdev-"\
+                    "group-are-your-udev-rules-wrong"
+                self.private_message_box_adb.setText(udev_error)
+                print(udev_error)
+                return []
             # Check if device is unauthorized
-
-            if i['status'] == "unauthorized":
+            elif i['status'] == "unauthorized":
                 log("unauthorized device detected: Click Allow on your device")
                 # The device is connected; and might/might't paired in the past
                 # And is connected to the same IP address
@@ -656,7 +666,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 # device with the error
                 paired = False
                 device_paired_and_exists = False
-
+                self.private_message_box_adb.setText(
+                    f"{i['identifier']} is unauthorized. Please click allow "
+                    f"on your device."
+                )
                 # Remove other devices with the same id and offline and
                 # unauthorized
                 self.remove_device_device_view(

@@ -147,7 +147,12 @@ elif platform.system() == 'Linux':
 
 data_files = [
         ('share/applications', ['guiscrcpy.desktop']),
-        ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png'])
+        ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png']),
+        ('share/fonts', [
+            'guiscrcpy/ui/fonts/NotoSans-Regular.ttf',
+            'guiscrcpy/ui/fonts/TitilliumWeb-Bold.ttf',
+            'guiscrcpy/ui/fonts/TitilliumWeb-Regular.ttf',
+        ])
     ]
 {DATA_FILE_MANIPULATE}
 setup(
@@ -217,7 +222,9 @@ with open('guiscrcpy.desktop', 'w') as w:
     w.write(DESKTOP_FILE.format(v=v, icon_path='guiscrcpy'))
 
 with open('snap/gui/guiscrcpy.desktop', 'w') as w:
-    w.write(DESKTOP_FILE.format(v=v, icon_path='${SNAP}/meta/gui/guiscrcpy.png'))
+    w.write(DESKTOP_FILE.format(
+        v=v, icon_path='${SNAP}/meta/gui/guiscrcpy.png'
+    ))
 
 with open('snap/local/snapcraft.yaml', 'r') as r:
     SNAPCRAFT_FILE = r.read()

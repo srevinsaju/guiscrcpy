@@ -441,10 +441,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         Popen(path_to_usbaudio, stdout=PIPE, stderr=PIPE)
 
     @staticmethod
-    def launch_web_srevinsaju():
-        webbrowser.open("https://srevinsaju.github.io")
-
-    @staticmethod
     def launch_web_github():
         webbrowser.open("https://github.com/srevinsaju/guiscrcpy")
 

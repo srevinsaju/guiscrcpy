@@ -167,6 +167,12 @@ parser.add_argument(
     help="Start scrcpy first before loading the GUI"
 )
 parser.add_argument(
+    '--start-scrcpy-device-id',
+    default='',
+    help="Provide the device id in the case of multiple devices. "
+         "(applicable only when '-s' or '--start' is passed)"
+)
+parser.add_argument(
     '-r',
     '--reset',
     action='store_true',
@@ -186,7 +192,7 @@ parser.add_argument(
 )
 parser.add_argument(
     '-f',
-    '--force_window_frame',
+    '--force-window-frame',
     action='store_true',
     help="Force display desktop window manager for toolkit without frames"
 )
@@ -245,16 +251,21 @@ if args.reset:
 logger.debug("Current Working Directory {}".format(os.getcwd()))
 
 if args.start:
+    devices = adb.devices_detailed(adb.path)
     logger.debug("RUNNING SCRCPY DIRECTLY")
-    args = ""
-    args += " -b " + str(config['bitrate'])
+    scrcpy_args = ""
+
+    if len(devices) > 1 and args.start_scrcpy_device_id:
+        scrcpy_args += " -s {}".format(args.start_scrcpy_device_id)
+
+    scrcpy_args += " -b " + str(config['bitrate'])
     if config['fullscreen']:
-        args += " -f "
+        scrcpy_args += " -f "
     if config['swtouches']:
-        args += " -t "
+        scrcpy_args += " -t "
     if config['dispRO']:
-        args += " --turn-screen-off "
-    scrcpy.start(scrcpy.path, args)
+        scrcpy_args += " --turn-screen-off "
+    scrcpy.start(scrcpy.path, scrcpy_args)
 
 logger.debug("Importing modules...")
 

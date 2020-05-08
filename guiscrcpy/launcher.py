@@ -185,6 +185,11 @@ parser.add_argument(
     help="Disable the swipe panel"
 )
 parser.add_argument(
+    '--connect',
+    default='',
+    help="Disable the swipe panel"
+)
+parser.add_argument(
     '-q',
     '--noscrcpy',
     action='store_true',
@@ -249,6 +254,13 @@ if args.reset:
     print("Configuration files resetted successfully.")
 
 logger.debug("Current Working Directory {}".format(os.getcwd()))
+
+if args.connect:
+    adb_cnx_output = adb.command(adb.path, 'connect {}'.format(args.connect))
+    print(
+        adb_cnx_output.stdout.read().decode(),
+        adb_cnx_output.stderr.read().decode()
+    )
 
 if args.start:
     devices = adb.devices_detailed(adb.path)
@@ -439,6 +451,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         else:
             return
         Popen(path_to_usbaudio, stdout=PIPE, stderr=PIPE)
+    @staticmethod
+    def launch_web_srevinsaju():
+        webbrowser.open("https://srevinsaju.github.io")
 
     @staticmethod
     def launch_web_github():
@@ -573,13 +588,18 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # convert the list into a string
         sys_args_desktop = ' '.join(sys_args_desktop)
+        auto_connect_run_command = \
+            "{executable} --connect={ip} " \
+            "--start --start-scrcpy-device-id={ip}".format(
+                executable=sys_args_desktop,
+                ip=identifier
+            )
 
         # create the desktop file using linux's desktop file gen method
         path_to_desktop_file = platform.System().create_desktop(
             desktop_file=GUISCRCPY_DEVICE.format(
                 identifier=model,
-                command=f'{adb.path} connect {identifier}; '
-                        f'{sys_args_desktop}',
+                command=auto_connect_run_command,
                 icon_path=path_to_image
             ),
             desktop_file_name=f'{model}.guiscrcpy.desktop'

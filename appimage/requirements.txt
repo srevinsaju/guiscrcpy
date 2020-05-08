@@ -1,1 +1,1 @@
-guiscrcpy==3.7
+guiscrcpy

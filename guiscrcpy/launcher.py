@@ -627,6 +627,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         devices = adb.devices_detailed(adb.path)
         log(devices)
         for i in devices:
+            device_is_wifi = \
+                i['identifier'].count('.') >= 3 and (':' in i['identifier'])
 
             if i['identifier'] not in config['device'].keys():
                 device_paired_and_exists = False
@@ -636,10 +638,15 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             else:
                 device_paired_and_exists = True
 
-            if config['device'].get('rotation', 0) in (-1, 0, 2):
-                icon = ':/icons/icons/portrait_mobile_white.svg'
+            if device_is_wifi:
+                _icon_suffix = '_wifi'
             else:
-                icon = ':/icons/icons/landscape_mobile_white.svg'
+                _icon_suffix = '_usb'
+
+            icon = ':/icons/icons/portrait_mobile_white{}.svg'.format(
+                _icon_suffix
+            )
+
             if i['status'] == 'offline':
                 icon = ':/icons/icons/portrait_mobile_error.svg'
             elif i['status'] == 'unauthorized':
@@ -737,8 +744,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             )
 
             devices_view_list_item.setFont(QFont('Noto Sans', pointSize=8))
-            log(device_paired_and_exists)
-            if device_paired_and_exists:
+            log(f"Pairing status: {device_paired_and_exists}")
+            if device_paired_and_exists and device_is_wifi:
+                # we need to only neglect wifi devices
+                # paired usb device need to still show in the display
                 continue
             # If and only if the device doesn't exist; add it
             self.devices_view.addItem(devices_view_list_item)
@@ -831,7 +840,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 self.devices_view.setCurrentIndex(
                     QModelIndex(self.devices_view.model().index(0, 0))
                 )
-                _, device_id = self.current_device_identifier()
+                try:
+                    _, device_id = self.current_device_identifier()
+                except ValueError:
+                    self.private_message_box_adb.setText(
+                        "Please select a device from the list view"
+                    )
+                    return 0
                 more_devices = False
             elif self.devices_view.currentItem() is None:
                 self.private_message_box_adb.setText("Please select a device "

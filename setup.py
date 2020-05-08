@@ -43,12 +43,17 @@ elif platform.system() == 'Linux':
 
 data_files = [
         ('share/applications', ['guiscrcpy.desktop']),
-        ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png'])
+        ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png']),
+        ('share/fonts', [
+            'guiscrcpy/ui/fonts/NotoSans-Regular.ttf',
+            'guiscrcpy/ui/fonts/TitilliumWeb-Bold.ttf',
+            'guiscrcpy/ui/fonts/TitilliumWeb-Regular.ttf',
+        ])
     ]
 
 setup(
     name='guiscrcpy',
-    version='3.7.post208.dev',
+    version='3.7.post218.dev',
     description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',

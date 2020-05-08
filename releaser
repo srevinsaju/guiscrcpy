@@ -143,7 +143,7 @@ requirements = ['PyQt5>=5.14,<5.15', 'pynput']
 if platform.system() == 'Windows':
     requirements.extend(['pywin32', 'psutil'])
 elif platform.system() == 'Linux':
-    requirements.extend(['fonttools', 'psutil'])
+    requirements.extend(['fonttools', 'psutil', 'cairosvg'])
 
 data_files = [
         ('share/applications', ['guiscrcpy.desktop']),
@@ -195,7 +195,7 @@ VERSION = '{version}'
 # this was because GitPython created a lot of problems
 # hardcoding the information before each release, solved the problem
 
-for setup in ("setup.py", "setup.py-manylinux2014-scrcpy"):
+for setup in ("setup.py", ):
     with open(setup, 'w') as w:
         w.write(setupfile.format(
             COPYRIGHT=COPYRIGHT,

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 GUISCRCPY by srevinsaju
 Get it on : https://github.com/srevinsaju/guiscrcpy

@@ -6,6 +6,12 @@
   </qresource>
   <qresource prefix="icons">
     <file>icons/gear.svg</file>
+    <file>icons/android.svg</file>
+    <file>icons/portrait_mobile_white_wifi.svg</file>
+    <file>icons/portrait_mobile_white_usb.svg</file>
+    <file>icons/portrait_mobile_white.svg</file>
+    <file>icons/portrait_mobile_disconnect.svg</file>
+    <file>icons/refresh-page-option.svg</file>
     <file>icons/wifi.svg</file>
     <file>icons/chevron-sign-down.svg</file>
     <file>icons/chevron-sign-right.svg</file>
@@ -13,6 +19,8 @@
     <file>icons/home.svg</file>
     <file>icons/zoom-out.svg</file>
     <file>icons/ss-branding.png</file>
+    <file>icons/portrait_mobile_error.svg</file>
+    <file>icons/portrait_mobile_warning.svg</file>
     <file>icons/github.logo.svg</file>
     <file>icons/bullseye.svg</file>
     <file>icons/zoom-in.svg</file>

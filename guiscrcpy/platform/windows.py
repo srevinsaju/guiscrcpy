@@ -100,4 +100,9 @@ class Windows:
 
     @staticmethod
     def create_desktop():
-        make_shortcut()
+        try:
+            make_shortcut()
+        except Exception as e:
+            # do not stop users from using guiscrcpy
+            # in case this small exception happens
+            print("Desktop shortcut generation failed: {}".format(e))

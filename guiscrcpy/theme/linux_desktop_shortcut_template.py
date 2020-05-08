@@ -1,10 +1,11 @@
-[Desktop Entry]
-Version=3.7.post208.dev
-Name=guiscrcpy
+GUISCRCPY_DEVICE = \
+    """[Desktop Entry]
+Name={identifier}
 GenericName=guiscrcpy
 Comment=Open Source Android Screen Mirroring System
-Exec=guiscrcpy
-Icon=guiscrcpy
+Exec={command}
+Icon={icon_path}
 Type=Application
 Categories=Utility;Development;
 StartupWMClass=UGENE
+"""

@@ -74,6 +74,10 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
             # in the text box
             if not self.lineEdit.text().strip().isspace() or len(
                     self.lineEdit.text().strip()) != 0:
+                if ':' in self.lineEdit.text():
+                    self.nm_det.setText("Please provide the port in the "
+                                        "'port' text box")
+                    return
                 if self.lineEdit.text().count('.') == 3:
                     ip = self.lineEdit.text().strip().lower()
                 else:

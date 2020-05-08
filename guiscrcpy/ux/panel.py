@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import sys
 import uuid
 
 from PyQt5 import QtCore
@@ -81,7 +80,7 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
             pass
 
     def quit_window(self):
-        for instance in self.parent.child_windows:
+        for instance in self.parent.child_windows:  # noqa
             # We are checking for any more windows running before killing
             # the main window. self.child_windows has the list of all
             # objects spawned by the main window ui
@@ -94,4 +93,8 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
                 self.hide()
                 break
         else:
-            sys.exit(0)
+            for instance in self.parent.child_windows:  # noqa
+                if instance.name == 'swipe' and instance.ux.get_sha() == \
+                        self.ux.get_sha():
+                    instance.hide()
+            self.hide()

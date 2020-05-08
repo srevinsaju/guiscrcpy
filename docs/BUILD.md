@@ -39,6 +39,18 @@ sudo make install
 
 <br>
 
+### Replicate `master`/ `branch` directly to your system
+
+If you do not want to build `guiscrcpy`‘s UI on your system; you can only do
+
+```
+pip3 install .
+```
+
+Use `--user` parameter if necessary.
+
+
+
 ## v3.5+
 
 A typical build (v**3.5**+) has a sequence of commands as:

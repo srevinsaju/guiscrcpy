@@ -1,5 +1,5 @@
 name: guiscrcpy
-version: 3.7.post115.dev
+version: 3.7.post208.dev
 summary: An opensource GUI for android screen mirroring# 79 char long summary
 description: |
   A full fledged GUI integration for the award winning open source scrcpy, for 
@@ -35,12 +35,27 @@ apps:
       GUISCRCPY_SCRCPY: "$SNAP/usr/local/bin/scrcpy"
       GUISCRCPY_ADB: "$SNAP/usr/bin/adb"
       SCRCPY_SERVER_PATH: "$SNAP/usr/local/share/scrcpy/scrcpy-server"
+      GUISCRCPY_SNAP: "TRUE"
     command-chain: &command-chain-common
     - bin/debian-multiarch-triplet-provider-launch
     - bin/classic-launch
     - bin/desktop-launch
     - bin/guiscrcpy
     desktop: share/applications/guiscrcpy.desktop
+
+  guiscrcpy-mapper:
+    command: bin/guiscrcpy-mapper
+    environment: 
+      PATH: $SNAP/lib:$SNAP/usr/lib:$SNAP/bin:$SNAP/usr/bin:$SNAP/usr/local/bin:$PATH
+      GUISCRCPY_SCRCPY: "$SNAP/usr/local/bin/scrcpy"
+      GUISCRCPY_ADB: "$SNAP/usr/bin/adb"
+      SCRCPY_SERVER_PATH: "$SNAP/usr/local/share/scrcpy/scrcpy-server"
+      GUISCRCPY_SNAP: "TRUE"
+    command-chain: &command-chain-common
+    - bin/debian-multiarch-triplet-provider-launch
+    - bin/classic-launch
+    - bin/desktop-launch
+    - bin/guiscrcpy
 
 parts:
 
@@ -125,6 +140,10 @@ parts:
     plugin: python
     python-version: python3
     source: .
+    LANG: C.UTF-8
+    LC_ALL: C.UTF-8
+    LC_CTYPE: C.UTF-8
+    LD_PRELOAD: $SNAP/bin/semwraplib.so
 
 
 plugs:
@@ -136,6 +155,7 @@ plugs:
   wayland:
   opengl:
   home:
+  process-control:
   network-bind:
   network:
   adb:

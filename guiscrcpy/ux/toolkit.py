@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-import sys
 import uuid
 
 from PyQt5 import QtCore
@@ -88,7 +87,7 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
             pass
 
     def quit_window(self):
-        for instance in self.parent.child_windows:
+        for instance in self.parent.child_windows:  # noqa
             # We are checking for any more windows running before killing
             # the main window. self.child_windows has the list of all
             # objects spawned by the main window ui
@@ -101,4 +100,8 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
                 self.hide()
                 break
         else:
-            sys.exit()
+            for instance in self.parent.child_windows:  # noqa
+                if instance.name == 'swipe' and instance.ux.get_sha() == \
+                        self.ux.get_sha():
+                    instance.hide()
+            self.hide()

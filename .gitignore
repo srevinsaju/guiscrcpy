@@ -6,8 +6,8 @@ bin
 release
 venv
 build
-.idea
 .vscode
+.idea
 *.egg-info
 *.tar.gz
 *.whl 
@@ -18,3 +18,4 @@ build
 .codacy-coverage
 *.snap
 prime
+/.run/guiscrcpy.sh

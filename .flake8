@@ -1,2 +1,2 @@
 [flake8]
-exclude = .git,__pycache__,old,build,dist,guiscrcpy/ui
+exclude = .git,__pycache__,old,build,dist,guiscrcpy/ui,guiscrcpy/theme

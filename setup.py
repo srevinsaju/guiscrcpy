@@ -39,7 +39,7 @@ requirements = ['PyQt5>=5.14,<5.15', 'pynput']
 if platform.system() == 'Windows':
     requirements.extend(['pywin32', 'psutil'])
 elif platform.system() == 'Linux':
-    requirements.extend(['fonttools', 'psutil'])
+    requirements.extend(['fonttools', 'psutil', 'cairosvg'])
 
 data_files = [
         ('share/applications', ['guiscrcpy.desktop']),
@@ -48,7 +48,7 @@ data_files = [
 
 setup(
     name='guiscrcpy',
-    version='3.7.post115.dev',
+    version='3.7.post208.dev',
     description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',

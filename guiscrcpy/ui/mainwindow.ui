@@ -226,6 +226,11 @@ border-radius: 10px;
          </item>
          <item row="2" column="5">
           <widget class="QCheckBox" name="lock_rotation">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
            <property name="text">
             <string>Lock Rotation</string>
            </property>
@@ -254,6 +259,11 @@ border-radius: 10px;
          </item>
          <item row="1" column="4">
           <widget class="QCheckBox" name="check_bottom_panel">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
            <property name="text">
             <string>Bottom Panel</string>
            </property>
@@ -265,6 +275,11 @@ border-radius: 10px;
          </item>
          <item row="1" column="5">
           <widget class="QCheckBox" name="check_swipe_panel">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
            <property name="text">
             <string>Swipe Panel</string>
            </property>
@@ -400,6 +415,11 @@ border-radius: 10px;
          </item>
          <item row="1" column="0" colspan="4">
           <widget class="QCheckBox" name="check_side_panel">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
            <property name="text">
             <string>Side Panel</string>
            </property>

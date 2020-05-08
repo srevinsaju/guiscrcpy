@@ -4,14 +4,20 @@ import os
 import socket
 import subprocess
 
+from guiscrcpy.platform import platform
+
+from guiscrcpy.lib.utils import log, check_existence
+
 
 class NetworkManager:
 
     def __init__(self):
-        pass
+        self.ping = check_existence(platform.System().paths(), 'ping',
+                                    path=True, directory=False)
+        if len(self.ping) >= 1:
+            self.ping = self.ping[0]
 
-    @staticmethod
-    def pinger(job_q, results_q):
+    def pinger(self, job_q, results_q):
         """
         Do Ping
         :param job_q:
@@ -27,7 +33,9 @@ class NetworkManager:
                 break
 
             try:
-                subprocess.check_call(['ping', '-c1', ip], stdout=devnull,
+                commands = '{ping} -c1 {ip}'.format(ping=self.ping, ip=ip)
+                log(commands)
+                subprocess.check_call(commands, stdout=devnull,
                                       shell=True)
                 results_q.put(ip)
             except BaseException as e:
@@ -52,7 +60,10 @@ class NetworkManager:
         :param pool_size: amount of parallel ping processes
         :return: list of valid ip addresses
         """
-
+        if not self.ping:
+            print("Error: `ping` executable not found. Please enter the IP "
+                  "address in the text box manually")
+            return
         ip_list = list()
 
         # get my IP and compose a base like 192.168.1.xxx

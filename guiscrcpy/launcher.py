@@ -54,7 +54,7 @@ from guiscrcpy.lib.check import scrcpy
 from guiscrcpy.lib.config import InterfaceConfig
 from guiscrcpy.lib.process import is_running
 from guiscrcpy.lib.toolkit import UXMapper
-from guiscrcpy.lib.utils import log
+from guiscrcpy.lib.utils import log, shellify
 from guiscrcpy.platform import platform
 from guiscrcpy.theme.decorate import Header
 from guiscrcpy.theme.desktop_shortcut import desktop_device_shortcut_svg
@@ -108,6 +108,48 @@ for arg in range(len(sys.argv)):
         sys_argv = sys.argv[arg:]
         break
 sys.argv = sys_argv
+
+# interface adb if asked for
+if 'adb-interface' in sys.argv:
+    if (adb.path is None) or (not os.path.exists(adb.path)):
+        raise FileNotFoundError(
+            "adb is not yet configured to interface it. "
+            "Please run guiscrcpy normally once, and then you can run the "
+            "command. adb is configured on the first successful run of "
+            "guiscrcpy"
+        )
+    try:
+        adb_commands = sys.argv.index('adb-interface') + 1
+    except ValueError:
+        raise OSError("adb-interface command is to be given as an arg and "
+                      "not a param")
+    adb_process_output = Popen(shellify(
+        f"{adb.path} {' '.join(sys.argv[adb_commands:])}"
+    ), stdout=PIPE, stderr=PIPE)
+    print(adb_process_output.stdout.read().decode())
+    print(adb_process_output.stderr.read().decode())
+    sys.exit(0)
+
+# interface scrcpy if asked for
+if 'scrcpy-interface' in sys.argv:
+    if (scrcpy.path is None) or (not os.path.exists(scrcpy.path)):
+        raise FileNotFoundError(
+            "scrcpy is not yet configured to interface it. "
+            "Please run guiscrcpy normally once, and then you can run the "
+            "command. scrcpy is configured on the first successful run of "
+            "guiscrcpy"
+        )
+    try:
+        scrcpy_commands = sys.argv.index('scrcpy-interface') + 1
+    except ValueError:
+        raise OSError("scrcpy-interface command is to be given as an arg and "
+                      "not a param")
+    scrcpy_process_output = Popen(shellify(
+        f"{scrcpy.path} {' '.join(sys.argv[scrcpy_commands:])}"
+    ), stdout=PIPE, stderr=PIPE)
+    print(scrcpy_process_output.stdout.read().decode())
+    print(scrcpy_process_output.stderr.read().decode())
+    sys.exit(0)
 
 # Initialize argument parser
 parser = argparse.ArgumentParser(
@@ -479,6 +521,17 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         )
 
     def create_desktop_shortcut_linux_os(self):
+        """
+        Creates a desktop shortcut for Linux OS
+        :return:
+        """
+        # just a check before anything further happens because of an
+        # unrelated OS
+        if environment.system() != "Linux":
+            log("Tried to run create_desktop_shortcut_linux_os on an "
+                "unsupported OS.")
+            return False
+
         # get device specific configuration
         model, identifier = self.current_device_identifier()
         picture_file_path = cfgmgr.get_cfgpath()

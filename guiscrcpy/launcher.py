@@ -35,7 +35,6 @@ import argparse
 import hashlib
 import logging
 import os
-import os.path
 import sys
 import time
 import webbrowser
@@ -82,7 +81,7 @@ environment = platform.System()
 # ============================================================================
 # Load cairosvg conditionally
 if environment.system() == "Linux":
-    from cairosvg import svg2png
+    from cairosvg import svg2png  # noqa:
 
 # ============================================================================
 # Add precedence for guiscrcpy to check environment variables

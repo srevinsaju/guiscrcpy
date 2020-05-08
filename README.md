@@ -59,23 +59,3 @@ These are the common methods of installation. To see more interesting ways, chec
 
 <br>
 
-## Features
-
-#### Customized settings for [`scrcpy`](https://github.com/Genymobile/scrcpy)
-
-`scrcpy` is a android screen mirroring command line interface tool. It does not save your configuration for your each run. Moreover, it requires some command line knowledge of how to use scrcpy and some developer background. There are already many unnecessary issues on `scrcpy`‘s repository, which is caused due to the complexity at which scrcpy’s options are handled. `guiscrcpy` makes use of this complexity and converts into a simple graphical user interface which creates `scrcpy ` 
-
-#### Desktop launcher
-
-`scrcpy` is a command line interface, which seems quite non intuitive for users who do not use command line / non-developers. `guiscrcpy` creates a one click desktop shortcut, which enables users to start `guiscrcpy` by clicking on their desktop shortcut
-
-#### Toolkits and Panels
-
-`guiscrcpy` bundles side panels, bottom panels and an additional unique swipe panel, which does not exist in other screen mirroring clients. 
-
-##### Swipe Panel (`guiscrcpy.ux.swipe.SwipeUX`)
-
-To be filled in later :jack_o_lantern:
-
-
-

@@ -146,7 +146,6 @@ jobs:
 
     - name: Release
       uses: marvinpinto/action-automatic-releases@latest
-      if: github.ref == 'refs/heads/master'
       with:
         automatic_release_tag: continuous
         title: continuous

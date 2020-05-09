@@ -49,7 +49,15 @@ class UXMapper:
         self.has_modules = getWindowsWithTitle and auto
         logging.debug("Calculating Screen Size")
         self.android_dimensions = adb.get_dimensions(
-            adb.path, device_id=device_id)
+            adb.path, device_id=device_id
+        )
+        if not self.android_dimensions:
+            print("E: guiscrcpy has crashed because of a failure in the "
+                  "execution of `adb shell wm size`. This might be because "
+                  "of an improper connection of adb. Please reconnect your "
+                  "device (disconnect from WiFi / Reconnect USB) or try \n\n"
+                  "guiscrcpy --killserver\n\nas a command line to restart adb "
+                  "server")
         self.deviceId = device_id
 
         # each device connected is uniquely identified by the tools by

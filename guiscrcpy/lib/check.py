@@ -104,6 +104,10 @@ class adb:
         else:
             shell_adb = Popen(_("{} shell wm size".format(path)),
                               stdout=PIPE, stderr=PIPE)
+        if shell_adb.returncode != 0:
+            print("E: Command 'adb shell wm size' exited with {}".format(
+                shell_adb.returncode))
+            return False
         raw_dimensions = shell_adb.stdout.read().decode().strip('\n')
         for i in ['Override size', 'Physical size']:
             if i in raw_dimensions:

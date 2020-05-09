@@ -157,90 +157,7 @@ border-radius: 10px;
          <property name="verticalSpacing">
           <number>1</number>
          </property>
-         <item row="6" column="0">
-          <widget class="QPushButton" name="network_button">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="toolTip">
-            <string>Launch Network Manager</string>
-           </property>
-           <property name="toolTipDuration">
-            <number>2</number>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/wifi.svg</normaloff>:/icons/icons/wifi.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0" colspan="4">
-          <widget class="QCheckBox" name="recScui">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>10</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Noto Sans</family>
-             <pointsize>10</pointsize>
-             <weight>50</weight>
-             <italic>false</italic>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Record your screen mirroring to your home directory. In Linux, it is in ~guiscrcpy directory. In Windows, it is in C:Users&lt;USER NAME&gt; with the date in seconds, followed by .mp4</string>
-           </property>
-           <property name="toolTipDuration">
-            <number>2</number>
-           </property>
-           <property name="statusTip">
-            <string>See tooltip</string>
-           </property>
-           <property name="text">
-            <string>Record screen</string>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/facetime-button.svg</normaloff>:/icons/icons/facetime-button.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="5">
-          <widget class="QCheckBox" name="lock_rotation">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Lock Rotation</string>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/reorder-option.svg</normaloff>:/icons/icons/reorder-option.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
+         <item row="7" column="1">
           <widget class="QPushButton" name="settings_button">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -254,69 +171,6 @@ border-radius: 10px;
            <property name="icon">
             <iconset resource="rsrc.qrc">
              <normaloff>:/icons/icons/gear.svg</normaloff>:/icons/icons/gear.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="4">
-          <widget class="QCheckBox" name="check_bottom_panel">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Bottom Panel</string>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/reorder-option.svg</normaloff>:/icons/icons/reorder-option.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="5">
-          <widget class="QCheckBox" name="check_swipe_panel">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Swipe Panel</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0" colspan="4">
-          <widget class="QCheckBox" name="aotop">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>10</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Noto Sans</family>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Keep display always on top of other windows</string>
-           </property>
-           <property name="toolTipDuration">
-            <number>2</number>
-           </property>
-           <property name="text">
-            <string>Always on Top</string>
-           </property>
-           <property name="icon">
-            <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/fire-symbol.svg</normaloff>:/icons/icons/fire-symbol.svg</iconset>
            </property>
           </widget>
          </item>
@@ -349,7 +203,94 @@ border-radius: 10px;
            </property>
           </widget>
          </item>
-         <item row="0" column="5">
+         <item row="7" column="0">
+          <widget class="QPushButton" name="network_button">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>Launch Network Manager</string>
+           </property>
+           <property name="toolTipDuration">
+            <number>2</number>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/wifi.svg</normaloff>:/icons/icons/wifi.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="5">
+          <widget class="QComboBox" name="device_rotation">
+           <item>
+            <property name="text">
+             <string>Default Rotation</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Potrait</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Landscape</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Potrait (flipped)</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Landscape (flipped)</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="7" column="2">
+          <widget class="QPushButton" name="refreshdevices">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/refresh-page-option.svg</normaloff>:/icons/icons/refresh-page-option.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>15</width>
+             <height>15</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="4">
           <widget class="QCheckBox" name="showTouches">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -378,7 +319,7 @@ border-radius: 10px;
            </property>
           </widget>
          </item>
-         <item row="2" column="4">
+         <item row="1" column="4">
           <widget class="QCheckBox" name="displayForceOn">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -413,6 +354,117 @@ border-radius: 10px;
            </property>
           </widget>
          </item>
+         <item row="2" column="5">
+          <widget class="QCheckBox" name="lock_rotation">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Lock Rotation</string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/padlock.svg</normaloff>:/icons/icons/padlock.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="5">
+          <widget class="QCheckBox" name="aotop">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Noto Sans</family>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string>Keep display always on top of other windows</string>
+           </property>
+           <property name="toolTipDuration">
+            <number>2</number>
+           </property>
+           <property name="text">
+            <string>Always on Top</string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/fire-symbol.svg</normaloff>:/icons/icons/fire-symbol.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QCheckBox" name="recScui">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Noto Sans</family>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Record your screen mirroring to your home directory. In Linux, it is in ~guiscrcpy directory. In Windows, it is in C:\Users\&amp;lt;username&amp;gt;\ with the UNIX date, followed by .mp4; For manual configuration and path selection, use the settings icon&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="toolTipDuration">
+            <number>2</number>
+           </property>
+           <property name="statusTip">
+            <string>See tooltip</string>
+           </property>
+           <property name="text">
+            <string>Record screen</string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/facetime-button.svg</normaloff>:/icons/icons/facetime-button.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" colspan="4">
+          <widget class="QCheckBox" name="check_swipe_panel">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Swipe Panel</string>
+           </property>
+           <property name="icon">
+            <iconset resource="rsrc.qrc">
+             <normaloff>:/icons/icons/guiscrcpy_swipe_panel.svg</normaloff>:/icons/icons/guiscrcpy_swipe_panel.svg</iconset>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="0" colspan="4">
           <widget class="QCheckBox" name="check_side_panel">
            <property name="font">
@@ -425,71 +477,23 @@ border-radius: 10px;
            </property>
            <property name="icon">
             <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/reorder-option.svg</normaloff>:/icons/icons/reorder-option.svg</iconset>
+             <normaloff>:/icons/icons/guiscrcpy_side_panel.svg</normaloff>:/icons/icons/guiscrcpy_side_panel.svg</iconset>
            </property>
           </widget>
          </item>
-         <item row="6" column="5">
-          <widget class="QComboBox" name="device_rotation">
-           <item>
-            <property name="text">
-             <string>Default Rotation</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Potrait</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Landscape</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Potrait (flipped)</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Landscape (flipped)</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="6" column="2">
-          <widget class="QPushButton" name="refreshdevices">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>22</width>
-             <height>22</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>30</width>
-             <height>16777215</height>
-            </size>
+         <item row="0" column="0" colspan="4">
+          <widget class="QCheckBox" name="check_bottom_panel">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
            </property>
            <property name="text">
-            <string/>
+            <string>Bottom Panel</string>
            </property>
            <property name="icon">
             <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/refresh-page-option.svg</normaloff>:/icons/icons/refresh-page-option.svg</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>15</width>
-             <height>15</height>
-            </size>
+             <normaloff>:/icons/icons/guiscrcpy_bottom_panel.svg</normaloff>:/icons/icons/guiscrcpy_bottom_panel.svg</iconset>
            </property>
           </widget>
          </item>

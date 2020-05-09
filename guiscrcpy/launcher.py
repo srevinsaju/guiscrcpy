@@ -286,12 +286,14 @@ if args.version:
     sys.exit(0)
 
 if args.reset:
+    # Resets the guiscrcpy.json configuration file
     cfgmgr.reset_config()
     print("Configuration files resetted successfully.")
 
 logger.debug("Current Working Directory {}".format(os.getcwd()))
 
 if args.connect:
+    # Connects to a device with a valid IP:PORT address
     adb_cnx_output = adb.command(adb.path, 'connect {}'.format(args.connect))
     print(
         adb_cnx_output.stdout.read().decode(),
@@ -299,6 +301,7 @@ if args.connect:
     )
 
 if args.start:
+    # Starts scrcpy before calling guiscrcpy UI with limited configuration
     devices = adb.devices_detailed(adb.path)
     logger.debug("RUNNING SCRCPY DIRECTLY")
     scrcpy_args = ""

@@ -35,7 +35,6 @@ import argparse
 import hashlib
 import logging
 import os
-import os.path
 import sys
 import time
 import webbrowser
@@ -54,7 +53,7 @@ from guiscrcpy.lib.check import scrcpy
 from guiscrcpy.lib.config import InterfaceConfig
 from guiscrcpy.lib.process import is_running
 from guiscrcpy.lib.toolkit import UXMapper
-from guiscrcpy.lib.utils import log
+from guiscrcpy.lib.utils import log, shellify
 from guiscrcpy.platform import platform
 from guiscrcpy.theme.decorate import Header
 from guiscrcpy.theme.desktop_shortcut import desktop_device_shortcut_svg
@@ -82,7 +81,7 @@ environment = platform.System()
 # ============================================================================
 # Load cairosvg conditionally
 if environment.system() == "Linux":
-    from cairosvg import svg2png
+    from cairosvg import svg2png  # noqa:
 
 # ============================================================================
 # Add precedence for guiscrcpy to check environment variables
@@ -109,6 +108,48 @@ for arg in range(len(sys.argv)):
         break
 sys.argv = sys_argv
 
+# interface adb if asked for
+if 'adb-interface' in sys.argv:
+    if (adb.path is None) or (not os.path.exists(adb.path)):
+        raise FileNotFoundError(
+            "adb is not yet configured to interface it. "
+            "Please run guiscrcpy normally once, and then you can run the "
+            "command. adb is configured on the first successful run of "
+            "guiscrcpy"
+        )
+    try:
+        adb_commands = sys.argv.index('adb-interface') + 1
+    except ValueError:
+        raise OSError("adb-interface command is to be given as an arg and "
+                      "not a param")
+    adb_process_output = Popen(shellify(
+        f"{adb.path} {' '.join(sys.argv[adb_commands:])}"
+    ), stdout=PIPE, stderr=PIPE)
+    print(adb_process_output.stdout.read().decode())
+    print(adb_process_output.stderr.read().decode())
+    sys.exit(0)
+
+# interface scrcpy if asked for
+if 'scrcpy-interface' in sys.argv:
+    if (scrcpy.path is None) or (not os.path.exists(scrcpy.path)):
+        raise FileNotFoundError(
+            "scrcpy is not yet configured to interface it. "
+            "Please run guiscrcpy normally once, and then you can run the "
+            "command. scrcpy is configured on the first successful run of "
+            "guiscrcpy"
+        )
+    try:
+        scrcpy_commands = sys.argv.index('scrcpy-interface') + 1
+    except ValueError:
+        raise OSError("scrcpy-interface command is to be given as an arg and "
+                      "not a param")
+    scrcpy_process_output = Popen(shellify(
+        f"{scrcpy.path} {' '.join(sys.argv[scrcpy_commands:])}"
+    ), stdout=PIPE, stderr=PIPE)
+    print(scrcpy_process_output.stdout.read().decode())
+    print(scrcpy_process_output.stderr.read().decode())
+    sys.exit(0)
+
 # Initialize argument parser
 parser = argparse.ArgumentParser(
     'guiscrcpy v{}'.format(VERSION)
@@ -126,15 +167,31 @@ parser.add_argument(
     help="Start scrcpy first before loading the GUI"
 )
 parser.add_argument(
+    '--start-scrcpy-device-id',
+    default='',
+    help="Provide the device id in the case of multiple devices. "
+         "(applicable only when '-s' or '--start' is passed)"
+)
+parser.add_argument(
     '-r',
     '--reset',
     action='store_true',
     help="Reset the guiscrcpy configuration files to default"
 )
 parser.add_argument(
+    '--mapper',
+    action='store_true',
+    help="Interface guiscrcpy's mapper to guiscrcpy main executable"
+)
+parser.add_argument(
     '-w',
     '--disable-swipe',
     action='store_true',
+    help="Disable the swipe panel"
+)
+parser.add_argument(
+    '--connect',
+    default='',
     help="Disable the swipe panel"
 )
 parser.add_argument(
@@ -145,7 +202,7 @@ parser.add_argument(
 )
 parser.add_argument(
     '-f',
-    '--force_window_frame',
+    '--force-window-frame',
     action='store_true',
     help="Force display desktop window manager for toolkit without frames"
 )
@@ -203,17 +260,29 @@ if args.reset:
 
 logger.debug("Current Working Directory {}".format(os.getcwd()))
 
+if args.connect:
+    adb_cnx_output = adb.command(adb.path, 'connect {}'.format(args.connect))
+    print(
+        adb_cnx_output.stdout.read().decode(),
+        adb_cnx_output.stderr.read().decode()
+    )
+
 if args.start:
+    devices = adb.devices_detailed(adb.path)
     logger.debug("RUNNING SCRCPY DIRECTLY")
-    args = ""
-    args += " -b " + str(config['bitrate'])
+    scrcpy_args = ""
+
+    if len(devices) > 1 and args.start_scrcpy_device_id:
+        scrcpy_args += " -s {}".format(args.start_scrcpy_device_id)
+
+    scrcpy_args += " -b " + str(config['bitrate'])
     if config['fullscreen']:
-        args += " -f "
+        scrcpy_args += " -f "
     if config['swtouches']:
-        args += " -t "
+        scrcpy_args += " -t "
     if config['dispRO']:
-        args += " --turn-screen-off "
-    scrcpy.start(scrcpy.path, args)
+        scrcpy_args += " --turn-screen-off "
+    scrcpy.start(scrcpy.path, scrcpy_args)
 
 logger.debug("Importing modules...")
 
@@ -389,10 +458,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         Popen(path_to_usbaudio, stdout=PIPE, stderr=PIPE)
 
     @staticmethod
-    def launch_web_srevinsaju():
-        webbrowser.open("https://srevinsaju.github.io")
-
-    @staticmethod
     def launch_web_github():
         webbrowser.open("https://github.com/srevinsaju/guiscrcpy")
 
@@ -479,6 +544,17 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         )
 
     def create_desktop_shortcut_linux_os(self):
+        """
+        Creates a desktop shortcut for Linux OS
+        :return:
+        """
+        # just a check before anything further happens because of an
+        # unrelated OS
+        if environment.system() != "Linux":
+            log("Tried to run create_desktop_shortcut_linux_os on an "
+                "unsupported OS.")
+            return False
+
         # get device specific configuration
         model, identifier = self.current_device_identifier()
         picture_file_path = cfgmgr.get_cfgpath()
@@ -514,13 +590,18 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # convert the list into a string
         sys_args_desktop = ' '.join(sys_args_desktop)
+        auto_connect_run_command = \
+            "{executable} --connect={ip} " \
+            "--start --start-scrcpy-device-id={ip}".format(
+                executable=sys_args_desktop,
+                ip=identifier
+            )
 
         # create the desktop file using linux's desktop file gen method
         path_to_desktop_file = platform.System().create_desktop(
             desktop_file=GUISCRCPY_DEVICE.format(
                 identifier=model,
-                command=f'{adb.path} connect {identifier}; '
-                        f'{sys_args_desktop}',
+                command=auto_connect_run_command,
                 icon_path=path_to_image
             ),
             desktop_file_name=f'{model}.guiscrcpy.desktop'
@@ -624,9 +705,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         for index in range(self.devices_view.count()):
             paired_devices.append(self.devices_view.item(index))
 
-        devices = adb.devices_detailed(adb.path)
-        log(devices)
-        for i in devices:
+        __devices = adb.devices_detailed(adb.path)
+        log(__devices)
+        for i in __devices:
             device_is_wifi = \
                 i['identifier'].count('.') >= 3 and (':' in i['identifier'])
 
@@ -751,7 +832,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 continue
             # If and only if the device doesn't exist; add it
             self.devices_view.addItem(devices_view_list_item)
-        return devices
+        return __devices
 
     def remove_device_device_view(self, identifier: str = '', statuses=()):
         """

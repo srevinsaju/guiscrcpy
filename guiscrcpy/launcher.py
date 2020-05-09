@@ -184,6 +184,11 @@ parser.add_argument(
     help="Interface guiscrcpy's mapper to guiscrcpy main executable"
 )
 parser.add_argument(
+    '--mapper-reset',
+    action='store_true',
+    help="Reset guiscrcpy's mapper configuration file"
+)
+parser.add_argument(
     '-w',
     '--disable-swipe',
     action='store_true',

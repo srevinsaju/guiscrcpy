@@ -492,10 +492,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             mapper.file_check()
         else:
             logger.warning(
-                "guiscrcpy ~ mapper is not initialized. "
-                "Initialize by running" +
-                "$ guiscrcpy-mapper" + "reset points by" +
-                "$ guiscrcpy-mapper -r"
+                "guiscrcpy ~ mapper is not initialized. \n"
+                "Initialize by running \n\n"
+                "$ guiscrcpy --mapper \n\n"
+                "reset points by \n\n" +
+                "$ guiscrcpy --mapper --mapper-reset\n"
             )
 
     @staticmethod

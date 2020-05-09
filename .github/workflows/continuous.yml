@@ -4,11 +4,13 @@ on:
   push:
     branches: 
       - 'master'
-      - 'beta-**'
     paths:
       - 'guiscrcpy/**'
       - '.github/workflows/continuous.yml'
-
+    pull-requests:
+      paths:
+      - 'guiscrcpy/**'
+      - '.github/workflows/continuous.yml'
 
 jobs:
   Wheel:

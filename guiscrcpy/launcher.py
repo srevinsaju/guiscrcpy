@@ -189,6 +189,11 @@ parser.add_argument(
     help="Reset guiscrcpy's mapper configuration file"
 )
 parser.add_argument(
+    '--mapper-delay',
+    action='store_true',
+    help="Sets the delay before connecting and configuring mapper files"
+)
+parser.add_argument(
     '-w',
     '--disable-swipe',
     action='store_true',

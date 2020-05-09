@@ -169,8 +169,8 @@ parser.add_argument(
 parser.add_argument(
     '--start-scrcpy-device-id',
     default='',
-    help="Provide the device id in the case of multiple devices. "
-         "(applicable only when '-s' or '--start' is passed)"
+    help="Provide the device id in the case of multiple devices."
+         " (applicable only when '-s' or '--start' is passed)"
 )
 parser.add_argument(
     '-r',

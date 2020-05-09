@@ -24,8 +24,6 @@ import os
 import platform
 import sys
 import time
-from subprocess import PIPE
-from subprocess import Popen
 
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.QtCore import Qt
@@ -66,7 +64,8 @@ parser.add_argument('--mapper-reset', action="store_true",
 parser.add_argument('--mapper-device-id', default='',
                     help="Sets the device-id for mapper to configure "
                          "(optional, needed for multiple devices)"
-)
+                    )
+
 args = parser.parse_args()
 
 if args.mapper_device_id:
@@ -206,8 +205,7 @@ class MapperUI(QtWidgets.QWidget):
 
         except BaseException as e:
             print(
-                "Special key entered, Use normal characters only: {}"
-                .format(e)
+                "Special key entered, Use normal characters only: {}".format(e)
             )
 
     def eventFilter(self, source, event):

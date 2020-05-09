@@ -271,15 +271,18 @@ if args.version:
     # Show version and exit lol
     import inspect
     from PyQt5 import Qt
-    _pyqt5_version = ['%s = %s' % (k, v) for k, v in vars(Qt).items() if
-            k.lower().find('version') >= 0 and not inspect.isbuiltin(v)]
+    _pyqt5_version = [
+        '%s = %s' % (k, v) for k, v in
+        vars(Qt).items() if
+        k.lower().find('version') >= 0 and not inspect.isbuiltin(v)
+    ]
     print()
     print("== PyQt5 Version ==")
     print('\n'.join(sorted(_pyqt5_version)))
     print()
     if environment.system() == "Linux":
         print("== CairoSVG version ==")
-        from cairosvg import VERSION
+        from cairosvg import VERSION  # noqa:
         print("CairoSVG == {}".format(VERSION))
         print()
 
@@ -320,8 +323,9 @@ if args.start:
 
 if args.mapper_reset:
     # Reset the mapper configuration if mapper is called.
-    mapper_cfg_path = os.path.join(cfgmgr.get_cfgpath(),
-                                  'guiscrcpy.mapper.json')
+    mapper_cfg_path = os.path.join(
+        cfgmgr.get_cfgpath(), 'guiscrcpy.mapper.json'
+    )
     # A ternary version of removing a file if it exists
     # https://stackoverflow.com/questions/10840533/
     # most-pythonic-way-to-delete-a-file-which-may-not-exist

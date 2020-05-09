@@ -8,7 +8,7 @@ import sys
 import platform
 parser = argparse.ArgumentParser()
 parser.add_argument('-r', '--reset', action="store_true",
-                    help="Remove prefernces")
+                    help="Remove preferences")
 args = parser.parse_args()
 if platform.system() == 'Windows':
     config_path = os.path.expanduser("~/AppData/Local/guiscrcpy/")

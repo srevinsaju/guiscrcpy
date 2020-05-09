@@ -179,6 +179,11 @@ parser.add_argument(
     help="Reset the guiscrcpy configuration files to default"
 )
 parser.add_argument(
+    '--mapper',
+    action='store_true',
+    help="Interface guiscrcpy's mapper to guiscrcpy main executable"
+)
+parser.add_argument(
     '-w',
     '--disable-swipe',
     action='store_true',
@@ -700,9 +705,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         for index in range(self.devices_view.count()):
             paired_devices.append(self.devices_view.item(index))
 
-        devices = adb.devices_detailed(adb.path)
-        log(devices)
-        for i in devices:
+        __devices = adb.devices_detailed(adb.path)
+        log(__devices)
+        for i in __devices:
             device_is_wifi = \
                 i['identifier'].count('.') >= 3 and (':' in i['identifier'])
 
@@ -827,7 +832,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 continue
             # If and only if the device doesn't exist; add it
             self.devices_view.addItem(devices_view_list_item)
-        return devices
+        return __devices
 
     def remove_device_device_view(self, identifier: str = '', statuses=()):
         """

@@ -282,8 +282,8 @@ if args.version:
     print()
     if environment.system() == "Linux":
         print("== CairoSVG version ==")
-        from cairosvg import VERSION  # noqa:
-        print("CairoSVG == {}".format(VERSION))
+        from cairosvg import VERSION as CAIRO_VERSION # noqa:
+        print("CairoSVG == {}".format(CAIRO_VERSION))
         print()
 
     sys.exit(0)

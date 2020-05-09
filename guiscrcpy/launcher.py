@@ -1244,8 +1244,11 @@ def bootstrap0():
     )  # use HIGH DPI icons
     app = QtWidgets.QApplication(sys.argv)
 
-    app.setStyle('Breeze')
-    app.setStyleSheet(dark_stylesheet())
+    app.setStyle(args.theme)
+
+    if args.theme == 'Breeze':
+        # The Qdarkstylesheet is based on Breeze, lets load them on default
+        app.setStyleSheet(dark_stylesheet())
 
     splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
     splash = QtWidgets.QSplashScreen(splash_pix)

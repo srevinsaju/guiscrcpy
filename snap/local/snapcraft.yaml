@@ -1,4 +1,4 @@
-summary: An opensource GUI for android screen mirroring# 79 char long summary
+summary: An opensource GUI for android screen mirroring
 description: |
   A full fledged GUI integration for the award winning open source scrcpy, for 
   Android Screen mirroring
@@ -38,20 +38,6 @@ apps:
     - bin/desktop-launch
     - bin/guiscrcpy
     desktop: share/applications/guiscrcpy.desktop
-
-  guiscrcpy-mapper:
-    command: bin/guiscrcpy-mapper
-    environment: 
-      PATH: $SNAP/lib:$SNAP/usr/lib:$SNAP/bin:$SNAP/usr/bin:$SNAP/usr/local/bin:$PATH
-      GUISCRCPY_SCRCPY: "$SNAP/usr/local/bin/scrcpy"
-      GUISCRCPY_ADB: "$SNAP/usr/bin/adb"
-      SCRCPY_SERVER_PATH: "$SNAP/usr/local/share/scrcpy/scrcpy-server"
-      GUISCRCPY_SNAP: "TRUE"
-    command-chain: &command-chain-common
-    - bin/debian-multiarch-triplet-provider-launch
-    - bin/classic-launch
-    - bin/desktop-launch
-    - bin/guiscrcpy
 
 parts:
 

@@ -20,4 +20,4 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-VERSION = '3.8.3'
+VERSION = '3.8.3.post8.dev'

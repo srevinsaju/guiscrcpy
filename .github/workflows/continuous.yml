@@ -2,11 +2,11 @@
 name: Continuous
 on: 
   push:
-    branches: 
+    branch:
       - 'master'
-    paths:
-      - 'guiscrcpy/**'
-      - '.github/workflows/continuous.yml'
+      paths:
+        - 'guiscrcpy/**'
+        - '.github/workflows/continuous.yml'
     pull-requests:
       paths:
       - 'guiscrcpy/**'

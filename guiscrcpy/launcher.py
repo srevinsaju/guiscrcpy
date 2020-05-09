@@ -268,6 +268,21 @@ logger.debug("Received flag {}".format(args.start))
 Header(VERSION)
 
 if args.version:
+    # Show version and exit lol
+    import inspect
+    from PyQt5 import Qt
+    _pyqt5_version = ['%s = %s' % (k, v) for k, v in vars(Qt).items() if
+            k.lower().find('version') >= 0 and not inspect.isbuiltin(v)]
+    print()
+    print("== PyQt5 Version ==")
+    print('\n'.join(sorted(_pyqt5_version)))
+    print()
+    if environment.system() == "Linux":
+        print("== CairoSVG version ==")
+        from cairosvg import VERSION
+        print("CairoSVG == {}".format(VERSION))
+        print()
+
     sys.exit(0)
 
 if args.reset:

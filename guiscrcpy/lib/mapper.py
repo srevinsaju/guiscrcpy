@@ -58,13 +58,23 @@ print("Device : OK!")
 cfgpath = cfgmgr.cfgpath
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-t', '--delay', default=10,
+parser.add_argument('--mapper-delay', default=10,
                     help="Set time to delay before screen is captured")
-parser.add_argument('-r', '--reset', action="store_true",
-                    help="Remove prefernces")
+parser.add_argument('--mapper-reset', action="store_true",
+                    help="Remove mapper configuration file and stat from "
+                         "scratch")
+parser.add_argument('--mapper-device-id', default='',
+                    help="Sets the device-id for mapper to configure "
+                         "(optional, needed for multiple devices)"
+)
 args = parser.parse_args()
 
-dimensions = adb.get_dimensions(adb.path)
+if args.mapper_device_id:
+    mapper_device_id = args.mapper_device_id
+else:
+    mapper_device_id = None
+
+dimensions = adb.get_dimensions(adb.path, device_id=mapper_device_id)
 
 
 class MapperUI(QtWidgets.QWidget):
@@ -113,18 +123,16 @@ class MapperUI(QtWidgets.QWidget):
         self.horizontalLayout.addWidget(self.label0)
         self.pushButton.pressed.connect(self.keyreg)
         # -- pullscreen shot
-        a = Popen(
-            "adb shell screencap -p /sdcard/scr.png",
-            shell=True,
-            stdout=PIPE,
-        )
+        a = adb.command(adb.path, 'shell screencap -p /sdcard/scr.png',
+                        device_id=mapper_device_id)
         time.sleep(2)
-        b = Popen("adb pull /sdcard/scr.png " + cfgpath +
-                  "scr.png", shell=True, stdout=PIPE)
+        b = adb.command(adb.path, 'pull /sdcard/scr.png {}'.format(cfgpath),
+                        device_id=mapper_device_id)
         time.sleep(1)
         print(b.stdout.read().decode('utf-8'))
         print(a.stdout.read().decode('utf-8'))
-        Popen("adb shell rm /sdcard/scr.png", shell=True, stdout=PIPE)
+        adb.command(adb.path, "shell rm /sdcard/scr.png",
+                    device_id=mapper_device_id)
         self.label.setSizePolicy(
             QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored
         )
@@ -250,10 +258,11 @@ def listen_keypress(key_a):
                 print(key.char)
                 print("running cmd")
                 finalpos0 = key_a[key.char]
-                cm = "adb shell input tap " + \
-                    str(finalpos0[0]) + " " + str(finalpos0[1])
-                print(cm)
-                c = Popen(cm, shell=True, stdout=PIPE)
+                c = adb.command(
+                    adb.path,
+                    'shell input tap {} {}'.format(*finalpos0),
+                    device_id=mapper_device_id
+                )
                 print(c.stdout.read().decode('utf-8'))
                 print("COMPLETED")
         except AttributeError as e:

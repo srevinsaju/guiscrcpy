@@ -217,6 +217,12 @@ parser.add_argument(
     help="Disable scrcpy processes (For debugging only)"
 )
 parser.add_argument(
+    '--theme',
+    default='Breeze',
+    help="Set the default theme (based on PyQt5 themes - Fusion, Breeze, "
+         "Windows) (stored in configuration, override by --theme-no-cfg)"
+)
+parser.add_argument(
     '-f',
     '--force-window-frame',
     action='store_true',

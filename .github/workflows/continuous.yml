@@ -1,16 +1,7 @@
 
 name: Continuous
 on: 
-  push:
-    branch:
-      - 'master'
-      paths:
-        - 'guiscrcpy/**'
-        - '.github/workflows/continuous.yml'
-    pull-requests:
-      paths:
-      - 'guiscrcpy/**'
-      - '.github/workflows/continuous.yml'
+  - push
 
 jobs:
   Wheel:

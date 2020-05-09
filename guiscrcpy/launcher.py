@@ -318,6 +318,24 @@ if args.start:
         scrcpy_args += " --turn-screen-off "
     scrcpy.start(scrcpy.path, scrcpy_args)
 
+if args.mapper_reset:
+    # Reset the mapper configuration if mapper is called.
+    mapper_cfg_path = os.path.join(cfgmgr.get_cfgpath(),
+                                  'guiscrcpy.mapper.json')
+    # A ternary version of removing a file if it exists
+    # https://stackoverflow.com/questions/10840533/
+    # most-pythonic-way-to-delete-a-file-which-may-not-exist
+    os.remove(mapper_cfg_path) if os.path.exists(mapper_cfg_path) else None
+    print("guiscrcpy mapper configuration file has been removed.")
+    sys.exit(0)
+
+if args.mapper:
+    from guiscrcpy.lib import mapper
+    # Initialize the mapper if it is called.
+    print('Initializing guiscrcpy mapper v3.5-')
+    mapper.file_check()
+    sys.exit(0)
+
 logger.debug("Importing modules...")
 
 

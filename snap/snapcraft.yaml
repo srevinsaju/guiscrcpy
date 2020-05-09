@@ -1,5 +1,5 @@
 name: guiscrcpy
-version: 3.8.3.post8.dev
+version: 3.8.3.post9.dev
 summary: An opensource GUI for android screen mirroring
 description: |
   A full fledged GUI integration for the award winning open source scrcpy, for 
@@ -124,11 +124,6 @@ parts:
     plugin: python
     python-version: python3
     source: .
-    LANG: C.UTF-8
-    LC_ALL: C.UTF-8
-    LC_CTYPE: C.UTF-8
-    LD_PRELOAD: $SNAP/bin/semwraplib.so
-
 
 plugs:
   adb-support:

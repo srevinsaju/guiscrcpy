@@ -436,11 +436,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         try:
             if config['extra']:
                 self.flaglineedit.setText(config['extra'])
-            else:
-                pass
         except Exception as err:
             logger.debug(f"Exception: flaglineedit.text(config[extra]) {err}")
-            pass
 
         # set swipe instance, bottom instance and
         # side instance as enabled by default
@@ -636,7 +633,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 break
         else:
             aend = None
-            pass
+
         sys_args_desktop = sys.argv[:aend]
 
         # check if its a python file
@@ -932,12 +929,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
     def __slider_change_cb(self):
         config['dimension'] = int(self.dimensionSlider.value())
         self.dimensionText.setText(str(config['dimension']) + "px")
-        pass
 
     def __dial_change_cb(self):
         config['bitrate'] = int(self.dial.value())
         self.bitrateText.setText(str(config['bitrate']) + "KB/s")
-        pass
 
     def progress(self, val):
         self.progressBar.setValue(val)
@@ -1018,7 +1013,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # edit configuration files to update dimension key
         if config['dimension'] is None:
             self.options = " "
-            pass
         elif config['dimension'] is not None:
             self.options = " -m " + str(config['dimension'])
         else:
@@ -1246,7 +1240,8 @@ def bootstrap0():
     # enable High DPI scaling
     QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(
-        QtCore.Qt.AA_UseHighDpiPixmaps, True)  # use HIGH DPI icons
+        QtCore.Qt.AA_UseHighDpiPixmaps, True
+    )  # use HIGH DPI icons
     app = QtWidgets.QApplication(sys.argv)
 
     app.setStyle('Breeze')

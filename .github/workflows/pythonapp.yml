@@ -2,6 +2,8 @@ name: Linux
 
 on: 
   push:
+    branches:
+      - 'master'
     paths:
       - 'guiscrcpy/**'
       - '.github/workflows/pythonapp.yml'
@@ -12,7 +14,7 @@ on:
 
 
 jobs:
-  build:
+  quality:
 
     runs-on: ubuntu-latest
 

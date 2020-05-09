@@ -53,7 +53,7 @@ data_files = [
 
 setup(
     name='guiscrcpy',
-    version='3.8.5',
+    version='3.8.5.post13.dev',
     description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -68,7 +68,7 @@ setup(
     package_data={'guiscrcpy': ['*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*', 'theme/*', 'ux/*', 'network/*', 'settings/*', 'install/*', 'platform/windows_tools/*', 'ui/icons/*', 'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*']},  # noqa: E501
     include_package_data=True,
     install_requires=requirements,
-    scripts=["scripts/guiscrcpy", "scripts/guiscrcpy-mapper"],
+    scripts=["scripts/guiscrcpy"],
     entry_points={'console_scripts': ['guiscrcpy = guiscrcpy.launcher:bootstrap']},  # noqa: E501
     classifiers=[
         'Operating System :: OS Independent',

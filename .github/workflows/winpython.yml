@@ -2,6 +2,8 @@ name: Windows
 
 on: 
   push:
+    branches:
+      - 'master'
     paths:
       - 'guiscrcpy/**'
       - '.github/workflows/winpython.yml'
@@ -12,7 +14,7 @@ on:
 
 
 jobs:
-  build:
+  quality:
 
     runs-on: windows-latest
 

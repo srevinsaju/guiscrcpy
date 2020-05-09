@@ -172,7 +172,7 @@ setup(
     package_data={package_data},  # noqa: E501
     include_package_data=True,
     install_requires=requirements,
-    scripts=["scripts/guiscrcpy", "scripts/guiscrcpy-mapper"],
+    scripts=["scripts/guiscrcpy"],
     entry_points={entry_points},  # noqa: E501
     classifiers=[
         'Operating System :: OS Independent',

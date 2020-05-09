@@ -169,8 +169,8 @@ parser.add_argument(
 parser.add_argument(
     '--start-scrcpy-device-id',
     default='',
-    help="Provide the device id in the case of multiple devices. "
-         "(applicable only when '-s' or '--start' is passed)"
+    help="Provide the device id in the case of multiple devices."
+         " (applicable only when '-s' or '--start' is passed)"
 )
 parser.add_argument(
     '-r',
@@ -182,6 +182,22 @@ parser.add_argument(
     '--mapper',
     action='store_true',
     help="Interface guiscrcpy's mapper to guiscrcpy main executable"
+)
+parser.add_argument(
+    '--mapper-reset',
+    action='store_true',
+    help="Reset guiscrcpy's mapper configuration file"
+)
+parser.add_argument(
+    '--mapper-delay',
+    action='store_true',
+    help="Sets the delay before connecting and configuring mapper files"
+)
+parser.add_argument(
+    '--mapper-device-id',
+    default='',
+    help="Sets the device-id for mapper to configure (optional, "
+         "needed for multiple devices)"
 )
 parser.add_argument(
     '-w',
@@ -252,15 +268,35 @@ logger.debug("Received flag {}".format(args.start))
 Header(VERSION)
 
 if args.version:
+    # Show version and exit lol
+    import inspect
+    from PyQt5 import Qt
+    _pyqt5_version = [
+        '%s = %s' % (k, v) for k, v in
+        vars(Qt).items() if
+        k.lower().find('version') >= 0 and not inspect.isbuiltin(v)
+    ]
+    print()
+    print("== PyQt5 Version ==")
+    print('\n'.join(sorted(_pyqt5_version)))
+    print()
+    if environment.system() == "Linux":
+        print("== CairoSVG version ==")
+        from cairosvg import VERSION as CAIRO_VERSION # noqa:
+        print("CairoSVG == {}".format(CAIRO_VERSION))
+        print()
+
     sys.exit(0)
 
 if args.reset:
+    # Resets the guiscrcpy.json configuration file
     cfgmgr.reset_config()
     print("Configuration files resetted successfully.")
 
 logger.debug("Current Working Directory {}".format(os.getcwd()))
 
 if args.connect:
+    # Connects to a device with a valid IP:PORT address
     adb_cnx_output = adb.command(adb.path, 'connect {}'.format(args.connect))
     print(
         adb_cnx_output.stdout.read().decode(),
@@ -268,6 +304,7 @@ if args.connect:
     )
 
 if args.start:
+    # Starts scrcpy before calling guiscrcpy UI with limited configuration
     devices = adb.devices_detailed(adb.path)
     logger.debug("RUNNING SCRCPY DIRECTLY")
     scrcpy_args = ""
@@ -283,6 +320,32 @@ if args.start:
     if config['dispRO']:
         scrcpy_args += " --turn-screen-off "
     scrcpy.start(scrcpy.path, scrcpy_args)
+
+if args.mapper_reset:
+    # Reset the mapper configuration if mapper is called.
+    mapper_cfg_path = os.path.join(
+        cfgmgr.get_cfgpath(), 'guiscrcpy.mapper.json'
+    )
+    # A ternary version of removing a file if it exists
+    # https://stackoverflow.com/questions/10840533/
+    # most-pythonic-way-to-delete-a-file-which-may-not-exist
+    mapper_configuration_file_exists = os.remove(mapper_cfg_path) if \
+        os.path.exists(
+        mapper_cfg_path) else None
+    if mapper_configuration_file_exists:
+        print("guiscrcpy mapper configuration file has been removed.")
+        print("Removed {}".format(mapper_configuration_file_exists))
+        sys.exit(0)
+    else:
+        print("guiscrcpy mapper configuration is not created yet.")
+        sys.exit(1)
+
+if args.mapper:
+    from guiscrcpy.lib import mapper
+    # Initialize the mapper if it is called.
+    print('Initializing guiscrcpy mapper v3.5-')
+    mapper.file_check()
+    sys.exit(0)
 
 logger.debug("Importing modules...")
 
@@ -440,10 +503,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             mapper.file_check()
         else:
             logger.warning(
-                "guiscrcpy ~ mapper is not initialized. "
-                "Initialize by running" +
-                "$ guiscrcpy-mapper" + "reset points by" +
-                "$ guiscrcpy-mapper -r"
+                "guiscrcpy ~ mapper is not initialized. \n"
+                "Initialize by running \n\n"
+                "$ guiscrcpy --mapper \n\n"
+                "reset points by \n\n" +
+                "$ guiscrcpy --mapper --mapper-reset\n"
             )
 
     @staticmethod

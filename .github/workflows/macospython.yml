@@ -2,6 +2,8 @@ name: Mac OS
 
 on: 
   push:
+    branches:
+      - 'master'
     paths:
       - 'guiscrcpy/**'
       - '.github/workflows/macospython.yml'
@@ -12,7 +14,7 @@ on:
 
 
 jobs:
-  build:
+  quality:
 
     runs-on: macos-latest
 

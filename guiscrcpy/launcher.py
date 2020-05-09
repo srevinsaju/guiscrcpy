@@ -194,6 +194,12 @@ parser.add_argument(
     help="Sets the delay before connecting and configuring mapper files"
 )
 parser.add_argument(
+    '--mapper-device-id',
+    default='',
+    help="Sets the device-id for mapper to configure (optional, "
+         "needed for multiple devices)"
+)
+parser.add_argument(
     '-w',
     '--disable-swipe',
     action='store_true',

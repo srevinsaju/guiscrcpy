@@ -262,13 +262,6 @@ else:
     logging_priority = 30
 logger = logging.Logger('guiscrcpy', logging_priority)
 
-# try using pynput, if exception handling not done here, it might fail in CI
-try:
-    from pynput import keyboard
-except Exception as e:
-    logger.warning("Running from tty, pass. E:{}".format(e))
-    keyboard = None
-
 logger.debug("Received flag {}".format(args.start))
 
 Header(VERSION)

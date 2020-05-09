@@ -111,12 +111,14 @@ class adb:
                 out_decoded = out.split(':')[1].strip()
                 dimension_values = out_decoded.split('x')
                 return dimension_values
-        else:
-            logging.error(
-                "AndroidDeviceError: adb shell wm size did not return "
-                "'Physical Size' or 'Override Size'"
-            )
-            return False
+
+        # As the for loop did not find any device; and hence we have reached
+        # this line. Announce to the user regarding the same
+        logging.error(
+            "AndroidDeviceError: adb shell wm size did not return "
+            "'Physical Size' or 'Override Size'"
+        )
+        return False
 
     @staticmethod
     def shell(path, command, device_id=None):

@@ -120,7 +120,7 @@ class adb:
             print("E: adb falied; timeout exceeded 10s, killing and "
                   "respawining adb")
             adb.command(path, "kill-server")
-            if type(device_id) is str and device_id.count('.') >= 3:
+            if isinstance(device_id, str) and device_id.count('.') >= 3:
                 adb.command(adb.path, "connect {}".format(device_id))
             shell_adb = _get_dimension_raw_noexcept(
                 path=path, device_id=device_id

@@ -31,7 +31,9 @@
 
 <img src="img/mainwindow.png" alt="image-20200508151737658" style="zoom:67%;" />
 
-The GUI is built with the help of `PyQt5`, It includes all the important command line functions that `scrcpy` can support. Along with the checkboxes on the main sceen; there is also additional settings in the settings menu
+> The user interface may vary from version to version
+
+The GUI is built with the help of `PyQt5`, It includes all the important command line functions that `scrcpy` can support. Along with the *checkboxes* on the main *sceen*; there is also additional settings in the settings menu
 
 <img src="img/settings.png" alt="image-20200508152433666" style="zoom:67%;" />
 
@@ -65,4 +67,25 @@ One of the important features `guiscrcpy` v3.7+ includes is multiple device supp
 
 [![guiscrcpy multi device](https://user-images.githubusercontent.com/48695438/79900656-3f56f880-8417-11ea-9e22-4bcf136b433e.png)](https://github.com/srevinsaju/guiscrcpy/releases/tag/3.7)
 
-You can notice that eac
+You can notice that each of the panels are identified by a unique color represented by the device salted hash of your identifier. It might be interesting to note that; a single device may be identified by two colors if its connected over two tunnels, example USB and TCP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

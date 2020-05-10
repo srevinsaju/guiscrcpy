@@ -28,9 +28,9 @@ some more features to be included, and paticularly ...
 
 [![Become a Patron](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/srevinsaju?fan_landing=true)
 
+![image of guiscrcpy](screen39.png)
 
-
-![image of guiscrcpy](https://raw.githubusercontent.com/srevinsaju/guiscrcpy-docs/master/docs/screen3.png)
+![Live example of guiscrcpy](https://raw.githubusercontent.com/guiscrcpy/guiscrcpy.github.io/master/img/guiscrcpy.gif)
 
 guiscrcpy is a multiplatform, ready-to-use GUI layer for Android to PC screen mirroring written in the advancing programming language python3 for the most award winning open-source android screen mirroring system -- `scrcpy` located on `https://github.com/genymobile/scrcpy/` by [@rom1v](https://github.com/rom1v)
 
@@ -53,7 +53,7 @@ These are the common methods of installation. To see more interesting ways, chec
 ## Table of Contents
 
 1. [Installation](docs/INSTALL.md) (detailed)
-2. [Features](#Features)
+2. [Features](docs/FEATURES.md)
 3. [Configuration files](docs/CONFIGURATION.md)
 4. [FAQ](docs/FAQ.md)
 

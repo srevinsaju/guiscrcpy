@@ -464,10 +464,15 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.refreshdevices.clicked.connect(
             self.scan_devices_update_list_view
         )
+        self.restart_adb_server.connect(self.restart_adb_server_guiscrcpy)
         self.devices_view.itemClicked.connect(self.more_options_device_view)
         self.devices_view.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.scan_config_devices_update_list_view()
         self.refresh_devices()
+
+    @staticmethod
+    def restart_adb_server_guiscrcpy():
+        adb.kill_adb_server(adb.path)
 
     def refresh_devices(self):
         """

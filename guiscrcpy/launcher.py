@@ -1098,7 +1098,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         progress = self.progress(progress)
         always_on_top = \
             config.get('panels_always_on_top', False) or \
-            args.panels_not_always_on_top
+            not args.panels_not_always_on_top
         # ====================================================================
         # 12: Init side_panel if necessary
         if self.check_side_panel.isChecked():

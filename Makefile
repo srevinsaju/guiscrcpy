@@ -41,6 +41,8 @@ uic:
 	echo '"""' >> guiscrcpy/theme/desktop_shortcut.py
 	echo '    return a' >> guiscrcpy/theme/desktop_shortcut.py
 	sed -i 's/#ffdc00/{}/g' guiscrcpy/theme/desktop_shortcut.py
+	cp ./README.md docs/README.md
+	sed -i 's/docs\// /g' docs/README.md
 	
 install: 
 	$(PYTHON) setup.py install --user

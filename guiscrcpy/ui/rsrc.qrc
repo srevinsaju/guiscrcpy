@@ -7,6 +7,10 @@
   <qresource prefix="icons">
     <file>icons/gear.svg</file>
     <file>icons/android.svg</file>
+    <file>icons/guiscrcpy_bottom_panel.svg</file>
+    <file>icons/guiscrcpy_side_panel.svg</file>
+    <file>icons/guiscrcpy_swipe_panel.svg</file>
+    <file>icons/padlock.svg</file>
     <file>icons/portrait_mobile_white_wifi.svg</file>
     <file>icons/portrait_mobile_white_usb.svg</file>
     <file>icons/portrait_mobile_white.svg</file>

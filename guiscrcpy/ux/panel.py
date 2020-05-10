@@ -28,12 +28,14 @@ from guiscrcpy.ui.panel import Ui_HorizontalPanel
 
 class Panel(QMainWindow, Ui_HorizontalPanel):
     # there was a Dialog in the bracket
-    def __init__(self, parent=None, ux_mapper=None, frame=False):
+    def __init__(self, parent=None, ux_mapper=None, frame=False,
+                 always_on_top=True):
         """
         The bottom panel subwindow class for guiscrcpy
         :param parent: The caller of the function
         :param ux_mapper: The UX Mapper toolkit
         :param frame: Boolean (Frame window / Frameless Window)
+        :param always_on_top: Boolean (always on top)
         """
         # noinspection PyArgumentList
         QMainWindow.__init__(self)
@@ -43,10 +45,12 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
         self.setupUi(self)
         self.parent = parent
         self.oldPos = self.pos()
+        __flags = QtCore.Qt.Window
         if not frame:
-            self.setWindowFlags(
-                QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
-            )
+            __flags |= QtCore.Qt.FramelessWindowHint
+        if always_on_top:
+            __flags |= QtCore.Qt.WindowStaysOnTopHint
+        self.setWindowFlags(__flags)
         if ux_mapper:
             self.ux = ux_mapper
         else:

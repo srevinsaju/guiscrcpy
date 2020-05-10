@@ -50,7 +50,8 @@ class InterfaceConfig:
             'dispRO': False,
             'extra': "",
             'cmx': "",
-            'device': {}
+            'device': {},
+            'theme': 'Breeze'
         }
         self.json_file = 'guiscrcpy.json'
         self.check_file()

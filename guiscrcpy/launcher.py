@@ -217,6 +217,17 @@ parser.add_argument(
     help="Disable scrcpy processes (For debugging only)"
 )
 parser.add_argument(
+    '--panels-not-always-on-top',
+    action='store_true',
+    help="Remove the always on top default while running guiscrcpy"
+)
+parser.add_argument(
+    '--theme',
+    default='Breeze',
+    help="Set the default theme (based on PyQt5 themes - Fusion, Breeze, "
+         "Windows) (stored in configuration, override by --theme-no-cfg)"
+)
+parser.add_argument(
     '-f',
     '--force-window-frame',
     action='store_true',
@@ -255,13 +266,6 @@ if args.debug:
 else:
     logging_priority = 30
 logger = logging.Logger('guiscrcpy', logging_priority)
-
-# try using pynput, if exception handling not done here, it might fail in CI
-try:
-    from pynput import keyboard
-except Exception as e:
-    logger.warning("Running from tty, pass. E:{}".format(e))
-    keyboard = None
 
 logger.debug("Received flag {}".format(args.start))
 
@@ -437,11 +441,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         try:
             if config['extra']:
                 self.flaglineedit.setText(config['extra'])
-            else:
-                pass
         except Exception as err:
             logger.debug(f"Exception: flaglineedit.text(config[extra]) {err}")
-            pass
 
         # set swipe instance, bottom instance and
         # side instance as enabled by default
@@ -463,10 +464,15 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.refreshdevices.clicked.connect(
             self.scan_devices_update_list_view
         )
+        self.restart_adb_server.connect(self.restart_adb_server_guiscrcpy)
         self.devices_view.itemClicked.connect(self.more_options_device_view)
         self.devices_view.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.scan_config_devices_update_list_view()
         self.refresh_devices()
+
+    @staticmethod
+    def restart_adb_server_guiscrcpy():
+        adb.kill_adb_server(adb.path)
 
     def refresh_devices(self):
         """
@@ -637,7 +643,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 break
         else:
             aend = None
-            pass
+
         sys_args_desktop = sys.argv[:aend]
 
         # check if its a python file
@@ -933,12 +939,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
     def __slider_change_cb(self):
         config['dimension'] = int(self.dimensionSlider.value())
         self.dimensionText.setText(str(config['dimension']) + "px")
-        pass
 
     def __dial_change_cb(self):
         config['bitrate'] = int(self.dial.value())
         self.bitrateText.setText(str(config['bitrate']) + "KB/s")
-        pass
 
     def progress(self, val):
         self.progressBar.setValue(val)
@@ -1019,7 +1023,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # edit configuration files to update dimension key
         if config['dimension'] is None:
             self.options = " "
-            pass
         elif config['dimension'] is not None:
             self.options = " -m " + str(config['dimension'])
         else:
@@ -1098,7 +1101,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # 11: Initialize User Experience Mapper
         ux = UXMapper(device_id=device_id)
         progress = self.progress(progress)
-
+        always_on_top = \
+            config.get('panels_always_on_top', False) or \
+            not args.panels_not_always_on_top
         # ====================================================================
         # 12: Init side_panel if necessary
         if self.check_side_panel.isChecked():
@@ -1106,11 +1111,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             side_instance = InterfaceToolkit(
                 parent=self,
                 ux_mapper=ux,
-                frame=args.force_window_frame
+                frame=args.force_window_frame,
+                always_on_top=always_on_top
             )
             for instance in self.child_windows:
                 if instance.ux.get_sha() == side_instance.ux.get_sha() and \
-                        instance.name == side_instance.name:
+                        instance.name == side_instance.name and \
+                        not instance.isHidden():
                     break
             else:
                 side_instance.init()
@@ -1126,11 +1133,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             panel_instance = Panel(
                 parent=self,
                 ux_mapper=ux,
-                frame=args.force_window_frame
+                frame=args.force_window_frame,
+                always_on_top=always_on_top
             )
             for instance in self.child_windows:
                 if instance.ux.get_sha() == panel_instance.ux.get_sha() and \
-                        instance.name == panel_instance.name:
+                        instance.name == panel_instance.name and \
+                        not instance.isHidden():
                     break
             else:
                 panel_instance.init()
@@ -1145,11 +1154,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             config['panels']['swipe'] = True
             swipe_instance = SwipeUX(
                 ux_wrapper=ux,
-                frame=args.force_window_frame
+                frame=args.force_window_frame,
+                always_on_top=always_on_top
             )  # Load swipe UI
             for instance in self.child_windows:
                 if instance.ux.get_sha() == swipe_instance.ux.get_sha() and \
-                        instance.name == swipe_instance.name:
+                        instance.name == swipe_instance.name and \
+                        not instance.isHidden():
                     break
             else:
                 swipe_instance.init()
@@ -1247,11 +1258,15 @@ def bootstrap0():
     # enable High DPI scaling
     QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(
-        QtCore.Qt.AA_UseHighDpiPixmaps, True)  # use HIGH DPI icons
+        QtCore.Qt.AA_UseHighDpiPixmaps, True
+    )  # use HIGH DPI icons
     app = QtWidgets.QApplication(sys.argv)
 
-    app.setStyle('Breeze')
-    app.setStyleSheet(dark_stylesheet())
+    app.setStyle(args.theme)
+
+    if args.theme == 'Breeze':
+        # The Qdarkstylesheet is based on Breeze, lets load them on default
+        app.setStyleSheet(dark_stylesheet())
 
     splash_pix = QPixmap(":/res/ui/guiscrcpy-branding.png")
     splash = QtWidgets.QSplashScreen(splash_pix)

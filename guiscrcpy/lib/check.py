@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import logging
-from subprocess import Popen, PIPE, call
+from subprocess import Popen, PIPE, call, TimeoutExpired
 
 from guiscrcpy.lib.utils import decode_process, check_existence, shellify as _
 from guiscrcpy.platform.platform import System
@@ -31,6 +31,17 @@ def get(ls, idx, default=""):
         return ls[idx]
     except IndexError:
         return default
+
+
+def _get_dimension_raw_noexcept(path, device_id=None):
+    if device_id:
+        shell_adb = Popen(
+            _("{} -s {} shell wm size".format(path, device_id)),
+            stdout=PIPE, stderr=PIPE)
+    else:
+        shell_adb = Popen(_("{} shell wm size".format(path)),
+                          stdout=PIPE, stderr=PIPE)
+    return shell_adb
 
 
 class scrcpy:
@@ -96,14 +107,32 @@ class adb:
             )
 
     @staticmethod
+    def kill_adb_server(path):
+        adb.command(path, "kill-server")
+
+    @staticmethod
     def get_dimensions(path, device_id=None):
-        if device_id:
-            shell_adb = Popen(
-                _("{} -s {} shell wm size".format(path, device_id)),
-                stdout=PIPE, stderr=PIPE)
-        else:
-            shell_adb = Popen(_("{} shell wm size".format(path)),
-                              stdout=PIPE, stderr=PIPE)
+        shell_adb = _get_dimension_raw_noexcept(
+            path=path, device_id=device_id
+        )
+        try:
+            if shell_adb.wait(timeout=3) != 0:
+                print("E: Command 'adb shell wm size' exited with {}".format(
+                    shell_adb.returncode))
+                return False
+        except TimeoutExpired:
+            print("E: adb falied; timeout exceeded 10s, killing and "
+                  "respawining adb")
+            adb.kill_adb_server(path)
+            if isinstance(device_id, str) and device_id.count('.') >= 3:
+                adb.command(adb.path, "connect {}".format(device_id))
+            shell_adb = _get_dimension_raw_noexcept(
+                path=path, device_id=device_id
+            )
+            if shell_adb.wait(timeout=8) != 0:
+                print("E: Command 'adb shell wm size' exited with {}".format(
+                    shell_adb.returncode))
+                return False
         raw_dimensions = shell_adb.stdout.read().decode().strip('\n')
         for i in ['Override size', 'Physical size']:
             if i in raw_dimensions:
@@ -111,12 +140,14 @@ class adb:
                 out_decoded = out.split(':')[1].strip()
                 dimension_values = out_decoded.split('x')
                 return dimension_values
-        else:
-            logging.error(
-                "AndroidDeviceError: adb shell wm size did not return "
-                "'Physical Size' or 'Override Size'"
-            )
-            return False
+
+        # As the for loop did not find any device; and hence we have reached
+        # this line. Announce to the user regarding the same
+        logging.error(
+            "AndroidDeviceError: adb shell wm size did not return "
+            "'Physical Size' or 'Override Size'"
+        )
+        return False
 
     @staticmethod
     def shell(path, command, device_id=None):

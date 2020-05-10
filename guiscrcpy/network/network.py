@@ -71,11 +71,18 @@ class NetworkManager:
         base_ip = ip_parts[0] + '.' + ip_parts[1] + '.' + ip_parts[2] + '.'
 
         # prepare the jobs queue
-        jobs = multiprocessing.Queue()
-        results = multiprocessing.Queue()
+        try:
+            jobs = multiprocessing.Queue()
+            results = multiprocessing.Queue()
 
-        pool = [multiprocessing.Process(target=self.pinger, args=(
-                jobs, results)) for _ in range(pool_size)]
+            pool = [multiprocessing.Process(target=self.pinger, args=(
+                    jobs, results)) for _ in range(pool_size)]
+        except PermissionError:
+            print("The current system of packaging of guiscrcpy does not "
+                  "support semaphores. Therefore its not possible to "
+                  "multiprocess ip port scanning. Alternatively use `nmap` "
+                  "or `nutty` to scan your network.")
+            return
 
         for p in pool:
             p.start()

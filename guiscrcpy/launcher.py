@@ -461,7 +461,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.mapnow.clicked.connect(self.bootstrap_mapper)
         self.network_button.clicked.connect(self.network_mgr)
         self.settings_button.clicked.connect(self.settings_mgr)
-        self.devices_view.itemChanged.connect(self.update_rotation_combo_cb)
+        # self.devices_view.itemChanged.connect(self.update_rotation_combo_cb)
+        self.devices_view.itemClicked.connect(self.update_rotation_combo_cb)
         self.refreshdevices.clicked.connect(
             self.scan_devices_update_list_view
         )

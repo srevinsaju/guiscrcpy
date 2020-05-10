@@ -1103,7 +1103,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             )
             for instance in self.child_windows:
                 if instance.ux.get_sha() == side_instance.ux.get_sha() and \
-                        instance.name == side_instance.name:
+                        instance.name == side_instance.name and \
+                        not instance.isHidden():
                     break
             else:
                 side_instance.init()
@@ -1123,7 +1124,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             )
             for instance in self.child_windows:
                 if instance.ux.get_sha() == panel_instance.ux.get_sha() and \
-                        instance.name == panel_instance.name:
+                        instance.name == panel_instance.name and \
+                        not instance.isHidden():
                     break
             else:
                 panel_instance.init()
@@ -1142,7 +1144,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             )  # Load swipe UI
             for instance in self.child_windows:
                 if instance.ux.get_sha() == swipe_instance.ux.get_sha() and \
-                        instance.name == swipe_instance.name:
+                        instance.name == swipe_instance.name and \
+                        not instance.isHidden():
                     break
             else:
                 swipe_instance.init()

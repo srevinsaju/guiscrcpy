@@ -28,7 +28,7 @@ some more features to be included, and paticularly ...
 
 [![Become a Patron](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/srevinsaju?fan_landing=true)
 
-![image of guiscrcpy](screen39.png)
+![image of guiscrcpy](screen39.jpg)
 
 ![Live example of guiscrcpy](https://raw.githubusercontent.com/guiscrcpy/guiscrcpy.github.io/master/img/guiscrcpy.gif)
 

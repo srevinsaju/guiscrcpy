@@ -61,4 +61,8 @@ The bottom panel is useful for devices with hardware buttons and which do not ha
 
 ### Multi-device Support
 
-One of the important features `guiscrcpy` v3.8+ includes is multiple device support. This reduces the hardwork which happens in `scrcpy`to ented the `device serial_id` to connect to a device if multiple devices are found. 
+One of the important features `guiscrcpy` v3.7+ includes is multiple device support. This reduces the hard work which happens in `scrcpy`to enter the `device serial_id` to connect to a device if multiple devices are found. 
+
+[![guiscrcpy multi device](https://user-images.githubusercontent.com/48695438/79900656-3f56f880-8417-11ea-9e22-4bcf136b433e.png)](https://github.com/srevinsaju/guiscrcpy/releases/tag/3.7)
+
+You can notice that eac

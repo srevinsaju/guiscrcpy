@@ -461,6 +461,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.mapnow.clicked.connect(self.bootstrap_mapper)
         self.network_button.clicked.connect(self.network_mgr)
         self.settings_button.clicked.connect(self.settings_mgr)
+        self.devices_view.itemChanged.connect(self.update_rotation_combo_cb)
         self.refreshdevices.clicked.connect(
             self.scan_devices_update_list_view
         )
@@ -488,7 +489,18 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         change in the QListBox
         :return:
         """
-        raise NotImplementedError("Maybe try waiting for me to finish it")
+        if self.devices_view.currentItem():
+            _, device_id = self.current_device_identifier()
+            _rotation = config['device']\
+                .get(device_id, dict()).get(
+                    'rotation',
+                    self.device_rotation.currentIndex()
+            )
+        else:
+            _rotation = config.get(
+                "rotation", self.device_rotation.currentIndex()
+            )
+        self.device_rotation.setCurrentIndex(_rotation)
 
     def settings_mgr(self):
         from guiscrcpy.ux.settings import InterfaceSettings
@@ -997,9 +1009,14 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             return 0
         else:
             if len(values_devices_list) == 1:
+                # Store the current rotation temporarily
+                __selected_rotation = self.device_rotation.currentIndex()
+                log("Rotation Index =", __selected_rotation)
                 self.devices_view.setCurrentIndex(
                     QModelIndex(self.devices_view.model().index(0, 0))
                 )
+                # Restore the selected rotation
+                self.device_rotation.setCurrentIndex(__selected_rotation)
                 try:
                     _, device_id = self.current_device_identifier()
                 except ValueError:

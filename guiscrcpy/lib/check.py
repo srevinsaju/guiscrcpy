@@ -104,7 +104,8 @@ class adb:
         else:
             shell_adb = Popen(_("{} shell wm size".format(path)),
                               stdout=PIPE, stderr=PIPE)
-        if shell_adb.returncode != 0:
+
+        if shell_adb.wait() != 0:
             print("E: Command 'adb shell wm size' exited with {}".format(
                 shell_adb.returncode))
             return False

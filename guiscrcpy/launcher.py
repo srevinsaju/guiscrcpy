@@ -885,11 +885,14 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 str(i['identifier']).encode()
             ).hexdigest()[5:5 + 6]
             devices_view_list_item.setToolTip(
-                "<span style='color: #{color}'>Device</snap>: <b>{d}</b>\n"
-                "Model: {m}\n"
-                "Alias: {a}\n"
-                "Status: {s}\n"
-                "Transport ID: {t}\n"
+                "Device: "
+                "<span style='color: #{inv_color};background-color: #{color}'>"
+                "<b>{d}</b></span>\n"
+                "<br>"
+                "Model: {m}\n<br>"
+                "Alias: {a}\n<br>"
+                "Status: {s}\n<br>"
+                "Transport ID: {t}\n<br>"
                 "Paired: {p}".format(
                     d=i['identifier'],
                     m=i['model'],
@@ -897,7 +900,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                     s=i['status'],
                     t=i['transport_id'],
                     p=paired,
-                    color=__sha
+                    color=__sha,
+                    inv_color=str(hex(0xFFFFFF - int(__sha, 16))[2:])
                 )
             )
 

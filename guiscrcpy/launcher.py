@@ -217,6 +217,11 @@ parser.add_argument(
     help="Disable scrcpy processes (For debugging only)"
 )
 parser.add_argument(
+    '--panels-not-always-on-top',
+    action='store_true',
+    help="Remove the always on top default while running guiscrcpy"
+)
+parser.add_argument(
     '--theme',
     default='Breeze',
     help="Set the default theme (based on PyQt5 themes - Fusion, Breeze, "
@@ -1091,7 +1096,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # 11: Initialize User Experience Mapper
         ux = UXMapper(device_id=device_id)
         progress = self.progress(progress)
-
+        always_on_top = \
+            config.get('panels_always_on_top', False) or \
+            args.panels_not_always_on_top
         # ====================================================================
         # 12: Init side_panel if necessary
         if self.check_side_panel.isChecked():
@@ -1099,7 +1106,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             side_instance = InterfaceToolkit(
                 parent=self,
                 ux_mapper=ux,
-                frame=args.force_window_frame
+                frame=args.force_window_frame,
+                always_on_top=always_on_top
             )
             for instance in self.child_windows:
                 if instance.ux.get_sha() == side_instance.ux.get_sha() and \
@@ -1120,7 +1128,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             panel_instance = Panel(
                 parent=self,
                 ux_mapper=ux,
-                frame=args.force_window_frame
+                frame=args.force_window_frame,
+                always_on_top=always_on_top
             )
             for instance in self.child_windows:
                 if instance.ux.get_sha() == panel_instance.ux.get_sha() and \
@@ -1140,7 +1149,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             config['panels']['swipe'] = True
             swipe_instance = SwipeUX(
                 ux_wrapper=ux,
-                frame=args.force_window_frame
+                frame=args.force_window_frame,
+                always_on_top=always_on_top
             )  # Load swipe UI
             for instance in self.child_windows:
                 if instance.ux.get_sha() == swipe_instance.ux.get_sha() and \

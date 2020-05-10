@@ -28,7 +28,13 @@ from guiscrcpy.lib.toolkit import UXMapper
 
 
 class SwipeUX(QMainWindow):
-    def __init__(self, ux_wrapper=None, frame=False):
+    def __init__(self, ux_wrapper=None, frame=False, always_on_top=True):
+        """
+        Swipe UI
+        :param ux_wrapper: UXMapper type object
+        :param frame: bool
+        :param always_on_top: bool
+        """
         QMainWindow.__init__(self)
         super(SwipeUX, self).__init__()
         self.oldPos = None
@@ -43,10 +49,14 @@ class SwipeUX(QMainWindow):
         hexdigest = self.ux.get_sha()[:6]
 
         self.setObjectName("SwipeUX")
+        __flags = QtCore.Qt.Window
         if not frame:
-            self.setWindowFlags(Qt.FramelessWindowHint)
+            __flags |= QtCore.Qt.FramelessWindowHint
             self.setAttribute(Qt.WA_NoSystemBackground, True)
             self.setAttribute(Qt.WA_TranslucentBackground, True)
+        if always_on_top:
+            __flags |= QtCore.Qt.WindowStaysOnTopHint
+        self.setWindowFlags(__flags)
 
         # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint
         # QtCore.Qt.FramelessWindowHint)

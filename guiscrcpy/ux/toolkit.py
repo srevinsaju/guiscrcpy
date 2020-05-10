@@ -28,12 +28,14 @@ from guiscrcpy.ui.toolkit import Ui_ToolbarPanel
 
 
 class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
-    def __init__(self, ux_mapper=None, parent=None, frame=False):
+    def __init__(self, ux_mapper=None, parent=None, frame=False,
+                 always_on_top=True):
         """
         Side panel toolkit for guiscrcpy main window
         :param ux_mapper:
         :param parent:
         :param frame:
+        :param: always_on_top: bool
         """
         QMainWindow.__init__(self)
         Ui_ToolbarPanel.__init__(self)
@@ -43,10 +45,12 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
         self.parent = parent
         self.oldPos = None
         self.ux = None
+        __flags = QtCore.Qt.Window
         if not frame:
-            self.setWindowFlags(
-                QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.FramelessWindowHint
-            )
+            __flags |= QtCore.Qt.FramelessWindowHint
+        if always_on_top:
+            __flags |= QtCore.Qt.WindowStaysOnTopHint
+        self.setWindowFlags(__flags)
         if ux_mapper:
             self.ux = ux_mapper
         else:

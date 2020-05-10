@@ -753,13 +753,15 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                             status='Disconnected'
                         )
                     )
-
+                __sha = hashlib.sha256(
+                    str(i).encode()).hexdigest()[5:5+6]
                 devices_view_list_item.setToolTip(
-                    "Device: {d}\n"
+                    "<span style='color: #{color}'>Device</snap>: <b>{d}</b>\n"
                     "Status: {s}".format(
                         d=i,
                         s="Disconnected. Right click 'ping' to attempt "
                           "reconnect",
+                        color=__sha
                     )
                 )
                 devices_view_list_item.setFont(QFont('Noto Sans', pointSize=8))
@@ -879,19 +881,27 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                     status=i['status']
                 )
             )
+            __sha = hashlib.sha256(
+                str(i['identifier']).encode()
+            ).hexdigest()[5:5 + 6]
             devices_view_list_item.setToolTip(
-                "Device: {d}\n"
-                "Model: {m}\n"
-                "Alias: {a}\n"
-                "Status: {s}\n"
-                "Transport ID: {t}\n"
+                "Device: "
+                "<span style='color: #{inv_color};background-color: #{color}'>"
+                "<b>{d}</b></span>\n"
+                "<br>"
+                "Model: {m}\n<br>"
+                "Alias: {a}\n<br>"
+                "Status: {s}\n<br>"
+                "Transport ID: {t}\n<br>"
                 "Paired: {p}".format(
                     d=i['identifier'],
                     m=i['model'],
                     a=i['product'],
                     s=i['status'],
                     t=i['transport_id'],
-                    p=paired
+                    p=paired,
+                    color=__sha,
+                    inv_color=str(hex(0xFFFFFF - int(__sha, 16))[2:])
                 )
             )
 

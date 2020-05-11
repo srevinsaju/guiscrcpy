@@ -6,7 +6,7 @@ Installing from [PyPi](https://pypi.org/project/guiscrcpy/) is the most supporte
 
 * Windows 8, 8.1, 10 (64-bit)
 * `manylinux2014` 
-* MacOS Catalina 10.15
+* macOS Catalina 10.15
 
 The restriction of `manylinux2014` are because of the wheels for `PyQt5` are mostly `manylinux2014`. The `PyQt5==5.14` gives `manylinux1` wheels also. It can be preferably downgraded on respective linux distributions for compatibility. The minimum required version of `PyQt5` required to run `guiscrcpy` is `5.14`, if not used, it might create user specific errors like `AttributeErrors` while parsing the User Interface files.
 
@@ -42,14 +42,14 @@ Few points to consider:
 
 ## Snap Store [![guiscrcpy](https://snapcraft.io//guiscrcpy/badge.svg)](https://snapcraft.io/guiscrcpy) [![guiscrcpy](https://snapcraft.io//guiscrcpy/trending.svg?name=0)](https://snapcraft.io/guiscrcpy)
 
-The guiscrcpy [snap](https://snapcraft.io) is a recent implementation of making `guiscrcpy` widely accessible for Ubuntu and its derivatives, and other operating systems with `snap` preinstalled. This increases the security, if you are concerned about them, and while using `guiscrcpy` because, “snap is confined”.
+The guiscrcpy [snap](https://snapcraft.io) is a recent implementation of making `guiscrcpy` widely accessible for Ubuntu and its derivatives, and other operating systems with `snap` pre-installed. This increases the security, if you are concerned about them, and while using `guiscrcpy` because, “snap is confined”.
 
 What makes a snap better than the `PyPI` package is:
 
 * security
-* `guiscrcpy` works out of the box, meaning,`scrcpy` and `adb` are preinstalled on the `guiscrcpy` snap. Thanks to [@sisco311](https://github.com/sisco311/scrcpy-snap)
+* `guiscrcpy` works out of the box, meaning,`scrcpy` and `adb` are pre-installed on the `guiscrcpy` snap. Thanks to [@sisco311](https://github.com/sisco311/scrcpy-snap)
 
-`guiscrcpy` snap is supported for all `AMD64` aka `x86_64` devices which support the [`snappy daemon`](https://snapcraft.io/docs/installing-snapd). MacOS is an exception from the list. Use `brew` to install `snapd`
+`guiscrcpy` snap is supported for all `AMD64` aka `x86_64` devices which support the [`snappy daemon`](https://snapcraft.io/docs/installing-snapd). macOS is an exception from the list. Use `brew` to install `snapd`
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/guiscrcpy)
 
@@ -99,6 +99,10 @@ guiscrcpy-x86_64.AppImage --install
 `guiscrcpy` provides a compiled windows executable, for users who are not interested in installing python and `pip`. Although this is not, suggested (guiscrcpy is converted to the compiled python `*.pyc`), it is useful for end consumers on the Windows system.
 
 Download the windows `.exe` either from releases, or click on the status badge to download the `exe `matching the latest commit.
+
+Along with `guiscrcpy.exe`; You would also want to download windows binary of [scrcpy](https://github.com/Genymobile/scrcpy/releases/latest) and extract the `.zip` file to any directory you wish to. You may add it to path, if you like; but it is completely optional. If `scrcpy` is not found on `PATH`, guiscrcpy will open a file selector to select `scrcpy.exe`, `adb.exe` and `scrcpy-server`. 
+
+Optionally, to get better appearance, you would like to install [Titillium Web](https://fonts.google.com/specimen/Titillium+Web). 
 
 > **NOTE**: Windows Binaries are now available only for 64-bit. If you would like to have 32-bit  binary, please build `guiscrcpy` from source 
 

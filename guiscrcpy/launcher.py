@@ -998,6 +998,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # 1: reset
         progress = self.progress(0)
+    def show_device_status_failure(self, status):
+        self.display_public_message(
+            f"Device is {status}. Please reconnect / press allow."
+        )
+
         stylesheet = \
             "background-color: qlineargradient(" \
             "spread:pad, x1:0, y1:0, x2:1, y2:1, " \

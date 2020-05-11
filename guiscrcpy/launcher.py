@@ -989,6 +989,12 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # prepare launch of scrcpy,
         # reset colors
         # reset vars
+    @staticmethod
+    def is_device_unusable(status):
+        if any(('unauth' in status, 'offline' in status)):
+            return True
+        else:
+            return False
 
         # 1: reset
         progress = self.progress(0)

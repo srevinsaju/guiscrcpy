@@ -926,9 +926,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                     status=i['status']
                 )
             )
+            __sha_shift = config.get('sha_shift', 5)
             __sha = hashlib.sha256(
                 str(i['identifier']).encode()
-            ).hexdigest()[5:5 + 6]
+            ).hexdigest()[__sha_shift:__sha_shift + 6]
             devices_view_list_item.setToolTip(
                 "Device: "
                 "<span style='color: #{inv_color};background-color: #{color}'>"

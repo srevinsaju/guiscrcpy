@@ -42,6 +42,7 @@ class InterfaceConfig:
                 'bottom': True,
                 'toolkit': True
             },
+            'sha_shift': 5,
             'scrcpy-server': None,
             'dimension': None,
             'swtouches': False,

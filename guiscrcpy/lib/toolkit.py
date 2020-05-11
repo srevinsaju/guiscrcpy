@@ -38,13 +38,14 @@ else:
 
 
 class UXMapper:
-    def __init__(self, device_id=None):
+    def __init__(self, device_id=None, sha_shift=5):
         """
         The main class for UXMapper and adb shell spawn to device
         The guiscrcpy client passes information ot the UXMapper which
         spawns adb sub processes to handle button and tap events
         :param device_id:
         """
+        self.sha_shift = sha_shift
         logging.debug("Launching UX Mapper")
         self.has_modules = getWindowsWithTitle and auto
         logging.debug("Calculating Screen Size")
@@ -70,7 +71,7 @@ class UXMapper:
         A method which returns the unique UUID of the the device
         :return: The hexdigest of a salted hash
         """
-        return self.__sha[5:5+6]
+        return self.__sha[self.sha_shift:self.sha_shift + 6]
 
     def do_swipe(self, x1=10, y1=10, x2=10, y2=10):
         """

@@ -643,7 +643,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # get device specific configuration
         model, identifier = self.current_device_identifier()
         picture_file_path = cfgmgr.get_cfgpath()
-        sha = hashlib.sha256(str(identifier).encode()).hexdigest()[5:5+6]
+        __sha_shift = config.get('sha_shift', 5)
+        sha = hashlib.sha256(
+            str(identifier).encode()
+        ).hexdigest()[__sha_shift:__sha_shift + 6]
         log(f"Creating desktop shortcut sha: {sha}")
         path_to_image = os.path.join(picture_file_path, identifier+'.png')
         svg2png(
@@ -783,8 +786,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                             status='Disconnected'
                         )
                     )
+                __sha_shift = config.get('sha_shift', 5)
                 __sha = hashlib.sha256(
-                    str(i).encode()).hexdigest()[5:5+6]
+                    str(i).encode()).hexdigest()[__sha_shift:__sha_shift+6]
                 devices_view_list_item.setToolTip(
                     "<span style='color: #{color}'>Device</snap>: <b>{d}</b>\n"
                     "Status: {s}".format(
@@ -1162,7 +1166,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # ====================================================================
         # 11: Initialize User Experience Mapper
-        ux = UXMapper(device_id=device_id)
+        ux = UXMapper(
+            device_id=device_id,
+            sha_shift=config.get('sha_shift', 5)
+        )
         progress = self.progress(progress)
         always_on_top = \
             config.get('panels_always_on_top', False) or \

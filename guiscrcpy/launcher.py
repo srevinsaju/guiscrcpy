@@ -606,10 +606,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         if 'Disconnect' in button.text():
             menu = QMenu("Menu", self)
             menu.addAction("Pair / Ping", self.ping_paired_device)
-            menu.addAction("Attempt TCPIP on device", self.ping_paired_device)
+            menu.addAction("Attempt TCPIP on device", self.tcpip_paired_device)
             menu.addAction("Forget device", self.forget_paired_device)
         else:
             menu = QMenu("Menu", self)
+            menu.addAction("Attempt TCPIP on device", self.tcpip_paired_device)
             menu.addAction("Attempt reconnection", self.ping_paired_device)
             menu.addAction("Refresh", self.refresh_devices)
         _, identifier = self.current_device_identifier()

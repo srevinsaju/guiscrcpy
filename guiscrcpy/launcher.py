@@ -989,10 +989,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         else:
             return val + 100 / 20
 
-    def start_act(self):
-        # prepare launch of scrcpy,
-        # reset colors
-        # reset vars
     @staticmethod
     def is_device_unusable(status):
         if any(('unauth' in status, 'offline' in status)):
@@ -1000,13 +996,12 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         else:
             return False
 
-        # 1: reset
-        progress = self.progress(0)
     def show_device_status_failure(self, status):
         self.display_public_message(
             f"Device is {status}. Please reconnect / press allow."
         )
 
+    def __reset_message_box_stylesheet(self):
         stylesheet = \
             "background-color: qlineargradient(" \
             "spread:pad, x1:0, y1:0, x2:1, y2:1, " \
@@ -1027,6 +1022,20 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         :return: None
         """
         self.private_message_box_adb.setText(message)
+
+    def start_act(self):
+        """
+        Main brain of guiscrcpy; handles what to do when
+        :return:
+        """
+        # prepare launch of scrcpy,
+        # reset colors
+        # reset vars
+
+        # 1: reset
+        self.options = ""
+        progress = self.progress(0)
+        self.__reset_message_box_stylesheet()
 
         # ====================================================================
         # 2: Update UI to start checking

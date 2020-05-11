@@ -887,6 +887,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                         elif paired_device.text().split()[1] ==\
                                 i['identifier']:
                             log("pairfilter: 2")
+                            self.remove_device_device_view(
+                                i['identifier'],
+                                statuses=['offline', 'unauthorized']
+                            )
                             devices_view_list_item = QListWidgetItem()
                             paired = False
                             break

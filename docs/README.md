@@ -55,3 +55,51 @@ These are the common methods of installation. To see more interesting ways, chec
 
 <br>
 
+## Further reading
+
+Thanks to users around the world, guiscrcpy is one of the trending apps this month. You may like to see some articles written by well wishers:
+
+* [Mirror your Android screen on your computer with Guiscrcpy - opensource.com](https://opensource.com/article/19/9/mirror-android-screen-guiscrcpy)
+* [Helper GUI For scrcpy, The Android Desktop Display And Remote Control Tool - linuxuprising.com](https://www.linuxuprising.com/2019/09/helper-gui-for-scrcpy-android-desktop.html)
+* [Mirror your Android display screen in your laptop with Guiscrcpy - breakingexpress.com](https://breakingexpress.com/2019/09/26/mirror-your-android-display-screen-in-your-laptop-with-guiscrcpy/)
+* [guiscrcpy demonstration (windows) - Youtube](https://www.youtube.com/watch?v=Uc1ozt4AtrY)
+* [guiscrcpy = OpenCollective](https://opencollective.com/guiscrcpy)
+
+
+
+## License
+
+```
+GUISCRCPY by srevinsaju
+Get it on : https://github.com/srevinsaju/guiscrcpy
+Licensed under GNU Public License
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+Icon made by Dave Gandy from www.flaticon.com used under
+Creative Commons 3.0 Unported. The original SVG black work
+by Dave Gandy has been re-oriented, flipped or color-changed.
+The rest of Terms and Conditions put forward by
+CC-3.0:Unported has been feverently followed by the developer.
+Icons have been adapted in all the three windows.
+
+Icons pack obtained from www.flaticon.com
+All rights reserved.
+
+```
+
+---------------------
+
+Copyright &copy; [Srevin Saju](https://github.com/srevinsaju) 2019 - 2020

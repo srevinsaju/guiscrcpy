@@ -1070,14 +1070,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 # get the status and identifier of the device;
                 # return if device is not in a connectable state
                 try:
-                    _, device_id = self.current_device_identifier()
                     _, device_id, _stat = \
                         self.current_device_identifier(need_status=True)
                     if self.is_device_unusable(_stat):
                         self.show_device_status_failure(_stat)
                         return 0
                 except ValueError:
-                    self.private_message_box_adb.setText(
+                    self.display_public_message(
                         "Please select a device from the list view"
                     )
                     return 0
@@ -1087,7 +1086,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 self.display_public_message("Please select a device below.")
                 return 0
             else:
-                _, device_id = self.current_device_identifier()
+                _, device_id, _stat = self.current_device_identifier(
+                    need_status=True)
+                if self.is_device_unusable(_stat):
+                    self.show_device_status_failure(_stat)
+                    return 0
                 log("Device_id = {}".format(device_id))
                 more_devices = True
         progress = self.progress(progress)

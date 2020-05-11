@@ -171,9 +171,13 @@ class adb:
         return adb_shell_output
 
     @staticmethod
-    def tcpip(path, port=5555):
+    def tcpip(path, port=5555, identifier=""):
+        if identifier:
+            command = "{path} -s {identifier} -d tcpip {port}"
+        else:
+            command = "{path} -d tcpip {port}"
         exit_code = call(
-            _("{} -d tcpip {}".format(path, port)),
+            _(command.format(path=path, port=port, identifier=identifier)),
             stdout=PIPE,
             stderr=PIPE
         )

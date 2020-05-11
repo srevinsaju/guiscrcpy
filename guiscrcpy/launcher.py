@@ -1015,6 +1015,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             "border-radius: 10px;"
         self.private_message_box_adb.setStyleSheet(stylesheet)
 
+    def __select_first_device(self):
+        self.devices_view.setCurrentIndex(
+            QModelIndex(self.devices_view.model().index(0, 0))
+        )
+
         # ====================================================================
         # 2: Update UI to start checking
         self.private_message_box_adb.setText("CHECKING DEVICE CONNECTION")

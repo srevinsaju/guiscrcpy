@@ -421,10 +421,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.fullscreen.setChecked(False)
         if is_running("scrcpy"):
             logger.debug("SCRCPY RUNNING")
-            self.private_message_box_adb.setText("SCRCPY SERVER RUNNING")
+            self.display_public_message("SCRCPY SERVER RUNNING")
         else:
             logger.debug("SCRCPY SERVER IS INACTIVE")
-            self.private_message_box_adb.setText("SCRCPY SERVER NOT RUNNING")
+            self.display_public_message("SCRCPY SERVER NOT RUNNING")
 
         # CONNECT DIMENSION CHECK BOX TO STATE CHANGE
         self.dimensionDefaultCheckbox.stateChanged.connect(
@@ -698,18 +698,18 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # announce it to developers / users
         log(f"Path to desktop file : {path_to_desktop_file}")
         print("Desktop file generated successfully")
-        self.private_message_box_adb.setText("Desktop file has been created")
+        self.display_public_message("Desktop file has been created")
 
     def is_connection_success_handler(self, output: Popen, ip=None):
         out, err = output.communicate()
         if 'failed' in out.decode() or 'failed' in err.decode():
-            self.private_message_box_adb.setText(
+            self.display_public_message(
                 "Failed to connect to {}. See the logs for more "
                 "information".format(ip)
             )
             print("adb:", out.decode(), err.decode())
         else:
-            self.private_message_box_adb.setText(
+            self.display_public_message(
                 "Connection command completed successfully"
             )
 
@@ -746,12 +746,12 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             identifier = ""
         __exit_code = adb.tcpip(adb.path, identifier=identifier)
         if __exit_code != 0:
-            self.private_message_box_adb.setText(
+            self.display_public_message(
                 "TCP/IP failed on device. "
                 "Please reconnect USB and try again"
             )
         else:
-            self.private_message_box_adb.setText(
+            self.display_public_message(
                 "TCP/IP completed successfully."
             )
             time.sleep(0.1)  # wait for everything to get settled
@@ -760,11 +760,17 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             else:
                 self.ping_paired_device()
 
-    def current_device_identifier(self):
+    def current_device_identifier(self, need_status=False):
         if self.devices_view.currentItem():
-            return \
-                self.devices_view.currentItem().text().split()[0], \
-                self.devices_view.currentItem().text().split()[1]
+            if need_status:
+                return \
+                    self.devices_view.currentItem().text().split()[0], \
+                    self.devices_view.currentItem().text().split()[1], \
+                    self.devices_view.currentItem().text().split()[2]
+            else:
+                return \
+                    self.devices_view.currentItem().text().split()[0], \
+                    self.devices_view.currentItem().text().split()[1]
         else:
             raise ValueError("No item is selected in QListView")
 
@@ -842,6 +848,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 icon = ':/icons/icons/portrait_mobile_warning.svg'
 
             if i['status'] == 'no_permission':
+                log("pairfilter: 5")
                 # https://stackoverflow.com/questions/
                 # 53887322/adb-devices-no-permissions-user-in-
                 # plugdev-group-are-your-udev-rules-wrong
@@ -849,12 +856,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                     " incorrect. See https://stackoverflow.com/questions"\
                     "/53887322/adb-devices-no-permissions-user-in-plugdev-"\
                     "group-are-your-udev-rules-wrong"
-                self.private_message_box_adb.setText(udev_error)
+                self.display_public_message(udev_error)
                 print(udev_error)
                 return []
             # Check if device is unauthorized
             elif i['status'] == "unauthorized":
                 log("unauthorized device detected: Click Allow on your device")
+                log("pairfilter: 4")
                 # The device is connected; and might/might't paired in the past
                 # And is connected to the same IP address
                 # It is possibly a bug with the connection;
@@ -862,7 +870,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 # device with the error
                 paired = False
                 device_paired_and_exists = False
-                self.private_message_box_adb.setText(
+                self.display_public_message(
                     f"{i['identifier']} is unauthorized. Please click allow "
                     f"on your device."
                 )
@@ -883,7 +891,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 else:
                     for paired_device in paired_devices:
                         if paired_device.text().split()[0] == i['model']:
-                            log("paired_device.text().split()[0]==i['model']")
+                            log("pairfilter: 1")
                             paired = True
                             devices_view_list_item = paired_device
                             # as we have found a paired device
@@ -900,20 +908,16 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                             break
                         elif paired_device.text().split()[1] ==\
                                 i['identifier']:
-                            log("paired_device.text().split()[1] ==\
-                                i['identifier']")
-                            log("'{}' '{}'".format(
-                                i['status'],
-                                paired_device.text().split()[2]
-                            ))
+                            log("pairfilter: 2")
                             self.remove_device_device_view(
                                 i['identifier'],
-                                statuses=['unauthorized']
+                                statuses=['offline', 'unauthorized']
                             )
                             devices_view_list_item = QListWidgetItem()
                             paired = False
                             break
                     else:
+                        log("pairfilter: 3")
                         paired = False
                         devices_view_list_item = QListWidgetItem()
 
@@ -1014,13 +1018,19 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         else:
             return val + 100 / 20
 
-    def start_act(self):
-        # prepare launch of scrcpy,
-        # reset colors
-        # reset vars
+    @staticmethod
+    def is_device_unusable(status):
+        if any(('unauth' in status, 'offline' in status)):
+            return True
+        else:
+            return False
 
-        # 1: reset
-        progress = self.progress(0)
+    def show_device_status_failure(self, status):
+        self.display_public_message(
+            f"Device is {status}. Please reconnect / press allow."
+        )
+
+    def __reset_message_box_stylesheet(self):
         stylesheet = \
             "background-color: qlineargradient(" \
             "spread:pad, x1:0, y1:0, x2:1, y2:1, " \
@@ -1029,9 +1039,36 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             "border-radius: 10px;"
         self.private_message_box_adb.setStyleSheet(stylesheet)
 
+    def __select_first_device(self):
+        self.devices_view.setCurrentIndex(
+            QModelIndex(self.devices_view.model().index(0, 0))
+        )
+
+    def display_public_message(self, message):
+        """
+        sets the message box information (GUI) with the string message
+        :param message: str
+        :return: None
+        """
+        self.private_message_box_adb.setText(message)
+
+    def start_act(self):
+        """
+        Main brain of guiscrcpy; handles what to do when
+        :return:
+        """
+        # prepare launch of scrcpy,
+        # reset colors
+        # reset vars
+
+        # 1: reset
+        self.options = ""
+        progress = self.progress(0)
+        self.__reset_message_box_stylesheet()
+
         # ====================================================================
         # 2: Update UI to start checking
-        self.private_message_box_adb.setText("CHECKING DEVICE CONNECTION")
+        self.display_public_message("CHECKING DEVICE CONNECTION")
         initial_time = time.time()
         progress = self.progress(progress)
 
@@ -1039,38 +1076,50 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # 3: Check devices
         values_devices_list = self.scan_devices_update_list_view()
         if len(values_devices_list) == 0:
-            self.private_message_box_adb.setText("Could not find any devices")
+            # Could not detect any device
+            self.display_public_message("Could not find any devices")
             return 0
         elif self.devices_view.currentIndex() is None and \
                 len(values_devices_list) != 1:
-            self.private_message_box_adb.setText(
-                "Please select a device below."
-            )
+            # No device is selected and more than one device found
+            self.display_public_message("Please select a device below.")
             return 0
         else:
+            # Device selected
+            log("DEVICE LIST", len(values_devices_list), values_devices_list)
             if len(values_devices_list) == 1:
+                # found only one device
+                # ======================================================
                 # Store the current rotation temporarily
                 __selected_rotation = self.device_rotation.currentIndex()
-                log("Rotation Index =", __selected_rotation)
-                self.devices_view.setCurrentIndex(
-                    QModelIndex(self.devices_view.model().index(0, 0))
-                )
+                self.__select_first_device()
                 # Restore the selected rotation
                 self.device_rotation.setCurrentIndex(__selected_rotation)
+                # =======================================================
+                # get the status and identifier of the device;
+                # return if device is not in a connectable state
                 try:
-                    _, device_id = self.current_device_identifier()
+                    _, device_id, _stat = \
+                        self.current_device_identifier(need_status=True)
+                    if self.is_device_unusable(_stat):
+                        self.show_device_status_failure(_stat)
+                        return 0
                 except ValueError:
-                    self.private_message_box_adb.setText(
+                    self.display_public_message(
                         "Please select a device from the list view"
                     )
                     return 0
                 more_devices = False
             elif self.devices_view.currentItem() is None:
-                self.private_message_box_adb.setText("Please select a device "
-                                                     "below.")
+                # no item is selected
+                self.display_public_message("Please select a device below.")
                 return 0
             else:
-                _, device_id = self.current_device_identifier()
+                _, device_id, _stat = self.current_device_identifier(
+                    need_status=True)
+                if self.is_device_unusable(_stat):
+                    self.show_device_status_failure(_stat)
+                    return 0
                 log("Device_id = {}".format(device_id))
                 more_devices = True
         progress = self.progress(progress)
@@ -1082,7 +1131,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.dimensionSlider.setEnabled(False)
             self.dimensionText.setText("DEFAULT")
             config['dimension'] = None
-
         else:
             self.dimensionSlider.setEnabled(True)
             config['dimension'] = int(self.dimensionSlider.value())
@@ -1145,7 +1193,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             '{str(self.bitrateText.text().split()[1][0])}'. " \
                                                f"Please use only K, M, T only"
             print(multiplier_error)
-            self.private_message_box_adb.setText(multiplier_error)
+            self.display_public_message(multiplier_error)
             return False
         if self.bitrateText.text().split()[0].isdigit():
             bitrate_integer = int(self.bitrateText.text().split()[0])
@@ -1291,7 +1339,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             # device is found
             arguments_scrcpy = f"-s {device_id} {arguments_scrcpy}"
             # tell end users that the color of the device is this
-            self.private_message_box_adb.setText(
+            self.display_public_message(
                 f"Device {device_id} is connected; (color id matches "
                 f"toolkit color)"
             )

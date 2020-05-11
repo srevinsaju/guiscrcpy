@@ -826,6 +826,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 icon = ':/icons/icons/portrait_mobile_warning.svg'
 
             if i['status'] == 'no_permission':
+                log("pairfilter: 5")
                 # https://stackoverflow.com/questions/
                 # 53887322/adb-devices-no-permissions-user-in-
                 # plugdev-group-are-your-udev-rules-wrong
@@ -839,6 +840,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             # Check if device is unauthorized
             elif i['status'] == "unauthorized":
                 log("unauthorized device detected: Click Allow on your device")
+                log("pairfilter: 4")
                 # The device is connected; and might/might't paired in the past
                 # And is connected to the same IP address
                 # It is possibly a bug with the connection;
@@ -867,6 +869,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 else:
                     for paired_device in paired_devices:
                         if paired_device.text().split()[0] == i['model']:
+                            log("pairfilter: 1")
                             paired = True
                             devices_view_list_item = paired_device
                             # as we have found a paired device
@@ -883,11 +886,12 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                             break
                         elif paired_device.text().split()[1] ==\
                                 i['identifier']:
-
+                            log("pairfilter: 2")
                             devices_view_list_item = QListWidgetItem()
                             paired = False
                             break
                     else:
+                        log("pairfilter: 3")
                         paired = False
                         devices_view_list_item = QListWidgetItem()
 

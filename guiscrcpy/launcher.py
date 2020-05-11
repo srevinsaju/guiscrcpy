@@ -801,6 +801,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         :return:
         """
         # self.devices_view.clear()
+        device_exists_in_view = False
         paired_devices = []
         for index in range(self.devices_view.count()):
             paired_devices.append(self.devices_view.item(index))
@@ -875,6 +876,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 else:
                     for paired_device in paired_devices:
                         if paired_device.text().split()[0] == i['model']:
+                            log("paired_device.text().split()[0]==i['model']")
                             paired = True
                             devices_view_list_item = paired_device
                             # as we have found a paired device
@@ -891,7 +893,16 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                             break
                         elif paired_device.text().split()[1] ==\
                                 i['identifier']:
-
+                            log("paired_device.text().split()[1] ==\
+                                i['identifier']")
+                            log("'{}' '{}'".format(
+                                i['status'],
+                                paired_device.text().split()[2]
+                            ))
+                            self.remove_device_device_view(
+                                i['identifier'],
+                                statuses=['unauthorized']
+                            )
                             devices_view_list_item = QListWidgetItem()
                             paired = False
                             break
@@ -938,6 +949,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 # we need to only neglect wifi devices
                 # paired usb device need to still show in the display
                 continue
+            elif device_exists_in_view:
+                # devices exists in the list with the same status and
+                # we should not add the new detected list item
+                continue
             # If and only if the device doesn't exist; add it
             self.devices_view.addItem(devices_view_list_item)
         return __devices
@@ -952,10 +967,12 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         """
         for index in range(self.devices_view.count() - 1, -1, -1):
             for status in statuses:
-                if str(identifier) in self.devices_view.item(index).text() \
-                        and \
-                        str(status) in self.devices_view.item(index).text():
-                    self.devices_view.takeItem(index)
+                if self.devices_view.item(index):
+                    if str(identifier) in self.devices_view.item(index).text()\
+                            and \
+                            str(status) in \
+                            self.devices_view.item(index).text():
+                        self.devices_view.takeItem(index)
         return
 
     def __dimension_change_cb(self):

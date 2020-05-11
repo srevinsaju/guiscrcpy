@@ -746,7 +746,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             identifier = ""
         __exit_code = adb.tcpip(adb.path, identifier=identifier)
         if __exit_code != 0:
-             self.display_public_message(
+            self.display_public_message(
                 "TCP/IP failed on device. "
                 "Please reconnect USB and try again"
             )

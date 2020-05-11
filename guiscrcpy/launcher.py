@@ -712,38 +712,37 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
     def ping_paired_device(self, device_id=None):
         # update the configuration file first
-        _, identifier = self.current_device_identifier()
-        if identifier.count('.') == 3:
-            wifi_device = True
-        else:
-            wifi_device = False
-        try:
-            config['device'][identifier]['wifi'] = wifi_device
-        except KeyError:
-            log(f"Failed writing the configuration 'wifi' key to {identifier}")
-
-        if wifi_device:
-            ip = self.current_device_identifier()[1]
-            output = adb.command(adb.path, 'connect {}'.format(ip))
-            out, err = output.communicate()
-            if 'failed' in out.decode() or 'failed' in err.decode():
-                self.private_message_box_adb.setText(
-                    "Failed to connect to {}. See the logs for more "
-                    "information".format(ip)
-                )
-                print("adb:", out.decode(), err.decode())
+        if not device_id:
+            _, identifier = self.current_device_identifier()
+            if identifier.count('.') == 3:
+                wifi_device = True
             else:
-                self.private_message_box_adb.setText(
-                    "Connection command completed successfully"
-                )
+                wifi_device = False
+            try:
+                config['device'][identifier]['wifi'] = wifi_device
+            except KeyError:
+                log(f"Failed writing the configuration "
+                    f"'wifi' key to {identifier}")
+
+            if wifi_device:
+                ip = self.current_device_identifier()[1]
+                output = adb.command(adb.path, 'connect {}'.format(ip))
+                self.is_connection_success_handler(output, ip=ip)
+            else:
+                adb.command(adb.path, 'reconnect offline')
+            # As we have attempted to connect; refresh the panel
+            self.refresh_devices()
         else:
-            adb.command(adb.path, 'reconnect offline')
-        # As we have attempted to connect; refresh the panel
-        self.refresh_devices()
+            output = adb.command(adb.path, 'connect {}'.format(device_id))
+            self.is_connection_success_handler(output, ip=device_id)
 
     def tcpip_paired_device(self):
-        ecode = adb.tcpip(adb.path)
-        if ecode != 0:
+        if self.devices_view.currentItem():
+            _, identifier = self.current_device_identifier()
+        else:
+            identifier = ""
+        __exit_code = adb.tcpip(adb.path, identifier=identifier)
+        if __exit_code != 0:
             self.private_message_box_adb.setText(
                 "TCP/IP failed on device. "
                 "Please reconnect USB and try again"
@@ -752,7 +751,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.private_message_box_adb.setText(
                 "TCP/IP completed successfully."
             )
-            self.ping_paired_device()
+            time.sleep(0.1)  # wait for everything to get settled
+            if identifier.count('.') >= 3:
+                self.ping_paired_device(device_id=identifier)
+            else:
+                self.ping_paired_device()
 
     def current_device_identifier(self):
         if self.devices_view.currentItem():

@@ -606,10 +606,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         if 'Disconnect' in button.text():
             menu = QMenu("Menu", self)
             menu.addAction("Pair / Ping", self.ping_paired_device)
-            menu.addAction("Attempt TCPIP on device", self.ping_paired_device)
+            menu.addAction("Attempt TCPIP on device", self.tcpip_paired_device)
             menu.addAction("Forget device", self.forget_paired_device)
         else:
             menu = QMenu("Menu", self)
+            menu.addAction("Attempt TCPIP on device", self.tcpip_paired_device)
             menu.addAction("Attempt reconnection", self.ping_paired_device)
             menu.addAction("Refresh", self.refresh_devices)
         _, identifier = self.current_device_identifier()
@@ -642,7 +643,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # get device specific configuration
         model, identifier = self.current_device_identifier()
         picture_file_path = cfgmgr.get_cfgpath()
-        sha = hashlib.sha256(str(identifier).encode()).hexdigest()[5:5+6]
+        __sha_shift = config.get('sha_shift', 5)
+        sha = hashlib.sha256(
+            str(identifier).encode()
+        ).hexdigest()[__sha_shift:__sha_shift + 6]
         log(f"Creating desktop shortcut sha: {sha}")
         path_to_image = os.path.join(picture_file_path, identifier+'.png')
         svg2png(
@@ -696,41 +700,53 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         print("Desktop file generated successfully")
         self.display_public_message("Desktop file has been created")
 
-    def ping_paired_device(self):
-        # update the configuration file first
-        _, identifier = self.current_device_identifier()
-        if identifier.count('.') == 3:
-            wifi_device = True
+    def is_connection_success_handler(self, output: Popen, ip=None):
+        out, err = output.communicate()
+        if 'failed' in out.decode() or 'failed' in err.decode():
+            self.display_public_message(
+                "Failed to connect to {}. See the logs for more "
+                "information".format(ip)
+            )
+            print("adb:", out.decode(), err.decode())
         else:
-            wifi_device = False
-        try:
-            config['device'][identifier]['wifi'] = wifi_device
-        except KeyError:
-            log(f"Failed writing the configuration 'wifi' key to {identifier}")
+            self.display_public_message(
+                "Connection command completed successfully"
+            )
 
-        if wifi_device:
-            ip = self.current_device_identifier()[1]
-            output = adb.command(adb.path, 'connect {}'.format(ip))
-            out, err = output.communicate()
-            if 'failed' in out.decode() or 'failed' in err.decode():
-                self.display_public_message(
-                    "Failed to connect to {}. See the logs for more "
-                    "information".format(ip)
-                )
-                print("adb:", out.decode(), err.decode())
+    def ping_paired_device(self, device_id=None):
+        # update the configuration file first
+        if not device_id:
+            _, identifier = self.current_device_identifier()
+            if identifier.count('.') == 3:
+                wifi_device = True
             else:
-                self.display_public_message(
-                    "Connection command completed successfully"
-                )
+                wifi_device = False
+            try:
+                config['device'][identifier]['wifi'] = wifi_device
+            except KeyError:
+                log(f"Failed writing the configuration "
+                    f"'wifi' key to {identifier}")
+
+            if wifi_device:
+                ip = self.current_device_identifier()[1]
+                output = adb.command(adb.path, 'connect {}'.format(ip))
+                self.is_connection_success_handler(output, ip=ip)
+            else:
+                adb.command(adb.path, 'reconnect offline')
+            # As we have attempted to connect; refresh the panel
+            self.refresh_devices()
         else:
-            adb.command(adb.path, 'reconnect offline')
-        # As we have attempted to connect; refresh the panel
-        self.refresh_devices()
+            output = adb.command(adb.path, 'connect {}'.format(device_id))
+            self.is_connection_success_handler(output, ip=device_id)
 
     def tcpip_paired_device(self):
-        ecode = adb.tcpip(adb.path)
-        if ecode != 0:
-            self.display_public_message(
+        if self.devices_view.currentItem():
+            _, identifier = self.current_device_identifier()
+        else:
+            identifier = ""
+        __exit_code = adb.tcpip(adb.path, identifier=identifier)
+        if __exit_code != 0:
+             self.display_public_message(
                 "TCP/IP failed on device. "
                 "Please reconnect USB and try again"
             )
@@ -738,7 +754,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.display_public_message(
                 "TCP/IP completed successfully."
             )
-            self.ping_paired_device()
+            time.sleep(0.1)  # wait for everything to get settled
+            if identifier.count('.') >= 3:
+                self.ping_paired_device(device_id=identifier)
+            else:
+                self.ping_paired_device()
 
     def current_device_identifier(self, need_status=False):
         if self.devices_view.currentItem():
@@ -772,8 +792,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                             status='Disconnected'
                         )
                     )
+                __sha_shift = config.get('sha_shift', 5)
                 __sha = hashlib.sha256(
-                    str(i).encode()).hexdigest()[5:5+6]
+                    str(i).encode()).hexdigest()[__sha_shift:__sha_shift+6]
                 devices_view_list_item.setToolTip(
                     "<span style='color: #{color}'>Device</snap>: <b>{d}</b>\n"
                     "Status: {s}".format(
@@ -793,6 +814,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         :return:
         """
         # self.devices_view.clear()
+        device_exists_in_view = False
         paired_devices = []
         for index in range(self.devices_view.count()):
             paired_devices.append(self.devices_view.item(index))
@@ -908,9 +930,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                     status=i['status']
                 )
             )
+            __sha_shift = config.get('sha_shift', 5)
             __sha = hashlib.sha256(
                 str(i['identifier']).encode()
-            ).hexdigest()[5:5 + 6]
+            ).hexdigest()[__sha_shift:__sha_shift + 6]
             devices_view_list_item.setToolTip(
                 "Device: "
                 "<span style='color: #{inv_color};background-color: #{color}'>"
@@ -938,6 +961,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 # we need to only neglect wifi devices
                 # paired usb device need to still show in the display
                 continue
+            elif device_exists_in_view:
+                # devices exists in the list with the same status and
+                # we should not add the new detected list item
+                continue
             # If and only if the device doesn't exist; add it
             self.devices_view.addItem(devices_view_list_item)
         return __devices
@@ -952,10 +979,12 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         """
         for index in range(self.devices_view.count() - 1, -1, -1):
             for status in statuses:
-                if str(identifier) in self.devices_view.item(index).text() \
-                        and \
-                        str(status) in self.devices_view.item(index).text():
-                    self.devices_view.takeItem(index)
+                if self.devices_view.item(index):
+                    if str(identifier) in self.devices_view.item(index).text()\
+                            and \
+                            str(status) in \
+                            self.devices_view.item(index).text():
+                        self.devices_view.takeItem(index)
         return
 
     def __dimension_change_cb(self):
@@ -1186,7 +1215,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # ====================================================================
         # 11: Initialize User Experience Mapper
-        ux = UXMapper(device_id=device_id)
+        ux = UXMapper(
+            device_id=device_id,
+            sha_shift=config.get('sha_shift', 5)
+        )
         progress = self.progress(progress)
         always_on_top = \
             config.get('panels_always_on_top', False) or \

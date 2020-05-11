@@ -740,11 +740,17 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             )
             self.ping_paired_device()
 
-    def current_device_identifier(self):
+    def current_device_identifier(self, need_status=False):
         if self.devices_view.currentItem():
-            return \
-                self.devices_view.currentItem().text().split()[0], \
-                self.devices_view.currentItem().text().split()[1]
+            if need_status:
+                return \
+                    self.devices_view.currentItem().text().split()[0], \
+                    self.devices_view.currentItem().text().split()[1], \
+                    self.devices_view.currentItem().text().split()[2]
+            else:
+                return \
+                    self.devices_view.currentItem().text().split()[0], \
+                    self.devices_view.currentItem().text().split()[1]
         else:
             raise ValueError("No item is selected in QListView")
 

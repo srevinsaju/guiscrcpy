@@ -1059,6 +1059,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             # Device selected
             log("DEVICE LIST", len(values_devices_list), values_devices_list)
             if len(values_devices_list) == 1:
+                # found only one device
+                # ======================================================
                 # Store the current rotation temporarily
                 __selected_rotation = self.device_rotation.currentIndex()
                 log("Rotation Index =", __selected_rotation)
@@ -1067,6 +1069,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 )
                 # Restore the selected rotation
                 self.device_rotation.setCurrentIndex(__selected_rotation)
+                # =======================================================
+                # get the status and identifier of the device;
+                # return if device is not in a connectable state
                 try:
                     _, device_id = self.current_device_identifier()
                 except ValueError:

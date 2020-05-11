@@ -1071,6 +1071,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 # return if device is not in a connectable state
                 try:
                     _, device_id = self.current_device_identifier()
+                    _, device_id, _stat = \
+                        self.current_device_identifier(need_status=True)
+                    if self.is_device_unusable(_stat):
+                        self.show_device_status_failure(_stat)
+                        return 0
                 except ValueError:
                     self.private_message_box_adb.setText(
                         "Please select a device from the list view"

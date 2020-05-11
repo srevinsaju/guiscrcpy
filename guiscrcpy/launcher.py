@@ -421,10 +421,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.fullscreen.setChecked(False)
         if is_running("scrcpy"):
             logger.debug("SCRCPY RUNNING")
-            self.private_message_box_adb.setText("SCRCPY SERVER RUNNING")
+            self.display_public_message("SCRCPY SERVER RUNNING")
         else:
             logger.debug("SCRCPY SERVER IS INACTIVE")
-            self.private_message_box_adb.setText("SCRCPY SERVER NOT RUNNING")
+            self.display_public_message("SCRCPY SERVER NOT RUNNING")
 
         # CONNECT DIMENSION CHECK BOX TO STATE CHANGE
         self.dimensionDefaultCheckbox.stateChanged.connect(
@@ -694,7 +694,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # announce it to developers / users
         log(f"Path to desktop file : {path_to_desktop_file}")
         print("Desktop file generated successfully")
-        self.private_message_box_adb.setText("Desktop file has been created")
+        self.display_public_message("Desktop file has been created")
 
     def ping_paired_device(self):
         # update the configuration file first
@@ -713,13 +713,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             output = adb.command(adb.path, 'connect {}'.format(ip))
             out, err = output.communicate()
             if 'failed' in out.decode() or 'failed' in err.decode():
-                self.private_message_box_adb.setText(
+                self.display_public_message(
                     "Failed to connect to {}. See the logs for more "
                     "information".format(ip)
                 )
                 print("adb:", out.decode(), err.decode())
             else:
-                self.private_message_box_adb.setText(
+                self.display_public_message(
                     "Connection command completed successfully"
                 )
         else:
@@ -730,12 +730,12 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
     def tcpip_paired_device(self):
         ecode = adb.tcpip(adb.path)
         if ecode != 0:
-            self.private_message_box_adb.setText(
+            self.display_public_message(
                 "TCP/IP failed on device. "
                 "Please reconnect USB and try again"
             )
         else:
-            self.private_message_box_adb.setText(
+            self.display_public_message(
                 "TCP/IP completed successfully."
             )
             self.ping_paired_device()
@@ -834,7 +834,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                     " incorrect. See https://stackoverflow.com/questions"\
                     "/53887322/adb-devices-no-permissions-user-in-plugdev-"\
                     "group-are-your-udev-rules-wrong"
-                self.private_message_box_adb.setText(udev_error)
+                self.display_public_message(udev_error)
                 print(udev_error)
                 return []
             # Check if device is unauthorized
@@ -848,7 +848,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 # device with the error
                 paired = False
                 device_paired_and_exists = False
-                self.private_message_box_adb.setText(
+                self.display_public_message(
                     f"{i['identifier']} is unauthorized. Please click allow "
                     f"on your device."
                 )
@@ -1030,7 +1030,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # ====================================================================
         # 2: Update UI to start checking
-        self.private_message_box_adb.setText("CHECKING DEVICE CONNECTION")
+        self.display_public_message("CHECKING DEVICE CONNECTION")
         initial_time = time.time()
         progress = self.progress(progress)
 
@@ -1038,13 +1038,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # 3: Check devices
         values_devices_list = self.scan_devices_update_list_view()
         if len(values_devices_list) == 0:
-            self.private_message_box_adb.setText("Could not find any devices")
+            # Could not detect any device
+            self.display_public_message("Could not find any devices")
             return 0
         elif self.devices_view.currentIndex() is None and \
                 len(values_devices_list) != 1:
-            self.private_message_box_adb.setText(
-                "Please select a device below."
-            )
+            # No device is selected and more than one device found
+            self.display_public_message("Please select a device below.")
             return 0
         else:
             if len(values_devices_list) == 1:
@@ -1065,8 +1065,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                     return 0
                 more_devices = False
             elif self.devices_view.currentItem() is None:
-                self.private_message_box_adb.setText("Please select a device "
-                                                     "below.")
+                # no item is selected
+                self.display_public_message("Please select a device below.")
                 return 0
             else:
                 _, device_id = self.current_device_identifier()
@@ -1081,7 +1081,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.dimensionSlider.setEnabled(False)
             self.dimensionText.setText("DEFAULT")
             config['dimension'] = None
-
         else:
             self.dimensionSlider.setEnabled(True)
             config['dimension'] = int(self.dimensionSlider.value())
@@ -1144,7 +1143,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             '{str(self.bitrateText.text().split()[1][0])}'. " \
                                                f"Please use only K, M, T only"
             print(multiplier_error)
-            self.private_message_box_adb.setText(multiplier_error)
+            self.display_public_message(multiplier_error)
             return False
         if self.bitrateText.text().split()[0].isdigit():
             bitrate_integer = int(self.bitrateText.text().split()[0])
@@ -1287,7 +1286,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             # device is found
             arguments_scrcpy = f"-s {device_id} {arguments_scrcpy}"
             # tell end users that the color of the device is this
-            self.private_message_box_adb.setText(
+            self.display_public_message(
                 f"Device {device_id} is connected; (color id matches "
                 f"toolkit color)"
             )

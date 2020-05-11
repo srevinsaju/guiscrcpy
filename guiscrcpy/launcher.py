@@ -1056,6 +1056,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.display_public_message("Please select a device below.")
             return 0
         else:
+            # Device selected
+            log("DEVICE LIST", len(values_devices_list), values_devices_list)
             if len(values_devices_list) == 1:
                 # Store the current rotation temporarily
                 __selected_rotation = self.device_rotation.currentIndex()

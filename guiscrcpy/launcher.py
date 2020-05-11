@@ -698,6 +698,18 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.private_message_box_adb.setText("Desktop file has been created")
 
     def ping_paired_device(self):
+    def is_connection_success_handler(self, output: Popen, ip=None):
+        out, err = output.communicate()
+        if 'failed' in out.decode() or 'failed' in err.decode():
+            self.private_message_box_adb.setText(
+                "Failed to connect to {}. See the logs for more "
+                "information".format(ip)
+            )
+            print("adb:", out.decode(), err.decode())
+        else:
+            self.private_message_box_adb.setText(
+                "Connection command completed successfully"
+            )
         # update the configuration file first
         _, identifier = self.current_device_identifier()
         if identifier.count('.') == 3:

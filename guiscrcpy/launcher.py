@@ -1020,6 +1020,14 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             QModelIndex(self.devices_view.model().index(0, 0))
         )
 
+    def display_public_message(self, message):
+        """
+        sets the message box information (GUI) with the string message
+        :param message: str
+        :return: None
+        """
+        self.private_message_box_adb.setText(message)
+
         # ====================================================================
         # 2: Update UI to start checking
         self.private_message_box_adb.setText("CHECKING DEVICE CONNECTION")

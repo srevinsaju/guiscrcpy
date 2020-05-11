@@ -1063,10 +1063,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 # ======================================================
                 # Store the current rotation temporarily
                 __selected_rotation = self.device_rotation.currentIndex()
-                log("Rotation Index =", __selected_rotation)
-                self.devices_view.setCurrentIndex(
-                    QModelIndex(self.devices_view.model().index(0, 0))
-                )
+                self.__select_first_device()
                 # Restore the selected rotation
                 self.device_rotation.setCurrentIndex(__selected_rotation)
                 # =======================================================

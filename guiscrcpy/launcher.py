@@ -109,7 +109,6 @@ for arg in range(len(sys.argv)):
     elif '.py' in sys.argv[arg] or 'guiscrcpy' in sys.argv[arg]:
         sys_argv = sys.argv[arg:]
         break
-sys.argv = sys_argv
 
 # interface adb if asked for
 if 'adb-interface' in sys.argv:
@@ -261,8 +260,10 @@ parser.add_argument(
     action='store_true',
     help="Display guiscrcpy version"
 )
-args = parser.parse_args()
-
+log(f"Complete args {sys.argv}")
+log(f"Received {sys_argv}")
+args = parser.parse_args(sys_argv)
+log(f"Parsed {args}")
 # set argument debug level
 if args.debug:
     logging_priority = int(args.debug) * 10

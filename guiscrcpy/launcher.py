@@ -105,7 +105,7 @@ sys_argv = []
 for arg in range(len(sys.argv)-1, -1, -1):
     log("Scanning {}".format(sys.argv[arg]))
     if '.py' in sys.argv[arg] or 'guiscrcpy' in sys.argv[arg]:
-        sys_argv = sys.argv[arg:]
+        sys_argv = sys.argv[arg+1:]
         break
 
 # interface adb if asked for

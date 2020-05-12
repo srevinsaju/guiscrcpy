@@ -102,10 +102,8 @@ scrcpy.server_path = config['scrcpy-server']
 # ARGUMENT PARSER
 
 sys_argv = []
-for arg in range(len(sys.argv)):
-    if 'bin/python' in sys.argv[arg]:
-        log("Ignoring", sys.argv[arg])
-        continue
+for arg in range(len(sys.argv)-1, -1, -1):
+    log("Scanning {}".format(sys.argv[arg]))
     elif '.py' in sys.argv[arg] or 'guiscrcpy' in sys.argv[arg]:
         sys_argv = sys.argv[arg:]
         break

@@ -103,7 +103,9 @@ scrcpy.server_path = config['scrcpy-server']
 
 sys_argv = []
 for arg in range(len(sys.argv)):
-    if '.py' in sys.argv[arg] or 'guiscrcpy' in sys.argv[arg]:
+    if 'bin/python' in sys.argv[arg]:
+        continue
+    elif '.py' in sys.argv[arg] or 'guiscrcpy' in sys.argv[arg]:
         sys_argv = sys.argv[arg:]
         break
 sys.argv = sys_argv

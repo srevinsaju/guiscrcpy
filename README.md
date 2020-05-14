@@ -69,7 +69,8 @@ Thanks to users around the world, guiscrcpy is one of the trending apps this mon
 ## Acknowledgements
 
 Special thanks to [Jetbrains](https://www.jetbrains.com/?from=guiscrcpy) for sponsoring `guiscrcpy` with
-a professional PyCharm IDE; It works fantastic!!
+a professional PyCharm IDE; It works fantastic!!3
+
 [![jetbrains](docs/img/jetbrains.svg)](https://www.jetbrains.com/?from=guiscrcpy)
 
 ## License

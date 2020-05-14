@@ -41,11 +41,11 @@ import webbrowser
 from subprocess import PIPE
 from subprocess import Popen
 
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QModelIndex, QPoint
-from PyQt5.QtGui import QPixmap, QIcon, QFont
-from PyQt5.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QMenu
-from PyQt5.QtWidgets import QMessageBox
+from qtpy import QtCore, QtWidgets
+from qtpy.QtCore import QModelIndex, QPoint
+from qtpy.QtGui import QPixmap, QIcon, QFont
+from qtpy.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QMenu
+from qtpy.QtWidgets import QMessageBox
 
 from guiscrcpy.install.finder import open_exe_name_dialog
 from guiscrcpy.lib.check import adb
@@ -560,7 +560,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             "Please restart guiscrcpy to reset the settings. "
             "guiscrcpy will now exit",
         )
-        about_message_box.addButton("OK", about_message_box.hide())
+        about_message_box.addButton("OK", about_message_box.hide)
         about_message_box.show()
 
     def reset(self):
@@ -578,7 +578,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             "Please restart guiscrcpy to reset the settings. "
             "guiscrcpy will now exit",
         )
-        message_box.addButton("OK", self.quit_window())
+        message_box.addButton("OK", self.quit_window)
         message_box.show()
 
     @staticmethod

@@ -20,6 +20,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os
 # flake8: noqa
 
+__QT_INSTANCE = os.getenv('QT_API', False)
+
+if __QT_INSTANCE and __QT_INSTANCE in ("pyside2", "pyqt5"):
+    if __QT_INSTANCE == "pyside2":
+        use_pyqt5 = False
+    else:
+        use_pyqt5 = True
+else:
+    # either QT_API is not defined or defined for an older version of PyQt5
+    # just use PyQt5 as default
+    use_pyqt5 = True
+
 if use_pyqt5:
     from ..ui.pyqt5.main import Ui_MainWindow  # noqa: F401
     from ..ui.pyqt5.network import Ui_NetworkUI  # noqa: F401

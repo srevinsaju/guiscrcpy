@@ -19,12 +19,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import time
 
-from PyQt5.QtWidgets import QMainWindow
+from qtpy.QtWidgets import QMainWindow
 
 from guiscrcpy.lib.check import adb
 from guiscrcpy.network.network import NetworkManager
 from guiscrcpy.platform.platform import System
-from guiscrcpy.ui.network import Ui_NetworkUI
+from guiscrcpy.ux import Ui_NetworkUI
 
 
 class InterfaceNetwork(QMainWindow, Ui_NetworkUI):

@@ -9,6 +9,7 @@ verify_ssl = true
 pynput = ">=1.6"
 pystray = "==0.14.4"
 PyQt5 = ">=5.14,<5.15"
+cairosvg = "*"
 
 [requires]
 python_version = "3.8"

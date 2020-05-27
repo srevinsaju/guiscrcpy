@@ -13,6 +13,7 @@ from PySide2.QtCore import (QCoreApplication, QDate, QDateTime, QMetaObject,
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
     QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter,
     QPixmap, QRadialGradient)
+from PySide2.QtGui import QGradient
 from PySide2.QtWidgets import *
 
 from  . import rsrc_rc

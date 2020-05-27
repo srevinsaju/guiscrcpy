@@ -59,7 +59,7 @@ from guiscrcpy.theme.decorate import Header
 from guiscrcpy.theme.desktop_shortcut import desktop_device_shortcut_svg
 from guiscrcpy.theme.linux_desktop_shortcut_template import GUISCRCPY_DEVICE
 from guiscrcpy.theme.style import dark_stylesheet
-from guiscrcpy.ui.main import Ui_MainWindow
+from guiscrcpy.ux import Ui_MainWindow
 from guiscrcpy.ux.panel import Panel
 from guiscrcpy.ux.swipe import SwipeUX
 from guiscrcpy.ux.toolkit import InterfaceToolkit

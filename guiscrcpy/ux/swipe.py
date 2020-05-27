@@ -36,7 +36,6 @@ class SwipeUX(QMainWindow):
         :param always_on_top: bool
         """
         QMainWindow.__init__(self)
-        super(SwipeUX, self).__init__()
         self.oldPos = None
         self.name = "swipe"
         self.uid = uuid.uuid4()

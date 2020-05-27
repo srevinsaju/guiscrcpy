@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import QPoint
-from PyQt5.QtWidgets import QMainWindow
+from qtpy import QtCore
+from qtpy.QtCore import QPoint
+from qtpy.QtWidgets import QMainWindow
 
 from guiscrcpy.lib.toolkit import UXMapper
-from guiscrcpy.ui.panel import Ui_HorizontalPanel
+from guiscrcpy.ux import Ui_HorizontalPanel
 
 
 class Panel(QMainWindow, Ui_HorizontalPanel):

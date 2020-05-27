@@ -66,6 +66,12 @@ Thanks to users around the world, guiscrcpy is one of the trending apps this mon
 * [guiscrcpy = OpenCollective](https://opencollective.com/guiscrcpy)
 
 
+## Acknowledgements
+
+Special thanks to [Jetbrains](https://www.jetbrains.com/?from=guiscrcpy) for sponsoring `guiscrcpy` with
+a professional PyCharm IDE; It works fantastic!!3
+
+[![jetbrains]( img/jetbrains.svg)](https://www.jetbrains.com/?from=guiscrcpy)
 
 ## License
 
@@ -103,3 +109,4 @@ All rights reserved.
 ---------------------
 
 Copyright &copy; [Srevin Saju](https://github.com/srevinsaju) 2019 - 2020
+

@@ -103,7 +103,7 @@ It is possible to ask your device to connect to the LAN to enable wireless suppo
 
 To get wireless connection, you will need to know the local `IP` address of your device. Alternatively, click the `REFRESH` button to select from the list.
 
-After the selection is complete, you can click the `CONNECT` button. Provided the port and the IP address is correct, you are likely to have connected to your devices. You can test if your connection was successful by pressing the `Refresh` icon  <img src="../guiscrcpy/ui/icons/refresh-page-option.svg" alt="refresh icon" style="zoom:2.5%" /> on the main user interface, you are likely to see your device in the devices view?
+After the selection is complete, you can click the `CONNECT` button. Provided the port and the IP address is correct, you are likely to have connected to your devices. You can test if your connection was successful by pressing the `Refresh` icon  <img src="../guiscrcpy/ui/icons/refresh-page-option.svg" alt="refresh icon" height="25px" /> on the main user interface, you are likely to see your device in the devices view?
 
 > Can’t see your device? Check if your device is listed when
 
@@ -135,7 +135,7 @@ As seen in the picture, the way to decipher it:
 
 ### `usbaudio`
 
-[`usbaudio`](https://github.com/rom1v/usbaudio) is a audio client written by @rom1v, to stream device audio to system with the help of [VLC](https://www.videolan.org/vlc/index.html). `guiscrcpy` has already included the GUI entry point for `usbaudio`. Make sure `usbaudio` is on `PATH` and then click the `usbaudio` button  <img src="../guiscrcpy/ui/icons/volume-up-interface-symbol.svg" alt="refresh icon" style="zoom:2.5%" /> on the main gui.
+[`usbaudio`](https://github.com/rom1v/usbaudio) is a audio client written by @rom1v, to stream device audio to system with the help of [VLC](https://www.videolan.org/vlc/index.html). `guiscrcpy` has already included the GUI entry point for `usbaudio`. Make sure `usbaudio` is on `PATH` and then click the `usbaudio` button  <img src="../guiscrcpy/ui/icons/volume-up-interface-symbol.svg" alt="refresh icon" height="25px" /> on the main gui.
 
 <br>
 
@@ -177,7 +177,7 @@ guiscrcpy --mapper
 
 Now, run guiscrcpy as usual. 
 
-Key mapper is not enabled by default as it conflicts with input text. To enable the keymapper for a session, click <img src="https://user-images.githubusercontent.com/48695438/76633072-37bd4d80-6555-11ea-89f8-61a5921c805c.png" style="zoom:25%;" /> and it will load in a few moments.
+Key mapper is not enabled by default as it conflicts with input text. To enable the keymapper for a session, click <img src="https://user-images.githubusercontent.com/48695438/76633072-37bd4d80-6555-11ea-89f8-61a5921c805c.png" height="25px" /> and it will load in a few moments.
 
 ------------------
 

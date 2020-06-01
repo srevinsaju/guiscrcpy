@@ -3,14 +3,15 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
+[dev-packages]
+GitPython = "*"
+
 
 [packages]
 fonttools = "*"
 psutil = "*"
 pynput = "*"
-pyshortcuts = "*"
 pystray = "*"
-GitPython = "*"
 PyQt5 = "*"
 
 [requires]

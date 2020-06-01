@@ -79,7 +79,7 @@ config = cfgmgr.get_config()
 environment = platform.System()
 
 # ============================================================================
-# Load cairosvg conditionally
+# Load cairo-svg conditionally
 if environment.system() == "Linux":
     from cairosvg import svg2png  # noqa:
 
@@ -1340,11 +1340,14 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             # its important to pass the device serial id, if more than one
             # device is found
             arguments_scrcpy = f"-s {device_id} {arguments_scrcpy}"
-            # tell end users that the color of the device is this
-            self.display_public_message(
-                f"Device {device_id} is connected; (color id matches "
-                f"toolkit color)"
-            )
+
+        # tell end users that the color of the device is this
+        self.display_public_message(
+            f"Device {device_id} is connected; (color id matches "
+            f"toolkit color)"
+        )
+        log("Device connection completed successfully.")
+        log("Private message box updated successfully")
         progress = self.progress(progress)
 
         # ====================================================================

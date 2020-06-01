@@ -18,5 +18,6 @@ build
 .codacy-coverage
 *.snap
 prime
+commit_sha
 Pipfile.lock
 /.run/guiscrcpy.sh

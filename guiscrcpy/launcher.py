@@ -806,7 +806,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                         color=__sha
                     )
                 )
-                devices_view_list_item.setFont(QFont('Noto Sans', pointSize=8))
+                devices_view_list_item.setFont(QFont('Noto Sans', 8))
                 self.devices_view.addItem(devices_view_list_item)
         return paired_devices
 
@@ -957,7 +957,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 )
             )
 
-            devices_view_list_item.setFont(QFont('Noto Sans', pointSize=8))
+            devices_view_list_item.setFont(QFont('Noto Sans', 8))
             log(f"Pairing status: {device_paired_and_exists}")
             if device_paired_and_exists and device_is_wifi:
                 # we need to only neglect wifi devices

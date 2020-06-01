@@ -2,7 +2,7 @@
 
 # guiscrcpy
 
-![Linux](https://github.com/srevinsaju/guiscrcpy/workflows/Linux/badge.svg)![Windows](https://github.com/srevinsaju/guiscrcpy/workflows/Windows/badge.svg)![Mac OS](https://github.com/srevinsaju/guiscrcpy/workflows/Mac%20OS/badge.svg)
+[![Financial Contributors on Open Collective](https://opencollective.com/guiscrcpy/all/badge.svg?label=financial+contributors)](https://opencollective.com/guiscrcpy) ![Linux](https://github.com/srevinsaju/guiscrcpy/workflows/Linux/badge.svg)![Windows](https://github.com/srevinsaju/guiscrcpy/workflows/Windows/badge.svg)![Mac OS](https://github.com/srevinsaju/guiscrcpy/workflows/Mac%20OS/badge.svg)
 
 [![Updates](https://pyup.io/repos/github/srevinsaju/guiscrcpy/shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)[![Python 3](https://pyup.io/repos/github/srevinsaju/guiscrcpy/python-3-shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/guiscrcpy?style=flat-square)![PyPI](https://img.shields.io/pypi/v/guiscrcpy?style=flat-square)![PyPI - Wheel](https://img.shields.io/pypi/wheel/guiscrcpy?style=flat-square)![PyPI - Downloads](https://img.shields.io/pypi/dm/guiscrcpy?color=dark%20green&logo=PYPI&logoColor=Green&style=flat-square)](https://pypi.org/project/guiscrcpy)
 
@@ -72,6 +72,36 @@ Special thanks to [Jetbrains](https://www.jetbrains.com/?from=guiscrcpy) for spo
 a professional PyCharm IDE; It works fantastic!!3
 
 [![jetbrains](docs/img/jetbrains.svg)](https://www.jetbrains.com/?from=guiscrcpy)
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/srevinsaju/guiscrcpy/graphs/contributors"><img src="https://opencollective.com/guiscrcpy/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/guiscrcpy/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/guiscrcpy"><img src="https://opencollective.com/guiscrcpy/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/guiscrcpy/contribute)]
+
+<a href="https://opencollective.com/guiscrcpy/organization/0/website"><img src="https://opencollective.com/guiscrcpy/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/guiscrcpy/organization/1/website"><img src="https://opencollective.com/guiscrcpy/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/guiscrcpy/organization/2/website"><img src="https://opencollective.com/guiscrcpy/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/guiscrcpy/organization/3/website"><img src="https://opencollective.com/guiscrcpy/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/guiscrcpy/organization/4/website"><img src="https://opencollective.com/guiscrcpy/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/guiscrcpy/organization/5/website"><img src="https://opencollective.com/guiscrcpy/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/guiscrcpy/organization/6/website"><img src="https://opencollective.com/guiscrcpy/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/guiscrcpy/organization/7/website"><img src="https://opencollective.com/guiscrcpy/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/guiscrcpy/organization/8/website"><img src="https://opencollective.com/guiscrcpy/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/guiscrcpy/organization/9/website"><img src="https://opencollective.com/guiscrcpy/organization/9/avatar.svg"></a>
 
 ## License
 

@@ -56,6 +56,8 @@ print("Device : OK!")
 cfgpath = cfgmgr.cfgpath
 
 parser = argparse.ArgumentParser()
+parser.add_argument('--mapper', action="store_true",
+                    help="Start the mapper")
 parser.add_argument('--mapper-delay', default=10,
                     help="Set time to delay before screen is captured")
 parser.add_argument('--mapper-reset', action="store_true",

@@ -147,8 +147,6 @@ jobs:
     - name: Release
       uses: marvinpinto/action-automatic-releases@latest
       with:
-        automatic_release_tag: continuous
-        title: continuous
         prerelease: false
         draft: true
         files: |

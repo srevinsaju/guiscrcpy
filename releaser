@@ -22,13 +22,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-RAW_VERSION = "3.7"
+RAW_VERSION = "4.0"
 PACKAGE_DIR = {
     'guiscrcpy': [
         '*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*',
         'theme/*', 'ux/*', 'network/*', 'settings/*',
         'install/*', 'platform/windows_tools/*', 'ui/icons/*',
-        'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*'
+        'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*',
+        'ui/pyqt5/*', 'ui/pyside2/*'
     ]
 }
 

@@ -25,9 +25,9 @@ import platform
 import sys
 import time
 
-from PyQt5 import QtGui, QtCore, QtWidgets
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
+from qtpy import QtGui, QtCore, QtWidgets
+from qtpy.QtCore import Qt
+from qtpy.QtGui import QPixmap
 from pynput import keyboard
 
 from guiscrcpy.lib.check import adb

@@ -1,3 +1,3 @@
 PyQt5>=5.14,<5.15
 pynput>=1.6
-pystray==0.14.4
+pystray==0.16.0

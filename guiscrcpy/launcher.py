@@ -517,8 +517,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.nm.init()
         self.nm.show()
 
-    @staticmethod
-    def bootstrap_mapper():
+    def bootstrap_mapper(self):
         if (os.path.exists(
                 os.path.join(cfgmgr.get_cfgpath() + "guiscrcpy.mapper.json"))):
             from guiscrcpy.lib import mapper

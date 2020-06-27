@@ -42,6 +42,7 @@ class InterfaceConfig:
                 'bottom': True,
                 'toolkit': True
             },
+            'mapper': '',
             'sha_shift': 5,
             'scrcpy-server': None,
             'dimension': None,

@@ -460,7 +460,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.pushButton.clicked.connect(self.reset)
         self.abtgit.clicked.connect(self.launch_web_github)
         self.usbaud.clicked.connect(self.launch_usb_audio)
-        self.mapnow.clicked.connect(self.bootstrap_mapper)
+        self.initmapnow.clicked.connect(self.bootstrap_mapper)
         self.network_button.clicked.connect(self.network_mgr)
         self.settings_button.clicked.connect(self.settings_mgr)
         # self.devices_view.itemChanged.connect(self.update_rotation_combo_cb)
@@ -591,6 +591,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             "Please restart guiscrcpy to reset the settings. "
             "guiscrcpy will now exit",
         )
+        QMessageBox.ButtonRole()
         message_box.addButton("OK", self.quit_window)
         message_box.show()
 

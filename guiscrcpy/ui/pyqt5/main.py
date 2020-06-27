@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(539, 645)
+        MainWindow.resize(539, 629)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -68,7 +68,17 @@ class Ui_MainWindow(object):
 "color: rgb(0, 0, 0);\n"
 "border-radius: 10px;\n"
 " }\n"
-".QPushButton#mapnow{\n"
+".QPushButton#initmapnow{\n"
+"background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0.0196078 rgba(0, 141, 255, 255), stop:1 rgba(52, 0, 255, 255));\n"
+"color: rgb(0, 0, 0);\n"
+"border-radius: 10px;\n"
+"}\n"
+".QPushButton#initmapnow:hover{\n"
+"background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0.0196078 rgba(0, 72, 131, 255), stop:1 rgba(24, 0, 122, 255));\n"
+"color: rgb(0, 0, 0);\n"
+"border-radius: 10px;\n"
+" }\n"
+".QPushButton#mapnow:hover{\n"
 "background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(199, 0, 255, 255), stop:0.990196 rgba(88, 0, 255, 255));\n"
 "color: rgb(0, 0, 0);\n"
 "border-radius: 10px;\n"
@@ -545,20 +555,21 @@ class Ui_MainWindow(object):
         self.usbaud.setIcon(icon16)
         self.usbaud.setObjectName("usbaud")
         self.horizontalLayout.addWidget(self.usbaud)
-        self.mapnow = QtWidgets.QPushButton(self.frame)
+        self.initmapnow = QtWidgets.QPushButton(self.frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(11)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.mapnow.sizePolicy().hasHeightForWidth())
-        self.mapnow.setSizePolicy(sizePolicy)
-        self.mapnow.setMinimumSize(QtCore.QSize(45, 45))
-        self.mapnow.setToolTipDuration(3)
-        self.mapnow.setText("")
+        sizePolicy.setHeightForWidth(self.initmapnow.sizePolicy().hasHeightForWidth())
+        self.initmapnow.setSizePolicy(sizePolicy)
+        self.initmapnow.setMinimumSize(QtCore.QSize(45, 45))
+        self.initmapnow.setToolTipDuration(3)
+        self.initmapnow.setText("")
         icon17 = QtGui.QIcon()
-        icon17.addPixmap(QtGui.QPixmap(":/icons/icons/four-black-squares.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.mapnow.setIcon(icon17)
-        self.mapnow.setObjectName("mapnow")
-        self.horizontalLayout.addWidget(self.mapnow)
+        icon17.addPixmap(QtGui.QPixmap(":/icons/icons/mapper_init.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.initmapnow.setIcon(icon17)
+        self.initmapnow.setIconSize(QtCore.QSize(40, 40))
+        self.initmapnow.setObjectName("initmapnow")
+        self.horizontalLayout.addWidget(self.initmapnow)
         self.executeaction = QtWidgets.QPushButton(self.frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -819,8 +830,8 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "  RESET  "))
         self.abtgit.setStatusTip(_translate("MainWindow", "Check me out on Github"))
         self.usbaud.setStatusTip(_translate("MainWindow", "Start @rom1v\'s usbaudio. Needs usbaudio to be on PATH"))
-        self.mapnow.setToolTip(_translate("MainWindow", "Device Point to Key mapping launcher. Click to register keys for the first time. For the subsequent launches, the button will start key listeners"))
-        self.mapnow.setStatusTip(_translate("MainWindow", "Device Point to Key mapping launcher. Click to register keys for the first time. For the subsequent launches, the button will start key listeners"))
+        self.initmapnow.setToolTip(_translate("MainWindow", "Initialize mapper"))
+        self.initmapnow.setStatusTip(_translate("MainWindow", "Initialize mapper"))
         self.executeaction.setStatusTip(_translate("MainWindow", "Start Scrcpy Executable right now. Please check if Scrcpy is added to path"))
         self.executeaction.setText(_translate("MainWindow", "START SCRCPY"))
         self.progressBar.setStatusTip(_translate("MainWindow", "Progress Bar"))

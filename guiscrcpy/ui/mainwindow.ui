@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>539</width>
-    <height>645</height>
+    <height>629</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -81,7 +81,17 @@ background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgb
 color: rgb(0, 0, 0);
 border-radius: 10px;
  }
-.QPushButton#mapnow{
+.QPushButton#initmapnow{
+background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0.0196078 rgba(0, 141, 255, 255), stop:1 rgba(52, 0, 255, 255));
+color: rgb(0, 0, 0);
+border-radius: 10px;
+}
+.QPushButton#initmapnow:hover{
+background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0.0196078 rgba(0, 72, 131, 255), stop:1 rgba(24, 0, 122, 255));
+color: rgb(0, 0, 0);
+border-radius: 10px;
+ }
+.QPushButton#mapnow:hover{
 background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(199, 0, 255, 255), stop:0.990196 rgba(88, 0, 255, 255));
 color: rgb(0, 0, 0);
 border-radius: 10px;
@@ -1020,7 +1030,7 @@ border-radius: 10px;
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="mapnow">
+          <widget class="QPushButton" name="initmapnow">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>11</horstretch>
@@ -1034,20 +1044,26 @@ border-radius: 10px;
             </size>
            </property>
            <property name="toolTip">
-            <string>Device Point to Key mapping launcher. Click to register keys for the first time. For the subsequent launches, the button will start key listeners</string>
+            <string>Initialize mapper</string>
            </property>
            <property name="toolTipDuration">
             <number>3</number>
            </property>
            <property name="statusTip">
-            <string>Device Point to Key mapping launcher. Click to register keys for the first time. For the subsequent launches, the button will start key listeners</string>
+            <string>Initialize mapper</string>
            </property>
            <property name="text">
             <string/>
            </property>
            <property name="icon">
             <iconset resource="rsrc.qrc">
-             <normaloff>:/icons/icons/four-black-squares.svg</normaloff>:/icons/icons/four-black-squares.svg</iconset>
+             <normaloff>:/icons/icons/mapper_init.svg</normaloff>:/icons/icons/mapper_init.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
            </property>
           </widget>
          </item>

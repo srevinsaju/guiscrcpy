@@ -22,7 +22,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(539, 645)
+        MainWindow.resize(539, 629)
         sizePolicy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -77,13 +77,23 @@ class Ui_MainWindow(object):
 "color: rgb(0, 0, 0);\n"
 "border-radius: 10px;\n"
 " }\n"
-".QPushButton#mapnow{\n"
+".QPushButton#initmapnow{\n"
+"background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0.0196078 rgba(0, 141, 255, 255), stop:1 rgba(52, 0, 255, 255));\n"
+"color: rgb(0, 0, 0);\n"
+"border-radius: 10px;\n"
+"}\n"
+"."
+                        "QPushButton#initmapnow:hover{\n"
+"background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0.0196078 rgba(0, 72, 131, 255), stop:1 rgba(24, 0, 122, 255));\n"
+"color: rgb(0, 0, 0);\n"
+"border-radius: 10px;\n"
+" }\n"
+".QPushButton#mapnow:hover{\n"
 "background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(199, 0, 255, 255), stop:0.990196 rgba(88, 0, 255, 255));\n"
 "color: rgb(0, 0, 0);\n"
 "border-radius: 10px;\n"
 "}\n"
-".QPush"
-                        "Button#network_button{\n"
+".QPushButton#network_button{\n"
 "background-color: rgb(10, 10, 10);\n"
 "color: rgb(0, 0, 0);\n"
 "border-radius: 10px;	\n"
@@ -540,17 +550,18 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.usbaud)
 
-        self.mapnow = QPushButton(self.frame)
-        self.mapnow.setObjectName(u"mapnow")
-        sizePolicy9.setHeightForWidth(self.mapnow.sizePolicy().hasHeightForWidth())
-        self.mapnow.setSizePolicy(sizePolicy9)
-        self.mapnow.setMinimumSize(QSize(45, 45))
-        self.mapnow.setToolTipDuration(3)
+        self.initmapnow = QPushButton(self.frame)
+        self.initmapnow.setObjectName(u"initmapnow")
+        sizePolicy9.setHeightForWidth(self.initmapnow.sizePolicy().hasHeightForWidth())
+        self.initmapnow.setSizePolicy(sizePolicy9)
+        self.initmapnow.setMinimumSize(QSize(45, 45))
+        self.initmapnow.setToolTipDuration(3)
         icon17 = QIcon()
-        icon17.addFile(u":/icons/icons/four-black-squares.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.mapnow.setIcon(icon17)
+        icon17.addFile(u":/icons/icons/mapper_init.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.initmapnow.setIcon(icon17)
+        self.initmapnow.setIconSize(QSize(40, 40))
 
-        self.horizontalLayout.addWidget(self.mapnow)
+        self.horizontalLayout.addWidget(self.initmapnow)
 
         self.executeaction = QPushButton(self.frame)
         self.executeaction.setObjectName(u"executeaction")
@@ -834,12 +845,12 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(statustip)
         self.usbaud.setText("")
 #if QT_CONFIG(tooltip)
-        self.mapnow.setToolTip(QCoreApplication.translate("MainWindow", u"Device Point to Key mapping launcher. Click to register keys for the first time. For the subsequent launches, the button will start key listeners", None))
+        self.initmapnow.setToolTip(QCoreApplication.translate("MainWindow", u"Initialize mapper", None))
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(statustip)
-        self.mapnow.setStatusTip(QCoreApplication.translate("MainWindow", u"Device Point to Key mapping launcher. Click to register keys for the first time. For the subsequent launches, the button will start key listeners", None))
+        self.initmapnow.setStatusTip(QCoreApplication.translate("MainWindow", u"Initialize mapper", None))
 #endif // QT_CONFIG(statustip)
-        self.mapnow.setText("")
+        self.initmapnow.setText("")
 #if QT_CONFIG(statustip)
         self.executeaction.setStatusTip(QCoreApplication.translate("MainWindow", u"Start Scrcpy Executable right now. Please check if Scrcpy is added to path", None))
 #endif // QT_CONFIG(statustip)

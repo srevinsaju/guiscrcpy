@@ -276,14 +276,16 @@ def listen_keypress(key_a):
     listener.start()
 
 
-def sth():
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
+def sth(init_core=False):
+    if init_core:
+        import sys
+        app = QtWidgets.QApplication(sys.argv)
     MapperUI()
-    sys.exit(app.exec_())
+    if init_core:
+        sys.exit(app.exec_())
 
 
-def file_check():
+def file_check(init_core=False):
     json_file = 'guiscrcpy.mapper.json'
 
     try:
@@ -321,7 +323,7 @@ def file_check():
         key_a = {"key": [], "pos": []}
         with open(cfgpath + json_file, 'w') as f:
             json.dump(key_a, f)
-        sth()
+        sth(init_core)
 
     elif file_exist:
         with open(cfgpath + json_file, 'r') as f:
@@ -379,4 +381,4 @@ def check_configuration_files():
 
 
 if __name__ == "__main__":
-    file_check()
+    file_check(init_core=True)

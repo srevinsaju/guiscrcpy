@@ -523,13 +523,26 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             from guiscrcpy.lib import mapper
             mapper.file_check()
         else:
-            logger.warning(
-                "guiscrcpy ~ mapper is not initialized. \n"
-                "Initialize by running \n\n"
-                "$ guiscrcpy --mapper \n\n"
-                "reset points by \n\n" +
-                "$ guiscrcpy --mapper --mapper-reset\n"
+            message_box = QMessageBox()
+            message_box.setText(
+                "guiscrcpy mapper is not initialized yet."
+                "Would you like to initialize it now? "
             )
+            message_box.setInformativeText(
+                "Before you initialize, make sure your phone is connected and "
+                "the display is switched on to map the points."
+            )
+            message_box.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            user_message_box_response = message_box.exec()
+            if user_message_box_response == QMessageBox.Ok:
+                self.private_message_box_adb.setText("Initializing mapper in 5 seconds")
+                print("Initializing mapper in 5 seconds")
+                print("Make sure your phone is connected and display is switched on")
+                print("Reset mapper if you missed any steps by 'guiscrcpy --mapper-reset'")
+                print()
+                print("If at first you don't succeed... reset, reset and reset again! :D")
+                print()
+                mapper.file_check()
 
     @staticmethod
     def launch_usb_audio():

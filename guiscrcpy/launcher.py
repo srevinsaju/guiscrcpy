@@ -102,10 +102,10 @@ scrcpy.server_path = config['scrcpy-server']
 # ARGUMENT PARSER
 
 sys_argv = []
-for arg in range(len(sys.argv)-1, -1, -1):
+for arg in range(len(sys.argv) - 1, -1, -1):
     log("Scanning {}".format(sys.argv[arg]))
     if '.py' in sys.argv[arg] or 'guiscrcpy' in sys.argv[arg]:
-        sys_argv = sys.argv[arg+1:]
+        sys_argv = sys.argv[arg + 1:]
         break
 
 # interface adb if asked for
@@ -288,7 +288,7 @@ if args.version:
     print()
     if environment.system() == "Linux":
         print("== CairoSVG version ==")
-        from cairosvg import VERSION as CAIRO_VERSION # noqa:
+        from cairosvg import VERSION as CAIRO_VERSION  # noqa:
         print("CairoSVG == {}".format(CAIRO_VERSION))
         print()
 
@@ -538,12 +538,15 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             message_box.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
             user_message_box_response = message_box.exec()
             if user_message_box_response == QMessageBox.Ok:
-                self.private_message_box_adb.setText("Initializing mapper in 5 seconds")
+                self.private_message_box_adb.setText(
+                    "Initializing mapper in 5 seconds")
                 print("Initializing mapper in 5 seconds")
                 print("Make sure your phone is connected and display is switched on")
-                print("Reset mapper if you missed any steps by 'guiscrcpy --mapper-reset'")
+                print(
+                    "Reset mapper if you missed any steps by 'guiscrcpy --mapper-reset'")
                 print()
-                print("If at first you don't succeed... reset, reset and reset again! :D")
+                print(
+                    "If at first you don't succeed... reset, reset and reset again! :D")
                 print()
                 mapper.file_check()
 
@@ -666,7 +669,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             str(identifier).encode()
         ).hexdigest()[__sha_shift:__sha_shift + 6]
         log(f"Creating desktop shortcut sha: {sha}")
-        path_to_image = os.path.join(picture_file_path, identifier+'.png')
+        path_to_image = os.path.join(picture_file_path, identifier + '.png')
         svg2png(
             bytestring=desktop_device_shortcut_svg().format(f"#{sha}"),
             write_to=path_to_image
@@ -803,16 +806,16 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             if paired_devices[i].get('wifi'):
                 icon = ':/icons/icons/portrait_mobile_disconnect.svg'
                 devices_view_list_item = QListWidgetItem(
-                        QIcon(icon),
-                        "{device}\n{mode}\n{status}".format(
-                            device=paired_devices[i].get('model'),
-                            mode=i,
-                            status='Disconnected'
-                        )
+                    QIcon(icon),
+                    "{device}\n{mode}\n{status}".format(
+                        device=paired_devices[i].get('model'),
+                        mode=i,
+                        status='Disconnected'
                     )
+                )
                 __sha_shift = config.get('sha_shift', 5)
                 __sha = hashlib.sha256(
-                    str(i).encode()).hexdigest()[__sha_shift:__sha_shift+6]
+                    str(i).encode()).hexdigest()[__sha_shift:__sha_shift + 6]
                 devices_view_list_item.setToolTip(
                     "<span style='color: #{color}'>Device</snap>: <b>{d}</b>\n"
                     "Status: {s}".format(

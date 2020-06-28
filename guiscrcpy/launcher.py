@@ -522,7 +522,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 os.path.join(cfgmgr.get_cfgpath() + "guiscrcpy.mapper.json"))):
             from guiscrcpy.lib import mapper
             mapper.file_check()
-            self.private_message_box_adb.setText("guiscrcpy-mapper has started")
+            self.private_message_box_adb.setText(
+                "guiscrcpy-mapper has started"
+            )
         else:
             message_box = QMessageBox()
             message_box.setText(

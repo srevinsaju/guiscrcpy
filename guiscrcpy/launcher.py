@@ -541,12 +541,18 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 self.private_message_box_adb.setText(
                     "Initializing mapper in 5 seconds")
                 print("Initializing mapper in 5 seconds")
-                print("Make sure your phone is connected and display is switched on")
                 print(
-                    "Reset mapper if you missed any steps by 'guiscrcpy --mapper-reset'")
+                        "Make sure your phone is connected"
+                        "and display is switched on"
+                )
+                print(
+                    "Reset mapper if you missed any "
+                    "steps by 'guiscrcpy --mapper-reset'")
                 print()
                 print(
-                    "If at first you don't succeed... reset, reset and reset again! :D")
+                    "If at first you don't succeed... "
+                    "reset, reset and reset again! :D"
+                )
                 print()
                 mapper.file_check()
 

@@ -57,7 +57,9 @@ These are the common methods of installation. To see more interesting ways, chec
 
 ## Further reading
 
-Thanks to users around the world, guiscrcpy is one of the trending apps this month. You may like to see some articles written by well wishers:
+Thanks to users around the world, 
+guiscrcpy is one of the trending apps this month. 
+You may like to see some articles written by well wishers:
 
 * [Mirror your Android screen on your computer with Guiscrcpy - opensource.com](https://opensource.com/article/19/9/mirror-android-screen-guiscrcpy)
 * [Helper GUI For scrcpy, The Android Desktop Display And Remote Control Tool - linuxuprising.com](https://www.linuxuprising.com/2019/09/helper-gui-for-scrcpy-android-desktop.html)

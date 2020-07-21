@@ -35,6 +35,7 @@ import argparse
 import hashlib
 import logging
 import os
+import subprocess
 import sys
 import time
 import webbrowser
@@ -347,10 +348,31 @@ if args.mapper_reset:
         sys.exit(1)
 
 if args.mapper:
-    from guiscrcpy.lib import mapper
+    if not args.mapper_device_id:
+        print("Please pass the --mapper-device-id <device_id> to initialize "
+              "the mapper")
+        sys.exit(1)
+    from guiscrcpy.lib.mapper.mapper import Mapper
     # Initialize the mapper if it is called.
     print('Initializing guiscrcpy mapper v3.5-')
-    mapper.file_check()
+    mp = Mapper(args.mapper_device_id)
+    if not os.path.exists(
+            os.path.join(cfgmgr.get_cfgpath(), 'guiscrcpy.mapper.json')):
+        print("guiscrcpy.mapper.json does not exist. ")
+        print("Initializing Mapper Configuration for the first time use.")
+        mp.initialize(initialize_qt=True)
+        print("Keys registered.")
+        print('Please run this command again to listen to map keys')
+    else:
+        print("guiscrcpy.mapper.json found. Starting the mapper...")
+        print("Your keyboard is being listened by guiscrcpy-mapper")
+        print("pressing any key will trigger the position.")
+        print()
+        print('If you would like to register new keys, pass --mapper-reset')
+        print("\nInitializing\n\n")
+        mp.listen_keypress()
+        print("Done!")
+
     sys.exit(0)
 
 logger.debug("Importing modules...")
@@ -518,10 +540,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.nm.show()
 
     def bootstrap_mapper(self):
+
         if (os.path.exists(
                 os.path.join(cfgmgr.get_cfgpath() + "guiscrcpy.mapper.json"))):
-            from guiscrcpy.lib import mapper
-            mapper.file_check()
+            from guiscrcpy.lib.mapper.mapper import MapperAsync
+            _, identifier = self.current_device_identifier()
+            self.mp = MapperAsync(self, identifier, initialize=False)
+            self.mp.start()
             self.private_message_box_adb.setText(
                 "guiscrcpy-mapper has started"
             )
@@ -529,14 +554,16 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             message_box = QMessageBox()
             message_box.setText(
                 "guiscrcpy mapper is not initialized yet."
-                "Would you like to initialize it now? "
+                "Please initialize guiscrcpy by running : "
+                "'guiscrcpy --mapper' on the command line"
             )
             message_box.setInformativeText(
                 "Before you initialize, make sure your phone is connected and "
                 "the display is switched on to map the points."
             )
-            message_box.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            message_box.setStandardButtons(QMessageBox.Ok)
             user_message_box_response = message_box.exec()
+            return
             if user_message_box_response == QMessageBox.Ok:
                 self.private_message_box_adb.setText(
                     "Initializing mapper in 5 seconds")
@@ -554,7 +581,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                     "reset, reset and reset again! :D"
                 )
                 print()
-                mapper.file_check()
+                _, identifier = self.current_device_identifier()
+
 
     @staticmethod
     def launch_usb_audio():
@@ -606,12 +634,15 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         message_box.addButton("OK", self.quit_window)
         message_box.show()
 
-    @staticmethod
-    def quit_window():
+    def quit_window(self):
         """
         A method to quit the main window
         :return:
         """
+        try:
+            self.mp.exit()
+        except (AttributeError, KeyboardInterrupt):
+            pass
         sys.exit()
 
     def forget_paired_device(self):

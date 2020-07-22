@@ -61,6 +61,7 @@ class Mapper:
         self.config = dict()
         self._device_id = device_id
         self.app = None
+        self.window = None
         self.dimensions = adb.get_dimensions(adb.path, device_id)
 
     def set_device_id(self, device_id):
@@ -126,7 +127,8 @@ class Mapper:
             adb.path, "shell rm /sdcard/{uid}.png".format(uid=uid),
             device_id=self._device_id
         )
-        print("[LOG] Screenshot captured. Saved to {cfgpath}".format(cfgpath=cfgpath))
+        print("[LOG] Screenshot captured. "
+              "Saved to {cfgpath}".format(cfgpath=cfgpath))
         return os.path.join(cfgpath, '{uid}.png'.format(uid=uid))
 
     # The following functions handle key events on the mapper
@@ -150,8 +152,6 @@ class Mapper:
         """
         Listens to keypress using pynput and executes self.on_key_press
         on every keydown
-        :param key_a:
-        :type key_a:
         :return:
         :rtype:
         """
@@ -264,10 +264,11 @@ def main():
         mapper_device_id = None
 
     # get the adb shell dimensions using wmctrl
-    dimensions = adb.get_dimensions(adb.path, device_id=mapper_device_id)
+    adb.get_dimensions(adb.path, device_id=mapper_device_id)
 
     # delay for 5 seconds by default or respect command line arguments
     delay = args.mapper_delay
+    time.sleep(delay)
 
 
 def __main__():

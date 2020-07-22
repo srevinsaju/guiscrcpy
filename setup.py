@@ -60,7 +60,7 @@ setup(
     license='GPL v3',
     author='srevinsaju',
     author_email="srevin03@gmail.com",
-    packages=['guiscrcpy', 'guiscrcpy.lib.mapper', 'guiscrcpy.network', 'guiscrcpy.platform', 'guiscrcpy.theme', 'guiscrcpy.ui', 'guiscrcpy.ux'],
+    packages=['guiscrcpy', 'guiscrcpy.lib.mapper', 'guiscrcpy.network', 'guiscrcpy.platform', 'guiscrcpy.theme', 'guiscrcpy.ui', 'guiscrcpy.ux'],  # noqa: E501
     data_files=data_files,
     extras_require={'pyqt5': 'PyQt5', 'pyside2': 'PySide2'},
     url="https://srevinsaju.github.io/guiscrcpy",

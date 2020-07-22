@@ -35,7 +35,6 @@ import argparse
 import hashlib
 import logging
 import os
-import subprocess
 import sys
 import time
 import webbrowser
@@ -123,7 +122,7 @@ if 'adb-interface' in sys.argv:
     except ValueError:
         raise OSError("adb-interface command is to be given as an arg and "
                       "not a param")
-    adb_process_output = Popen(shellify(
+    adb_process_output = Popen(shellify(  # noqa:
         f"{adb.path} {' '.join(sys.argv[adb_commands:])}"
     ), stdout=PIPE, stderr=PIPE)
     print(adb_process_output.stdout.read().decode())
@@ -144,7 +143,7 @@ if 'scrcpy-interface' in sys.argv:
     except ValueError:
         raise OSError("scrcpy-interface command is to be given as an arg and "
                       "not a param")
-    scrcpy_process_output = Popen(shellify(
+    scrcpy_process_output = Popen(shellify(  # noqa:
         f"{scrcpy.path} {' '.join(sys.argv[scrcpy_commands:])}"
     ), stdout=PIPE, stderr=PIPE)
     print(scrcpy_process_output.stdout.read().decode())
@@ -391,6 +390,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.cmx = None
         self.sm = None
+        self.mp = None
         self.nm = None
         self.swipe_instance = None
         self.panel_instance = None
@@ -562,27 +562,28 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 "the display is switched on to map the points."
             )
             message_box.setStandardButtons(QMessageBox.Ok)
-            user_message_box_response = message_box.exec()
+            message_box.exec()
+            # user_message_box_response = message_box.exec()
             return
-            if user_message_box_response == QMessageBox.Ok:
-                self.private_message_box_adb.setText(
-                    "Initializing mapper in 5 seconds")
-                print("Initializing mapper in 5 seconds")
-                print(
-                        "Make sure your phone is connected"
-                        "and display is switched on"
-                )
-                print(
-                    "Reset mapper if you missed any "
-                    "steps by 'guiscrcpy --mapper-reset'")
-                print()
-                print(
-                    "If at first you don't succeed... "
-                    "reset, reset and reset again! :D"
-                )
-                print()
-                _, identifier = self.current_device_identifier()
-
+            # TODO: allow enabling mapper from inside
+            # if user_message_box_response == QMessageBox.Ok:
+            #     self.private_message_box_adb.setText(
+            #         "Initializing mapper in 5 seconds")
+            #     print("Initializing mapper in 5 seconds")
+            #     print(
+            #             "Make sure your phone is connected"
+            #             "and display is switched on"
+            #     )
+            #     print(
+            #         "Reset mapper if you missed any "
+            #         "steps by 'guiscrcpy --mapper-reset'")
+            #     print()
+            #     print(
+            #         "If at first you don't succeed... "
+            #         "reset, reset and reset again! :D"
+            #     )
+            #     print()
+            #     _, identifier = self.current_device_identifier()
 
     @staticmethod
     def launch_usb_audio():
@@ -612,7 +613,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             "Please restart guiscrcpy to reset the settings. "
             "guiscrcpy will now exit",
         )
-        about_message_box.addButton("OK", about_message_box.hide)
+        about_message_box.addButton("OK", about_message_box.hide)  # noqa:
         about_message_box.show()
 
     def reset(self):
@@ -631,7 +632,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             "guiscrcpy will now exit",
         )
         QMessageBox.ButtonRole()
-        message_box.addButton("OK", self.quit_window)
+        message_box.addButton("OK", self.quit_window)  # noqa:
         message_box.show()
 
     def quit_window(self):

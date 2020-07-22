@@ -18,10 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import argparse
-import copy
 import json
 import os
-import platform
 import sys
 import time
 import uuid
@@ -53,7 +51,7 @@ print('With USB debugging turned on.')
 print("+++++++++++++++++++++++++++++++++++++++")
 print("Waiting for device")
 adb.command(adb.path, 'wait-for-any-device')
-print("Device : OK!")
+print("Device : OK!\n")
 
 cfgpath = cfgmgr.cfgpath
 

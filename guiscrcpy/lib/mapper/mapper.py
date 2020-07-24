@@ -219,8 +219,10 @@ class MapperAsync(QThread):
         if self.initialize:
             mp.initialize(initialize_qt=False)
         else:
+            mp.read_configuration()
             mp.listen_keypress()
 
+   
 
 def command_line_argument_parse():
     """

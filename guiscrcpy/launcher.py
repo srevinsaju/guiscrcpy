@@ -363,6 +363,7 @@ if args.mapper:
         print("Keys registered.")
         print('Please run this command again to listen to map keys')
     else:
+        mp.read_configuration()
         print("guiscrcpy.mapper.json found. Starting the mapper...")
         print("Your keyboard is being listened by guiscrcpy-mapper")
         print("pressing any key will trigger the position.")

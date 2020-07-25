@@ -347,14 +347,23 @@ if args.mapper_reset:
         sys.exit(1)
 
 if args.mapper:
-    if not args.mapper_device_id:
+    adb_devices_list = adb.devices(adb.path)
+    if len(adb_devices_list) == 0:
+        print("E: No devices found")
+        sys.exit(1)
+    elif len(adb_devices_list) == 1:
+        mapper_device_id = adb_devices_list[0][0]
+    elif not args.mapper_device_id:
         print("Please pass the --mapper-device-id <device_id> to initialize "
               "the mapper")
         sys.exit(1)
+    else:
+        mapper_device_id = args.mapper_device_id
+
     from guiscrcpy.lib.mapper.mapper import Mapper
     # Initialize the mapper if it is called.
     print('Initializing guiscrcpy mapper v3.5-')
-    mp = Mapper(args.mapper_device_id)
+    mp = Mapper(mapper_device_id)
     if not os.path.exists(
             os.path.join(cfgmgr.get_cfgpath(), 'guiscrcpy.mapper.json')):
         print("guiscrcpy.mapper.json does not exist. ")
@@ -363,6 +372,7 @@ if args.mapper:
         print("Keys registered.")
         print('Please run this command again to listen to map keys')
     else:
+        mp.read_configuration()
         print("guiscrcpy.mapper.json found. Starting the mapper...")
         print("Your keyboard is being listened by guiscrcpy-mapper")
         print("pressing any key will trigger the position.")

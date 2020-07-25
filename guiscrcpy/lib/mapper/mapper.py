@@ -219,6 +219,7 @@ class MapperAsync(QThread):
         if self.initialize:
             mp.initialize(initialize_qt=False)
         else:
+            mp.read_configuration()
             mp.listen_keypress()
 
 
@@ -269,10 +270,6 @@ def main():
     # delay for 5 seconds by default or respect command line arguments
     delay = args.mapper_delay
     time.sleep(delay)
-
-
-def __main__():
-    main()
 
 
 if __name__ == "__main__":

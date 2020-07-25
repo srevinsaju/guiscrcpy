@@ -63,6 +63,37 @@ class Mapper:
         self.app = None
         self.window = None
         self.dimensions = adb.get_dimensions(adb.path, device_id)
+        if self.check_orientation() == 1:
+            # reverse the detected dimensions.
+            # possibly the device is landscape / not the default
+            # orientation as detected by Android Window Manager 
+            self.dimensions = self.dimensions[::-1]
+
+    def check_orientation(self):
+        proc = adb.shell(adb.path, "dumpsys input")
+        proc.wait(500)
+        out, err = proc.communicate()
+        out, err = out.decode(), err.decode()
+        if 'SurfaceOrientation' in out:
+            # SurfaceOrientation gives the idea if the device is
+            # landscape or portait. SurfaceOrientation: 1 mentions that
+            # the mobile is oriented in the landscape orientation
+            # SugrfaceOrientation: 0 indicates, default
+            print("Detected SurfaceOrientation, processing...")
+            if "SurfaceOrientation: 0" in out:
+                print("Detected Portait orientation...")
+                return 0
+            elif "SurfaceOrientation: 1" in out:
+                print("Detected Landscape orientation...")
+                return 1
+            else:
+                print("Failed to detect orientation from device. "
+                      "Fallback to 0")
+                return 0
+        else:
+            print("Failed to detect Orientation. SurfaceOrientation"
+                  " key was not found")
+            return 0
 
     def set_device_id(self, device_id):
         """

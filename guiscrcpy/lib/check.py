@@ -153,10 +153,10 @@ class adb:
     def shell(path, command, device_id=None):
         if device_id:
             po = Popen(_("{} -s {} shell {}".format(path, device_id, command)),
-                  stdout=PIPE, stderr=PIPE)
+                       stdout=PIPE, stderr=PIPE)
         else:
             po = Popen(_("{} shell {}".format(path, command)),
-                  stdout=PIPE, stderr=PIPE)
+                       stdout=PIPE, stderr=PIPE)
         return po
 
     @staticmethod

@@ -66,7 +66,7 @@ class Mapper:
         if self.check_orientation() == 1:
             # reverse the detected dimensions.
             # possibly the device is landscape / not the default
-            # orientation as detected by Android Window Manager 
+            # orientation as detected by Android Window Manager
             self.dimensions = self.dimensions[::-1]
 
     def check_orientation(self):

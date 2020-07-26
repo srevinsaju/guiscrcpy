@@ -90,6 +90,72 @@ jobs:
         path: guiscrcpy-x86_64.AppImage
 
 
+  AppImage-PySide2:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        version: ['3.8']
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.version }}
+    - name: Download dependencies
+      run: |
+        sudo apt install libxkbcommon0 libxcb-xkb-dev libxkbcommon-x11-0 libxcb-xkb1
+    - name: Test AppImage
+      run: |
+        sed -i 's,PyQt5,PySide2' requirements.txt
+        sed -i 's,PyQt5,PySide2' setup.py
+        python -m pip install python-appimage
+        echo $(realpath .) > appimage/requirements.txt
+        python -m python_appimage build app appimage \
+                                            --linux-tag=manylinux1_x86_64
+    
+    - name: Extract AppImage
+      run: |
+        ./guiscrcpy-x86_64.AppImage --appimage-extract
+        mv squashfs-root AppDir
+        wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+        chmod +x ./appimagetool-x86_64.AppImage
+        
+    - name: Patch PyQt5
+      run: |
+        cp -L /usr/lib/x86_64-linux-gnu/libxkbcommon* AppDir/usr/lib/.
+        cp -L /usr/lib/x86_64-linux-gnu/libxcb-xkb.so.1 AppDir/usr/lib/.
+    
+    - name: Download adb
+      run: |
+        wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip
+        unzip platform-tools-latest-linux.zip -d adb
+        cp adb/platform-tools/adb AppDir/usr/bin/.
+    
+    - name: Download scrcpy
+      run: |
+        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy113.tar.gz
+        tar -xf scrcpy113.tar.gz
+        mkdir -p AppDir/usr/bin
+        cp scrcpy113/scrcpy AppDir/usr/bin/.
+        chmod +x AppDir/usr/bin/scrcpy
+        mkdir -p AppDir/usr/share/scrcpy
+        cp scrcpy113/scrcpy-server AppDir/usr/share/scrcpy/.
+
+    - name: Download scrcpy binary deps
+      run: |
+        cp scrcpy113/lib/* AppDir/usr/lib/.
+    - name: Reimage AppImage
+      run: |
+        rm ./guiscrcpy-x86_64.AppImage
+        ./appimagetool-x86_64.AppImage --comp gzip AppDir -n
+        mv guiscrcpy-x86_64.AppImage guiscrcpy-PySide2-x86_64.AppImage
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: guiscrcpy-PySide2-continuous-x86_64.AppImage
+        path: guiscrcpy-PySide2-x86_64.AppImage
+
+
   Windows:
     name: Windows
     runs-on: windows-latest
@@ -115,8 +181,40 @@ jobs:
           name: guiscrcpy-continuous.exe
           # Directory containing files to upload
           path: dist/guiscrcpy.exe
+
+
+  Windows-PySide2:
+    name: Windows
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+        
+      - name: Install dependencies
+        run: |
+          sed -i 's,PyQt5,PySide2' requirements.txt
+          sed -i 's,PyQt5,PySide2' setup.py
+          python -m pip install --upgrade pip
+          pip3 install PyInstaller
+          pip3 install -r requirements.txt
+          pip3 install . 
+          echo Done
+          
+      - name: Create .exe
+        run: |
+          python -m PyInstaller guiscrcpy-windows.spec
+          mv dist/guiscrcpy.exe dist/guiscrcpy-pyside2.exe
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          # Artifact name
+          name: guiscrcpy-pyside2-continuous.exe
+          # Directory containing files to upload
+          path: dist/guiscrcpy-pyside2.exe
+
+
   Release:
-    needs: [Windows, AppImage, Wheel]
+    needs: [Windows, AppImage, Wheel, Windows-PySide2, AppImage-PySide2]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -128,10 +226,16 @@ jobs:
         name: guiscrcpy-continuous.exe
     - uses: actions/download-artifact@v1
       with:
+        name: guiscrcpy-pyside2-continuous.exe
+    - uses: actions/download-artifact@v1
+      with:
         name: guiscrcpy-continuous-none-any-py3.whl
     - uses: actions/download-artifact@v1
       with:
         name: guiscrcpy-continuous-x86_64.AppImage
+    - uses: actions/download-artifact@v1
+      with:
+        name: guiscrcpy-PySide2-continuous-x86_64.AppImage
 
     - name: Release
       uses: marvinpinto/action-automatic-releases@latest
@@ -141,6 +245,8 @@ jobs:
         title: continuous
         files: |
           guiscrcpy-continuous.exe
+          guiscrcpy-pyside2-continuous.exe
+          guiscrcpy-PySide2-continuous-x86_64.AppImage
           guiscrcpy-continuous-x86_64.AppImage
           guiscrcpy-continuous-none-any-py3.whl
           

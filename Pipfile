@@ -3,16 +3,17 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
-[dev - packages]
+[dev-packages]
+GitPython = "*"
 
 [packages]
 fonttools = "*"
-psutil = "5.7.0"
-pynput = "1.6"
-pyshortcuts = "1.7"
-pystray = "0.14.4"
-GitPython = "3.1.1"
-PyQt5 = "*"
+psutil = "*"
+pynput = "*"
+pystray = "*"
+PyQt5 = "~=5.15"
+qtpy = "*"
+cairosvg = "~=2.4.2"
 
 [requires]
 python_version = "3.8"

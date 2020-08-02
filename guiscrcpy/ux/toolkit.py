@@ -19,12 +19,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import uuid
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import QPoint
-from PyQt5.QtWidgets import QMainWindow
+from qtpy import QtCore
+from qtpy.QtCore import QPoint
+from qtpy.QtWidgets import QMainWindow
 
 from guiscrcpy.lib.toolkit import UXMapper
-from guiscrcpy.ui.toolkit import Ui_ToolbarPanel
+from guiscrcpy.ux import Ui_ToolbarPanel
 
 
 class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):

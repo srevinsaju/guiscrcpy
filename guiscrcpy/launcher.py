@@ -41,11 +41,11 @@ import webbrowser
 from subprocess import PIPE
 from subprocess import Popen
 
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QModelIndex, QPoint
-from PyQt5.QtGui import QPixmap, QIcon, QFont
-from PyQt5.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QMenu
-from PyQt5.QtWidgets import QMessageBox
+from qtpy import QtCore, QtWidgets
+from qtpy.QtCore import QModelIndex, QPoint
+from qtpy.QtGui import QPixmap, QIcon, QFont
+from qtpy.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QMenu
+from qtpy.QtWidgets import QMessageBox
 
 from guiscrcpy.install.finder import open_exe_name_dialog
 from guiscrcpy.lib.check import adb
@@ -59,7 +59,7 @@ from guiscrcpy.theme.decorate import Header
 from guiscrcpy.theme.desktop_shortcut import desktop_device_shortcut_svg
 from guiscrcpy.theme.linux_desktop_shortcut_template import GUISCRCPY_DEVICE
 from guiscrcpy.theme.style import dark_stylesheet
-from guiscrcpy.ui.main import Ui_MainWindow
+from guiscrcpy.ux import Ui_MainWindow
 from guiscrcpy.ux.panel import Panel
 from guiscrcpy.ux.swipe import SwipeUX
 from guiscrcpy.ux.toolkit import InterfaceToolkit
@@ -102,10 +102,10 @@ scrcpy.server_path = config['scrcpy-server']
 # ARGUMENT PARSER
 
 sys_argv = []
-for arg in range(len(sys.argv)-1, -1, -1):
+for arg in range(len(sys.argv) - 1, -1, -1):
     log("Scanning {}".format(sys.argv[arg]))
     if '.py' in sys.argv[arg] or 'guiscrcpy' in sys.argv[arg]:
-        sys_argv = sys.argv[arg+1:]
+        sys_argv = sys.argv[arg + 1:]
         break
 
 # interface adb if asked for
@@ -122,7 +122,7 @@ if 'adb-interface' in sys.argv:
     except ValueError:
         raise OSError("adb-interface command is to be given as an arg and "
                       "not a param")
-    adb_process_output = Popen(shellify(
+    adb_process_output = Popen(shellify(  # noqa:
         f"{adb.path} {' '.join(sys.argv[adb_commands:])}"
     ), stdout=PIPE, stderr=PIPE)
     print(adb_process_output.stdout.read().decode())
@@ -143,7 +143,7 @@ if 'scrcpy-interface' in sys.argv:
     except ValueError:
         raise OSError("scrcpy-interface command is to be given as an arg and "
                       "not a param")
-    scrcpy_process_output = Popen(shellify(
+    scrcpy_process_output = Popen(shellify(  # noqa:
         f"{scrcpy.path} {' '.join(sys.argv[scrcpy_commands:])}"
     ), stdout=PIPE, stderr=PIPE)
     print(scrcpy_process_output.stdout.read().decode())
@@ -288,7 +288,7 @@ if args.version:
     print()
     if environment.system() == "Linux":
         print("== CairoSVG version ==")
-        from cairosvg import VERSION as CAIRO_VERSION # noqa:
+        from cairosvg import VERSION as CAIRO_VERSION  # noqa:
         print("CairoSVG == {}".format(CAIRO_VERSION))
         print()
 
@@ -347,10 +347,41 @@ if args.mapper_reset:
         sys.exit(1)
 
 if args.mapper:
-    from guiscrcpy.lib import mapper
+    adb_devices_list = adb.devices(adb.path)
+    if len(adb_devices_list) == 0:
+        print("E: No devices found")
+        sys.exit(1)
+    elif len(adb_devices_list) == 1:
+        mapper_device_id = adb_devices_list[0][0]
+    elif not args.mapper_device_id:
+        print("Please pass the --mapper-device-id <device_id> to initialize "
+              "the mapper")
+        sys.exit(1)
+    else:
+        mapper_device_id = args.mapper_device_id
+
+    from guiscrcpy.lib.mapper.mapper import Mapper
     # Initialize the mapper if it is called.
     print('Initializing guiscrcpy mapper v3.5-')
-    mapper.file_check()
+    mp = Mapper(mapper_device_id)
+    if not os.path.exists(
+            os.path.join(cfgmgr.get_cfgpath(), 'guiscrcpy.mapper.json')):
+        print("guiscrcpy.mapper.json does not exist. ")
+        print("Initializing Mapper Configuration for the first time use.")
+        mp.initialize(initialize_qt=True)
+        print("Keys registered.")
+        print('Please run this command again to listen to map keys')
+    else:
+        mp.read_configuration()
+        print("guiscrcpy.mapper.json found. Starting the mapper...")
+        print("Your keyboard is being listened by guiscrcpy-mapper")
+        print("pressing any key will trigger the position.")
+        print()
+        print('If you would like to register new keys, pass --mapper-reset')
+        print("\nInitializing\n\n")
+        mp.listen_keypress()
+        print("Done!")
+
     sys.exit(0)
 
 logger.debug("Importing modules...")
@@ -369,6 +400,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.cmx = None
         self.sm = None
+        self.mp = None
         self.nm = None
         self.swipe_instance = None
         self.panel_instance = None
@@ -460,7 +492,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.pushButton.clicked.connect(self.reset)
         self.abtgit.clicked.connect(self.launch_web_github)
         self.usbaud.clicked.connect(self.launch_usb_audio)
-        self.mapnow.clicked.connect(self.bootstrap_mapper)
+        self.initmapnow.clicked.connect(self.bootstrap_mapper)
         self.network_button.clicked.connect(self.network_mgr)
         self.settings_button.clicked.connect(self.settings_mgr)
         # self.devices_view.itemChanged.connect(self.update_rotation_combo_cb)
@@ -517,20 +549,51 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.nm.init()
         self.nm.show()
 
-    @staticmethod
-    def bootstrap_mapper():
+    def bootstrap_mapper(self):
+
         if (os.path.exists(
                 os.path.join(cfgmgr.get_cfgpath() + "guiscrcpy.mapper.json"))):
-            from guiscrcpy.lib import mapper
-            mapper.file_check()
-        else:
-            logger.warning(
-                "guiscrcpy ~ mapper is not initialized. \n"
-                "Initialize by running \n\n"
-                "$ guiscrcpy --mapper \n\n"
-                "reset points by \n\n" +
-                "$ guiscrcpy --mapper --mapper-reset\n"
+            from guiscrcpy.lib.mapper.mapper import MapperAsync
+            _, identifier = self.current_device_identifier()
+            self.mp = MapperAsync(self, identifier, initialize=False)
+            self.mp.start()
+            self.private_message_box_adb.setText(
+                "guiscrcpy-mapper has started"
             )
+        else:
+            message_box = QMessageBox()
+            message_box.setText(
+                "guiscrcpy mapper is not initialized yet."
+                "Please initialize guiscrcpy by running : "
+                "'guiscrcpy --mapper' on the command line"
+            )
+            message_box.setInformativeText(
+                "Before you initialize, make sure your phone is connected and "
+                "the display is switched on to map the points."
+            )
+            message_box.setStandardButtons(QMessageBox.Ok)
+            message_box.exec()
+            # user_message_box_response = message_box.exec()
+            return
+            # TODO: allow enabling mapper from inside
+            # if user_message_box_response == QMessageBox.Ok:
+            #     self.private_message_box_adb.setText(
+            #         "Initializing mapper in 5 seconds")
+            #     print("Initializing mapper in 5 seconds")
+            #     print(
+            #             "Make sure your phone is connected"
+            #             "and display is switched on"
+            #     )
+            #     print(
+            #         "Reset mapper if you missed any "
+            #         "steps by 'guiscrcpy --mapper-reset'")
+            #     print()
+            #     print(
+            #         "If at first you don't succeed... "
+            #         "reset, reset and reset again! :D"
+            #     )
+            #     print()
+            #     _, identifier = self.current_device_identifier()
 
     @staticmethod
     def launch_usb_audio():
@@ -560,7 +623,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             "Please restart guiscrcpy to reset the settings. "
             "guiscrcpy will now exit",
         )
-        about_message_box.addButton("OK", about_message_box.hide())
+        about_message_box.addButton("OK", about_message_box.hide)  # noqa:
         about_message_box.show()
 
     def reset(self):
@@ -578,15 +641,19 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             "Please restart guiscrcpy to reset the settings. "
             "guiscrcpy will now exit",
         )
-        message_box.addButton("OK", self.quit_window())
+        QMessageBox.ButtonRole()
+        message_box.addButton("OK", self.quit_window)  # noqa:
         message_box.show()
 
-    @staticmethod
-    def quit_window():
+    def quit_window(self):
         """
         A method to quit the main window
         :return:
         """
+        try:
+            self.mp.exit()
+        except (AttributeError, KeyboardInterrupt):
+            pass
         sys.exit()
 
     def forget_paired_device(self):
@@ -650,7 +717,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             str(identifier).encode()
         ).hexdigest()[__sha_shift:__sha_shift + 6]
         log(f"Creating desktop shortcut sha: {sha}")
-        path_to_image = os.path.join(picture_file_path, identifier+'.png')
+        path_to_image = os.path.join(picture_file_path, identifier + '.png')
         svg2png(
             bytestring=desktop_device_shortcut_svg().format(f"#{sha}"),
             write_to=path_to_image
@@ -787,16 +854,16 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             if paired_devices[i].get('wifi'):
                 icon = ':/icons/icons/portrait_mobile_disconnect.svg'
                 devices_view_list_item = QListWidgetItem(
-                        QIcon(icon),
-                        "{device}\n{mode}\n{status}".format(
-                            device=paired_devices[i].get('model'),
-                            mode=i,
-                            status='Disconnected'
-                        )
+                    QIcon(icon),
+                    "{device}\n{mode}\n{status}".format(
+                        device=paired_devices[i].get('model'),
+                        mode=i,
+                        status='Disconnected'
                     )
+                )
                 __sha_shift = config.get('sha_shift', 5)
                 __sha = hashlib.sha256(
-                    str(i).encode()).hexdigest()[__sha_shift:__sha_shift+6]
+                    str(i).encode()).hexdigest()[__sha_shift:__sha_shift + 6]
                 devices_view_list_item.setToolTip(
                     "<span style='color: #{color}'>Device</snap>: <b>{d}</b>\n"
                     "Status: {s}".format(
@@ -806,7 +873,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                         color=__sha
                     )
                 )
-                devices_view_list_item.setFont(QFont('Noto Sans', pointSize=8))
+                devices_view_list_item.setFont(QFont('Noto Sans', 8))
                 self.devices_view.addItem(devices_view_list_item)
         return paired_devices
 
@@ -957,7 +1024,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 )
             )
 
-            devices_view_list_item.setFont(QFont('Noto Sans', pointSize=8))
+            devices_view_list_item.setFont(QFont('Noto Sans', 8))
             log(f"Pairing status: {device_paired_and_exists}")
             if device_paired_and_exists and device_is_wifi:
                 # we need to only neglect wifi devices

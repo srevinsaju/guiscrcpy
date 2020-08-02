@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QFileDialog
+from qtpy.QtWidgets import QFileDialog
 
 
 def open_exe_name_dialog(parent, appname):

@@ -35,7 +35,7 @@ except FileNotFoundError:
     long_description = \
         "Open Source Android Screen Mirroring System by @srevinsaju"
 
-requirements = ['PyQt5>=5.14,<5.15', 'pynput']
+requirements = ['PyQt5>=5.14,<5.16', 'pynput', 'qtpy']
 if platform.system() == 'Windows':
     requirements.extend(['pywin32', 'psutil'])
 elif platform.system() == 'Linux':
@@ -53,19 +53,19 @@ data_files = [
 
 setup(
     name='guiscrcpy',
-    version='3.9.3',
+    version='4.0.b1',
     description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',
     license='GPL v3',
     author='srevinsaju',
     author_email="srevin03@gmail.com",
-    packages=['guiscrcpy'],
+    packages=['guiscrcpy', 'guiscrcpy.lib.mapper', 'guiscrcpy.network', 'guiscrcpy.platform', 'guiscrcpy.theme', 'guiscrcpy.ui', 'guiscrcpy.ux'], # noqa:
     data_files=data_files,
     extras_require={'pyqt5': 'PyQt5', 'pyside2': 'PySide2'},
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
-    package_data={'guiscrcpy': ['*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*', 'theme/*', 'ux/*', 'network/*', 'settings/*', 'install/*', 'platform/windows_tools/*', 'ui/icons/*', 'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*']},  # noqa: E501
+    package_data={'guiscrcpy': ['*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*', 'theme/*', 'ux/*', 'network/*', 'settings/*', 'install/*', 'platform/windows_tools/*', 'ui/icons/*', 'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*', 'ui/pyqt5/*', 'ui/pyside2/*']},  # noqa: E501
     include_package_data=True,
     install_requires=requirements,
     scripts=["scripts/guiscrcpy"],

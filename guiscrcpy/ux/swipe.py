@@ -20,9 +20,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import logging
 import uuid
 
-from PyQt5 import QtGui, QtWidgets, QtCore
-from PyQt5.QtCore import Qt, QPoint
-from PyQt5.QtWidgets import QMainWindow
+from qtpy import QtGui, QtWidgets, QtCore
+from qtpy.QtCore import Qt, QPoint
+from qtpy.QtWidgets import QMainWindow
 
 from guiscrcpy.lib.toolkit import UXMapper
 
@@ -36,7 +36,6 @@ class SwipeUX(QMainWindow):
         :param always_on_top: bool
         """
         QMainWindow.__init__(self)
-        super(SwipeUX, self).__init__()
         self.oldPos = None
         self.name = "swipe"
         self.uid = uuid.uuid4()

@@ -20,14 +20,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QDialog
 
-from guiscrcpy.ui.settings import Ui_MainWindow
+from guiscrcpy.ux import Ui_SettingsWindow
 
 
-class InterfaceSettings(QMainWindow, Ui_MainWindow):
+class InterfaceSettings(QMainWindow, Ui_SettingsWindow):
     # there was a Dialog in the bracket
     def __init__(self, parent):
         QMainWindow.__init__(self)
-        Ui_MainWindow.__init__(self)
+        Ui_SettingsWindow.__init__(self)
         self.setupUi(self)
         self.parent = parent
         self.commands = []

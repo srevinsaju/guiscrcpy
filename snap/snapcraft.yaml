@@ -1,3 +1,6 @@
+# some parts are inherited from https://github.com/sisco311/scrcpy-snap/blob/master/snap/snapcraft.yaml
+# Thanks @sisco311 for the amazing snap!!
+
 name: guiscrcpy
 version: 4.0.b1
 summary: An opensource GUI for android screen mirroring
@@ -85,10 +88,10 @@ parts:
   scrcpy-server:
     plugin: nil
     override-pull:
-      wget https://github.com/Genymobile/scrcpy/releases/download/v1.13/scrcpy-server-v1.13
+      wget https://github.com/Genymobile/scrcpy/releases/download/v1.15.1/scrcpy-server-v1.15.1
     override-build: |
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/
-      cp scrcpy-server-v1.13 $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/scrcpy-server
+      cp scrcpy-server-v1.15.1 $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/scrcpy-server
   scrcpy:
     source: https://github.com/Genymobile/scrcpy.git
     plugin: meson
@@ -117,6 +120,7 @@ parts:
       - libslang2
       - libglu1-mesa
       - adb
+
 
   guiscrcpy:
     after: [desktop-qt5, classic-launch, debian-multiarch-triplet-provider-launch]

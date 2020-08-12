@@ -83,10 +83,10 @@ parts:
   scrcpy-server:
     plugin: nil
     override-pull:
-      wget https://github.com/Genymobile/scrcpy/releases/download/v1.13/scrcpy-server-v1.13
+      wget https://github.com/Genymobile/scrcpy/releases/download/v1.15.1/scrcpy-server-v1.15.1
     override-build: |
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/
-      cp scrcpy-server-v1.13 $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/scrcpy-server
+      cp scrcpy-server-v1.15.1 $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/scrcpy-server
   scrcpy:
     source: https://github.com/Genymobile/scrcpy.git
     plugin: meson

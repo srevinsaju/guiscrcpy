@@ -54,7 +54,7 @@ data_files = [
 
 setup(
     name='guiscrcpy',
-    version='4.1.1',
+    version='4.1.2',
     description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',

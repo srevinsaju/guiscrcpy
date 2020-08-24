@@ -138,4 +138,6 @@ plugs:
   adb:
     interface: content
     target: $SNAP/usr/bin
-    
+
+# some parts are inherited from https://github.com/sisco311/scrcpy-snap/blob/master/snap/snapcraft.yaml
+# Thanks @sisco311 for the amazing snap!!    

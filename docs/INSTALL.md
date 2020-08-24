@@ -38,6 +38,43 @@ Few points to consider:
 
 * `guiscrcpy` requires Python `v3.6` or above. Installing on an older version of python is likely to fail. Python 2 is not supported in any previous releases also. Support for Python 3.5 can be attained by manual patching the `f-strings` and patching the requirements with an apt version of `PyQt5`.
 
+
+<br>
+
+## AppImages ![AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/AppImage/badge.svg) [![Get guiscrcpy AppImage](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.srevinsaju.me%2Fget-appimage%2Fguiscrcpy%2Fshields.json)](https://www.srevinsaju.me/get-appimage/guiscrcpy/)
+
+AppImages are distributed on the AppImage catalog and on the releases page. To get seamless updates and desktop integration, install the AppImage
+with [Zap AppImage Package Manager](https://github.com/srevinsaju/zap), and then just run
+
+```bash
+zap install guiscrcpy
+``` 
+and you are done!
+
+Alternatively, the longer method : 
+
+Download the AppImage either from the releases, or from by clicking the `Status` badge and then download the AppImage artifact for the latest commit.
+
+**AppImages** are built on `manylinux2014` base image. Older linux might / might not support it. A possible test for it, might be to check if you can install the `wheel` of `PyQt5>=5.14`. 
+
+AppImages are more supported than snaps. Snaps are containerised. So it is likely that guiscrcpy might not work as a snap.
+
+```bash
+wget https://github.com/srevinsaju/guiscrcpy/releases/continuous/download/guiscrcpy-x86_64.AppImage
+chmod +x guiscrcpy-x86_64.AppImage
+
+# one time execution
+./guiscrcpy-x86_64.AppImage
+
+# for systems without FUSE support
+guiscrcpy-x86_64.AppImage --appimage-extract
+mv squashfs-root guiscrcpy_appimage
+cd guiscrcpy_appimage
+./AppRun
+```
+
+[![Get Appimage](https://raw.githubusercontent.com/srevinsaju/get-appimage/master/static/badges/get-appimage-branding-blue.png)](https://srevinsaju.github.io/get-appimage/guiscrcpy)
+
 <br>
 
 ## Snap Store [![guiscrcpy](https://snapcraft.io//guiscrcpy/badge.svg)](https://snapcraft.io/guiscrcpy) [![guiscrcpy](https://snapcraft.io//guiscrcpy/trending.svg?name=0)](https://snapcraft.io/guiscrcpy)
@@ -60,39 +97,7 @@ What makes a snap better than the `PyPI` package is:
 > * Failure of `scrcpy`: Please create an issue at [sisco311/scrcpy-snap](https://github.com/sisco311/scrcpy-snap/issues) and make sure that a similar issue does not exist. You wouldn’t want to disturb the developer
 > * Failure of `guiscrcpy`: Please report it [here](https://github.com/srevinsaju/guiscrcpy/issues)
 
-<br>
-
-## AppImages ![AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/AppImage/badge.svg)
-
-For beta Linux compiled AppImages, click the above button; 
-and download the artifact. :tada: Thanks to @niess, guiscrcpy appimages are distributed for public use!!
-
-Download the AppImage either from the releases, or from by clicking the `Status` badge and then download the AppImage artifact for the latest commit.
-
-**AppImages** are built on `manylinux2014` base image. Older linux might / might not support it. A possible test for it, might be to check if you can install the `wheel` of `PyQt5>=5.14`. 
-
-> **NOTE**:
->
-> If you encounter any issues with running AppImages, please check if your system is compatible with the above specifications. If your system is compatible, please create an issue
-
-```bash
-wget https://github.com/srevinsaju/guiscrcpy/releases/continuous/download/guiscrcpy-x86_64.AppImage
-chmod +x guiscrcpy-x86_64.AppImage
-
-# one time execution
-./guiscrcpy-x86_64.AppImage
-
-# for systems without FUSE support
-guiscrcpy-x86_64.AppImage --appimage-extract
-mv squashfs-root guiscrcpy_appimage
-cd guiscrcpy_appimage
-./AppRun
-
-# optional system-wide installation
-guiscrcpy-x86_64.AppImage --install  
-```
-
-<br>
+<br> 
 
 ## Windows Executable [![Windows Executable](https://github.com/srevinsaju/guiscrcpy/workflows/Windows%20Executable/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=+event%3Apush++is%3Asuccess+branch%3Amaster+workflow%3A%22Windows+Executable%22)
 

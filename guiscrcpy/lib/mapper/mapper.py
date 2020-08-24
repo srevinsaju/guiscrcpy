@@ -176,8 +176,14 @@ class Mapper:
                 print(c.stdout.read().decode('utf-8'))
                 print("[KEY][COMPLETE]")
 
-        except AttributeError as e:
-            print("E: {}".format(e))
+        except AttributeError:
+            if key == keyboard.Key.shift:
+                print("[KEY][MOD] Shift key")
+            elif key == keyboard.Key.esc:
+                print("[KEY][ESC] Aborting")
+                return False
+            else:
+                print("[KEY][MOD] Special key {}".format(key))
 
     def listen_keypress(self):
         """
@@ -190,8 +196,11 @@ class Mapper:
             "[SERVER] LISTENING VALUES:"
             "Your keys are being listened by server. "
         )
-        with keyboard.Listener(on_press=self.on_key_press) as listener:
-            listener.join()
+        try:
+            with keyboard.Listener(on_press=self.on_key_press) as listener:
+                listener.join()
+        except KeyboardInterrupt:
+            print("guiscrcpy-mapper aborted on user request")
 
     # configuration
     def read_configuration(self):

@@ -9,6 +9,7 @@
 [![AUR version](https://img.shields.io/aur/version/guiscrcpy?label=Arch%20Linux%20Package&style=flat-square)](https://aur.archlinux.org/packages/guiscrcpy)
 [![guiscrcpy](https://snapcraft.io//guiscrcpy/badge.svg)](https://snapcraft.io/guiscrcpy)
 [![GitHub All Releases](https://img.shields.io/github/downloads/srevinsaju/guiscrcpy/total?style=flat-square)](https://github.com/srevinsaju/guiscrcpy/releases)
+![Discord](https://img.shields.io/discord/679746670422261783?label=chat%20on%20Discord&logo=discord&logoColor=white&style=flat-square)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -57,7 +58,9 @@ These are the common methods of installation. To see more interesting ways, chec
 
 ## Further reading
 
-Thanks to users around the world, guiscrcpy is one of the trending apps this month. You may like to see some articles written by well wishers:
+Thanks to users around the world, 
+guiscrcpy is one of the trending apps this month. 
+You may like to see some articles written by well wishers:
 
 * [Mirror your Android screen on your computer with Guiscrcpy - opensource.com](https://opensource.com/article/19/9/mirror-android-screen-guiscrcpy)
 * [Helper GUI For scrcpy, The Android Desktop Display And Remote Control Tool - linuxuprising.com](https://www.linuxuprising.com/2019/09/helper-gui-for-scrcpy-android-desktop.html)

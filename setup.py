@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 from setuptools import setup
+from setuptools import find_packages
 import os
 import platform
 
@@ -60,7 +61,7 @@ setup(
     license='GPL v3',
     author='srevinsaju',
     author_email="srevin03@gmail.com",
-    packages=['guiscrcpy', 'guiscrcpy.lib.mapper', 'guiscrcpy.network', 'guiscrcpy.platform', 'guiscrcpy.theme', 'guiscrcpy.ui', 'guiscrcpy.ux'], # noqa:
+    packages=find_packages(),
     data_files=data_files,
     extras_require={'pyqt5': 'PyQt5', 'pyside2': 'PySide2'},
     url="https://srevinsaju.github.io/guiscrcpy",

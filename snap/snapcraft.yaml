@@ -1,8 +1,5 @@
-# some parts are inherited from https://github.com/sisco311/scrcpy-snap/blob/master/snap/snapcraft.yaml
-# Thanks @sisco311 for the amazing snap!!
-
 name: guiscrcpy
-version: 4.0.b1
+version: 4.0
 summary: An opensource GUI for android screen mirroring
 description: |
   A full fledged GUI integration for the award winning open source scrcpy, for 
@@ -121,7 +118,6 @@ parts:
       - libglu1-mesa
       - adb
 
-
   guiscrcpy:
     after: [desktop-qt5, classic-launch, debian-multiarch-triplet-provider-launch]
     # See 'snapcraft plugins'
@@ -144,4 +140,6 @@ plugs:
   adb:
     interface: content
     target: $SNAP/usr/bin
-    
+
+# some parts are inherited from https://github.com/sisco311/scrcpy-snap/blob/master/snap/snapcraft.yaml
+# Thanks @sisco311 for the amazing snap!!    

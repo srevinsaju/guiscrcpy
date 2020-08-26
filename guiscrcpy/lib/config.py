@@ -124,3 +124,8 @@ class InterfaceConfig:
     def reset_config(self):
         os.remove(os.path.join(self.get_cfgpath(), self.json_file))
         return True
+
+    def __repr__(self):
+        return 'GuiscrcpyConfig({})'.format(
+            json.dumps(self.config, indent=4)
+        )

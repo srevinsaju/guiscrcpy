@@ -191,11 +191,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.child_windows = list()
         self.options = ""
         log("Options received by class are : {} {} {} {} {} ".format(
-                config['bitrate'],
-                config['dimension'],
-                config['swtouches'],
-                config['dispRO'],
-                config['fullscreen'],
+            config['bitrate'],
+            config['dimension'],
+            config['swtouches'],
+            config['dispRO'],
+            config['fullscreen'],
         ))
         # ====================================================================
         # Rotation; read config, update UI
@@ -320,7 +320,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         if self.devices_view.currentItem():
             _, device_id = self.current_device_identifier()
             _rotation = self.config.get('device').get(device_id, dict()).get(
-                    'rotation', self.device_rotation.currentIndex())
+                'rotation', self.device_rotation.currentIndex())
         else:
             _rotation = self.config.get("rotation",
                                         self.device_rotation.currentIndex())

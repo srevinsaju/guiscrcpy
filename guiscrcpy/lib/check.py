@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import logging
+import shutil
 from subprocess import Popen, PIPE, call, TimeoutExpired
 
 from ..lib.utils import decode_process, shellify as _

@@ -49,7 +49,7 @@ from qtpy.QtWidgets import QMessageBox
 from .install.finder import open_exe_name_dialog
 from .lib.process import is_running
 from .lib.toolkit import UXMapper
-from .lib.utils import log
+from .lib.utils import log, get_self
 from .platform import platform
 from .theme.desktop_shortcut import desktop_device_shortcut_svg
 from .theme.linux_desktop_shortcut_template import GUISCRCPY_DEVICE

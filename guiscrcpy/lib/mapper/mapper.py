@@ -192,15 +192,13 @@ class Mapper:
 
     # configuration
     def read_configuration(self):
-        guiscrcpy_mapper_json = os.path.join(cfgpath, 'guiscrcpy.mapper.json')
-        if not os.path.exists(guiscrcpy_mapper_json):
+        if not os.path.exists(self.guiscrcpy_mapper_json):
             self.create_configuration()
         with open(self.guiscrcpy_mapper_json, 'r', encoding='utf-8') as f:
             self.config.update(json.load(f))
 
     def create_configuration(self):
-        guiscrcpy_mapper_json = os.path.join(cfgpath, 'guiscrcpy.mapper.json')
-        with open(guiscrcpy_mapper_json, 'w') as w:
+        with open(self.guiscrcpy_mapper_json, 'w') as w:
             json.dump(self.config, w)
         print("Wrote configuration file.")
 

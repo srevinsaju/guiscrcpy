@@ -20,6 +20,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import logging
 import os
 import shlex
+import shutil
+import sys
+
 from colorama import Fore
 
 from guiscrcpy.platform.platform import System

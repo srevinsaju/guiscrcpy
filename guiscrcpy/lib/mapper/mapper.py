@@ -271,25 +271,4 @@ def command_line_argument_parse():
     return parser.parse_args()
 
 
-def main():
-    """
-    Main function only executed if __name__ == __main__
-    :return:
-    :rtype:
-    """
-    args = command_line_argument_parse()
-    if args.mapper_device_id:
-        mapper_device_id = args.mapper_device_id
-    else:
-        mapper_device_id = None
 
-    # get the adb shell dimensions using wmctrl
-    adb.get_dimensions(adb.path, device_id=mapper_device_id)
-
-    # delay for 5 seconds by default or respect command line arguments
-    delay = args.mapper_delay
-    time.sleep(delay)
-
-
-if __name__ == "__main__":
-    main()

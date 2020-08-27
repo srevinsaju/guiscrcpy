@@ -236,11 +236,14 @@ class Mapper:
 
 
 class MapperAsync(QThread):
-    def __init__(self, parent, device_id, initialize=True):
+    def __init__(self, parent, device_id, adb, initialize=True,
+                 config_path=None):
         QThread.__init__(self, parent)
         self.parent = parent
+        self.adb = adb
         self.device_id = device_id
         self.initialize = initialize
+        self._config_path = config_path
 
     def run(self):
         mp = Mapper(self.device_id, adb=self.adb,

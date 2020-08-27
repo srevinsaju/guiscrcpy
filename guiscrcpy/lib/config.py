@@ -126,6 +126,7 @@ class InterfaceConfig:
         return True
 
     def __repr__(self):
-        return 'GuiscrcpyConfig({})'.format(
-            json.dumps(self.config, indent=4)
+        return 'GuiscrcpyConfig({}, "{}")'.format(
+            json.dumps(self.config, indent=4),
+            self.cfgpath
         )

@@ -218,7 +218,7 @@ class Mapper:
         print("Intializing GUI window")
         if __name__ == '__main__' or initialize_qt:
             print("Creating QtCore window Application instance")
-            self.app = QtWidgets.QApplication(sys.argv)
+            self.app = QtWidgets.QApplication([])
         self.window = MapperUI(
             self,
             self.get_screenshot(),

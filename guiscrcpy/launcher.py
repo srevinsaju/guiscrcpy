@@ -33,6 +33,7 @@ All rights reserved.
 
 import hashlib
 import os
+import subprocess
 import sys
 import time
 import webbrowser

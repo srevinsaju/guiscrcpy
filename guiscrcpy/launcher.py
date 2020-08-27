@@ -1287,6 +1287,8 @@ def bootstrap(cfgmgr, theme='Breeze', aot=True, debug__no_scrcpy=False,
     cfgmgr.write_file()
     adb = AndroidDebugBridge(cfgmgr.get_config().get('adb'))
     scrcpy = ScrcpyBridge(cfgmgr.get_config().get('scrcpy'))
+    cfgmgr['adb'] = adb.get_path()
+    cfgmgr['scrcpy'] = scrcpy.get_path()
     guiscrcpy = InterfaceGuiscrcpy(
         cfgmgr=cfgmgr, adb=adb, scrcpy=scrcpy,
         force_window_frame=not hide_wm_frame,

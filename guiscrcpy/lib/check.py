@@ -45,35 +45,31 @@ def _get_dimension_raw_noexcept(path, device_id=None):
     return shell_adb
 
 
-class scrcpy:
-    path = None
 
-    def __init__(self):
-        pass
 
-    @staticmethod
-    def start(path, args):
-        Popen(
-            _("{} {}".format(path, args)),
-            stdout=PIPE,
-            stderr=PIPE,
-        )
-        return True
-
-    @staticmethod
-    def device():
-        pass
-
-    @staticmethod
-    def check():
-        scrcpy_path = check_existence(
-            environment.paths(), ['scrcpy'], False, True)
-        if scrcpy_path and (isinstance(scrcpy_path, list)):
-            return scrcpy_path[0]
+class ScrcpyBridge:
+    def __init__(self, path=None):
+        if path is not None:
+            self.path = path
+        elif shutil.which('scrcpy'):
+            self.path = shutil.which('scrcpy')
         else:
-            logging.error(
-                'scrcpy could not be found in any of the paths {}'.format(
-                    environment.paths()))
+            self.path = open_exe_name_dialog(None, 'scrcpy')
+        if self.path is None:
+            raise ScrcpyNotFoundError("Could not find `scrcpy` on PATH. Make "
+                                      "sure scrcpy is installed and "
+                                      "accessible from the terminal.")
+
+    def start(self, args, stdout=PIPE, stderr=PIPE):
+        proc = Popen(
+            _("{} {}".format(self.path, args)),
+            stdout=stdout,
+            stderr=stderr,
+        )
+        return proc
+
+    def get_path(self):
+        return self.path
 
 
 class adb:

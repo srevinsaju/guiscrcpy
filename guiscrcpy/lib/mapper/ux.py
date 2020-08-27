@@ -180,3 +180,27 @@ class MapperUI(QtWidgets.QWidget):
         if event.button == Qt.LeftButton:
             # self.drawing = False
             self.label.setPixmap(QPixmap.fromImage(self.image))
+
+    def closeEvent(self, event):
+        # do stuff
+        message_box = QMessageBox()
+        message_box.setText(
+            "Save changes and exit?"
+        )
+        vals = ["{} → {}".format(
+            x, self.core.config[x]) for x in self.core.config]
+        message_box.setInformativeText(
+            "Mapper has unsaved mappings: {val}. Do you want to save the "
+            "current mappings?".format(val=', '.join(vals))
+        )
+        message_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        user_message_box_response = message_box.exec()
+        if user_message_box_response == QMessageBox.Yes:
+            print("Registration process completed.")
+            print("Registered mappings are : ", self.core.config)
+            print("Writing configuration file...")
+            self.core.create_configuration()
+            print("Mapper completed successfully!")
+            event.accept()
+        else:
+            event.ignore()

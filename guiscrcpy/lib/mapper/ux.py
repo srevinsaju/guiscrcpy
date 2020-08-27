@@ -193,7 +193,8 @@ class MapperUI(QtWidgets.QWidget):
             "Mapper has unsaved mappings: {val}. Do you want to save the "
             "current mappings?".format(val=', '.join(vals))
         )
-        message_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        message_box.setStandardButtons(
+            QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
         user_message_box_response = message_box.exec()
         if user_message_box_response == QMessageBox.Yes:
             print("Registration process completed.")
@@ -201,6 +202,9 @@ class MapperUI(QtWidgets.QWidget):
             print("Writing configuration file...")
             self.core.create_configuration()
             print("Mapper completed successfully!")
+            event.accept()
+        elif user_message_box_response == QMessageBox.No:
+            print("Not saving mapper configuration to json file")
             event.accept()
         else:
             event.ignore()

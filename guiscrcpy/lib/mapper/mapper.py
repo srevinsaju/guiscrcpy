@@ -109,8 +109,8 @@ class Mapper:
         # capture screenshot using `adb screencap`
         print("Please wait. A full definition screenshot is being captured")
 
-        adb_screencap_process = adb.command(
-            adb.path, 'shell screencap -p /sdcard/{uid}.png'.format(
+        adb_screencap_process = self.adb.command(
+            'shell screencap -p /sdcard/{uid}.png'.format(
                 uid=uid
             ),
             device_id=self._device_id
@@ -124,8 +124,8 @@ class Mapper:
         time.sleep(2)
 
         # pull screenshot from android using `adb pull`
-        adb_pull_process = adb.command(
-            adb.path, 'pull /sdcard/{uid}.png {dest}'.format(
+        adb_pull_process = self.adb.command(
+            'pull /sdcard/{uid}.png {dest}'.format(
                 uid=uid,
                 dest=cfgpath
             ),
@@ -142,8 +142,8 @@ class Mapper:
         time.sleep(1)
 
         # remove data from user sdcard
-        adb.command(
-            adb.path, "shell rm /sdcard/{uid}.png".format(uid=uid),
+        self.adb.command(
+            "shell rm /sdcard/{uid}.png".format(uid=uid),
             device_id=self._device_id
         )
         print("[LOG] Screenshot captured. "

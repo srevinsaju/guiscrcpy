@@ -355,9 +355,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         else:
             message_box = QMessageBox()
             message_box.setText(
-                "guiscrcpy mapper is not initialized yet."
-                "Please initialize guiscrcpy by running : "
-                "'guiscrcpy --mapper' on the command line"
+                "guiscrcpy mapper is not initialized yet. Do you want to "
+                "initialize it now?"
             )
             message_box.setInformativeText(
                 "Before you initialize, make sure your phone is connected and "

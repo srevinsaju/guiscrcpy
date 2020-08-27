@@ -74,6 +74,13 @@ class InterfaceConfig:
             os.environ['SCRCPY_SERVER_PATH'] = self.config['scrcpy-server']
         return True
 
+    def __setitem__(self, key, value):
+        self.config[key] = value
+        self.write_file()
+
+    def __getitem__(self, item):
+        return self.config.get(item)
+
     def get_config(self):
         return self.config
 

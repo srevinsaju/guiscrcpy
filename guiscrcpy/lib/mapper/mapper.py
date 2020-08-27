@@ -17,10 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-import argparse
 import json
 import os
-import sys
 import time
 import uuid
 
@@ -29,8 +27,6 @@ from qtpy.QtCore import QThread
 
 from pynput import keyboard
 
-from guiscrcpy.lib.check import adb
-from guiscrcpy.lib.config import InterfaceConfig
 from guiscrcpy.lib.mapper.ux import MapperUI
 
 get1 = False

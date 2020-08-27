@@ -53,8 +53,13 @@ class Mapper:
             self.dimensions = self.dimensions[::-1]
 
     def check_orientation(self):
-        proc = adb.shell(adb.path, "dumpsys input")
-        proc.wait(500)
+        proc = self.adb.shell("dumpsys input")
+        e_code = proc.wait(500)
+        if e_code != 0:
+            # process failed
+            raise AdbRuntimeError(
+                'adb failed with {ecode} when trying to '
+                'execute command `adb dumpsys input`'.format(ecode=e_code))
         out, err = proc.communicate()
         out, err = out.decode(), err.decode()
         if 'SurfaceOrientation' in out:

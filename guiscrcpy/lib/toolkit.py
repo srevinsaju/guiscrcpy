@@ -142,13 +142,12 @@ class UXMapper:
 
     def reorient_landscape(self):
         logging.debug("Passing REORIENT [LANDSCAPE]")
-        adb.shell(
-            adb.path,
+        self.adb.shell(
             'settings put system accelerometer_rotation 0',
             device_id=self.deviceId
         )
-        adb.shell(
-            adb.path, "settings put system rotation 1",
+        self.adb.shell(
+            "settings put system rotation 1",
             device_id=self.deviceId)
 
     def expand_notifications(self):

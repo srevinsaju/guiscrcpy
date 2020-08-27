@@ -20,7 +20,6 @@ import hashlib
 import logging
 import os
 
-from guiscrcpy.lib.check import adb
 from guiscrcpy.platform.platform import System
 
 if System.system() == "Windows":

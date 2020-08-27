@@ -227,12 +227,8 @@ class Mapper:
             fixed_pos=fixed_pos,
             final_pos=final_pos
         )
-        input()
-        # Mapper process ended
-        print("Registration process completed.")
-        print("Registered mappings are : ", self.config)
-        print("Writing configuration file...")
-        self.create_configuration()
+        self.app.processEvents()
+        self.app.exec_()
 
 
 class MapperAsync(QThread):

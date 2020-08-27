@@ -79,6 +79,10 @@ class AdbNotFoundError(FileNotFoundError):
     pass
 
 
+class AdbRuntimeError(RuntimeError):
+    pass
+
+
 class AndroidDebugBridge:
     def __init__(self, path=None):
         if path is None:

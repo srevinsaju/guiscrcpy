@@ -157,8 +157,7 @@ class Mapper:
             if key.char in self.config.keys():
                 print("[KEY] Hotkey command executing")
                 position_to_tap = self.config.get(key.char)
-                c = adb.command(
-                    adb.path,
+                c = self.adb.command(
                     'shell input tap {} {}'.format(*position_to_tap),
                     device_id=self.get_device_id()
                 )

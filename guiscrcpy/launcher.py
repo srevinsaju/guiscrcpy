@@ -919,29 +919,20 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         """
         self.private_message_box_adb.setText(message)
 
-    def start_act(self):
+    def check_devices_status_and_select_first_if_only_one(
+            self, values_devices_list):
         """
-        Main brain of guiscrcpy; handles what to do when
+        Checks the devices in the Grid View, and then checks if any device
+        is available or offline accordingly display the error message. If
+        only one device was detected, automatically select the first device
+        and check its status of connectivity. Return the selected device if
+        multiple devices were detected by adb. Return device_id, status and
+        a bool more_devices if more than one device was found
+        :param values_devices_list:
+        :type values_devices_list:
         :return:
+        :rtype:
         """
-        # prepare launch of scrcpy,
-        # reset colors
-        # reset vars
-
-        # 1: reset
-        self.options = ""
-        progress = self.progress(0)
-        self.__reset_message_box_stylesheet()
-
-        # ====================================================================
-        # 2: Update UI to start checking
-        self.display_public_message("CHECKING DEVICE CONNECTION")
-        initial_time = time.time()
-        progress = self.progress(progress)
-
-        # ====================================================================
-        # 3: Check devices
-        values_devices_list = self.scan_devices_update_list_view()
         if len(values_devices_list) == 0:
             # Could not detect any device
             self.display_public_message("Could not find any devices")
@@ -989,6 +980,36 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                     return 0
                 log("Device_id = {}".format(device_id))
                 more_devices = True
+        return device_id, more_devices, _stat
+
+    def start_act(self):
+        """
+        Main brain of guiscrcpy; handles what to do when
+        :return:
+        """
+        # prepare launch of scrcpy,
+        # reset colors
+        # reset vars
+
+        # 1: reset
+        self.options = ""
+        progress = self.progress(0)
+        self.__reset_message_box_stylesheet()
+
+        # ====================================================================
+        # 2: Update UI to start checking
+        self.display_public_message("CHECKING DEVICE CONNECTION")
+        initial_time = time.time()
+        progress = self.progress(progress)
+
+        # ====================================================================
+        # 3: Check devices
+        values_devices_list = self.scan_devices_update_list_view()
+        e = self.check_devices_status_and_select_first_if_only_one(
+            values_devices_list)
+        if e is None or isinstance(e, int):
+            return e
+        device_id, more_devices, _stat = e
         progress = self.progress(progress)
 
         # ====================================================================

@@ -102,3 +102,5 @@ def check_existence(paths, filename="", directory=True, path=False):
             return False
     else:
         return False
+def format_colors(string, **kwargs):
+    return string.format(**kwargs, **COLORS)

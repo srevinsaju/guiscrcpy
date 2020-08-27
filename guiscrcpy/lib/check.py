@@ -75,6 +75,8 @@ class ScrcpyBridge:
         return self.path
 
 
+class AdbNotFoundError(FileNotFoundError):
+    pass
 
 
 class AndroidDebugBridge:

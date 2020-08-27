@@ -362,29 +362,37 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 "Before you initialize, make sure your phone is connected and "
                 "the display is switched on to map the points."
             )
-            message_box.setStandardButtons(QMessageBox.Ok)
-            message_box.exec()
-            # user_message_box_response = message_box.exec()
-            return
+            message_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            user_message_box_response = message_box.exec()
+            values_devices_list = self.scan_devices_update_list_view()
+            self.check_devices_status_and_select_first_if_only_one(
+                values_devices_list=values_devices_list)
             # TODO: allow enabling mapper from inside
-            # if user_message_box_response == QMessageBox.Ok:
-            #     self.private_message_box_adb.setText(
-            #         "Initializing mapper in 5 seconds")
-            #     print("Initializing mapper in 5 seconds")
-            #     print(
-            #             "Make sure your phone is connected"
-            #             "and display is switched on"
-            #     )
-            #     print(
-            #         "Reset mapper if you missed any "
-            #         "steps by 'guiscrcpy --mapper-reset'")
-            #     print()
-            #     print(
-            #         "If at first you don't succeed... "
-            #         "reset, reset and reset again! :D"
-            #     )
-            #     print()
-            #     _, identifier = self.current_device_identifier()
+            if user_message_box_response == QMessageBox.Yes:
+                self.private_message_box_adb.setText(
+                    "Initializing mapper...")
+                print("Make sure your phone is connected and display is "
+                      "switched on")
+                print("Reset mapper if you missed any "
+                      "steps by 'guiscrcpy --mapper-reset'")
+                print()
+                print(
+                    "If at first you don't succeed... "
+                    "reset, reset and reset again! :D"
+                )
+                print()
+                _, identifier = self.current_device_identifier()
+                executable = get_self()
+                from .lib.utils import shellify as sx
+                _proc = subprocess.Popen(
+                    sx('{} mapper'.format(executable)),
+                    stdout=sys.stdout,
+                    stdin=sys.stdin,
+                    stderr=sys.stderr,
+                    cwd=os.getcwd())
+                print("Mapper started")
+                self.private_message_box_adb.setText(
+                    "Mapper initialized")
 
     @staticmethod
     def launch_usb_audio():

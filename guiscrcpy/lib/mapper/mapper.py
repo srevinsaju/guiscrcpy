@@ -41,6 +41,8 @@ class Mapper:
         self.config = dict()
         self._device_id = device_id
         self.app = None
+        self.adb = adb
+        self.adb.command('wait-for-any-device')
         self.window = None
         self.dimensions = adb.get_dimensions(adb.path, device_id)
         if self.check_orientation() == 1:

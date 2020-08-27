@@ -155,7 +155,7 @@ class Mapper:
     def on_key_press(self, key):
         try:
             if key.char in self.config.keys():
-                print("[KEY] Hotkey command eecuting")
+                print("[KEY] Hotkey command executing")
                 position_to_tap = self.config.get(key.char)
                 c = adb.command(
                     adb.path,

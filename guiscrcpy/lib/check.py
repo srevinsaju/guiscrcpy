@@ -46,6 +46,8 @@ def _get_dimension_raw_noexcept(path, device_id=None):
     return shell_adb
 
 
+class ScrcpyNotFoundError(FileNotFoundError):
+    pass
 
 
 class ScrcpyBridge:

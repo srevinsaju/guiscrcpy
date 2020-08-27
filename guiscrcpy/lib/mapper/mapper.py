@@ -29,27 +29,10 @@ from pynput import keyboard
 
 from guiscrcpy.lib.mapper.ux import MapperUI
 
-get1 = False
 fixed_pos = [0.0, 0.0]
 final_pos = [0.0, 0.0]
 
-cfgmgr = InterfaceConfig()
-config = cfgmgr.get_config()
-adb.path = config['adb']
-
 json_file = 'guiscrcpy.mapper.json'
-
-print("+++++++++++++++++++++++++++++++++++++++")
-print("guiscrcpy ~ mapper by srevinsaju")
-print("=======================================")
-print("Make sure that your device is turned on, and connected to your PC")
-print('With USB debugging turned on.')
-print("+++++++++++++++++++++++++++++++++++++++")
-print("Waiting for device")
-adb.command(adb.path, 'wait-for-any-device')
-print("Device : OK!\n")
-
-cfgpath = cfgmgr.cfgpath
 
 
 class Mapper:

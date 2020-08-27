@@ -44,7 +44,8 @@ class Mapper:
         self.adb = adb
         self.adb.command('wait-for-any-device')
         self.window = None
-        self.dimensions = adb.get_dimensions(adb.path, device_id)
+        self.guiscrcpy_mapper_json = config_path
+        self.dimensions = adb.get_dimensions(device_id)
         if self.check_orientation() == 1:
             # reverse the detected dimensions.
             # possibly the device is landscape / not the default

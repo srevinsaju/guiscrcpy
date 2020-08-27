@@ -1213,7 +1213,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         if not self.debug__no_scrcpy:
             # for debugging purposes, its important to not start scrcpy
             # every time
-            self.scrcpy.start(self.scrcpy.path, arguments_scrcpy)
+            self.scrcpy.start(arguments_scrcpy, stdout=sys.stdout,
+                              stderr=sys.stderr)
         progress = self.progress(progress)
 
         # ====================================================================

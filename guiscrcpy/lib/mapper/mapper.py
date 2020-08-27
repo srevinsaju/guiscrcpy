@@ -217,7 +217,6 @@ class Mapper:
         """
         print("Setting up guiscrcpy-mapper for the first time use...")
         print("Intializing GUI window")
-        print(__name__ == "__main__")
         if __name__ == '__main__' or initialize_qt:
             print("Creating QtCore window Application instance")
             self.app = QtWidgets.QApplication(sys.argv)

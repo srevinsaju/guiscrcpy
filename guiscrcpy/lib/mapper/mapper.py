@@ -27,6 +27,7 @@ from qtpy.QtCore import QThread
 
 from pynput import keyboard
 
+from guiscrcpy.lib.check import AdbRuntimeError
 from guiscrcpy.lib.mapper.ux import MapperUI
 
 fixed_pos = [0.0, 0.0]

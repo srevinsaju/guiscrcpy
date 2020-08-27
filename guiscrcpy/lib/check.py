@@ -20,8 +20,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import logging
 from subprocess import Popen, PIPE, call, TimeoutExpired
 
-from guiscrcpy.lib.utils import decode_process, check_existence, shellify as _
-from guiscrcpy.platform.platform import System
+from ..lib.utils import decode_process, shellify as _
+from ..platform.platform import System
+from ..install.finder import open_exe_name_dialog
 
 environment = System()
 

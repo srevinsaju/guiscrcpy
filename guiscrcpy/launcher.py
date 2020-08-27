@@ -384,7 +384,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 _, identifier = self.current_device_identifier()
                 executable = get_self()
                 from .lib.utils import shellify as sx
-                _proc = subprocess.Popen(
+                subprocess.Popen(
                     sx('{} mapper'.format(executable)),
                     stdout=sys.stdout,
                     stdin=sys.stdin,

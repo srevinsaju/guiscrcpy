@@ -182,7 +182,8 @@ class AndroidDebugBridge:
         else:
             command = "{path} -d tcpip {port}"
         exit_code = call(
-            _(command.format(path=self.path, port=port, identifier=identifier)),
+            _(command.format(path=self.path, port=port,
+                             identifier=identifier)),
             stdout=PIPE,
             stderr=PIPE
         )

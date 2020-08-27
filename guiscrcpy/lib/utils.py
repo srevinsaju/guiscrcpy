@@ -20,10 +20,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import logging
 import os
 import shlex
+from colorama import Fore
 
 from guiscrcpy.platform.platform import System
 
 environment = System()
+
+COLORS = {
+    'g': Fore.GREEN,
+    'rst': Fore.RESET,
+    'y': Fore.YELLOW,
+    'r': Fore.RED,
+    'b': Fore.BLUE,
+    'B': Fore.LIGHTBLUE_EX,
+    'x': Fore.LIGHTBLACK_EX
+}
 
 
 def log(*args, **kwargs):

@@ -340,12 +340,14 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.nm.show()
 
     def bootstrap_mapper(self):
-
-        if os.path.exists(os.path.join(self.cfgmgr.get_cfgpath(),
-                                       "guiscrcpy.mapper.json")):
+        mapper_config_path = os.path.join(self.cfgmgr.get_cfgpath(),
+                                          "guiscrcpy.mapper.json")
+        if os.path.exists(mapper_config_path):
             from guiscrcpy.lib.mapper.mapper import MapperAsync
             _, identifier = self.current_device_identifier()
-            self.mp = MapperAsync(self, identifier, initialize=False)
+            self.mp = MapperAsync(self, device_id=identifier,
+                                  config_path=mapper_config_path,
+                                  adb=self.adb, initialize=False)
             self.mp.start()
             self.private_message_box_adb.setText(
                 "guiscrcpy-mapper has started"

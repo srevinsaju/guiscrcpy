@@ -36,7 +36,7 @@ json_file = 'guiscrcpy.mapper.json'
 
 
 class Mapper:
-    def __init__(self, device_id):
+    def __init__(self, device_id, adb, config_path=None):
         self.config = dict()
         self._device_id = device_id
         self.app = None

@@ -243,7 +243,8 @@ class MapperAsync(QThread):
         self.initialize = initialize
 
     def run(self):
-        mp = Mapper(self.device_id)
+        mp = Mapper(self.device_id, adb=self.adb,
+                    config_path=self._config_path)
         if self.initialize:
             mp.initialize(initialize_qt=False)
         else:

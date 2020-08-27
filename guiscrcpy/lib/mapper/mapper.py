@@ -127,7 +127,7 @@ class Mapper:
         adb_pull_process = self.adb.command(
             'pull /sdcard/{uid}.png {dest}'.format(
                 uid=uid,
-                dest=cfgpath
+                dest=os.path.dirname(self.guiscrcpy_mapper_json)
             ),
             device_id=self._device_id
         )
@@ -146,9 +146,10 @@ class Mapper:
             "shell rm /sdcard/{uid}.png".format(uid=uid),
             device_id=self._device_id
         )
-        print("[LOG] Screenshot captured. "
-              "Saved to {cfgpath}".format(cfgpath=cfgpath))
-        return os.path.join(cfgpath, '{uid}.png'.format(uid=uid))
+        print("[LOG] Screenshot captured. Saved to {cfgpath}".format(
+            cfgpath=os.path.dirname(self.guiscrcpy_mapper_json)))
+        return os.path.join(os.path.dirname(self.guiscrcpy_mapper_json),
+                            '{uid}.png'.format(uid=uid))
 
     # The following functions handle key events on the mapper
     def on_key_press(self, key):

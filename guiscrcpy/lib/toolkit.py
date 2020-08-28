@@ -20,7 +20,6 @@ import hashlib
 import logging
 import os
 
-from guiscrcpy.lib.check import adb
 from guiscrcpy.platform.platform import System
 
 if System.system() == "Windows":
@@ -38,19 +37,20 @@ else:
 
 
 class UXMapper:
-    def __init__(self, device_id=None, sha_shift=5):
+    def __init__(self, adb, device_id=None, sha_shift=5):
         """
         The main class for UXMapper and adb shell spawn to device
         The guiscrcpy client passes information ot the UXMapper which
         spawns adb sub processes to handle button and tap events
         :param device_id:
         """
+        self.adb = adb
         self.sha_shift = sha_shift
         logging.debug("Launching UX Mapper")
         self.has_modules = getWindowsWithTitle and auto
         logging.debug("Calculating Screen Size")
         self.android_dimensions = adb.get_dimensions(
-            adb.path, device_id=device_id
+            device_id=device_id
         )
         if not self.android_dimensions:
             print("E: guiscrcpy has crashed because of a failure in the "
@@ -82,7 +82,7 @@ class UXMapper:
         :param y2: y2 coordinate
         :return: Boolean True, in success
         """
-        adb.shell_input(adb.path, "swipe {} {} {} {}".format(
+        self.adb.shell_input("swipe {} {} {} {}".format(
             x1, y1, x2, y2), device_id=self.deviceId)
         return True
 
@@ -92,8 +92,8 @@ class UXMapper:
         :param key: The ADB predefined keycode
         :return:
         """
-        adb.shell_input(adb.path, "keyevent {}".format(key),
-                        device_id=self.deviceId)
+        self.adb.shell_input("keyevent {}".format(key),
+                             device_id=self.deviceId)
         return True
 
     def copy_devpc(self):
@@ -135,20 +135,19 @@ class UXMapper:
 
     def reorient_portrait(self):
         logging.debug("Passing REORIENT [POTRAIT]")
-        adb.shell(adb.path, 'settings put system accelerometer_rotation 0',
-                  device_id=self.deviceId)
-        adb.shell(adb.path, "settings put system rotation 1",
-                  device_id=self.deviceId)
+        self.adb.shell('settings put system accelerometer_rotation 0',
+                       device_id=self.deviceId)
+        self.adb.shell("settings put system rotation 1",
+                       device_id=self.deviceId)
 
     def reorient_landscape(self):
         logging.debug("Passing REORIENT [LANDSCAPE]")
-        adb.shell(
-            adb.path,
+        self.adb.shell(
             'settings put system accelerometer_rotation 0',
             device_id=self.deviceId
         )
-        adb.shell(
-            adb.path, "settings put system rotation 1",
+        self.adb.shell(
+            "settings put system rotation 1",
             device_id=self.deviceId)
 
     def expand_notifications(self):

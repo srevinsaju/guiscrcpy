@@ -20,10 +20,24 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import logging
 import os
 import shlex
+import shutil
+import sys
+
+from colorama import Fore
 
 from guiscrcpy.platform.platform import System
 
 environment = System()
+
+COLORS = {
+    'g': Fore.GREEN,
+    'rst': Fore.RESET,
+    'y': Fore.YELLOW,
+    'r': Fore.RED,
+    'b': Fore.BLUE,
+    'B': Fore.LIGHTBLUE_EX,
+    'x': Fore.LIGHTBLACK_EX
+}
 
 
 def log(*args, **kwargs):
@@ -88,3 +102,35 @@ def check_existence(paths, filename="", directory=True, path=False):
             return False
     else:
         return False
+
+
+def get_self():
+    """
+    Returns the path to the running executable depending on the conditions
+    :return:
+    :rtype:
+    """
+    if os.getenv('APPIMAGE'):
+        # Running from AppImage
+        return os.getenv('APPIMAGE')
+    elif getattr(sys, 'frozen', False):
+        # running in precompiled bundle
+        return sys.executable
+    elif shutil.which('guiscrcpy'):
+        # guiscrcpy is added to PATH
+        return shutil.which('guiscrcpy')
+    elif any([os.path.exists(os.path.join(x, 'guiscrcpy'))
+              for x in sys.path]) and \
+            any([sys.executable.endswith(py) for py in
+                 ['python', 'python3']]):
+        # guiscrcpy is installed as a pip package, but not added to PATH
+        return '{py} -m guiscrcpy'.format(py=sys.executable)
+    elif os.getenv('SNAP'):
+        # running from SNAP
+        return '/snap/bin/guiscrcpy'
+    raise RuntimeError("Could not detect if guiscrcpy was run from "
+                       "snap, appimage or python wheel")
+
+
+def format_colors(string, **kwargs):
+    return string.format(**kwargs, **COLORS)

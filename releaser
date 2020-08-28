@@ -35,7 +35,7 @@ PACKAGE_DIR = {
 
 CONSOLE_SCRIPTS = {
     'console_scripts': [
-        'guiscrcpy = guiscrcpy.launcher:bootstrap',
+        'guiscrcpy = guiscrcpy.cli:cli',
     ]
 }
 

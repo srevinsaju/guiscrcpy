@@ -19,9 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import json
 import os
-
-from guiscrcpy.lib.check import adb
-from guiscrcpy.lib.check import scrcpy
+import shutil
 from guiscrcpy.platform import platform
 
 
@@ -62,18 +60,26 @@ class InterfaceConfig:
     def validate(self):
         # check scrcpy and adb are not None, else replace it with original
         # values
+        if os.getenv('APPIMAGE') is not None:
+            # no need further configuration for adb, scrcpy and scrcpy_server
+            return True
         if self.config['adb'] is None:
-            adb_path = adb.check()
-            if adb_path:
-                self.config['adb'] = adb_path
+            adb_path = shutil.which('adb')
+            self.config['adb'] = adb_path
         if self.config['scrcpy'] is None:
-            scrcpy_path = scrcpy.check()
-            if scrcpy_path:
-                self.config['scrcpy'] = scrcpy_path
+            scrcpy_path = shutil.which('scrcpy')
+            self.config['scrcpy'] = scrcpy_path
         if (self.config['scrcpy-server'] is not None) and (
                 platform.System() == "Windows"):
             os.environ['SCRCPY_SERVER_PATH'] = self.config['scrcpy-server']
         return True
+
+    def __setitem__(self, key, value):
+        self.config[key] = value
+        self.write_file()
+
+    def __getitem__(self, item):
+        return self.config.get(item)
 
     def get_config(self):
         return self.config
@@ -124,3 +130,9 @@ class InterfaceConfig:
     def reset_config(self):
         os.remove(os.path.join(self.get_cfgpath(), self.json_file))
         return True
+
+    def __repr__(self):
+        return 'GuiscrcpyConfig({}, "{}")'.format(
+            json.dumps(self.config, indent=4),
+            self.cfgpath
+        )

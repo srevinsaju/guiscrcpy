@@ -23,8 +23,8 @@ from qtpy import QtCore
 from qtpy.QtCore import QPoint
 from qtpy.QtWidgets import QMainWindow
 
-from guiscrcpy.lib.toolkit import UXMapper
-from guiscrcpy.ux import Ui_ToolbarPanel
+from ..lib.toolkit import UXMapper
+from ..ux import Ui_ToolbarPanel
 
 
 class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):

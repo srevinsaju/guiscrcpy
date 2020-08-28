@@ -18,10 +18,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import logging
+import shutil
 from subprocess import Popen, PIPE, call, TimeoutExpired
 
-from guiscrcpy.lib.utils import decode_process, check_existence, shellify as _
-from guiscrcpy.platform.platform import System
+from ..lib.utils import decode_process, shellify as _
+from ..platform.platform import System
+from ..install.finder import open_exe_name_dialog
 
 environment = System()
 
@@ -44,55 +46,58 @@ def _get_dimension_raw_noexcept(path, device_id=None):
     return shell_adb
 
 
-class scrcpy:
-    path = None
+class ScrcpyNotFoundError(FileNotFoundError):
+    pass
 
-    def __init__(self):
-        pass
 
-    @staticmethod
-    def start(path, args):
-        Popen(
-            _("{} {}".format(path, args)),
-            stdout=PIPE,
-            stderr=PIPE,
+class ScrcpyBridge:
+    def __init__(self, path=None):
+        if path is not None:
+            self.path = path
+        elif shutil.which('scrcpy'):
+            self.path = shutil.which('scrcpy')
+        else:
+            self.path = open_exe_name_dialog(None, 'scrcpy')
+        if self.path is None:
+            raise ScrcpyNotFoundError("Could not find `scrcpy` on PATH. Make "
+                                      "sure scrcpy is installed and "
+                                      "accessible from the terminal.")
+
+    def start(self, args, stdout=PIPE, stderr=PIPE):
+        proc = Popen(
+            _("{} {}".format(self.path, args)),
+            stdout=stdout,
+            stderr=stderr,
         )
-        return True
+        return proc
 
-    @staticmethod
-    def device():
-        pass
+    def get_path(self):
+        return self.path
 
-    @staticmethod
-    def check():
-        scrcpy_path = check_existence(
-            environment.paths(), ['scrcpy'], False, True)
-        if scrcpy_path and (isinstance(scrcpy_path, list)):
-            return scrcpy_path[0]
+
+class AdbNotFoundError(FileNotFoundError):
+    pass
+
+
+class AdbRuntimeError(RuntimeError):
+    pass
+
+
+class AndroidDebugBridge:
+    def __init__(self, path=None):
+        if path is None:
+            self.path = path
+        elif shutil.which('adb') is not None:
+            self.path = shutil.which('adb')
         else:
-            logging.error(
-                'scrcpy could not be found in any of the paths {}'.format(
-                    environment.paths()))
+            self.path = open_exe_name_dialog(None, 'adb')
+        if self.path is None:
+            AdbNotFoundError("Could not find `adb` on PATH. "
+                             "Make sure adb is installed accessible "
+                             "from the terminal")
 
-
-class adb:
-    path = None
-
-    def __init__(self):
-        pass
-
-    @staticmethod
-    def check():
-        adb_path = check_existence(environment.paths(), ['adb'], False, True)
-        if adb_path and (isinstance(adb_path, list)):
-            return adb_path[0]
-        else:
-            logging.error(
-                'adb could not be found in any of the paths {}'.format(
-                    environment.paths()))
-
-    @staticmethod
-    def shell_input(path, command, device_id=None):
+    def shell_input(self, command, device_id=None):
+        path = self.path
         if device_id:
             Popen(
                 _("{} -s {} shell input {}".format(path, device_id, command)),
@@ -106,14 +111,15 @@ class adb:
                 stderr=PIPE,
             )
 
-    @staticmethod
-    def kill_adb_server(path):
-        adb.command(path, "kill-server")
+    def get_path(self):
+        return self.path
 
-    @staticmethod
-    def get_dimensions(path, device_id=None):
+    def kill_adb_server(self):
+        self.command(self.path, "kill-server")
+
+    def get_dimensions(self, device_id=None):
         shell_adb = _get_dimension_raw_noexcept(
-            path=path, device_id=device_id
+            path=self.path, device_id=device_id
         )
         try:
             if shell_adb.wait(timeout=3) != 0:
@@ -123,11 +129,11 @@ class adb:
         except TimeoutExpired:
             print("E: adb falied; timeout exceeded 10s, killing and "
                   "respawining adb")
-            adb.kill_adb_server(path)
+            self.kill_adb_server()
             if isinstance(device_id, str) and device_id.count('.') >= 3:
-                adb.command(adb.path, "connect {}".format(device_id))
+                self.command(self.path, "connect {}".format(device_id))
             shell_adb = _get_dimension_raw_noexcept(
-                path=path, device_id=device_id
+                path=self.path, device_id=device_id
             )
             if shell_adb.wait(timeout=8) != 0:
                 print("E: Command 'adb shell wm size' exited with {}".format(
@@ -149,62 +155,50 @@ class adb:
         )
         return False
 
-    @staticmethod
-    def shell(path, command, device_id=None):
+    def shell(self, command, device_id=None):
         if device_id:
-            po = Popen(_("{} -s {} shell {}".format(path, device_id, command)),
-                       stdout=PIPE, stderr=PIPE)
+            po = Popen(_("{} -s {} shell {}".format(
+                self.path, device_id, command)),
+                stdout=PIPE, stderr=PIPE)
         else:
-            po = Popen(_("{} shell {}".format(path, command)),
+            po = Popen(_("{} shell {}".format(self.path, command)),
                        stdout=PIPE, stderr=PIPE)
         return po
 
-    @staticmethod
-    def command(path, command, device_id=None):
+    def command(self, command, device_id=None):
         if device_id:
             adb_shell_output = Popen(
-                _("{} -s {} {}".format(path, device_id, command)), stdout=PIPE,
+                _("{} -s {} {}".format(self.path, device_id, command)),
+                stdout=PIPE,
                 stderr=PIPE)
         else:
-            adb_shell_output = Popen(_("{} {}".format(path, command)),
+            adb_shell_output = Popen(_("{} {}".format(self.path, command)),
                                      stdout=PIPE, stderr=PIPE)
         return adb_shell_output
 
-    @staticmethod
-    def tcpip(path, port=5555, identifier=""):
+    def tcpip(self, port=5555, identifier=""):
         if identifier:
             command = "{path} -s {identifier} -d tcpip {port}"
         else:
             command = "{path} -d tcpip {port}"
         exit_code = call(
-            _(command.format(path=path, port=port, identifier=identifier)),
+            _(command.format(path=self.path, port=port,
+                             identifier=identifier)),
             stdout=PIPE,
             stderr=PIPE
         )
         return exit_code
 
-    @staticmethod
-    def devices(increment=''):
-        if increment is None:
-            raise FileNotFoundError(
-                "guiscrcpy couldn't find adb. "
-                "Please specify path to adb in configuration filename"
-            )
-        proc = Popen(_(increment + " devices"), stdout=PIPE)
+    def devices(self):
+        proc = Popen(_(self.path + " devices"), stdout=PIPE)
         output = [[y.strip() for y in x.split('\t')]
                   for x in decode_process(proc)[1:]][:-1]
 
         logging.debug("ADB: {}".format(output))
         return output
 
-    @staticmethod
-    def devices_detailed(increment=''):
-        if increment is None:
-            raise FileNotFoundError(
-                "guiscrcpy couldn't find adb. "
-                "Please specify path to adb in configuration filename"
-            )
-        proc = Popen(_(increment + " devices -l"), stdout=PIPE)
+    def devices_detailed(self):
+        proc = Popen(_(self.path + " devices -l"), stdout=PIPE)
         output = [[y.strip() for y in x.split()]
                   for x in decode_process(proc)[1:]][:-1]
         devices_found = []

@@ -21,7 +21,6 @@ import time
 
 from qtpy.QtWidgets import QMainWindow
 
-from guiscrcpy.lib.check import adb
 from guiscrcpy.network.network import NetworkManager
 from guiscrcpy.platform.platform import System
 from guiscrcpy.ux import Ui_NetworkUI
@@ -35,12 +34,12 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
     Does not work satisfactorily on Windows.
     """
 
-    def __init__(self, adb_path=None):
+    def __init__(self, adb):
         QMainWindow.__init__(self)
         Ui_NetworkUI.__init__(self)
         self.os = System()
         self.setupUi(self)
-        adb.path = adb_path
+        self.adb = adb
         self.nm = NetworkManager()
 
     def init(self):
@@ -60,7 +59,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
         self.tcpip.pressed.connect(self.tcpip_launch)
 
     def tcpip_launch(self):
-        adb.command(adb.path, '-d tcpip 5555')
+        self.adb.command('-d tcpip 5555')
         self.nm_det.setText(
             "Now disconnect your device, and enter the IP address, and connect"
         )
@@ -93,7 +92,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
                         "Click refresh")
                 return
 
-        sp = adb.command(adb.path, 'connect {}:5555'.format(ip))
+        sp = self.adb.command('connect {}:5555'.format(ip))
         count = 0
         while True:
             count += 1

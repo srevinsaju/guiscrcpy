@@ -59,7 +59,7 @@ jobs:
     
     - name: Download scrcpy
       run: |
-        wget -c https://github.com/$(wget -q https://github.com/srevinsaju/scrcpy-appimage/releases -O - | grep "scrcpy*.AppImage" | head -n 1 | cut -d '"' -f 2)
+        wget -c $(curl -sL https://api.github.com/repos/srevinsaju/scrcpy-appimage/releases/latest | jq -r '.assets[].browser_download_url')
         chmod +x scrcpy*.AppImage
         ./scrcpy*.AppImage --appimage-extract
 

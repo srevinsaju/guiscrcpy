@@ -48,112 +48,47 @@ jobs:
         python -m python_appimage build app appimage \
                                             --linux-tag=manylinux1_x86_64
     
+    - name: Download scrcpy
+      run: |
+        wget -c $(curl -sL https://api.github.com/repos/srevinsaju/scrcpy-appimage/releases/latest | jq -r '.assets[].browser_download_url')
+        chmod +x scrcpy*.AppImage
+        ./scrcpy*.AppImage --appimage-extract
+
     - name: Extract AppImage
       run: |
         ./guiscrcpy-x86_64.AppImage --appimage-extract
-        mv squashfs-root AppDir
-        wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
-        chmod +x ./appimagetool-x86_64.AppImage
         
     - name: Patch PyQt5
       run: |
-        cp -L /usr/lib/x86_64-linux-gnu/libxkbcommon* AppDir/usr/lib/.
-        cp -L /usr/lib/x86_64-linux-gnu/libxcb-xkb.so.1 AppDir/usr/lib/.
-    
-    - name: Download adb
+        cp -L /usr/lib/x86_64-linux-gnu/libxkbcommon* squashfs-root/usr/lib/.
+        cp -L /usr/lib/x86_64-linux-gnu/libxcb-xkb.so.1 squashfs-root/usr/lib/.
+    - name: Remove unwanted stuff
       run: |
-        wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip
-        unzip platform-tools-latest-linux.zip -d adb
-        cp adb/platform-tools/adb AppDir/usr/bin/.
-    
-    - name: Download scrcpy
-      run: |
-        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy113.tar.gz
-        tar -xf scrcpy113.tar.gz
-        mkdir -p AppDir/usr/bin
-        cp scrcpy113/scrcpy AppDir/usr/bin/.
-        chmod +x AppDir/usr/bin/scrcpy
-        mkdir -p AppDir/usr/share/scrcpy
-        cp scrcpy113/scrcpy-server AppDir/usr/share/scrcpy/.
+        # from 
+        find squashfs-root/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/plugins/platforms/ -type f -not -name libqxcb.so -delete
+        rm -rf squashfs-root/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/plugins/egldeviceintegrations
+        rm -rf squashfs-root/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/plugins/{audio,gamepads,geometryloaders,geoservices,mediaservice,playlistformats,position,renderplugins,sceneparsers,sensorgestures,sensors,sqldrivers,texttospeech,wayland*,webview,xcbglintegrations}
+        rm -rf squashfs-root/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/qml
+        rm squashfs-root/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/lib/libQt5{Bluetooth,Concurrent,Designer,Help,Location,Multimedia,Network,Nfc,OpenGL,Positioning,Qml,Quick,RemoteObjects,Sensors,SerialPort,Sql,Test,WaylandClient,WebChannel,WebSockets,Xml}*
+        rm -rf squashfs-root/opt/python3.8/lib/python3.8/site-packages/pip
 
-    - name: Download scrcpy binary deps
+    - name: Download AppImage Tool
       run: |
-        cp scrcpy113/lib/* AppDir/usr/lib/.
+        wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+        chmod +x ./appimagetool-x86_64.AppImage
+ 
     - name: Reimage AppImage
       run: |
         rm ./guiscrcpy-x86_64.AppImage
-        ./appimagetool-x86_64.AppImage --comp gzip AppDir -n
+        ./appimagetool-x86_64.AppImage squashfs-root -n -u 'gh-releases-zsync|srevinsaju|guiscrcpy|latest|guiscrcpy*.AppImage.zsync'
+        mkdir -p appimage_dist
+        mv guiscrcpy*.AppImage* appimage_dist/.
+ 
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
         name: guiscrcpy-continuous-x86_64.AppImage
-        path: guiscrcpy-x86_64.AppImage
-
-
-  AppImage-PySide2:
-    runs-on: ubuntu-18.04
-    strategy:
-      matrix:
-        version: ['3.8']
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v1
-      with:
-        python-version: ${{ matrix.version }}
-    - name: Download dependencies
-      run: |
-        sudo apt install libxkbcommon0 libxcb-xkb-dev libxkbcommon-x11-0 libxcb-xkb1
-    - name: Test AppImage
-      run: |
-        sed -i 's,PyQt5,PySide2,g' requirements.txt
-        sed -i 's,PyQt5,PySide2,g' setup.py
-        python -m pip install python-appimage
-        echo $(realpath .) > appimage/requirements.txt
-        python -m python_appimage build app appimage \
-                                            --linux-tag=manylinux1_x86_64
-    
-    - name: Extract AppImage
-      run: |
-        ./guiscrcpy-x86_64.AppImage --appimage-extract
-        mv squashfs-root AppDir
-        wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
-        chmod +x ./appimagetool-x86_64.AppImage
-        
-    - name: Patch PyQt5
-      run: |
-        cp -L /usr/lib/x86_64-linux-gnu/libxkbcommon* AppDir/usr/lib/.
-        cp -L /usr/lib/x86_64-linux-gnu/libxcb-xkb.so.1 AppDir/usr/lib/.
-    
-    - name: Download adb
-      run: |
-        wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip
-        unzip platform-tools-latest-linux.zip -d adb
-        cp adb/platform-tools/adb AppDir/usr/bin/.
-    
-    - name: Download scrcpy
-      run: |
-        wget https://dl.bintray.com/srevinsaju/guiscrcpy/scrcpy/scrcpy113.tar.gz
-        tar -xf scrcpy113.tar.gz
-        mkdir -p AppDir/usr/bin
-        cp scrcpy113/scrcpy AppDir/usr/bin/.
-        chmod +x AppDir/usr/bin/scrcpy
-        mkdir -p AppDir/usr/share/scrcpy
-        cp scrcpy113/scrcpy-server AppDir/usr/share/scrcpy/.
-
-    - name: Download scrcpy binary deps
-      run: |
-        cp scrcpy113/lib/* AppDir/usr/lib/.
-    - name: Reimage AppImage
-      run: |
-        rm ./guiscrcpy-x86_64.AppImage
-        ./appimagetool-x86_64.AppImage --comp gzip AppDir -n
-        mv guiscrcpy-x86_64.AppImage guiscrcpy-PySide2-x86_64.AppImage
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: guiscrcpy-PySide2-continuous-x86_64.AppImage
-        path: guiscrcpy-PySide2-x86_64.AppImage
+        path: 'appimage_dist/'
 
 
   Windows:
@@ -214,7 +149,7 @@ jobs:
 
 
   Release:
-    needs: [Windows, AppImage, Wheel, Windows-PySide2, AppImage-PySide2]
+    needs: [Windows, AppImage, Wheel, Windows-PySide2]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -233,9 +168,6 @@ jobs:
     - uses: actions/download-artifact@v1
       with:
         name: guiscrcpy-continuous-x86_64.AppImage
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-PySide2-continuous-x86_64.AppImage
 
     - name: Release
       uses: marvinpinto/action-automatic-releases@latest

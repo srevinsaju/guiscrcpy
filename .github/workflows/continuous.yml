@@ -141,7 +141,7 @@ jobs:
 
 
   Release:
-    needs: [Windows, AppImage, Wheel, Windows-PySide2, AppImage-PySide2]
+    needs: [Windows, AppImage, Wheel, Windows-PySide2]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -160,9 +160,6 @@ jobs:
     - uses: actions/download-artifact@v1
       with:
         name: guiscrcpy-continuous-x86_64.AppImage
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-PySide2-continuous-x86_64.AppImage
 
     - name: Release
       uses: marvinpinto/action-automatic-releases@latest

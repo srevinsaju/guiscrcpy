@@ -21,3 +21,9 @@ prime
 commit_sha
 Pipfile.lock
 /.run/guiscrcpy.sh
+/guiscrcpy-squashfs-root/
+*.AppImage.zsync
+guiscrcpy.AppDir.BUILD/
+guiscrcpy.AppDir/
+scrcpy-squashfs-root/
+squashfs-root/

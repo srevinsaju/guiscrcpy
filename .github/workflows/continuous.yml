@@ -54,8 +54,8 @@ jobs:
         
     - name: Patch PyQt5
       run: |
-        cp -L /usr/lib/x86_64-linux-gnu/libxkbcommon* AppDir/usr/lib/.
-        cp -L /usr/lib/x86_64-linux-gnu/libxcb-xkb.so.1 AppDir/usr/lib/.
+        cp -L /usr/lib/x86_64-linux-gnu/libxkbcommon* squashfs-root/usr/lib/.
+        cp -L /usr/lib/x86_64-linux-gnu/libxcb-xkb.so.1 squashfs-root/usr/lib/.
     
     - name: Download scrcpy
       run: |

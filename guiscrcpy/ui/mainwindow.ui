@@ -276,6 +276,7 @@ border-radius: 10px;
           <widget class="QCheckBox" name="check_swipe_panel">
            <property name="font">
             <font>
+             <family>Noto Sans</family>
              <pointsize>10</pointsize>
             </font>
            </property>
@@ -400,6 +401,7 @@ border-radius: 10px;
           <widget class="QCheckBox" name="lock_rotation">
            <property name="font">
             <font>
+             <family>Noto Sans</family>
              <pointsize>10</pointsize>
             </font>
            </property>
@@ -416,6 +418,7 @@ border-radius: 10px;
           <widget class="QCheckBox" name="check_bottom_panel">
            <property name="font">
             <font>
+             <family>Noto Sans</family>
              <pointsize>10</pointsize>
             </font>
            </property>
@@ -455,6 +458,7 @@ border-radius: 10px;
           <widget class="QCheckBox" name="check_side_panel">
            <property name="font">
             <font>
+             <family>Noto Sans</family>
              <pointsize>10</pointsize>
             </font>
            </property>
@@ -572,6 +576,7 @@ border-radius: 10px;
          </property>
          <property name="font">
           <font>
+           <family>Noto Sans</family>
            <pointsize>9</pointsize>
           </font>
          </property>
@@ -742,7 +747,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
            </property>
            <property name="font">
             <font>
-             <family>Trebuchet MS</family>
+             <family>Noto Sans</family>
              <pointsize>11</pointsize>
             </font>
            </property>

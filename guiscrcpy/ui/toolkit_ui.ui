@@ -757,6 +757,7 @@ color: rgb(0, 0, 0);
       </property>
       <property name="font">
        <font>
+        <family>Noto Sans</family>
         <pointsize>18</pointsize>
         <weight>75</weight>
         <bold>true</bold>
@@ -783,6 +784,7 @@ color: rgb(0, 0, 0);
       </property>
       <property name="font">
        <font>
+        <family>Noto Sans</family>
         <pointsize>18</pointsize>
         <weight>75</weight>
         <bold>true</bold>

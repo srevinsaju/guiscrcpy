@@ -276,6 +276,7 @@ border-radius: 10px;
           <widget class="QCheckBox" name="check_swipe_panel">
            <property name="font">
             <font>
+             <family>Noto Sans</family>
              <pointsize>10</pointsize>
             </font>
            </property>
@@ -400,6 +401,7 @@ border-radius: 10px;
           <widget class="QCheckBox" name="lock_rotation">
            <property name="font">
             <font>
+             <family>Noto Sans</family>
              <pointsize>10</pointsize>
             </font>
            </property>
@@ -416,6 +418,7 @@ border-radius: 10px;
           <widget class="QCheckBox" name="check_bottom_panel">
            <property name="font">
             <font>
+             <family>Noto Sans</family>
              <pointsize>10</pointsize>
             </font>
            </property>
@@ -455,6 +458,7 @@ border-radius: 10px;
           <widget class="QCheckBox" name="check_side_panel">
            <property name="font">
             <font>
+             <family>Noto Sans</family>
              <pointsize>10</pointsize>
             </font>
            </property>
@@ -486,6 +490,12 @@ border-radius: 10px;
          </item>
          <item row="7" column="5">
           <widget class="QComboBox" name="device_rotation">
+           <property name="font">
+            <font>
+             <family>Noto Sans</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
            <item>
             <property name="text">
              <string>Default Rotation</string>
@@ -572,6 +582,7 @@ border-radius: 10px;
          </property>
          <property name="font">
           <font>
+           <family>Noto Sans</family>
            <pointsize>9</pointsize>
           </font>
          </property>
@@ -645,9 +656,16 @@ border-radius: 10px;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="font">
+            <font>
+             <family>Noto Sans</family>
+             <pointsize>11</pointsize>
+            </font>
+         </property>
          <property name="text">
           <string/>
          </property>
+
         </widget>
        </item>
        <item>
@@ -665,7 +683,7 @@ border-radius: 10px;
            </property>
            <property name="font">
             <font>
-             <family>Titillium Web</family>
+             <family>Noto Sans</family>
              <pointsize>11</pointsize>
              <weight>50</weight>
              <italic>false</italic>
@@ -690,7 +708,7 @@ border-radius: 10px;
            </property>
            <property name="font">
             <font>
-             <family>Titillium Web</family>
+             <family>Noto Sans</family>
              <pointsize>11</pointsize>
             </font>
            </property>
@@ -742,7 +760,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
            </property>
            <property name="font">
             <font>
-             <family>Trebuchet MS</family>
+             <family>Noto Sans</family>
              <pointsize>11</pointsize>
             </font>
            </property>
@@ -881,7 +899,7 @@ border-radius: 10px;
          </property>
          <property name="font">
           <font>
-           <family>Courier 10 Pitch</family>
+           <family>Monospace</family>
           </font>
          </property>
          <property name="placeholderText">
@@ -1582,7 +1600,7 @@ border-radius: 10px;
            </property>
            <property name="font">
             <font>
-             <family>Titillium Web</family>
+             <family>Noto Sans</family>
             </font>
            </property>
            <property name="styleSheet">

@@ -42,10 +42,11 @@ from subprocess import Popen
 
 from qtpy import QtCore, QtWidgets
 from qtpy.QtCore import QModelIndex, QPoint
-from qtpy.QtGui import QPixmap, QIcon, QFont
+from qtpy.QtGui import QPixmap, QIcon, QFont, QFontDatabase
 from qtpy.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QMenu
 from qtpy.QtWidgets import QMessageBox
-
+from .lib.utils import format_colors as fc
+from .constants import FONTS
 from .install.finder import open_exe_name_dialog
 from .lib.process import is_running
 from .lib.toolkit import UXMapper
@@ -1204,6 +1205,17 @@ def bootstrap(cfgmgr, theme='Breeze', aot=True, debug__no_scrcpy=False,
     QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
     # init core
     app = QtWidgets.QApplication([])
+
+    # load fonts
+    font_database = QFontDatabase()
+    for font in FONTS:
+        s = font_database.addApplicationFont(':/font/fonts/{ttf}'.format(
+            ttf=font
+        ))
+        if s == -1:  # loading the font failed
+            # https://doc.qt.io/qt-5/qfontdatabase.html
+            print(fc("{y}Failed to load {ttf} font.{rst}", ttf=font))
+
     # set theme
     app.setStyle(theme)
     # apply stylesheet

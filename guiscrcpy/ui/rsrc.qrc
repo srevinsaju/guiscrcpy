@@ -51,6 +51,10 @@
     <file>icons/volume-up-interface-symbol.svg</file>
   </qresource>
   <qresource prefix="font">
+    <file>fonts/NotoSans-Bold.ttf</file>
+    <file>fonts/NotoSans-BoldItalic.ttf</file>
+    <file>fonts/NotoSans-Italic.ttf</file>
+    <file>fonts/NotoSans-Regular.ttf</file>
     <file>fonts/TitilliumWeb-Bold.ttf</file>
     <file>fonts/TitilliumWeb-Regular.ttf</file>
   </qresource>

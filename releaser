@@ -23,15 +23,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 RAW_VERSION = "4.0"
-PACKAGE_DIR = {
-    'guiscrcpy': [
-        '*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*',
-        'theme/*', 'ux/*', 'network/*', 'settings/*',
-        'install/*', 'platform/windows_tools/*', 'ui/icons/*',
-        'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*',
-        'ui/pyqt5/*', 'ui/pyside2/*'
-    ]
-}
 
 CONSOLE_SCRIPTS = {
     'console_scripts': [
@@ -145,16 +136,11 @@ requirements = ['PyQt5>=5.14,<5.16', 'pynput', 'qtpy']
 if platform.system() == 'Windows':
     requirements.extend(['pywin32', 'psutil'])
 elif platform.system() == 'Linux':
-    requirements.extend(['fonttools', 'psutil', 'cairosvg'])
+    requirements.extend(['psutil', 'cairosvg'])
 
 data_files = [
         ('share/applications', ['guiscrcpy.desktop']),
         ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png']),
-        ('share/fonts', [
-            'guiscrcpy/ui/fonts/NotoSans-Regular.ttf',
-            'guiscrcpy/ui/fonts/TitilliumWeb-Bold.ttf',
-            'guiscrcpy/ui/fonts/TitilliumWeb-Regular.ttf',
-        ])
     ]
 {DATA_FILE_MANIPULATE}
 setup(
@@ -171,7 +157,6 @@ setup(
     extras_require={extras},
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
-    package_data={package_data},  # noqa: E501
     include_package_data=True,
     install_requires=requirements,
     scripts=["scripts/guiscrcpy"],
@@ -207,7 +192,6 @@ for setup in ("setup.py", ):
         w.write(setupfile.format(
             COPYRIGHT=COPYRIGHT,
             version=v,
-            package_data=PACKAGE_DIR,
             entry_points=CONSOLE_SCRIPTS,
             extras=EXTRAS_REQUIRE,
             DATA_FILE_MANIPULATE=DATA_FILES_MANIPULATE[setup]

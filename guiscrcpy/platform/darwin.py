@@ -60,3 +60,7 @@ class Darwin:
     @staticmethod
     def paths():
         return ['bin', '/usr/bin', '~/.local/bin', '~/bin', '/usr/local/bin']
+
+    @staticmethod
+    def install_fonts():
+        return True

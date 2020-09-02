@@ -97,6 +97,7 @@ class Ui_HorizontalPanel(object):
         self.label = QtWidgets.QLabel(HorizontalPanel)
         self.label.setGeometry(QtCore.QRect(0, -10, 20, 41))
         font = QtGui.QFont()
+        font.setFamily("Noto Sans")
         font.setPointSize(18)
         font.setBold(True)
         font.setWeight(75)

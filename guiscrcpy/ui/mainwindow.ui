@@ -665,7 +665,7 @@ border-radius: 10px;
            </property>
            <property name="font">
             <font>
-             <family>Titillium Web</family>
+             <family>Noto Sans</family>
              <pointsize>11</pointsize>
              <weight>50</weight>
              <italic>false</italic>
@@ -690,7 +690,7 @@ border-radius: 10px;
            </property>
            <property name="font">
             <font>
-             <family>Titillium Web</family>
+             <family>Noto Sans</family>
              <pointsize>11</pointsize>
             </font>
            </property>
@@ -881,7 +881,7 @@ border-radius: 10px;
          </property>
          <property name="font">
           <font>
-           <family>Courier 10 Pitch</family>
+           <family>Monospace</family>
           </font>
          </property>
          <property name="placeholderText">
@@ -1582,7 +1582,7 @@ border-radius: 10px;
            </property>
            <property name="font">
             <font>
-             <family>Titillium Web</family>
+             <family>Noto Sans</family>
             </font>
            </property>
            <property name="styleSheet">

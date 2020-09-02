@@ -103,47 +103,8 @@ class Linux:
 
     @staticmethod
     def install_fonts():
-        """
-        Install fonts to ~/.fonts.
-        The fonts being installed is Titillium Web ~
-        https://fonts.google.com/specimen/Titillium+Web
-        Open Source Approved fonts.
-        # TODO support for SystemWide Installation
-        :return: True if installation successful, else False
-        """
-        sys_font_dir = os.path.join(os.path.expanduser('~'), '.fonts')
-        if not os.path.exists(sys_font_dir):
-            os.makedirs(sys_font_dir)
-
-        try:
-            from fontTools.ttLib import TTFont
-        except ModuleNotFoundError as e:
-            logging.error(
-                "Error Installing the fonts. "
-                "You might have to manually install the fonts"
-                "Titillium Web : "
-                "https://fonts.google.com/specimen/Titillium+Web "
-                "Error: {}".format(e)
-            )
-            return False
-
-        font_dir = os.path.join(os.path.abspath(
-            os.path.dirname(os.path.dirname(__file__))), 'ui', 'fonts')
-        try:
-            fonts = os.listdir(font_dir)
-            for i in fonts:
-                font = TTFont(os.path.join(font_dir, i))
-                font.save(os.path.join(sys_font_dir, i))
-            return True
-        except Exception as e:
-            logging.error(
-                "Error Installing the fonts. "
-                "You might have to manually install the fonts"
-                "Titillium Web : "
-                "https://fonts.google.com/specimen/Titillium+Web "
-                "Error: {}".format(e)
-            )
-            return False
+        # deprecate install fonts for Linux
+        return True
 
     @staticmethod
     def system():

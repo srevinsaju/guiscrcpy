@@ -20,4 +20,4 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-VERSION = '4.2.0.dev'
+VERSION = '4.3.0.dev'

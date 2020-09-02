@@ -36,25 +36,20 @@ except FileNotFoundError:
     long_description = \
         "Open Source Android Screen Mirroring System by @srevinsaju"
 
-requirements = ['PyQt5>=5.14,<5.16', 'pynput', 'qtpy', 'click', 'colorama']
+requirements = ['PyQt5>=5.14,<5.16', 'pynput', 'qtpy']
 if platform.system() == 'Windows':
     requirements.extend(['pywin32', 'psutil'])
 elif platform.system() == 'Linux':
-    requirements.extend(['fonttools', 'psutil', 'cairosvg'])
+    requirements.extend(['psutil', 'cairosvg'])
 
 data_files = [
         ('share/applications', ['guiscrcpy.desktop']),
         ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png']),
-        ('share/fonts', [
-            'guiscrcpy/ui/fonts/NotoSans-Regular.ttf',
-            'guiscrcpy/ui/fonts/TitilliumWeb-Bold.ttf',
-            'guiscrcpy/ui/fonts/TitilliumWeb-Regular.ttf',
-        ])
     ]
 
 setup(
     name='guiscrcpy',
-    version='4.2.0.dev',
+    version='4.3.0.dev',
     description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -66,7 +61,6 @@ setup(
     extras_require={'pyqt5': 'PyQt5', 'pyside2': 'PySide2'},
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
-    package_data={'guiscrcpy': ['*', '*.*', 'resources/*', 'ui/*', 'lib/*', 'platform/*', 'theme/*', 'ux/*', 'network/*', 'settings/*', 'install/*', 'platform/windows_tools/*', 'ui/icons/*', 'ui/fonts/*', 'ui/rsrc/*', 'ui/ui/*', 'ui/pyqt5/*', 'ui/pyside2/*']},  # noqa: E501
     include_package_data=True,
     install_requires=requirements,
     scripts=["scripts/guiscrcpy"],

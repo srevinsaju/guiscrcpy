@@ -157,7 +157,6 @@ setup(
     extras_require={extras},
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
-    package_data={package_data},  # noqa: E501
     include_package_data=True,
     install_requires=requirements,
     scripts=["scripts/guiscrcpy"],
@@ -193,7 +192,6 @@ for setup in ("setup.py", ):
         w.write(setupfile.format(
             COPYRIGHT=COPYRIGHT,
             version=v,
-            package_data=PACKAGE_DIR,
             entry_points=CONSOLE_SCRIPTS,
             extras=EXTRAS_REQUIRE,
             DATA_FILE_MANIPULATE=DATA_FILES_MANIPULATE[setup]

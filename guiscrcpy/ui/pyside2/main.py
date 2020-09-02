@@ -16,7 +16,7 @@ from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
 from PySide2.QtGui import QGradient
 from PySide2.QtWidgets import *
 
-from  . import rsrc_rc
+from . import rsrc_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):

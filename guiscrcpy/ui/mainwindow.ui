@@ -490,6 +490,12 @@ border-radius: 10px;
          </item>
          <item row="7" column="5">
           <widget class="QComboBox" name="device_rotation">
+           <property name="font">
+            <font>
+             <family>Noto Sans</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
            <item>
             <property name="text">
              <string>Default Rotation</string>
@@ -650,9 +656,16 @@ border-radius: 10px;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="font">
+            <font>
+             <family>Noto Sans</family>
+             <pointsize>11</pointsize>
+            </font>
+         </property>
          <property name="text">
           <string/>
          </property>
+
         </widget>
        </item>
        <item>

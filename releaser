@@ -141,11 +141,6 @@ elif platform.system() == 'Linux':
 data_files = [
         ('share/applications', ['guiscrcpy.desktop']),
         ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png']),
-        ('share/fonts', [
-            'guiscrcpy/ui/fonts/NotoSans-Regular.ttf',
-            'guiscrcpy/ui/fonts/TitilliumWeb-Bold.ttf',
-            'guiscrcpy/ui/fonts/TitilliumWeb-Regular.ttf',
-        ])
     ]
 {DATA_FILE_MANIPULATE}
 setup(

@@ -36,7 +36,7 @@ except FileNotFoundError:
     long_description = \
         "Open Source Android Screen Mirroring System by @srevinsaju"
 
-requirements = ['PyQt5>=5.14,<5.16', 'pynput', 'qtpy']
+requirements = ['PyQt5>=5.14,<5.16', 'pynput', 'qtpy', 'click', 'colorama']
 if platform.system() == 'Windows':
     requirements.extend(['pywin32', 'psutil'])
 elif platform.system() == 'Linux':
@@ -54,7 +54,7 @@ data_files = [
 
 setup(
     name='guiscrcpy',
-    version='4.1.2',
+    version='4.2.0.dev',
     description='An Open Source - Fast - Android Screen Mirroring system.',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -70,7 +70,7 @@ setup(
     include_package_data=True,
     install_requires=requirements,
     scripts=["scripts/guiscrcpy"],
-    entry_points={'console_scripts': ['guiscrcpy = guiscrcpy.launcher:bootstrap']},  # noqa: E501
+    entry_points={'console_scripts': ['guiscrcpy = guiscrcpy.cli:cli']},  # noqa: E501
     classifiers=[
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.7',

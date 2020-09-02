@@ -248,6 +248,8 @@ jobs:
         draft: true
         files: |
           guiscrcpy-continuous.exe
+          guiscrcpy-pyside2-continuous.exe
+          guiscrcpy-PySide2-continuous-x86_64.AppImage
           guiscrcpy-continuous-x86_64.AppImage
           guiscrcpy-continuous-none-any-py3.whl
           

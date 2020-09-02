@@ -114,7 +114,8 @@ jobs:
           
       - name: Create .exe
         run: |
-          python -m PyInstaller guiscrcpy-windows.spec
+          python -m PyInstaller -n guiscrcpy scripts/guiscrcpy.py --onefile
+
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
         with:
@@ -147,7 +148,7 @@ jobs:
           
       - name: Create .exe
         run: |
-          python -m PyInstaller guiscrcpy-windows.spec
+          python -m PyInstaller -n guiscrcpy scripts/guiscrcpy.py --onefile
           mv dist/guiscrcpy.exe dist/guiscrcpy-pyside2.exe
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0

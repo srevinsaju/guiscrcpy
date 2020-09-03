@@ -1184,7 +1184,7 @@ def set_scrcpy_server_path(config):
             config['scrcpy-server'] = server_path
             os.environ['SCRCPY_SERVER_PATH'] = server_path
     elif (
-        (scrcpy_server_path_env is None) or
+        (scrcpy_server_path_env is None) and
         (isinstance(config.get('scrcpy-server'), 'str') and
          not os.path.exists(config.get('scrcpy-server')))
     ) and (

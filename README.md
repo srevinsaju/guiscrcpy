@@ -11,7 +11,7 @@
 [![AUR version](https://img.shields.io/aur/version/guiscrcpy?label=Arch%20Linux%20Package&style=flat-square)](https://aur.archlinux.org/packages/guiscrcpy)
 [![guiscrcpy](https://snapcraft.io//guiscrcpy/badge.svg)](https://snapcraft.io/guiscrcpy)
 [![GitHub All Releases](https://img.shields.io/github/downloads/srevinsaju/guiscrcpy/total?style=flat-square)](https://github.com/srevinsaju/guiscrcpy/releases)
-![Discord](https://img.shields.io/discord/679746670422261783?label=chat%20on%20Discord&logo=discord&logoColor=white&style=flat-square)
+[![Discord](https://img.shields.io/discord/679746670422261783?label=chat%20on%20Discord&logo=discord&logoColor=white&style=flat-square)](https://discord.gg/mFqj3a5)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 

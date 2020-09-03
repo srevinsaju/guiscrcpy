@@ -1,46 +1,10 @@
 import logging
-import multiprocessing
-import os
 import socket
-import subprocess
-
-from guiscrcpy.platform import platform
-
-from guiscrcpy.lib.utils import log, check_existence
+import threading
+import time
 
 
 class NetworkManager:
-
-    def __init__(self):
-        self.ping = check_existence(platform.System().paths(), 'ping',
-                                    path=True, directory=False)
-        if len(self.ping) >= 1:
-            self.ping = self.ping[0]
-
-    def pinger(self, job_q, results_q):
-        """
-        Do Ping
-        :param job_q:
-        :param results_q:
-        :return:
-        """
-        devnull = open(os.devnull, 'w')
-        while True:
-
-            ip = job_q.get()
-
-            if ip is None:
-                break
-
-            try:
-                commands = '{ping} -c1 {ip}'.format(ping=self.ping, ip=ip)
-                log(commands)
-                subprocess.check_call(commands, stdout=devnull,
-                                      shell=True)
-                results_q.put(ip)
-            except BaseException as e:
-                logging.info("Error in ping: {}".format(e))
-                return  # Fix guiscrcpy ping error on Windows systems
 
     @staticmethod
     def get_my_ip():
@@ -60,47 +24,40 @@ class NetworkManager:
         :param pool_size: amount of parallel ping processes
         :return: list of valid ip addresses
         """
-        if not self.ping:
-            print("Error: `ping` executable not found. Please enter the IP "
-                  "address in the text box manually")
-            return
         ip_list = list()
 
         # get my IP and compose a base like 192.168.1.xxx
         ip_parts = self.get_my_ip().split('.')
         base_ip = ip_parts[0] + '.' + ip_parts[1] + '.' + ip_parts[2] + '.'
 
-        # prepare the jobs queue
-        try:
-            jobs = multiprocessing.Queue()
-            results = multiprocessing.Queue()
+        max_threads = 50
 
-            pool = [multiprocessing.Process(target=self.pinger, args=(
-                    jobs, results)) for _ in range(pool_size)]
-        except PermissionError:
-            print("The current system of packaging of guiscrcpy does not "
-                  "support semaphores. Therefore its not possible to "
-                  "multiprocess ip port scanning. Alternatively use `nmap` "
-                  "or `nutty` to scan your network.")
-            return
+        def check_adb_port(ip):
+            """
+            Check if port is open
+            :param ip:
+            :param port:
+            :return:
+            """
+            try:
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                socket.setdefaulttimeout(2.0)
+                result = sock.connect_ex((ip, 5555))
+                if result == 0:
+                    ip_list.append(ip)
+                sock.close()
+            except Exception as e:
+                logging.warning("Unable to check %s: %s", ip, e)
 
-        for p in pool:
-            p.start()
-
-        # cue hte ping processes
         for i in range(1, 255):
-            jobs.put(base_ip + '{0}'.format(i))
+            threading.Thread(
+                target=check_adb_port,
+                args=[f"{base_ip}{i}"],
+            ).start()
 
-        for _ in pool:
-            jobs.put(None)
-
-        for p in pool:
-            p.join()
-
-        # collect he results
-        while not results.empty():
-            ip = results.get()
-            ip_list.append(ip)
+        # limit the number of threads.
+        while threading.active_count() > max_threads:
+            time.sleep(1)
 
         return ip_list
 

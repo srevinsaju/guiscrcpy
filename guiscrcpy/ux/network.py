@@ -21,9 +21,9 @@ import time
 
 from qtpy.QtWidgets import QMainWindow
 
-from guiscrcpy.network.network import NetworkManager
-from guiscrcpy.platform.platform import System
-from guiscrcpy.ux import Ui_NetworkUI
+from ..network.network import NetworkManager
+from ..platform.platform import System
+from . import Ui_NetworkUI
 
 
 class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
@@ -113,4 +113,6 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
 
     def refresh(self):
         self.listView.clear()
-        self.listView.addItems(self.nm.map_network())
+        nm_map_network_devices = self.nm.map_network()
+        print("Detected IP Addresses:", nm_map_network_devices)
+        self.listView.addItems(nm_map_network_devices)

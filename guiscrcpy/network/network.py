@@ -29,7 +29,7 @@ class NetworkManager:
         ip_parts = self.get_my_ip().split('.')
         base_ip = ip_parts[0] + '.' + ip_parts[1] + '.' + ip_parts[2] + '.'
 
-        max_threads=50
+        max_threads = 50
 
         def check_adb_port(ip):
             """
@@ -45,14 +45,17 @@ class NetworkManager:
                 if result == 0:
                     ip_list.append(ip)
                 sock.close()
-            except:
+            except Exception:
                 pass
 
         for i in range(1, 255):
-            threading.Thread(target=check_adb_port, args=[f"{base_ip}{i}"]).start()
+            threading.Thread(
+                target=check_adb_port,
+                args=[f"{base_ip}{i}"],
+            ).start()
 
         # limit the number of threads.
-        while threading.active_count() > max_threads :
+        while threading.active_count() > max_threads:
             time.sleep(1)
 
         return ip_list

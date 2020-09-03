@@ -1,3 +1,4 @@
+import logging
 import socket
 import threading
 import time
@@ -45,8 +46,8 @@ class NetworkManager:
                 if result == 0:
                     ip_list.append(ip)
                 sock.close()
-            except Exception:
-                pass
+            except Exception as e:
+                logging.warning("Unable to check %s: %s", ip, e)
 
         for i in range(1, 255):
             threading.Thread(

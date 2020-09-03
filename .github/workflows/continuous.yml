@@ -114,7 +114,8 @@ jobs:
           
       - name: Create .exe
         run: |
-          python -m PyInstaller -n guiscrcpy scripts/guiscrcpy.py --onefile
+          echo "from guiscrcpy.cli import cli; cli()" > entry.py
+          python -m PyInstaller -n guiscrcpy .\entry.py --onefile -i guiscrcpy\ui\icons\guiscrcpy_logo_SRj_icon.ico
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
@@ -148,8 +149,10 @@ jobs:
           
       - name: Create .exe
         run: |
-          python -m PyInstaller -n guiscrcpy scripts/guiscrcpy.py --onefile
+          echo "from guiscrcpy.cli import cli; cli()" > entry.py
+          python -m PyInstaller -n guiscrcpy .\entry.py --onefile -i guiscrcpy\ui\icons\guiscrcpy_logo_SRj_icon.ico
           mv dist/guiscrcpy.exe dist/guiscrcpy-pyside2.exe
+
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
         with:

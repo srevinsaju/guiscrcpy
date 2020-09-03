@@ -85,7 +85,7 @@ class AdbRuntimeError(RuntimeError):
 
 class AndroidDebugBridge:
     def __init__(self, path=None):
-        if path is None:
+        if path is not None:
             self.path = path
         elif shutil.which('adb') is not None:
             self.path = shutil.which('adb')

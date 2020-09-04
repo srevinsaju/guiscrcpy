@@ -58,8 +58,9 @@ jobs:
         
     - name: Test guiscrcpy works 
       run: | 
-        Xvfb :99 -screen 0 800x600x24 &
         export DISPLAY=:99
+        echo "exec icewm-session" > ~/.xinitrc
+        startx &
         echo $DISPLAY
         sleep 1
         export QT_DEBUG_PLUGINS=1

@@ -60,6 +60,7 @@ jobs:
     - name: Test guiscrcpy works 
       run: | 
         sleep 1
+        export QT_DEBUG_PLUGINS=1
         guiscrcpy
         xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//'
         # Count the windows on screen

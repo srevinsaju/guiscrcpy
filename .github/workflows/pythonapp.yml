@@ -44,7 +44,7 @@ jobs:
       run: |
         echo "adapted from https://github.com/AppImage/appimage.github.io/blob/master/.travis.yml"
         sudo apt-get update
-        sudo apt-get -qq -y install imagemagick libasound2-dev pulseaudio-utils alsa-utils alsa-oss libjack0 desktop-file-utils xmlstarlet xterm xvfb icewm x11-utils x11-apps netpbm xdotool libgl1-mesa-dri libgl1-mesa-dev mesa-utils libosmesa6 libsdl1.2-dev fonts-wqy-microhei libfile-mimeinfo-perl libx11-xcb1 libxcb-xkb1 libxcb-* libxcb-render-util0 libxkbcommon-x11-0 libxkbcommon0 scrcpy xorg xserver-xorg xserver-xorg-core> /dev/null # appstream # TODO: Cache me!
+        sudo apt-get -qq -y install imagemagick libasound2-dev pulseaudio-utils alsa-utils alsa-oss libjack0 desktop-file-utils xmlstarlet xterm xvfb icewm x11-utils x11-apps netpbm xdotool libgl1-mesa-dri libgl1-mesa-dev mesa-utils libosmesa6 libsdl1.2-dev fonts-wqy-microhei libfile-mimeinfo-perl libx11-xcb1 libxcb-xkb1 libxcb-* libxcb-render-util0 libxkbcommon-x11-0 libxkbcommon0 scrcpy> /dev/null # appstream # TODO: Cache me!
         mkdir $HOME/.icewm/
         echo "ShowTaskBar = 0" > $HOME/.icewm/preferences
         echo "TaskBarAutoHide = 1" > $HOME/.icewm/preferences
@@ -56,59 +56,58 @@ jobs:
         echo "TaskBarShowWindowListMenu = 0" > $HOME/.icewm/preferences
         
         
-    - name: Test guiscrcpy works 
-      run: | 
-        export DISPLAY=:99
-        echo "exec icewm-session" > ~/.xinitrc
-        startx -- :99 &
-        echo $DISPLAY
-        sleep 1
-        export QT_DEBUG_PLUGINS=1
-        guiscrcpy &
-        APID=$!
-        sleep 10
-        xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//'
-        # Count the windows on screen
-        NUMBER_OF_WINDOWS=$(xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//' | wc -l)
-        echo "NUMBER_OF_WINDOWS: $NUMBER_OF_WINDOWS"
-        if [ $(($NUMBER_OF_WINDOWS)) -lt 1 ] ; then
-          echo "ERROR: Could not find a single window on screen :-("
-        fi
-
-        # Works with Xvfb but cannot select window by ID
-        # sudo apt-get -y install scrot 
-        # scrot -b 'screenshot_$wx$h.jpg' # -u gives "X Error of failed request:  BadDrawable (invalid Pixmap or Window parameter)"
-        # mv screenshot_* database/$INPUTBASENAME/
-
-        # Getting the active window seems to require a window manager
-        icewm &
-        sleep 2
-
-        # We could simulate X11 keyboard/mouse input with xdotool here if needed;
-        # of course this should not be hardcoded here (this is just an example)
-        if [ x"$INPUTBASENAME" == xVLC ] ; then
-          xdotool sleep 0.1 key Return # Click away the data protection window
-          xdotool sleep 0.1 key shift+F1 # Open the about screen
+    - name: Run headless test
+      uses: GabrielBB/xvfb-action@v1
+      with:
+        working-directory: ./
+        run: |
+          echo $DISPLAY
           sleep 1
-        fi
-        if [ x"$INPUTBASENAME" == xSubsurface ] ; then
-          xdotool sleep 0.1 key Escape # Click away the update check window
-          sleep 1
-          # Get a list of open windows
+          export QT_DEBUG_PLUGINS=1
+          guiscrcpy &
+          APID=$!
+          sleep 10
           xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//'
-        fi
+          # Count the windows on screen
+          NUMBER_OF_WINDOWS=$(xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//' | wc -l)
+          echo "NUMBER_OF_WINDOWS: $NUMBER_OF_WINDOWS"
+          if [ $(($NUMBER_OF_WINDOWS)) -lt 1 ] ; then
+            echo "ERROR: Could not find a single window on screen :-("
+          fi
 
-        # Works with Xvfb
-        # sudo apt-get -y install x11-apps netpbm xdotool # We do this in .travis.yml
-        # -display :99 needed here? 
-        # xwd -id $(xdotool getactivewindow) -silent | xwdtopnm | pnmtojpeg  > database/$INPUTBASENAME/screenshot.jpg && echo "Snap!"
-        mkdir -p database/$INPUTBASENAME/
-        # xwd -id $(xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//' | head -n 1 | cut -d " " -f 1) -silent | xwdtopnm | pnmtojpeg  > database/$INPUTBASENAME/screenshot.jpg && echo "Snap!"
-        # xwd -id $(xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//' | head -n 1 | cut -d " " -f 1) -silent | xwdtopnm | pnmtopng  > database/$INPUTBASENAME/screenshot.png && echo "Snap!"
-        convert x:$(xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//' | head -n 1 | cut -d " " -f 1) screenshot.png && echo "Snap!"
+          # Works with Xvfb but cannot select window by ID
+          # sudo apt-get -y install scrot 
+          # scrot -b 'screenshot_$wx$h.jpg' # -u gives "X Error of failed request:  BadDrawable (invalid Pixmap or Window parameter)"
+          # mv screenshot_* database/$INPUTBASENAME/
 
-        kill $APID && printf "\n\n\n* * * SUCCESS :-) * * *\n\n\n" || exit 1
-        killall icewm
+          # Getting the active window seems to require a window manager
+          icewm &
+          sleep 2
+
+          # We could simulate X11 keyboard/mouse input with xdotool here if needed;
+          # of course this should not be hardcoded here (this is just an example)
+          if [ x"$INPUTBASENAME" == xVLC ] ; then
+            xdotool sleep 0.1 key Return # Click away the data protection window
+            xdotool sleep 0.1 key shift+F1 # Open the about screen
+            sleep 1
+          fi
+          if [ x"$INPUTBASENAME" == xSubsurface ] ; then
+            xdotool sleep 0.1 key Escape # Click away the update check window
+            sleep 1
+            # Get a list of open windows
+            xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//'
+          fi
+
+          # Works with Xvfb
+          # sudo apt-get -y install x11-apps netpbm xdotool # We do this in .travis.yml
+          # xwd -id $(xdotool getactivewindow) -silent | xwdtopnm | pnmtojpeg  > database/$INPUTBASENAME/screenshot.jpg && echo "Snap!"
+          mkdir -p database/$INPUTBASENAME/
+          # xwd -id $(xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//' | head -n 1 | cut -d " " -f 1) -silent | xwdtopnm | pnmtojpeg  > database/$INPUTBASENAME/screenshot.jpg && echo "Snap!"
+          # xwd -id $(xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//' | head -n 1 | cut -d " " -f 1) -silent | xwdtopnm | pnmtopng  > database/$INPUTBASENAME/screenshot.png && echo "Snap!"
+          convert x:$(xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//' | head -n 1 | cut -d " " -f 1) screenshot.png && echo "Snap!"
+
+          kill $APID && printf "\n\n\n* * * SUCCESS :-) * * *\n\n\n" || exit 1
+          killall icewm
         
         
     - name: Upload artifact

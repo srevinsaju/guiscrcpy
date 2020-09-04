@@ -44,7 +44,7 @@ jobs:
       run: |
         echo "adapted from https://github.com/AppImage/appimage.github.io/blob/master/.travis.yml"
         sudo apt-get update
-        sudo apt-get -qq -y install imagemagick libasound2-dev pulseaudio-utils alsa-utils alsa-oss libjack0 desktop-file-utils xmlstarlet xterm xvfb icewm x11-utils x11-apps netpbm xdotool libgl1-mesa-dri libgl1-mesa-dev mesa-utils libosmesa6 libsdl1.2-dev fonts-wqy-microhei libfile-mimeinfo-perl libx11-xcb1 libxcb-xkb1 libxcb-* libxcb-render-util0 > /dev/null # appstream # TODO: Cache me!
+        sudo apt-get -qq -y install imagemagick libasound2-dev pulseaudio-utils alsa-utils alsa-oss libjack0 desktop-file-utils xmlstarlet xterm xvfb icewm x11-utils x11-apps netpbm xdotool libgl1-mesa-dri libgl1-mesa-dev mesa-utils libosmesa6 libsdl1.2-dev fonts-wqy-microhei libfile-mimeinfo-perl libx11-xcb1 libxcb-xkb1 libxcb-* libxcb-render-util0 libxkbcommon-x11 libxkbcommon0 > /dev/null # appstream # TODO: Cache me!
         mkdir $HOME/.icewm/
         echo "ShowTaskBar = 0" > $HOME/.icewm/preferences
         echo "TaskBarAutoHide = 1" > $HOME/.icewm/preferences
@@ -54,11 +54,11 @@ jobs:
         echo "TaskBarShowMailboxStatus = 0" > $HOME/.icewm/preferences
         echo "TaskBarShowCPUStatus = 0" > $HOME/.icewm/preferences
         echo "TaskBarShowWindowListMenu = 0" > $HOME/.icewm/preferences
-        Xvfb :99 -screen 0 800x600x24 >/dev/null 2>&1 & # Need to set bit depth, otherwise get some black screenshots
         
         
     - name: Test guiscrcpy works 
       run: | 
+        Xvfb :99 -screen 0 800x600x24 &
         sleep 1
         export QT_DEBUG_PLUGINS=1
         guiscrcpy &

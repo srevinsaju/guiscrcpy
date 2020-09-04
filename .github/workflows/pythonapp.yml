@@ -58,7 +58,8 @@ jobs:
         
     - name: Run headless test
       run: |
-        /usr/bin/xvfb-run --auto-servernum scripts/display_ci.sh
+        chmod +x scripts/display-ci.sh
+        /usr/bin/xvfb-run --auto-servernum ./scripts/display-ci.sh
         
         
     - name: Upload artifact

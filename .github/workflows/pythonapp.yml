@@ -36,6 +36,10 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8  
         
+    - name: Test setup.py
+      run: |
+        pip3 install .
+
     - name: Install Destop Environment
       run: |
         echo "adapted from https://github.com/AppImage/appimage.github.io/blob/master/.travis.yml"

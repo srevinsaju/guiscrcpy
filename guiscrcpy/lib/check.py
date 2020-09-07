@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
+import os
 import logging
 import shutil
 from subprocess import Popen, PIPE, call, TimeoutExpired
@@ -62,6 +63,8 @@ class ScrcpyBridge:
             raise ScrcpyNotFoundError("Could not find `scrcpy` on PATH. Make "
                                       "sure scrcpy is installed and "
                                       "accessible from the terminal.")
+        if os.getenv('SCRCPY_LDD'):
+            os.environ['LD_LIBRARY_PATH'] += os.getenv('SCRCPY_LDD')
 
     def start(self, args, stdout=PIPE, stderr=PIPE):
         proc = Popen(

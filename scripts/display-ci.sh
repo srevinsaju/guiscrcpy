@@ -46,4 +46,9 @@ mkdir -p database/$INPUTBASENAME/
 convert x:$(xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//' | head -n 1 | cut -d " " -f 1) screenshot.png && echo "Snap!"
 
 kill $APID && printf "\n\n\n* * * SUCCESS :-) * * *\n\n\n" || exit 1
+echo "Trying to run guiscrcpy again"
+guiscrcpy &
+APID=$!
+sleep 25
+kill $APID && echo "test complete!" || exit 1
 killall icewm

@@ -87,7 +87,9 @@ class InterfaceConfig:
             scrcpy_path = shutil.which('scrcpy')
             self.config['scrcpy'] = scrcpy_path
         else:
-            raise InvalidConfigurationError(
+            _scrcpy_path = self.config['scrcpy']
+            if not os.path.exists(_scrcpy_path):
+                raise InvalidConfigurationError(
                     "The configuration key 'scrcpy' is "
                     "invalid. {} does not exist. "
                     "If you did not set it on purpose, "

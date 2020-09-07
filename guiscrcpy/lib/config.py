@@ -23,6 +23,10 @@ import shutil
 from guiscrcpy.platform import platform
 
 
+class InvalidConfigurationError(RuntimeError):
+    pass
+
+
 class InterfaceConfig:
     def __init__(self):
         """
@@ -62,13 +66,35 @@ class InterfaceConfig:
         # values
         if os.getenv('APPIMAGE') is not None:
             # no need further configuration for adb, scrcpy and scrcpy_server
+            self.config['adb'] = os.getenv('GUISCRCPY_ADB')
+            self.config['scrcpy'] = os.getenv('GUISCRCPY_SCRCPY')
             return True
         if self.config['adb'] is None:
             adb_path = shutil.which('adb')
             self.config['adb'] = adb_path
+        else:
+            _adb_path = self.config['adb']
+            if not os.path.exists(_adb_path):
+                raise InvalidConfigurationError(
+                    "The configuration key 'adb' is "
+                    "invalid. {} does not exist. "
+                    "If you did not set it on purpose, "
+                    "run `guiscrcpy config -r` to reset "
+                    "the configuration".format(
+                        self.config['adb'])
+                )
         if self.config['scrcpy'] is None:
             scrcpy_path = shutil.which('scrcpy')
             self.config['scrcpy'] = scrcpy_path
+        else:
+            raise InvalidConfigurationError(
+                    "The configuration key 'scrcpy' is "
+                    "invalid. {} does not exist. "
+                    "If you did not set it on purpose, "
+                    "run `guiscrcpy config -r` to reset "
+                    "the configuration".format(
+                        self.config['scrcpy'])
+                )
         if (self.config['scrcpy-server'] is not None) and (
                 platform.System() == "Windows"):
             os.environ['SCRCPY_SERVER_PATH'] = self.config['scrcpy-server']
@@ -113,11 +139,6 @@ class InterfaceConfig:
         if not os.path.exists(self.cfgpath):
             os.makedirs(self.cfgpath)
         if not os.path.exists(os.path.join(self.cfgpath, self.json_file)):
-            if (self.os.system() == 'Linux') or (
-                    self.os.system() == 'Windows'):
-                self.os.create_desktop()
-                self.os.install_fonts()
-
             self.write_file()
         self.read_file()
 

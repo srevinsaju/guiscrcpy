@@ -59,7 +59,7 @@ jobs:
     - name: Run headless test
       run: |
         chmod +x scripts/display-ci.sh
-        /usr/bin/xvfb-run --auto-servernum ./scripts/display-ci.sh
+        /usr/bin/xvfb-run --auto-servernum ./scripts/display-ci.sh guiscrcpy
         
         
     - name: Upload artifact

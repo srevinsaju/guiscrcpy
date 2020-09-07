@@ -64,7 +64,10 @@ class ScrcpyBridge:
                                       "sure scrcpy is installed and "
                                       "accessible from the terminal.")
         if os.getenv('SCRCPY_LDD'):
-            os.environ['LD_LIBRARY_PATH'] += os.getenv('SCRCPY_LDD')
+            if os.getenv('LD_LIBRARY_PATH'):
+                os.environ['LD_LIBRARY_PATH'] += os.getenv('SCRCPY_LDD')
+            else:
+                os.environ['LD_LIBRARY_PATH'] = os.getenv('SCRCPY_LDD')
 
     def start(self, args, stdout=PIPE, stderr=PIPE):
         proc = Popen(

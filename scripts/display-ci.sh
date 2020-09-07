@@ -3,7 +3,7 @@
 echo $DISPLAY
 sleep 1
 export QT_DEBUG_PLUGINS=1
-guiscrcpy &
+"$1" &
 APID=$!
 sleep 10
 xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//'
@@ -46,8 +46,8 @@ mkdir -p database/$INPUTBASENAME/
 convert x:$(xwininfo -tree -root | grep 0x | grep '": ("' | sed -e 's/^[[:space:]]*//' | head -n 1 | cut -d " " -f 1) screenshot.png && echo "Snap!"
 
 kill $APID && printf "\n\n\n* * * SUCCESS :-) * * *\n\n\n" || exit 1
-echo "Trying to run guiscrcpy again"
-guiscrcpy &
+echo "Trying to run $1 again"
+"$1" &
 APID=$!
 sleep 25
 kill $APID && echo "test complete!" || exit 1

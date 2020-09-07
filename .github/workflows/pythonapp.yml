@@ -16,7 +16,7 @@ on:
 jobs:
   quality:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - uses: actions/checkout@v1
@@ -35,7 +35,37 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8  
-    - name: Done
-      run: | 
-        echo Done
+        
+    - name: Test setup.py
+      run: |
+        pip3 install .
+
+    - name: Install Destop Environment
+      run: |
+        echo "adapted from https://github.com/AppImage/appimage.github.io/blob/master/.travis.yml"
+        sudo apt-get update
+        sudo apt-get -qq -y install imagemagick libasound2-dev pulseaudio-utils alsa-utils alsa-oss libjack0 desktop-file-utils xmlstarlet xterm xvfb icewm x11-utils x11-apps netpbm xdotool libgl1-mesa-dri libgl1-mesa-dev mesa-utils libosmesa6 libsdl1.2-dev fonts-wqy-microhei libfile-mimeinfo-perl libx11-xcb1 libxcb-xkb1 libxcb-* libxcb-render-util0 libxkbcommon-x11-0 libxkbcommon0 scrcpy> /dev/null # appstream # TODO: Cache me!
+        mkdir $HOME/.icewm/
+        echo "ShowTaskBar = 0" > $HOME/.icewm/preferences
+        echo "TaskBarAutoHide = 1" > $HOME/.icewm/preferences
+        echo "TaskBarShowWorkspaces = 0" > $HOME/.icewm/preferences
+        echo "TaskBarShowAllWindows = 0" > $HOME/.icewm/preferences
+        echo "TaskBarShowClock = 0" > $HOME/.icewm/preferences
+        echo "TaskBarShowMailboxStatus = 0" > $HOME/.icewm/preferences
+        echo "TaskBarShowCPUStatus = 0" > $HOME/.icewm/preferences
+        echo "TaskBarShowWindowListMenu = 0" > $HOME/.icewm/preferences
+        
+        
+    - name: Run headless test
+      run: |
+        chmod +x scripts/display-ci.sh
+        /usr/bin/xvfb-run --auto-servernum ./scripts/display-ci.sh
+        
+        
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: guiscrcpy-screenshot.png
+        path: screenshot.png
+
         

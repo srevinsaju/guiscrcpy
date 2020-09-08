@@ -45,13 +45,13 @@ pyuic5:
 	sed -i 's/docs\// /g' docs/README.md
 
 pysideuic:
-	pyside2-rcc guiscrcpy/ui/rsrc.qrc -o guiscrcpy/ui/pyside2/rsrc_rc.py
-	pyside2-uic guiscrcpy/ui/mainwindow.ui -o guiscrcpy/ui/pyside2/main.py --from-imports
-	pyside2-uic guiscrcpy/ui/downloader.ui -o guiscrcpy/ui/pyside2/downloader.py --from-imports
-	pyside2-uic guiscrcpy/ui/bottompanelui.ui -o guiscrcpy/ui/pyside2/panel.py --from-imports
-	pyside2-uic guiscrcpy/ui/toolkit_ui.ui -o guiscrcpy/ui/pyside2/toolkit.py --from-imports
-	pyside2-uic guiscrcpy/ui/network.ui -o guiscrcpy/ui/pyside2/network.py --from-imports
-	pyside2-uic guiscrcpy/ui/settings.ui -o guiscrcpy/ui/pyside2/settings.py --from-imports
+	rcc --generator=python guiscrcpy/ui/rsrc.qrc -o guiscrcpy/ui/pyside2/rsrc_rc.py
+	uic --generator=python guiscrcpy/ui/mainwindow.ui -o guiscrcpy/ui/pyside2/main.py --from-imports
+	uic --generator=python guiscrcpy/ui/downloader.ui -o guiscrcpy/ui/pyside2/downloader.py --from-imports
+	uic --generator=python guiscrcpy/ui/bottompanelui.ui -o guiscrcpy/ui/pyside2/panel.py --from-imports
+	uic --generator=python guiscrcpy/ui/toolkit_ui.ui -o guiscrcpy/ui/pyside2/toolkit.py --from-imports
+	uic --generator=python guiscrcpy/ui/network.ui -o guiscrcpy/ui/pyside2/network.py --from-imports
+	uic --generator=python guiscrcpy/ui/settings.ui -o guiscrcpy/ui/pyside2/settings.py --from-imports
 	sed -i '/from PySide2.QtWidgets import */ifrom PySide2.QtGui import QGradient' guiscrcpy/ui/pyside2/main.py
 	sed -i 's/self.verticalLayout.setSpacing(0())/self.verticalLayout.setSpacing(0)/g' guiscrcpy/ui/pyside2/toolkit.py
 	sed -i 's/self.verticalLayout.setMargin(0())/self.verticalLayout.setMargin(0)/g' guiscrcpy/ui/pyside2/toolkit.py

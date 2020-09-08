@@ -24,35 +24,35 @@ class Ui_NetworkUI(object):
         NetworkUI.resize(374, 414)
         self.centralwidget = QWidget(NetworkUI)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.widget = QWidget(self.centralwidget)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(2, 5, 371, 381))
-        self.verticalLayout = QVBoxLayout(self.widget)
+        self.layoutWidget = QWidget(self.centralwidget)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(2, 5, 371, 381))
+        self.verticalLayout = QVBoxLayout(self.layoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.label = QLabel(self.widget)
+        self.label = QLabel(self.layoutWidget)
         self.label.setObjectName(u"label")
 
         self.verticalLayout.addWidget(self.label)
 
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
-        self.listView = QListWidget(self.widget)
+        self.listView = QListWidget(self.layoutWidget)
         self.listView.setObjectName(u"listView")
 
         self.gridLayout.addWidget(self.listView, 0, 0, 1, 2)
 
-        self.nm_refresh = QPushButton(self.widget)
+        self.nm_refresh = QPushButton(self.layoutWidget)
         self.nm_refresh.setObjectName(u"nm_refresh")
 
         self.gridLayout.addWidget(self.nm_refresh, 5, 0, 1, 1)
 
-        self.tcpip = QPushButton(self.widget)
+        self.tcpip = QPushButton(self.layoutWidget)
         self.tcpip.setObjectName(u"tcpip")
 
         self.gridLayout.addWidget(self.tcpip, 4, 1, 1, 1)
 
-        self.spinBox = QSpinBox(self.widget)
+        self.spinBox = QSpinBox(self.layoutWidget)
         self.spinBox.setObjectName(u"spinBox")
         font = QFont()
         font.setBold(True)
@@ -65,18 +65,18 @@ class Ui_NetworkUI(object):
 
         self.gridLayout.addWidget(self.spinBox, 4, 0, 1, 1)
 
-        self.nm_connect = QPushButton(self.widget)
+        self.nm_connect = QPushButton(self.layoutWidget)
         self.nm_connect.setObjectName(u"nm_connect")
 
         self.gridLayout.addWidget(self.nm_connect, 5, 1, 1, 1)
 
-        self.nm_det = QPushButton(self.widget)
+        self.nm_det = QPushButton(self.layoutWidget)
         self.nm_det.setObjectName(u"nm_det")
         self.nm_det.setEnabled(False)
 
         self.gridLayout.addWidget(self.nm_det, 2, 0, 1, 2)
 
-        self.lineEdit = QLineEdit(self.widget)
+        self.lineEdit = QLineEdit(self.layoutWidget)
         self.lineEdit.setObjectName(u"lineEdit")
 
         self.gridLayout.addWidget(self.lineEdit, 1, 0, 1, 2)

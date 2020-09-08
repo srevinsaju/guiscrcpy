@@ -352,6 +352,7 @@ class Ui_ToolbarPanel(object):
         sizePolicy2.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
         self.label_2.setSizePolicy(sizePolicy2)
         font = QFont()
+        font.setFamily(u"Noto Sans")
         font.setPointSize(18)
         font.setBold(True)
         font.setWeight(75)

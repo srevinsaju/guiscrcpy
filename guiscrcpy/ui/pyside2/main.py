@@ -16,7 +16,7 @@ from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
 from PySide2.QtGui import QGradient
 from PySide2.QtWidgets import *
 
-from . import rsrc_rc
+from  . import rsrc_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -188,9 +188,7 @@ class Ui_MainWindow(object):
 
         self.check_swipe_panel = QCheckBox(self.frame)
         self.check_swipe_panel.setObjectName(u"check_swipe_panel")
-        font2 = QFont()
-        font2.setPointSize(10)
-        self.check_swipe_panel.setFont(font2)
+        self.check_swipe_panel.setFont(font1)
         icon4 = QIcon()
         icon4.addFile(u":/icons/icons/guiscrcpy_swipe_panel.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.check_swipe_panel.setIcon(icon4)
@@ -215,13 +213,13 @@ class Ui_MainWindow(object):
         sizePolicy2.setHeightForWidth(self.recScui.sizePolicy().hasHeightForWidth())
         self.recScui.setSizePolicy(sizePolicy2)
         self.recScui.setMinimumSize(QSize(10, 20))
-        font3 = QFont()
-        font3.setFamily(u"Noto Sans")
-        font3.setPointSize(10)
-        font3.setBold(False)
-        font3.setItalic(False)
-        font3.setWeight(50)
-        self.recScui.setFont(font3)
+        font2 = QFont()
+        font2.setFamily(u"Noto Sans")
+        font2.setPointSize(10)
+        font2.setBold(False)
+        font2.setItalic(False)
+        font2.setWeight(50)
+        self.recScui.setFont(font2)
         self.recScui.setToolTipDuration(2)
         icon6 = QIcon()
         icon6.addFile(u":/icons/icons/facetime-button.svg", QSize(), QIcon.Normal, QIcon.Off)
@@ -244,7 +242,7 @@ class Ui_MainWindow(object):
 
         self.lock_rotation = QCheckBox(self.frame)
         self.lock_rotation.setObjectName(u"lock_rotation")
-        self.lock_rotation.setFont(font2)
+        self.lock_rotation.setFont(font1)
         icon8 = QIcon()
         icon8.addFile(u":/icons/icons/padlock.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.lock_rotation.setIcon(icon8)
@@ -253,7 +251,7 @@ class Ui_MainWindow(object):
 
         self.check_bottom_panel = QCheckBox(self.frame)
         self.check_bottom_panel.setObjectName(u"check_bottom_panel")
-        self.check_bottom_panel.setFont(font2)
+        self.check_bottom_panel.setFont(font1)
         icon9 = QIcon()
         icon9.addFile(u":/icons/icons/guiscrcpy_bottom_panel.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.check_bottom_panel.setIcon(icon9)
@@ -276,7 +274,7 @@ class Ui_MainWindow(object):
 
         self.check_side_panel = QCheckBox(self.frame)
         self.check_side_panel.setObjectName(u"check_side_panel")
-        self.check_side_panel.setFont(font2)
+        self.check_side_panel.setFont(font1)
         icon11 = QIcon()
         icon11.addFile(u":/icons/icons/guiscrcpy_side_panel.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.check_side_panel.setIcon(icon11)
@@ -300,6 +298,10 @@ class Ui_MainWindow(object):
         self.device_rotation.addItem("")
         self.device_rotation.addItem("")
         self.device_rotation.setObjectName(u"device_rotation")
+        font3 = QFont()
+        font3.setFamily(u"Noto Sans")
+        font3.setPointSize(11)
+        self.device_rotation.setFont(font3)
 
         self.gridLayout_4.addWidget(self.device_rotation, 7, 5, 1, 1)
 
@@ -329,6 +331,7 @@ class Ui_MainWindow(object):
         self.devices_view.setSizePolicy(sizePolicy2)
         self.devices_view.setMaximumSize(QSize(16777215, 90))
         font4 = QFont()
+        font4.setFamily(u"Noto Sans")
         font4.setPointSize(9)
         self.devices_view.setFont(font4)
         self.devices_view.setAutoFillBackground(True)
@@ -353,6 +356,7 @@ class Ui_MainWindow(object):
         self.private_message_box_adb.setObjectName(u"private_message_box_adb")
         sizePolicy2.setHeightForWidth(self.private_message_box_adb.sizePolicy().hasHeightForWidth())
         self.private_message_box_adb.setSizePolicy(sizePolicy2)
+        self.private_message_box_adb.setFont(font3)
 
         self.verticalLayout.addWidget(self.private_message_box_adb)
 
@@ -364,7 +368,7 @@ class Ui_MainWindow(object):
         sizePolicy2.setHeightForWidth(self.dimensionDefaultCheckbox.sizePolicy().hasHeightForWidth())
         self.dimensionDefaultCheckbox.setSizePolicy(sizePolicy2)
         font5 = QFont()
-        font5.setFamily(u"Titillium Web")
+        font5.setFamily(u"Noto Sans")
         font5.setPointSize(11)
         font5.setBold(False)
         font5.setItalic(False)
@@ -378,10 +382,7 @@ class Ui_MainWindow(object):
         self.label.setObjectName(u"label")
         sizePolicy2.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy2)
-        font6 = QFont()
-        font6.setFamily(u"Titillium Web")
-        font6.setPointSize(11)
-        self.label.setFont(font6)
+        self.label.setFont(font3)
 
         self.gridLayout_3.addWidget(self.label, 0, 1, 1, 1)
 
@@ -389,12 +390,12 @@ class Ui_MainWindow(object):
         self.bitrateText.setObjectName(u"bitrateText")
         sizePolicy2.setHeightForWidth(self.bitrateText.sizePolicy().hasHeightForWidth())
         self.bitrateText.setSizePolicy(sizePolicy2)
-        font7 = QFont()
-        font7.setFamily(u"Titillium Web")
-        font7.setPointSize(26)
-        font7.setBold(True)
-        font7.setWeight(75)
-        self.bitrateText.setFont(font7)
+        font6 = QFont()
+        font6.setFamily(u"Titillium Web")
+        font6.setPointSize(26)
+        font6.setBold(True)
+        font6.setWeight(75)
+        self.bitrateText.setFont(font6)
         self.bitrateText.setStyleSheet(u"color: rgb(0, 0, 0);\n"
 "border-radius: 10px;\n"
 "\n"
@@ -410,10 +411,7 @@ class Ui_MainWindow(object):
         sizePolicy4.setVerticalStretch(0)
         sizePolicy4.setHeightForWidth(self.dial.sizePolicy().hasHeightForWidth())
         self.dial.setSizePolicy(sizePolicy4)
-        font8 = QFont()
-        font8.setFamily(u"Trebuchet MS")
-        font8.setPointSize(11)
-        self.dial.setFont(font8)
+        self.dial.setFont(font3)
         self.dial.setCursor(QCursor(Qt.SizeHorCursor))
         self.dial.setToolTipDuration(2)
         self.dial.setStyleSheet(u"background-color: rgb(0, 255, 255);\n"
@@ -457,7 +455,7 @@ class Ui_MainWindow(object):
         self.dimensionText.setObjectName(u"dimensionText")
         sizePolicy2.setHeightForWidth(self.dimensionText.sizePolicy().hasHeightForWidth())
         self.dimensionText.setSizePolicy(sizePolicy2)
-        self.dimensionText.setFont(font7)
+        self.dimensionText.setFont(font6)
         self.dimensionText.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(17, 17, 17);\n"
 "border-radius: 10px;\n"
@@ -477,9 +475,9 @@ class Ui_MainWindow(object):
         sizePolicy5.setVerticalStretch(0)
         sizePolicy5.setHeightForWidth(self.flaglineedit.sizePolicy().hasHeightForWidth())
         self.flaglineedit.setSizePolicy(sizePolicy5)
-        font9 = QFont()
-        font9.setFamily(u"Courier 10 Pitch")
-        self.flaglineedit.setFont(font9)
+        font7 = QFont()
+        font7.setFamily(u"Monospace")
+        self.flaglineedit.setFont(font7)
 
         self.verticalLayout.addWidget(self.flaglineedit)
 
@@ -511,12 +509,12 @@ class Ui_MainWindow(object):
         sizePolicy7.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
         self.pushButton.setSizePolicy(sizePolicy7)
         self.pushButton.setMinimumSize(QSize(45, 45))
-        font10 = QFont()
-        font10.setFamily(u"Titillium Web")
-        font10.setPointSize(11)
-        font10.setBold(True)
-        font10.setWeight(75)
-        self.pushButton.setFont(font10)
+        font8 = QFont()
+        font8.setFamily(u"Titillium Web")
+        font8.setPointSize(11)
+        font8.setBold(True)
+        font8.setWeight(75)
+        self.pushButton.setFont(font8)
         self.pushButton.setToolTipDuration(2)
 
         self.horizontalLayout.addWidget(self.pushButton)
@@ -568,13 +566,13 @@ class Ui_MainWindow(object):
         sizePolicy5.setHeightForWidth(self.executeaction.sizePolicy().hasHeightForWidth())
         self.executeaction.setSizePolicy(sizePolicy5)
         self.executeaction.setMinimumSize(QSize(45, 45))
-        font11 = QFont()
-        font11.setFamily(u"Titillium Web")
-        font11.setPointSize(11)
-        font11.setBold(True)
-        font11.setItalic(False)
-        font11.setWeight(75)
-        self.executeaction.setFont(font11)
+        font9 = QFont()
+        font9.setFamily(u"Titillium Web")
+        font9.setPointSize(11)
+        font9.setBold(True)
+        font9.setItalic(False)
+        font9.setWeight(75)
+        self.executeaction.setFont(font9)
         self.executeaction.setStyleSheet(u"")
         icon18 = QIcon()
         icon18.addFile(u":/icons/icons/small-rocket-ship-silhouette.svg", QSize(), QIcon.Normal, QIcon.Off)
@@ -723,13 +721,13 @@ class Ui_MainWindow(object):
         self.label_3.setObjectName(u"label_3")
         sizePolicy8.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
         self.label_3.setSizePolicy(sizePolicy8)
-        font12 = QFont()
-        font12.setFamily(u"Titillium Web")
-        font12.setPointSize(28)
-        font12.setBold(True)
-        font12.setItalic(False)
-        font12.setWeight(75)
-        self.label_3.setFont(font12)
+        font10 = QFont()
+        font10.setFamily(u"Titillium Web")
+        font10.setPointSize(28)
+        font10.setBold(True)
+        font10.setItalic(False)
+        font10.setWeight(75)
+        self.label_3.setFont(font10)
         self.label_3.setStyleSheet(u"")
 
         self.verticalLayout_2.addWidget(self.label_3)
@@ -738,9 +736,9 @@ class Ui_MainWindow(object):
         self.build_label.setObjectName(u"build_label")
         sizePolicy5.setHeightForWidth(self.build_label.sizePolicy().hasHeightForWidth())
         self.build_label.setSizePolicy(sizePolicy5)
-        font13 = QFont()
-        font13.setFamily(u"Titillium Web")
-        self.build_label.setFont(font13)
+        font11 = QFont()
+        font11.setFamily(u"Noto Sans")
+        self.build_label.setFont(font11)
         self.build_label.setStyleSheet(u"color: rgb(255, 255, 255);")
 
         self.verticalLayout_2.addWidget(self.build_label)

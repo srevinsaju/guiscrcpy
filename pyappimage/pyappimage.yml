@@ -1,0 +1,55 @@
+name: guiscrcpy
+entrypoint: guiscrcpy.cli:cli
+categories:
+  - Utility
+updateinformation: gh-releases-zsync|srevinsaju|guiscrcpy|latest|guiscrcpy*.AppImage.zsync
+
+data:
+  $CWD/pyappimage/hooks/cssselect2: $APPIMAGE/guiscrcpy/cssselect2
+  $CWD/pyappimage/hooks/cairocffi: $APPIMAGE/guiscrcpy/cairocffi
+  $CWD/pyappimage/hooks/VERSION: $APPIMAGE/guiscrcpy/
+  /lib64/ld-linux-x86-64.so.2: $APPIMAGE/usr/lib/
+  /usr/lib/libc.so.6: $APPIMAGE/usr/lib/
+
+environment:
+  GUISCRCPY_SCRCPY: ${APPDIR}/usr/bin/scrcpy
+  GUISCRCPY_ADB: ${APPDIR}/usr/bin/adb
+  SCRCPY_SERVER_PATH: ${APPDIR}/usr/local/share/scrcpy/scrcpy-server
+  ADB: ${APPDIR}/usr/bin/adb
+  GUISCRCPY_APPIMAGE: True
+  PATH: ${APPDIR}/usr/bin:${PATH}
+
+ignore-binaries:
+  - libQt5Bluetooth*
+  - libQt5BodyMovin*
+  - libQt53D*
+  - libQt5Quick*
+  - libQt5Qml*
+  - libQt5Sensors*
+  - libQt5Sql*
+  - libQt5Network*
+  - libQt5Pos*Quick*
+  - libQt5Purchasing*
+  - libQt5Pdf*
+  - libQt5Gamepad*
+  - libQt5Location*
+  - libQt5*Quick*
+  - libQt5DataVisualization*
+  - libQt5EglFSDeviceIntegration*
+  - libQt5Web*
+  - libQt5Charts*
+  - libQt5Concurrent*
+  - libQt5Multimedia*
+  - libQt5VirtualKeyboard*
+  - libQt5RemoteObjects*
+  - libQt5Xml*
+  - libQt5WaylandClient*
+  - libQt5Test*
+  - PySide2/plugins/platforms/libqwayland*
+  - PySide2/plugins/platforms/[!libqxcb.so]*
+  - libQt5Positioning*
+  - PySide2/qml
+  - PySide2/QtNetwork*
+  - PySide2/QtQml*
+
+

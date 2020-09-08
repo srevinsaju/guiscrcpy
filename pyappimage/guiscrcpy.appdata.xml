@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id>guiscrcpy</id>
+	<name>guiscrcpy</name>
+    <metadata_license>MIT</metadata_license>
+    <project_license>GPL3+</project_license>
+    <summary>Android Screen Mirroring Software</summary>
+    <description>
+        <p> The open source android screen mirroring system built for the award winning scrcpy 
+        </p>
+    </description>
+    <launchable type="desktop-id">guiscrcpy.desktop</launchable>
+    <url type="homepage">https://github.com/srevinsaju/guiscrcpy</url>
+    <provides>
+        <binary>python{{ python-version }}</binary>
+    </provides>
+</component>

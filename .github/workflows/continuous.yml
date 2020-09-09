@@ -109,6 +109,7 @@ jobs:
           
       - name: Run headless test
         run: |
+          export APPIMAGE_EXTRACT_AND_RUN=1
           chmod +x scripts/display-ci.sh
           echo "echo Dummy scrcpy" | sudo tee -a /usr/bin/scrcpy
           sudo chmod +x /usr/bin/scrcpy

@@ -8,8 +8,6 @@ data:
   $CWD/pyappimage/hooks/cssselect2: $APPIMAGE/guiscrcpy/cssselect2
   $CWD/pyappimage/hooks/cairocffi: $APPIMAGE/guiscrcpy/cairocffi
   $CWD/pyappimage/hooks/VERSION: $APPIMAGE/guiscrcpy/
-  /lib64/ld-linux-x86-64.so.2: $APPIMAGE/usr/lib/
-  /usr/lib/libc.so.6: $APPIMAGE/usr/lib/
 
 environment:
   GUISCRCPY_SCRCPY: ${APPDIR}/usr/bin/scrcpy
@@ -20,14 +18,13 @@ environment:
   PATH: ${APPDIR}/usr/bin:${PATH}
 
 ignore-binaries:
+  - libstdc++*
   - libQt5Bluetooth*
-  - libQt5BodyMovin*
+  - libQt5Bodymovin*
   - libQt53D*
   - libQt5Quick*
-  - libQt5Qml*
   - libQt5Sensors*
   - libQt5Sql*
-  - libQt5Network*
   - libQt5Pos*Quick*
   - libQt5Purchasing*
   - libQt5Pdf*

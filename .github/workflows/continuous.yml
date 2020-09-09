@@ -73,17 +73,18 @@ jobs:
           wget -c $(curl -sL https://api.github.com/repos/srevinsaju/scrcpy-appimage/releases/latest | jq -r '.assets[].browser_download_url')
           chmod +x scrcpy*.AppImage
           ./scrcpy*.AppImage --appimage-extract  
+          mv squashfs-root scrcpy
+          mkdir squashfs-root
+          mv scrcpy squashfs-root/.
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool-x86_64.AppImage
           ARCH=x86_64 ./appimagetool*.AppImage -n guiscrcpy.AppDir
           ./guiscrcpy*.AppImage --appimage-extract
-          cd squashfs-root
+          cd squashfs-root/scrcpy
           wget https://github.com/AppImageCrafters/AppRun/releases/download/v1.1.2/AppRun-amd64 -O AppRun && chmod +x AppRun
           wget https://github.com/AppImageCrafters/AppRun/releases/download/v1.1.2/libapprun_hooks-amd64.so -O libapprun_hooks.so && chmod +x libapprun_hooks.so
-          cd ..
-          rm squashfs-root/scrcpy.desktop
-          rm squashfs-root/scrcpy.png
-          cp pyappimage/.env.template squashfs-root/.env
+          cd ../..
+          cp pyappimage/.env.template squashfs-root/scrcpy/.env
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool-x86_64.AppImage
           ./appimagetool*.AppImage squashfs-root -n -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy*.AppImage.zsync' guiscrcpy-$(git describe --tags --match '[0-9]*')-$(uname -m).AppImage

@@ -10,12 +10,12 @@ data:
   $CWD/pyappimage/hooks/VERSION: $APPIMAGE/guiscrcpy/
 
 environment:
-  GUISCRCPY_SCRCPY: ${APPDIR}/usr/bin/scrcpy
-  GUISCRCPY_ADB: ${APPDIR}/usr/bin/adb
-  SCRCPY_SERVER_PATH: ${APPDIR}/usr/local/share/scrcpy/scrcpy-server
-  ADB: ${APPDIR}/usr/bin/adb
+  QT_API: pyside2
+  GUISCRCPY_SCRCPY: ${APPDIR}/scrcpy/AppRun
+  GUISCRCPY_ADB: ${APPDIR}/scrcpy/usr/bin/adb
+  SCRCPY_SERVER_PATH: ${APPDIR}/scrcpy/usr/local/share/scrcpy/scrcpy-server
+  ADB: ${APPDIR}/scrcpy/usr/bin/adb
   GUISCRCPY_APPIMAGE: True
-  PATH: ${APPDIR}/usr/bin:${PATH}
 
 ignore-binaries:
   - libstdc++*

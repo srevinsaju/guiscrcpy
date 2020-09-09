@@ -46,7 +46,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt -y install git
-          sudo apt -y install wget
+          sudo apt -y install wget curl jq
           sudo apt install -y software-properties-common
           sudo add-apt-repository ppa:deadsnakes/ppa
           sudo apt update

@@ -73,6 +73,9 @@ jobs:
           wget -c $(curl -sL https://api.github.com/repos/srevinsaju/scrcpy-appimage/releases/latest | jq -r '.assets[].browser_download_url')
           chmod +x scrcpy*.AppImage
           ./scrcpy*.AppImage --appimage-extract  
+          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool-x86_64.AppImage
+          ARCH=x86_64 ./appimagetool*.AppImage -n guiscrcpy.AppDir
           ./guiscrcpy*.AppImage --appimage-extract
           cd squashfs-root
           wget https://github.com/AppImageCrafters/AppRun/releases/download/v1.1.2/AppRun-amd64 -O AppRun && chmod +x AppRun

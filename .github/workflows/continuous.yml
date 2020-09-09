@@ -27,6 +27,97 @@ jobs:
         name: guiscrcpy-continuous-none-any-py3.whl
         path: dist/${{ env.VERSION }}
 
+
+  AppImageNew:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup up User
+        run: |
+          apt update
+          apt install -y sudo
+          echo "github ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          useradd -m github
+          usermod -aG sudo github
+          su - github
+      
+      - name: Install dependencies
+        run: |
+          sudo apt -y install git
+          sudo apt -y install wget
+          sudo apt install software-properties-common
+          sudo add-apt-repository ppa:deadsnakes/ppa
+          sudo apt update
+          sudo apt install python3.8 python3.8-dev python3.8-venv -y
+          wget https://bootstrap.pypa.io/get-pip.py
+          python3.8 get-pip.py
+          mv `which python3.8` `which python3`
+          sudo apt install -y libtool libcairo-dev
+          sudo apt -y install build-essential
+          git clone https://github.com/srevinsaju/pyappimage --depth=1
+          cd pyappimage
+          python3 -m pip install -r requirements.txt
+          python3 -m pip install .
+          cd ..
+          sed -i 's,qtpy,PySide2,g' ./**/*.py
+          sed -i 's,qtpy,PySide2,g' **/*.py
+          sed -i 's,PyQt5,PySide2,g' *.py
+          python3 -m pyappimage.cli build
+          ls -a 
+      
+      - name: Bundle scrcpy
+        run: |
+          export APPIMAGE_EXTRACT_AND_RUN=1
+          wget -c $(curl -sL https://api.github.com/repos/srevinsaju/scrcpy-appimage/releases/latest | jq -r '.assets[].browser_download_url')
+          chmod +x scrcpy*.AppImage
+          ./scrcpy*.AppImage --appimage-extract  
+          ./guiscrcpy*.AppImage --appimage-extract
+          cd squashfs-root
+          wget https://github.com/AppImageCrafters/AppRun/releases/download/v1.1.2/AppRun-amd64 -O AppRun && chmod +x AppRun
+          wget https://github.com/AppImageCrafters/AppRun/releases/download/v1.1.2/libapprun_hooks-amd64.so -O libapprun_hooks.so && chmod +x libapprun_hooks.so
+          cd ..
+          rm squashfs-root/scrcpy.desktop
+          rm squashfs-root/scrcpy.png
+          cp pyappimage/.env.template squashfs-root/.env
+          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool-x86_64.AppImage
+          ./appimagetool*.AppImage squashfs-root -n -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy*.AppImage.zsync' guiscrcpy-$(git describe --tags --match '[0-9]*')-$(uname -m).AppImage
+          mkdir dist
+          mv guiscrcpy-$(git describe --tags --match '[0-9]*')-$(uname -m).AppImage* dist/.
+
+
+      - name: Install Destop Environment
+        run: |
+          echo "adapted from https://github.com/AppImage/appimage.github.io/blob/master/.travis.yml"
+          sudo apt-get update
+          sudo apt-get -qq -y install imagemagick libasound2-dev pulseaudio-utils alsa-utils alsa-oss libjack0 desktop-file-utils xmlstarlet xterm xvfb icewm x11-utils x11-apps netpbm xdotool libgl1-mesa-dri libgl1-mesa-dev mesa-utils libosmesa6 libsdl1.2-dev fonts-wqy-microhei libfile-mimeinfo-perl libx11-xcb1 libxcb-xkb1 libxcb-* libxcb-render-util0 libxkbcommon-x11-0 libxkbcommon0 > /dev/null # appstream # TODO: Cache me!
+          mkdir $HOME/.icewm/
+          echo "ShowTaskBar = 0" > $HOME/.icewm/preferences
+          echo "TaskBarAutoHide = 1" > $HOME/.icewm/preferences
+          echo "TaskBarShowWorkspaces = 0" > $HOME/.icewm/preferences
+          echo "TaskBarShowAllWindows = 0" > $HOME/.icewm/preferences
+          echo "TaskBarShowClock = 0" > $HOME/.icewm/preferences
+          echo "TaskBarShowMailboxStatus = 0" > $HOME/.icewm/preferences
+          echo "TaskBarShowCPUStatus = 0" > $HOME/.icewm/preferences
+          echo "TaskBarShowWindowListMenu = 0" > $HOME/.icewm/preferences
+          
+          
+      - name: Run headless test
+        run: |
+          chmod +x scripts/display-ci.sh
+          echo "echo Dummy scrcpy" | sudo tee -a /usr/bin/scrcpy
+          sudo chmod +x /usr/bin/scrcpy
+          /usr/bin/xvfb-run --auto-servernum ./scripts/display-ci.sh "$(realpath dist/*.AppImage)"
+
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: guiscrcpy-continuous-2-x86_64.AppImage
+          path: 'dist/'
+
   AppImage:
     runs-on: ubuntu-18.04
     strategy:

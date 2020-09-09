@@ -19,6 +19,8 @@ environment:
 
 ignore-binaries:
   - libstdc++*
+  - libfontconfig*
+  - libfreetype*
   - libQt5Bluetooth*
   - libQt5Bodymovin*
   - libQt53D*

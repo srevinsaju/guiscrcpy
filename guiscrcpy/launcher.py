@@ -68,7 +68,13 @@ environment = platform.System()
 # ============================================================================
 # Load cairo-svg conditionally
 if environment.system() == "Linux":
-    from cairosvg import svg2png  # noqa:
+    try:
+        from cairosvg import svg2png  # noqa:
+        has_cairo = True
+    except Exception as e:
+        print("Failed to load cairo:", e)
+        print("Some features are likely to be disabled")
+        has_cairo = False
 
 
 class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
@@ -425,10 +431,17 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         ).hexdigest()[__sha_shift:__sha_shift + 6]
         log(f"Creating desktop shortcut sha: {sha}")
         path_to_image = os.path.join(picture_file_path, identifier + '.png')
-        svg2png(
-            bytestring=desktop_device_shortcut_svg().format(f"#{sha}"),
-            write_to=path_to_image
-        )
+        if has_cairo:
+            svg2png(
+                bytestring=desktop_device_shortcut_svg().format(f"#{sha}"),
+                write_to=path_to_image
+            )
+        else:
+            print("Trying to use Plain SVG as renderer"
+                  " instead of cairo")
+            with open(path_to_image, 'w') as fp:
+                svg_str = desktop_device_shortcut_svg().format(f"#{sha}")
+                fp.write(svg_str)
 
         # go through all args; break when we find guiscrcpy
         for args_i in range(len(sys.argv)):

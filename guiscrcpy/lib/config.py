@@ -28,7 +28,7 @@ class InvalidConfigurationError(RuntimeError):
 
 
 class InterfaceConfig:
-    def __init__(self):
+    def __init__(self, load=True):
         """
         Manages guiscrcpy's configuration files
         """
@@ -58,6 +58,10 @@ class InterfaceConfig:
             'theme': 'Breeze'
         }
         self.json_file = 'guiscrcpy.json'
+        if load:
+            self.load_config()
+
+    def load_config(self):
         self.check_file()
         self.validate()
 

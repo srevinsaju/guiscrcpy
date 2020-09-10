@@ -191,11 +191,12 @@ def scrcpy(args):
               help="Reset the configuration files")
 def _config(reset=False):
     """View / Edit the configuration file"""
-    cfgmgr = InterfaceConfig()
+    cfgmgr = InterfaceConfig(load=False)
     if reset:
         cfgmgr.reset_config()
         click.echo("Configuration file resetted successfully.")
         sys.exit(0)
+    cfgmgr.load_config()
     print(cfgmgr)
 
 

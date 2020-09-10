@@ -28,7 +28,7 @@ jobs:
         path: dist/${{ env.VERSION }}
 
 
-  AppImageNew:
+  AppImage:
     runs-on: ubuntu-latest
     container:
       image: ubuntu:18.04
@@ -122,98 +122,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
         with:
-          name: guiscrcpy-continuous-2-x86_64.AppImage
+          name: guiscrcpy-continuous-x86_64.AppImage
           path: 'dist/'
-
-  AppImage:
-    runs-on: ubuntu-18.04
-    strategy:
-      matrix:
-        version: ['3.8']
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v1
-      with:
-        python-version: ${{ matrix.version }}
-    - name: Download dependencies
-      run: |
-        sudo apt install libxkbcommon0 libxcb-xkb-dev libxkbcommon-x11-0 libxcb-xkb1
-    - name: Test AppImage
-      run: |
-        python -m pip install python-appimage
-        echo $(realpath .) > appimage/requirements.txt
-        python -m python_appimage build app appimage \
-                                            --linux-tag=manylinux1_x86_64
-    
-    - name: Download scrcpy
-      run: |
-        wget -c $(curl -sL https://api.github.com/repos/srevinsaju/scrcpy-appimage/releases/latest | jq -r '.assets[].browser_download_url')
-        chmod +x scrcpy*.AppImage
-        ./scrcpy*.AppImage --appimage-extract
-        mv squashfs-root/usr/lib squashfs-root/usr/libscrcpy
-
-    - name: Extract AppImage
-      run: |
-        ./guiscrcpy-x86_64.AppImage --appimage-extract
-        
-    - name: Patch PyQt5
-      run: |
-        cp -L /usr/lib/x86_64-linux-gnu/libxkbcommon* squashfs-root/usr/lib/.
-        cp -L /usr/lib/x86_64-linux-gnu/libxcb-xkb.so.1 squashfs-root/usr/lib/.
-    - name: Remove unwanted stuff
-      run: |
-        # from 
-        find squashfs-root/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/plugins/platforms/ -type f -not -name libqxcb.so -delete
-        rm -rf squashfs-root/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/plugins/egldeviceintegrations
-        rm -rf squashfs-root/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/plugins/{audio,gamepads,geometryloaders,geoservices,mediaservice,playlistformats,position,renderplugins,sceneparsers,sensorgestures,sensors,sqldrivers,texttospeech,wayland*,webview,xcbglintegrations}
-        rm -rf squashfs-root/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/qml
-        rm squashfs-root/opt/python3.8/lib/python3.8/site-packages/PyQt5/Qt/lib/libQt5{Bluetooth,Concurrent,Designer,Help,Location,Multimedia,Network,Nfc,OpenGL,Positioning,Qml,Quick,RemoteObjects,Sensors,SerialPort,Sql,Test,WaylandClient,WebChannel,WebSockets,Xml}*
-        rm -rf squashfs-root/opt/python3.8/lib/python3.8/site-packages/pip
-
-    - name: Download AppImage Tool
-      run: |
-        wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
-        chmod +x ./appimagetool-x86_64.AppImage
- 
-    - name: Reimage AppImage
-      run: |
-        rm ./guiscrcpy-x86_64.AppImage
-        ./appimagetool-x86_64.AppImage squashfs-root -n -u 'gh-releases-zsync|srevinsaju|guiscrcpy|latest|guiscrcpy*.AppImage.zsync'
-        mkdir -p appimage_dist
-        mv guiscrcpy*.AppImage* appimage_dist/.
-
-
-
-    - name: Install Destop Environment
-      run: |
-        echo "adapted from https://github.com/AppImage/appimage.github.io/blob/master/.travis.yml"
-        sudo apt-get update
-        sudo apt-get -qq -y install imagemagick libasound2-dev pulseaudio-utils alsa-utils alsa-oss libjack0 desktop-file-utils xmlstarlet xterm xvfb icewm x11-utils x11-apps netpbm xdotool libgl1-mesa-dri libgl1-mesa-dev mesa-utils libosmesa6 libsdl1.2-dev fonts-wqy-microhei libfile-mimeinfo-perl libx11-xcb1 libxcb-xkb1 libxcb-* libxcb-render-util0 libxkbcommon-x11-0 libxkbcommon0 > /dev/null # appstream # TODO: Cache me!
-        mkdir $HOME/.icewm/
-        echo "ShowTaskBar = 0" > $HOME/.icewm/preferences
-        echo "TaskBarAutoHide = 1" > $HOME/.icewm/preferences
-        echo "TaskBarShowWorkspaces = 0" > $HOME/.icewm/preferences
-        echo "TaskBarShowAllWindows = 0" > $HOME/.icewm/preferences
-        echo "TaskBarShowClock = 0" > $HOME/.icewm/preferences
-        echo "TaskBarShowMailboxStatus = 0" > $HOME/.icewm/preferences
-        echo "TaskBarShowCPUStatus = 0" > $HOME/.icewm/preferences
-        echo "TaskBarShowWindowListMenu = 0" > $HOME/.icewm/preferences
-        
-        
-    - name: Run headless test
-      run: |
-        chmod +x scripts/display-ci.sh
-        echo "echo Dummy scrcpy" | sudo tee -a /usr/bin/scrcpy
-        sudo chmod +x /usr/bin/scrcpy
-        /usr/bin/xvfb-run --auto-servernum ./scripts/display-ci.sh "$(realpath appimage_dist/*.AppImage)"
- 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: guiscrcpy-continuous-x86_64.AppImage
-        path: 'appimage_dist/'
-
 
   Windows:
     name: Windows

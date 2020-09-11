@@ -8,10 +8,11 @@ data:
   $CWD/pyappimage/hooks/cssselect2: $APPIMAGE/guiscrcpy/cssselect2
   $CWD/pyappimage/hooks/cairocffi: $APPIMAGE/guiscrcpy/cairocffi
   $CWD/pyappimage/hooks/VERSION: $APPIMAGE/guiscrcpy/
+  $CWD/pyappimage/scrcpy: $APPIMAGE/scrcpy/
 
 environment:
   QT_API: pyside2
-  GUISCRCPY_SCRCPY: ${APPDIR}/scrcpy/AppRun
+  GUISCRCPY_SCRCPY: ${APPDIR}/scrcpy/scrcpy
   GUISCRCPY_ADB: ${APPDIR}/scrcpy/usr/bin/adb
   SCRCPY_SERVER_PATH: ${APPDIR}/scrcpy/usr/local/share/scrcpy/scrcpy-server
   ADB: ${APPDIR}/scrcpy/usr/bin/adb

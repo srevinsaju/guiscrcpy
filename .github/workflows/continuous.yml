@@ -83,7 +83,7 @@ jobs:
           cd squashfs-root/scrcpy
           wget https://github.com/AppImageCrafters/AppRun/releases/download/v1.1.2/AppRun-amd64 -O AppRun && chmod +x AppRun
           wget https://github.com/AppImageCrafters/AppRun/releases/download/v1.1.2/libapprun_hooks-amd64.so -O libapprun_hooks.so && chmod +x libapprun_hooks.so
-          cd ../..
+          cd ..
           cp pyappimage/.env.template squashfs-root/scrcpy/.env
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool-x86_64.AppImage

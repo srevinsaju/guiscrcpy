@@ -80,16 +80,11 @@ jobs:
           chmod +x appimagetool-x86_64.AppImage
           ARCH=x86_64 ./appimagetool*.AppImage -n guiscrcpy.AppDir
           ./guiscrcpy*.AppImage --appimage-extract
-          cd squashfs-root/scrcpy
-          wget https://github.com/AppImageCrafters/AppRun/releases/download/v1.1.2/AppRun-amd64 -O AppRun && chmod +x AppRun
-          wget https://github.com/AppImageCrafters/AppRun/releases/download/v1.1.2/libapprun_hooks-amd64.so -O libapprun_hooks.so && chmod +x libapprun_hooks.so
-          cd ../..
-          cp pyappimage/.env.template squashfs-root/scrcpy/.env
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool-x86_64.AppImage
-          ./appimagetool*.AppImage squashfs-root -n -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy*.AppImage.zsync' guiscrcpy-$(git describe --tags --match '[0-9]*')-$(uname -m).AppImage
+          ./appimagetool*.AppImage squashfs-root -n -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy*.AppImage.zsync' guiscrcpy-$(git describe --tags --match '*[0-9]*')-$(uname -m).AppImage
           mkdir dist
-          mv guiscrcpy-$(git describe --tags --match '[0-9]*')-$(uname -m).AppImage* dist/.
+          mv guiscrcpy-$(git describe --tags --match '*[0-9]*')-$(uname -m).AppImage* dist/.
 
 
       - name: Install Destop Environment

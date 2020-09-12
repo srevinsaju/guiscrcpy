@@ -55,6 +55,7 @@ jobs:
           python3.8 get-pip.py
           mv `which python3.8` `which python3`
           sudo apt install -y libtool libcairo-dev
+          sudo apt -y install libxcb-xinerama0
           sudo apt -y install build-essential
           git clone https://github.com/srevinsaju/pyappimage --depth=1 pyapim
           cd pyapim

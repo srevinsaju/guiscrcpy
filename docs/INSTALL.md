@@ -51,6 +51,14 @@ zap install guiscrcpy
 ``` 
 and you are done!
 
+If you already installed an older version of guiscrcpy 
+using `zap`, then it would be easier to download only the 
+changed parts, (or delta) of the binary. Just do
+
+```bash
+zap update guiscrcpy
+```
+
 Alternatively, the longer method : 
 
 Download the AppImage either from the releases, or from by clicking the `Status` badge and then download the AppImage artifact for the latest commit.
@@ -60,17 +68,14 @@ Download the AppImage either from the releases, or from by clicking the `Status`
 AppImages are more supported than snaps. Snaps are containerised. So it is likely that guiscrcpy might not work as a snap.
 
 ```bash
-wget https://github.com/srevinsaju/guiscrcpy/releases/continuous/download/guiscrcpy-x86_64.AppImage
-chmod +x guiscrcpy-x86_64.AppImage
+wget https://github.com/srevinsaju/guiscrcpy/releases/continuous/download/guiscrcpy-*.AppImage
+chmod +x guiscrcpy-*.AppImage
 
 # one time execution
-./guiscrcpy-x86_64.AppImage
+./guiscrcpy-*.AppImage
 
 # for systems without FUSE support
-guiscrcpy-x86_64.AppImage --appimage-extract
-mv squashfs-root guiscrcpy_appimage
-cd guiscrcpy_appimage
-./AppRun
+guiscrcpy-x86_64.AppImage --appimage-extract-and-run
 ```
 
 [![Get Appimage](https://raw.githubusercontent.com/srevinsaju/get-appimage/master/static/badges/get-appimage-branding-blue.png)](https://srevinsaju.github.io/get-appimage/guiscrcpy)

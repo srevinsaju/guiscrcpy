@@ -36,6 +36,7 @@ import os
 import subprocess
 import sys
 import time
+import traceback
 import webbrowser
 from subprocess import PIPE
 from subprocess import Popen
@@ -45,7 +46,7 @@ from qtpy.QtCore import QModelIndex, QPoint
 from qtpy.QtGui import QPixmap, QIcon, QFont, QFontDatabase
 from qtpy.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QMenu
 from qtpy.QtWidgets import QMessageBox
-from .lib.utils import format_colors as fc
+from .lib.utils import format_colors as fc, show_message_box
 from .constants import FONTS
 from .install.finder import open_exe_name_dialog
 from .lib.process import is_running
@@ -60,8 +61,8 @@ from .ux.panel import Panel
 from .ux.swipe import SwipeUX
 from .ux.toolkit import InterfaceToolkit
 from .version import VERSION
-from .lib.check import AndroidDebugBridge, ScrcpyBridge
-
+from .lib.check import AndroidDebugBridge, ScrcpyBridge, ScrcpyNotFoundError, AdbNotFoundError, \
+    ScrcpyServerNotFoundError
 
 environment = platform.System()
 

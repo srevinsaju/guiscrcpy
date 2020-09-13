@@ -1,14 +1,17 @@
 import os
 import platform
 import sys
+import traceback
 
 import click
 import colorama
+from qtpy.QtWidgets import QApplication
+from qtpy import QtCore, QtWidgets
 
-from .lib.utils import format_colors as fc
+from .lib.utils import format_colors as fc, show_message_box
 from .launcher import bootstrap
-from .lib.check import AndroidDebugBridge
-from .lib.config import InterfaceConfig
+from .lib.check import AndroidDebugBridge, ScrcpyNotFoundError, AdbNotFoundError, ScrcpyServerNotFoundError
+from .lib.config import InterfaceConfig, InvalidConfigurationError
 from .version import VERSION
 from . import __doc__ as lic
 
@@ -87,9 +90,87 @@ def cli(ctx, hide_wm_frame=True, aot=True, theme='Breeze',
     print(fc("{x}https://github.com/srevinsaju/guiscrcpy{rst}\n\n"))
     if ctx.invoked_subcommand is not None:
         return
-    cfgmgr = InterfaceConfig()
-    bootstrap(cfgmgr, theme=theme, aot=aot, hide_wm_frame=hide_wm_frame,
-              debug__no_scrcpy=debug__disable_scrcpy)
+    try:
+        # why this try block?
+        # this is because, in case guiscrcpy crashes, it will log the traceback to the terminal
+        # but it would not be visible to users without CLI interface
+        # enable High DPI scaling
+        QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+        # use HIGH DPI icons
+        QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
+        # init core
+        app = QtWidgets.QApplication(sys.argv)
+        cfgmgr = InterfaceConfig()
+        bootstrap(app, cfgmgr, theme=theme, aot=aot, hide_wm_frame=hide_wm_frame,
+                  debug__no_scrcpy=debug__disable_scrcpy)
+    except ScrcpyNotFoundError:
+        _msg_box = show_message_box(
+            text="Scrcpy not found",
+            info_text="guiscrcpy could not find scrcpy. "
+                      "Make sure you select scrcpy in the dialog box "
+                      "or add scrcpy to PATH. You can get the latest release "
+                      "of scrcpy from <a href='https://github.com/Genymobile/scrcpy'>"
+                      "Genymobile/scrcpy 's GitHub Releases</a> "
+                      "and select the <pre>scrcpy{ext}</pre> when you run "
+                      "guiscrcpy next time".format(
+                            ext=".exe" if platform.system() == "Windows" else ""
+            )
+
+        )
+        _msg_box.exec_()
+        print("Aborting!")
+        sys.exit(-1)
+    except AdbNotFoundError:
+        _msg_box = show_message_box(
+            text="ADB not found",
+            info_text="guiscrcpy could not find adb. "
+                      "Make sure you select adb in the dialog box or add adb to PATH"
+        )
+        _msg_box.exec_()
+        print("Aborting!")
+        sys.exit(-1)
+    except InvalidConfigurationError:
+        _msg_box = show_message_box(
+            text="Invalid configuration error",
+            info_text="The configuration file for guiscrcpy is invalid. <br>"
+                      "This is possibly because a new version of guiscrcpy "
+                      "was installed, or the old paths to `adb` and `scrcpy` "
+                      "as defined in the configuration file, no longer exists "
+                      "in the same path. To fix this error,"
+                      "Run  "
+                      "<pre>guiscrcpy config -r</pre> on your terminal."
+        )
+        _msg_box.exec_()
+        print("Aborting!")
+        sys.exit(-1)
+    except ScrcpyServerNotFoundError:
+        _msg_box = show_message_box(
+            text="Scrcpy server not found error",
+            info_text="The configuration file for guiscrcpy is invalid. <br>"
+                      "This is possibly because a new version of guiscrcpy "
+                      "was installed, or the old paths to `adb` and `scrcpy` "
+                      "as defined in the configuration file, no longer exists "
+                      "in the same path. To fix this error,"
+                      "Run  "
+                      "<pre>guiscrcpy config -r</pre> on your terminal."
+        )
+        _msg_box.exec_()
+        print("Aborting!")
+        sys.exit(-1)
+    except Exception:
+        error_message = traceback.format_exc(chain=True)
+        print(error_message)
+        _msg_box = show_message_box(
+            text="Error: Unhandled exception",
+            info_text="<pre>{error_message}</pre>"
+                      "Please report this, if its a bug, to <a href="
+                      "'https://github.com/srevinsaju/guiscrcpy/issues'>"
+                      "guiscrcpy bug tracker</a> as it will help to improve "
+                      "the next release.".format(error_message=error_message)
+        )
+        _msg_box.exec_()
+        print("Aborting!")
+        sys.exit(-1)
 
 
 @cli.command()

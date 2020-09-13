@@ -136,3 +136,24 @@ def get_self():
 
 def format_colors(string, **kwargs):
     return string.format(**kwargs, **COLORS)
+
+
+def show_message_box(text, info_text="", buttons=QMessageBox.Ok):
+    """
+    Shows a message box
+    :param text:
+    :param info_text:
+    :param buttons:
+    :return:
+    """
+    message_box = QMessageBox()
+    try:
+        message_box.setIconPixmap(QPixmap(
+            ":/res/ui/guiscrcpy_logo.png").scaledToHeight(100))
+    except Exception as e:
+        print("WARN: loading guiscrcpy message box pixmap failed. Ignoring")
+    message_box.setText("<b>{}</b>".format(text))
+    message_box.setTextFormat(QtCore.Qt.RichText)
+    message_box.setInformativeText(info_text)
+    message_box.setStandardButtons(buttons)
+    return message_box

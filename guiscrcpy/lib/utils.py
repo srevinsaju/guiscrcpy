@@ -23,7 +23,10 @@ import shlex
 import shutil
 import sys
 
+from qtpy.QtGui import QPixmap
 from colorama import Fore
+from qtpy import QtCore
+from qtpy.QtWidgets import QMessageBox
 from ..platform.platform import System
 
 environment = System()

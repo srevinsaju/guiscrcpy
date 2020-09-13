@@ -927,11 +927,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # ====================================================================
         # 3: Check devices
         values_devices_list = self.scan_devices_update_list_view()
-        e = self.check_devices_status_and_select_first_if_only_one(
+        _e = self.check_devices_status_and_select_first_if_only_one(
             values_devices_list)
-        if e is None or isinstance(e, int):
-            return e
-        device_id, more_devices, _stat = e
+        if _e is None or isinstance(e, int):
+            return _e
+        device_id, more_devices, _stat = _e
         progress = self.progress(progress)
 
         # ====================================================================
@@ -1205,7 +1205,7 @@ def set_scrcpy_server_path(config):
         server_path = open_exe_name_dialog(None, 'scrcpy-server')
         if server_path is None:
             raise ScrcpyServerNotFoundError(
-                    "User did not select scrcpy server")
+                "User did not select scrcpy server")
         config['scrcpy-server'] = server_path
         os.environ['SCRCPY_SERVER_PATH'] = server_path
     elif platform.System().system() == "Windows":

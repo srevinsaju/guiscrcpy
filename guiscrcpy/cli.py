@@ -10,7 +10,8 @@ from qtpy import QtCore, QtWidgets
 
 from .lib.utils import format_colors as fc, show_message_box
 from .launcher import bootstrap
-from .lib.check import AndroidDebugBridge, ScrcpyNotFoundError, AdbNotFoundError, ScrcpyServerNotFoundError
+from .lib.check import AndroidDebugBridge, ScrcpyNotFoundError, \
+    AdbNotFoundError, ScrcpyServerNotFoundError
 from .lib.config import InterfaceConfig, InvalidConfigurationError
 from .version import VERSION
 from . import __doc__ as lic
@@ -20,7 +21,7 @@ from . import __doc__ as lic
 colorama.init()
 
 
-def show_version(ctx, param, value):
+def show_version(ctx, param, value):  # noqa:
     """Prints the version of the utility"""
     if not value or ctx.resilient_parsing:
         return
@@ -49,7 +50,7 @@ def show_version(ctx, param, value):
     ctx.exit()
 
 
-def show_license(ctx, param, value):
+def show_license(ctx, param, value):  # noqa:
     """Prints the license of the utility"""
     if not value or ctx.resilient_parsing:
         return
@@ -92,7 +93,8 @@ def cli(ctx, hide_wm_frame=True, aot=True, theme='Breeze',
         return
     try:
         # why this try block?
-        # this is because, in case guiscrcpy crashes, it will log the traceback to the terminal
+        # this is because, in case guiscrcpy crashes,
+        # it will log the traceback to the terminal
         # but it would not be visible to users without CLI interface
         # enable High DPI scaling
         QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
@@ -101,31 +103,32 @@ def cli(ctx, hide_wm_frame=True, aot=True, theme='Breeze',
         # init core
         app = QtWidgets.QApplication(sys.argv)
         cfgmgr = InterfaceConfig()
-        bootstrap(app, cfgmgr, theme=theme, aot=aot, hide_wm_frame=hide_wm_frame,
-                  debug__no_scrcpy=debug__disable_scrcpy)
+        bootstrap(
+            app,
+            cfgmgr,
+            theme=theme,
+            aot=aot,
+            hide_wm_frame=hide_wm_frame,
+            debug__no_scrcpy=debug__disable_scrcpy)
     except ScrcpyNotFoundError:
         _msg_box = show_message_box(
             text="Scrcpy not found",
             info_text="guiscrcpy could not find scrcpy. "
                       "Make sure you select scrcpy in the dialog box "
                       "or add scrcpy to PATH. You can get the latest release "
-                      "of scrcpy from <a href='https://github.com/Genymobile/scrcpy'>"
+                      "of scrcpy from <a href='"
+                      "https://github.com/Genymobile/scrcpy'>"
                       "Genymobile/scrcpy 's GitHub Releases</a> "
                       "and select the <pre>scrcpy{ext}</pre> when you run "
                       "guiscrcpy next time".format(
-                            ext=".exe" if platform.system() == "Windows" else ""
-            )
-
-        )
+                        ext=".exe" if platform.system() == "Windows" else ""))
         _msg_box.exec_()
         print("Aborting!")
         sys.exit(-1)
     except AdbNotFoundError:
         _msg_box = show_message_box(
-            text="ADB not found",
-            info_text="guiscrcpy could not find adb. "
-                      "Make sure you select adb in the dialog box or add adb to PATH"
-        )
+            text="ADB not found", info_text="guiscrcpy could not find adb. "
+            "Make sure you select adb in the dialog box or add adb to PATH")
         _msg_box.exec_()
         print("Aborting!")
         sys.exit(-1)
@@ -157,7 +160,7 @@ def cli(ctx, hide_wm_frame=True, aot=True, theme='Breeze',
         _msg_box.exec_()
         print("Aborting!")
         sys.exit(-1)
-    except Exception:
+    except Exception:  # noqa:
         error_message = traceback.format_exc(chain=True)
         print(error_message)
         _msg_box = show_message_box(

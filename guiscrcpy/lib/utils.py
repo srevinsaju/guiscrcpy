@@ -151,7 +151,9 @@ def show_message_box(text, info_text="", buttons=QMessageBox.Ok):
         message_box.setIconPixmap(QPixmap(
             ":/res/ui/guiscrcpy_logo.png").scaledToHeight(100))
     except Exception as e:
-        print("WARN: loading guiscrcpy message box pixmap failed. Ignoring")
+        print("WARN: {e}: loading guiscrcpy "
+              "message box pixmap failed. "
+              "Ignoring".format(e=e))
     message_box.setText("<b>{}</b>".format(text))
     message_box.setTextFormat(QtCore.Qt.RichText)
     message_box.setInformativeText(info_text)

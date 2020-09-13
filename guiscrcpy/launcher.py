@@ -1214,19 +1214,13 @@ def set_scrcpy_server_path(config):
     return config
 
 
-def bootstrap(cfgmgr, theme='Breeze', aot=True, debug__no_scrcpy=False,
+def bootstrap(app, cfgmgr, theme='Breeze', aot=True, debug__no_scrcpy=False,
               hide_wm_frame=True):
     """
     Launch the guiscrcpy window
     :return:
     """
     config = cfgmgr.get_config()
-    # enable High DPI scaling
-    QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-    # use HIGH DPI icons
-    QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
-    # init core
-    app = QtWidgets.QApplication([])
 
     # load fonts
     font_database = QFontDatabase()

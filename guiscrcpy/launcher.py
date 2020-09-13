@@ -929,7 +929,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         values_devices_list = self.scan_devices_update_list_view()
         _e = self.check_devices_status_and_select_first_if_only_one(
             values_devices_list)
-        if _e is None or isinstance(e, int):
+        if _e is None or isinstance(_e, int):
             return _e
         device_id, more_devices, _stat = _e
         progress = self.progress(progress)

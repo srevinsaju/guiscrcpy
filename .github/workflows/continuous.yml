@@ -11,6 +11,7 @@ jobs:
         version: ['3.8']
     steps:
     - uses: actions/checkout@v2
+
     - uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.version }}
@@ -34,6 +35,8 @@ jobs:
       image: ubuntu:18.04
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Setup up User
         run: |
           apt update
@@ -61,6 +64,9 @@ jobs:
           cd pyapim
           python3 -m pip install -r requirements.txt
           python3 -m pip install .
+          python3 -m pip install gitpython
+          ./releaser
+          python3 -m pip uninstall gitpython
           cd ..
           sed -i 's,qtpy,PySide2,g' ./**/*.py
           sed -i 's,qtpy,PySide2,g' **/*.py

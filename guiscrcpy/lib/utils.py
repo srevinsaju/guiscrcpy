@@ -24,8 +24,7 @@ import shutil
 import sys
 
 from colorama import Fore
-
-from guiscrcpy.platform.platform import System
+from ..platform.platform import System
 
 environment = System()
 

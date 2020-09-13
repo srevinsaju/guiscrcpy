@@ -51,6 +51,10 @@ class ScrcpyNotFoundError(FileNotFoundError):
     pass
 
 
+class ScrcpyServerNotFoundError(FileNotFoundError):
+    pass
+
+
 class ScrcpyBridge:
     def __init__(self, path=None):
         if path is not None:

@@ -78,6 +78,23 @@ chmod +x guiscrcpy-*.AppImage
 guiscrcpy-x86_64.AppImage --appimage-extract-and-run
 ```
 
+> NOTE: The AppImage includes `scrcpy` pre-built binary along 
+along with adb. This implies you do not need to have anything 
+additionally installed other than to download this AppImage. 
+
+For some linux desktops, it would be needed to install 
+`libva-drm2` or `libva` to enable scrcpy's new video acceleration
+feature using OpenGL.
+
+On ubuntu, if you have enabled `universe` repositories, you can just
+Ubuntu:
+```bash
+sudo apt install libva-drm2
+```
+
+The bug was found on ubuntu. Tested on Ubuntu 20.10, 20.04 (GNOME). Most linux distros (not live CDs) have these installed on them by default. I do not mind bundling this lib too, but it might break other linux'es. So feel free to pop into `guiscrcpy` 's Discord channel or open a GitHub issue, if you need some help.
+
+
 [![Get Appimage](https://raw.githubusercontent.com/srevinsaju/get-appimage/master/static/badges/get-appimage-branding-blue.png)](https://srevinsaju.github.io/get-appimage/guiscrcpy)
 
 <br>

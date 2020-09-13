@@ -1191,10 +1191,8 @@ def set_scrcpy_server_path(config):
         if not os.path.exists(scrcpy_server_path_env):
             server_path = open_exe_name_dialog(None, 'scrcpy-server')
             if server_path is None:
-                print("ERROR: User did not select path to scrcpy-server")
-                print("Cannot proceed without configured server path")
-                print("Aborting: 1")
-                sys.exit(-1)
+                raise ScrcpyServerNotFoundError(
+                    "User did not select scrcpy server")
             config['scrcpy-server'] = server_path
             os.environ['SCRCPY_SERVER_PATH'] = server_path
     elif (
@@ -1207,10 +1205,8 @@ def set_scrcpy_server_path(config):
     ):
         server_path = open_exe_name_dialog(None, 'scrcpy-server')
         if server_path is None:
-            print("ERROR: User did not select path to scrcpy-server")
-            print("Cannot proceed without configured server path")
-            print("Aborting: 2")
-            sys.exit(-1)
+            raise ScrcpyServerNotFoundError(
+                    "User did not select scrcpy server")
         config['scrcpy-server'] = server_path
         os.environ['SCRCPY_SERVER_PATH'] = server_path
     elif platform.System().system() == "Windows":

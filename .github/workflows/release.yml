@@ -44,6 +44,8 @@ jobs:
       image: ubuntu:18.04
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Setup up User
         run: |
           apt update
@@ -65,12 +67,14 @@ jobs:
           python3.8 get-pip.py
           mv `which python3.8` `which python3`
           sudo apt install -y libtool libcairo-dev
+          sudo apt -y install libxcb-xinerama0
           sudo apt -y install build-essential
           git clone https://github.com/srevinsaju/pyappimage --depth=1 pyapim
           cd pyapim
           python3 -m pip install -r requirements.txt
           python3 -m pip install .
           cd ..
+          echo "$(git describe --tags --always --match '*[0-9]*')"
           sed -i 's,qtpy,PySide2,g' ./**/*.py
           sed -i 's,qtpy,PySide2,g' **/*.py
           sed -i 's,PyQt5,PySide2,g' *.py
@@ -90,16 +94,11 @@ jobs:
           chmod +x appimagetool-x86_64.AppImage
           ARCH=x86_64 ./appimagetool*.AppImage -n guiscrcpy.AppDir
           ./guiscrcpy*.AppImage --appimage-extract
-          cd squashfs-root/scrcpy
-          wget https://github.com/AppImageCrafters/AppRun/releases/download/v1.1.2/AppRun-amd64 -O AppRun && chmod +x AppRun
-          wget https://github.com/AppImageCrafters/AppRun/releases/download/v1.1.2/libapprun_hooks-amd64.so -O libapprun_hooks.so && chmod +x libapprun_hooks.so
-          cd ../..
-          cp pyappimage/.env.template squashfs-root/scrcpy/.env
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool-x86_64.AppImage
-          ./appimagetool*.AppImage squashfs-root -n -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy*.AppImage.zsync' guiscrcpy-$(git describe --tags --match '[0-9]*')-$(uname -m).AppImage
+          ./appimagetool*.AppImage squashfs-root -n -u 'gh-releases-zsync|srevinsaju|guiscrcpy|latest|guiscrcpy*.AppImage.zsync' guiscrcpy-$(git describe --tags --match '*[0-9]*' --always)-$(uname -m).AppImage
           mkdir dist
-          mv guiscrcpy-$(git describe --tags --match '[0-9]*')-$(uname -m).AppImage* dist/.
+          mv guiscrcpy-$(git describe --tags --match '*[0-9]*' --always)-$(uname -m).AppImage* dist/.
 
 
       - name: Install Destop Environment
@@ -134,7 +133,6 @@ jobs:
         with:
           name: guiscrcpy-continuous-x86_64.AppImage
           path: 'dist/'
-
 
   Windows:
     name: Windows
@@ -205,7 +203,8 @@ jobs:
           name: guiscrcpy-pyside2-continuous.exe
           # Directory containing files to upload
           path: dist/guiscrcpy-pyside2.exe
-          
+
+
   Release:
     needs: [Windows, AppImage, Wheel, Windows-PySide2]
     runs-on: ubuntu-latest

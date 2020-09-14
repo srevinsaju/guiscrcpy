@@ -86,7 +86,7 @@ jobs:
           ARCH=x86_64 ./appimagetool*.AppImage -n guiscrcpy.AppDir
           ./guiscrcpy*.AppImage --appimage-extract
           export GUISCRCPY_VERSION="$(cat setup.py | grep 'version=' | grep -P -o '\d\.\d\.\d+').dev"
-          export GUISCRCPY_GLIB_VERSION="glibc$(ldd --version | grep 'ldd ' | grep -o ')"
+          export GUISCRCPY_GLIB_VERSION="glibc$(ldd --version | grep 'ldd ' | grep -o ').[0-9].[0-9][0-9]' | grep -o '[0-9].[0-9][0-9]')"
           export GUISCRCPY_MACHINE="$(uname -m)"
           export GUISCRCPY_TYPE="r"
           ./appimagetool*.AppImage squashfs-root -n \
@@ -181,7 +181,7 @@ jobs:
           cp pyappimage/AppRun.standalone.sh guiscrcpy.AppDir/AppRun
           chmod +x guiscrcpy.AppDir/AppRun
           export GUISCRCPY_VERSION="$(cat setup.py | grep 'version=' | grep -P -o '\d\.\d\.\d+').dev"
-          export GUISCRCPY_GLIB_VERSION="glibc$(ldd --version | grep 'ldd ' | grep -o ')"
+          export GUISCRCPY_GLIB_VERSION="glibc$(ldd --version | grep 'ldd ' | grep -o ').[0-9].[0-9][0-9]' | grep -o '[0-9].[0-9][0-9]')"
           export GUISCRCPY_MACHINE="$(uname -m)"
           export GUISCRCPY_TYPE="m"
           ./appimagetool*.AppImage squashfs-root -n \

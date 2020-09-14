@@ -85,9 +85,7 @@ jobs:
           chmod +x appimagetool-x86_64.AppImage
           ARCH=x86_64 ./appimagetool*.AppImage -n guiscrcpy.AppDir
           ./guiscrcpy*.AppImage --appimage-extract
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
-          chmod +x appimagetool-x86_64.AppImage
-          ./appimagetool*.AppImage squashfs-root -n -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy*.AppImage.zsync' guiscrcpy-$(git describe --tags --match '*[0-9]*')-$(uname -m).AppImage
+          ./appimagetool*.AppImage squashfs-root -n -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-*-r-*.AppImage.zsync' guiscrcpy-$(ldd --version | grep 'ldd ' | grep -o ').[0-9].[0-9][0-9]' | grep -o '[0-9].[0-9][0-9]')-r-$(cat setup.py | grep 'version=' | grep -P -o '\d\.\d\.\d+')-$(uname -m).AppImage
           mkdir dist
           mv guiscrcpy-$(git describe --tags --match '*[0-9]*')-$(uname -m).AppImage* dist/.
 
@@ -124,6 +122,95 @@ jobs:
         with:
           name: guiscrcpy-continuous-x86_64.AppImage
           path: 'dist/'
+
+
+  AppImage-Standalone:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:16.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup up User
+        run: |
+          apt update
+          apt install -y sudo
+          echo "github ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          useradd -m github
+          usermod -aG sudo github
+          su - github
+      
+      - name: Install dependencies
+        run: |
+          sudo apt -y install git
+          sudo apt -y install wget curl jq
+          sudo apt install -y software-properties-common
+          sudo add-apt-repository ppa:deadsnakes/ppa
+          sudo apt update
+          sudo apt install python3.8 python3.8-dev python3.8-venv -y
+          wget https://bootstrap.pypa.io/get-pip.py
+          python3.8 get-pip.py
+          mv `which python3.8` `which python3`
+          sudo apt install -y libtool libcairo-dev
+          sudo apt -y install libxcb-xinerama0
+          sudo apt -y install build-essential
+          git clone https://github.com/srevinsaju/pyappimage --depth=1 pyapim
+          cd pyapim
+          python3 -m pip install -r requirements.txt
+          python3 -m pip install .
+          cd ..
+          echo "$(git describe --tags --always --match '*[0-9]*')"
+          sed -i 's,qtpy,PySide2,g' ./**/*.py
+          sed -i 's,qtpy,PySide2,g' **/*.py
+          sed -i 's,PyQt5,PySide2,g' *.py
+          python3 -m pyappimage.cli build
+          ls -a 
+      
+      - name: Bundle scrcpy
+        run: |
+          export APPIMAGE_EXTRACT_AND_RUN=1
+          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool-x86_64.AppImage
+          cp pyappimage/AppRun.standalone.sh guiscrcpy.AppDir/AppRun
+          chmod +x guiscrcpy.AppDir/AppRun
+          ARCH=x86_64 ./appimagetool*.AppImage guiscrcpy.AppDir -n -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-min*-m-*.AppImage.zsync' guiscrcpy-min-$(ldd --version | grep 'ldd ' | grep -o ').[0-9].[0-9][0-9]' | grep -o '[0-9].[0-9][0-9]')-m-$(cat setup.py | grep 'version=' | grep -P -o '\d\.\d\.\d+')-$(uname -m).AppImage
+          mkdir dist
+          mv guiscrcpy-$(git describe --tags --match '*[0-9]*')-$(uname -m).AppImage* dist/.
+
+      - name: Install Destop Environment
+        run: |
+          echo "adapted from https://github.com/AppImage/appimage.github.io/blob/master/.travis.yml"
+          sudo apt-get update
+          sudo apt-get -qq -y install imagemagick libasound2-dev pulseaudio-utils alsa-utils alsa-oss libjack0 desktop-file-utils xmlstarlet xterm xvfb icewm x11-utils x11-apps netpbm xdotool libgl1-mesa-dri libgl1-mesa-dev mesa-utils libosmesa6 libsdl1.2-dev fonts-wqy-microhei libfile-mimeinfo-perl libx11-xcb1 libxcb-xkb1 libxcb-* libxcb-render-util0 libxkbcommon-x11-0 libxkbcommon0 > /dev/null # appstream # TODO: Cache me!
+          mkdir $HOME/.icewm/
+          echo "ShowTaskBar = 0" > $HOME/.icewm/preferences
+          echo "TaskBarAutoHide = 1" > $HOME/.icewm/preferences
+          echo "TaskBarShowWorkspaces = 0" > $HOME/.icewm/preferences
+          echo "TaskBarShowAllWindows = 0" > $HOME/.icewm/preferences
+          echo "TaskBarShowClock = 0" > $HOME/.icewm/preferences
+          echo "TaskBarShowMailboxStatus = 0" > $HOME/.icewm/preferences
+          echo "TaskBarShowCPUStatus = 0" > $HOME/.icewm/preferences
+          echo "TaskBarShowWindowListMenu = 0" > $HOME/.icewm/preferences
+          
+          
+      - name: Run headless test
+        run: |
+          export LC_ALL=C.UTF-8
+          export LANG=C.UTF-8
+          export APPIMAGE_EXTRACT_AND_RUN=1
+          chmod +x scripts/display-ci.sh
+          echo "echo Dummy scrcpy" | sudo tee -a /usr/bin/scrcpy
+          sudo chmod +x /usr/bin/scrcpy
+          /usr/bin/xvfb-run --auto-servernum ./scripts/display-ci.sh "$(realpath dist/*.AppImage)"
+
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: guiscrcpy-min-continuous-x86_64.AppImage
+          path: 'dist/'
+
 
   Windows:
     name: Windows

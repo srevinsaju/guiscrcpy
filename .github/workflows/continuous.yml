@@ -85,9 +85,15 @@ jobs:
           chmod +x appimagetool-x86_64.AppImage
           ARCH=x86_64 ./appimagetool*.AppImage -n guiscrcpy.AppDir
           ./guiscrcpy*.AppImage --appimage-extract
-          ./appimagetool*.AppImage squashfs-root -n -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-*-r-*.AppImage.zsync' guiscrcpy-$(ldd --version | grep 'ldd ' | grep -o ').[0-9].[0-9][0-9]' | grep -o '[0-9].[0-9][0-9]')-r-$(cat setup.py | grep 'version=' | grep -P -o '\d\.\d\.\d+')-$(uname -m).AppImage
+          export GUISCRCPY_VERSION="$(cat setup.py | grep 'version=' | grep -P -o '\d\.\d\.\d+').dev"
+          export GUISCRCPY_GLIB_VERSION="glibc$(ldd --version | grep 'ldd ' | grep -o ')"
+          export GUISCRCPY_MACHINE="$(uname -m)"
+          export GUISCRCPY_TYPE="r"
+          ./appimagetool*.AppImage squashfs-root -n \
+            -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-*.r.*.AppImage.zsync' \
+            guiscrcpy-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage
           mkdir dist
-          mv guiscrcpy-$(git describe --tags --match '*[0-9]*')-$(uname -m).AppImage* dist/.
+          mv guiscrcpy-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage* dist/.
 
 
       - name: Install Destop Environment
@@ -174,9 +180,15 @@ jobs:
           chmod +x appimagetool-x86_64.AppImage
           cp pyappimage/AppRun.standalone.sh guiscrcpy.AppDir/AppRun
           chmod +x guiscrcpy.AppDir/AppRun
-          ARCH=x86_64 ./appimagetool*.AppImage guiscrcpy.AppDir -n -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-min*-m-*.AppImage.zsync' guiscrcpy-min-$(ldd --version | grep 'ldd ' | grep -o ').[0-9].[0-9][0-9]' | grep -o '[0-9].[0-9][0-9]')-m-$(cat setup.py | grep 'version=' | grep -P -o '\d\.\d\.\d+')-$(uname -m).AppImage
+          export GUISCRCPY_VERSION="$(cat setup.py | grep 'version=' | grep -P -o '\d\.\d\.\d+').dev"
+          export GUISCRCPY_GLIB_VERSION="glibc$(ldd --version | grep 'ldd ' | grep -o ')"
+          export GUISCRCPY_MACHINE="$(uname -m)"
+          export GUISCRCPY_TYPE="m"
+          ./appimagetool*.AppImage squashfs-root -n \
+            -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-*.r.*.AppImage.zsync' \
+            guiscrcpy-min-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage
           mkdir dist
-          mv guiscrcpy-$(git describe --tags --match '*[0-9]*')-$(uname -m).AppImage* dist/.
+          mv guiscrcpy-min-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage* dist/.
 
       - name: Install Destop Environment
         run: |

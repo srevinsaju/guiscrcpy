@@ -215,7 +215,7 @@ jobs:
           chmod +x scripts/display-ci.sh
           echo "echo Dummy scrcpy" | sudo tee -a /usr/bin/scrcpy
           sudo chmod +x /usr/bin/scrcpy
-          /usr/bin/xvfb-run --auto-servernum ./scripts/display-ci.sh "$(realpath dist/*.AppImage)"
+          # /usr/bin/xvfb-run --auto-servernum ./scripts/display-ci.sh "$(realpath dist/*.AppImage)"
 
 
       - name: Upload artifact

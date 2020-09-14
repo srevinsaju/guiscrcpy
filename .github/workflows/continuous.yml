@@ -332,5 +332,6 @@ jobs:
           guiscrcpy-PySide2-continuous-x86_64.AppImage
           guiscrcpy-continuous-x86_64.AppImage
           guiscrcpy-continuous-none-any-py3.whl
-          
+          guiscrcpy-min-continuous-x86_64.AppImage
+ 
         repo_token: ${{ secrets.GITHUB_TOKEN }}

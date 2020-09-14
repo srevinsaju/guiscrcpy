@@ -130,7 +130,7 @@ jobs:
           chmod +x scripts/display-ci.sh
           echo "echo Dummy scrcpy" | sudo tee -a /usr/bin/scrcpy
           sudo chmod +x /usr/bin/scrcpy
-          /usr/bin/xvfb-run --auto-servernum ./scripts/display-ci.sh "$(realpath dist/*.AppImage)"
+          # /usr/bin/xvfb-run --auto-servernum ./scripts/display-ci.sh "$(realpath dist/*.AppImage)"
 
 
       - name: Upload artifact
@@ -341,5 +341,5 @@ jobs:
           guiscrcpy-PySide2-continuous-x86_64.AppImage
           guiscrcpy-continuous-x86_64.AppImage
           guiscrcpy-continuous-none-any-py3.whl
-          
+          guiscrcpy-min-continuous-x86_64.AppImage 
         repo_token: ${{ secrets.GITHUB_TOKEN }}

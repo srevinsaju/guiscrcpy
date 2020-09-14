@@ -90,7 +90,7 @@ jobs:
           export GUISCRCPY_MACHINE="$(uname -m)"
           export GUISCRCPY_TYPE="r"
           ./appimagetool*.AppImage squashfs-root -n \
-            -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-*.r.*.AppImage.zsync' \
+            -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-*.$GUISCRCPY_TYPE.*.AppImage.zsync' \
             guiscrcpy-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage
           mkdir dist
           mv guiscrcpy-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage* dist/.
@@ -185,7 +185,7 @@ jobs:
           export GUISCRCPY_MACHINE="$(uname -m)"
           export GUISCRCPY_TYPE="m"
           ./appimagetool*.AppImage squashfs-root -n \
-            -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-*.r.*.AppImage.zsync' \
+            -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-*.$GUISCRCPY_TYPE.*.AppImage.zsync' \
             guiscrcpy-min-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage
           mkdir dist
           mv guiscrcpy-min-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage* dist/.

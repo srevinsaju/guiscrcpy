@@ -59,8 +59,10 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
             self.ux = UXMapper()
 
     def init(self):
-        if platform.system() != "Linux" or (shutil.which('wmctrl') and 
-                shutil.which('xdotool') and platform.system() == "Linux"):
+        if platform.system() != "Linux" or (
+                shutil.which('wmctrl') and
+                shutil.which('xdotool') and
+                platform.system() == "Linux"):
             self.clipD2PC.clicked.connect(self.ux.copy_devpc)
             self.clipPC2D.clicked.connect(self.ux.copy_pc2dev)
             self.fullscreenUI.clicked.connect(self.ux.fullscreen)

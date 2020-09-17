@@ -57,7 +57,7 @@ def wmctrl_xdotool_linux_send_key(key):
         _xdotool_proc = subprocess.Popen(shlex.split(
             'xdotool key --clearmodifiers {}+{}'.format(
                 os.getenv('GUISCRCPY_MODIFIER') or 'alt', key)
-            ),
+        ),
             stdout=sys.stdout,
             stderr=sys.stderr
         )
@@ -205,4 +205,3 @@ class UXMapper:
             auto.hotkey("alt", "f")
         else:
             wmctrl_xdotool_linux_send_key('f')
-

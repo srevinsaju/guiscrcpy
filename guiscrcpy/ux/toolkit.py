@@ -17,7 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
+import shutil
 import uuid
+import platform
 
 from qtpy import QtCore
 from qtpy.QtCore import QPoint
@@ -57,8 +59,24 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
             self.ux = UXMapper()
 
     def init(self):
-        self.clipD2PC.clicked.connect(self.ux.copy_devpc)
-        self.clipPC2D.clicked.connect(self.ux.copy_pc2dev)
+        if platform.system() != "Linux" or (shutil.which('wmctrl') and 
+                shutil.which('xdotool') and platform.system() == "Linux"):
+            self.clipD2PC.clicked.connect(self.ux.copy_devpc)
+            self.clipPC2D.clicked.connect(self.ux.copy_pc2dev)
+            self.fullscreenUI.clicked.connect(self.ux.fullscreen)
+        else:
+            # the tools do not exist on Linux. user has to manually install
+            for button, helper in (
+                    (self.clipD2PC, 'Alt + C'),
+                    (self.clipPC2D, 'Alt + Shift + C'),
+                    (self.fullscreenUI, 'Alt + F')):
+                button.setDisabled(True)
+                button.setToolTip(
+                    'This function is disabled because "wmctrl"'
+                    ' or "xdotool" is not found on your installation.'
+                    'Keyboard shortcut can be used instead'
+                    ': <b>{}</b>'.format(helper))
+
         self.back.clicked.connect(self.ux.key_back)
         self.screenfreeze.clicked.connect(self.quit_window)
         self.appswi.clicked.connect(self.ux.key_switch)
@@ -66,7 +84,6 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
         self.home.clicked.connect(self.ux.key_home)
         self.notif_pull.clicked.connect(self.ux.expand_notifications)
         self.notif_collapse.clicked.connect(self.ux.collapse_notifications)
-        self.fullscreenUI.clicked.connect(self.ux.fullscreen)
         self.powerUI.clicked.connect(self.ux.key_power)
         self.vup.clicked.connect(self.ux.key_volume_up)
         self.vdown.clicked.connect(self.ux.key_volume_down)

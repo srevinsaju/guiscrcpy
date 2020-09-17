@@ -16,10 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import sys
 import hashlib
 import logging
 import os
-
+import shutil
+import subprocess
+import shlex
 from guiscrcpy.platform.platform import System
 
 if System.system() == "Windows":
@@ -34,6 +37,36 @@ if System.system() == "Windows":
 else:
     auto = None
     getWindowsWithTitle = None
+
+
+def wmctrl_xdotool_linux_send_key(key):
+    assert isinstance(key, str)
+    assert System.system() == "Linux"
+    wmctrl = shutil.which("wmctrl")
+    xdotool = shutil.which("xdotool")
+    if not wmctrl or not xdotool:
+        print('E: Could not find {} on PATH. Make sure '
+              'that a compatible package is installed '
+              'on your system for this function')
+        return
+    _proc = subprocess.Popen(shlex.split(
+        'wmctrl -x -a scrcpy'),
+        stdout=sys.stdout,
+        stderr=sys.stderr)
+    if _proc.wait() == 0:
+        _xdotool_proc = subprocess.Popen(shlex.split(
+            'xdotool key --clearmodifiers {}+{}'.format(
+                os.getenv('GUISCRCPY_MODIFIER') or 'alt', key)
+            ),
+            stdout=sys.stdout,
+            stderr=sys.stderr
+        )
+        if _xdotool_proc.wait() != 0:
+            print("E (xdotool): Failed to send key {} to "
+                  "scrcpy window.".format(key))
+    else:
+        print("E (wmctrl): Failed to get scrcpy window. "
+              "(Is scrcpy running?)")
 
 
 class UXMapper:
@@ -100,10 +133,9 @@ class UXMapper:
         if self.has_modules:
             scrcpywindow = getWindowsWithTitle("scrcpy")[0]
             scrcpywindow.focus()
-            auto.hotkey("ctrl", "c")
+            auto.hotkey("alt", "c")
         else:
-            os.system(
-                "wmctrl -x -a  scrcpy && xdotool key --clearmodifiers ctrl+c")
+            wmctrl_xdotool_linux_send_key('c')
 
     def key_power(self):
         logging.debug("Passing POWER")
@@ -162,21 +194,15 @@ class UXMapper:
         if self.has_modules:
             scrcpywindow = getWindowsWithTitle("scrcpy")[0]
             scrcpywindow.focus()
-            auto.hotkey("ctrl", "shift", "c")
-            logging.warning("NOT SUPPORTED ON WINDOWS")
+            auto.hotkey("alt", "shift", "c")
         else:
-            os.system(
-                "wmctrl -x -a  scrcpy && "
-                "xdotool key --clearmodifiers ctrl+shift+c"
-            )
+            wmctrl_xdotool_linux_send_key('shift+c')
 
     def fullscreen(self):
         if self.has_modules:
             scrcpy_window = getWindowsWithTitle("scrcpy")[0]
             scrcpy_window.focus()
-            auto.hotkey("ctrl", "f")
+            auto.hotkey("alt", "f")
         else:
-            os.system(
-                "wmctrl -x -a  scrcpy && "
-                "xdotool key --clearmodifiers ctrl+f"
-            )
+            wmctrl_xdotool_linux_send_key('f')
+

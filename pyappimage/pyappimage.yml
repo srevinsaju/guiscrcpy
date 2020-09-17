@@ -1,5 +1,8 @@
 name: guiscrcpy
 entrypoint: guiscrcpy.cli:cli
+description: |
+  Open Source Android Screen Mirroring GUI for scrcpy
+
 categories:
   - Utility
 updateinformation: gh-releases-zsync|srevinsaju|guiscrcpy|latest|guiscrcpy*.AppImage.zsync

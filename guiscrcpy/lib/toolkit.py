@@ -16,13 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import sys
 import hashlib
 import logging
 import os
+import shlex
 import shutil
 import subprocess
-import shlex
+import sys
+
 from guiscrcpy.platform.platform import System
 
 if System.system() == "Windows":
@@ -45,21 +46,19 @@ def wmctrl_xdotool_linux_send_key(key):
     wmctrl = shutil.which("wmctrl")
     xdotool = shutil.which("xdotool")
     if not wmctrl or not xdotool:
-        print('E: Could not find {} on PATH. Make sure '
-              'that a compatible package is installed '
-              'on your system for this function')
+        print("E: Could not find {} on PATH. Make sure "
+              "that a compatible package is installed "
+              "on your system for this function")
         return
-    _proc = subprocess.Popen(shlex.split(
-        'wmctrl -x -a scrcpy'),
-        stdout=sys.stdout,
-        stderr=sys.stderr)
+    _proc = subprocess.Popen(shlex.split("wmctrl -x -a scrcpy"),
+                             stdout=sys.stdout,
+                             stderr=sys.stderr)
     if _proc.wait() == 0:
-        _xdotool_proc = subprocess.Popen(shlex.split(
-            'xdotool key --clearmodifiers {}+{}'.format(
-                os.getenv('GUISCRCPY_MODIFIER') or 'alt', key)
-        ),
+        _xdotool_proc = subprocess.Popen(
+            shlex.split("xdotool key --clearmodifiers {}+{}".format(
+                os.getenv("GUISCRCPY_MODIFIER") or "alt", key)),
             stdout=sys.stdout,
-            stderr=sys.stderr
+            stderr=sys.stderr,
         )
         if _xdotool_proc.wait() != 0:
             print("E (xdotool): Failed to send key {} to "
@@ -82,9 +81,7 @@ class UXMapper:
         logging.debug("Launching UX Mapper")
         self.has_modules = getWindowsWithTitle and auto
         logging.debug("Calculating Screen Size")
-        self.android_dimensions = adb.get_dimensions(
-            device_id=device_id
-        )
+        self.android_dimensions = adb.get_dimensions(device_id=device_id)
         if not self.android_dimensions:
             print("E: guiscrcpy has crashed because of a failure in the "
                   "execution of `adb shell wm size`. This might be because "
@@ -115,8 +112,8 @@ class UXMapper:
         :param y2: y2 coordinate
         :return: Boolean True, in success
         """
-        self.adb.shell_input("swipe {} {} {} {}".format(
-            x1, y1, x2, y2), device_id=self.deviceId)
+        self.adb.shell_input("swipe {} {} {} {}".format(x1, y1, x2, y2),
+                             device_id=self.deviceId)
         return True
 
     def do_keyevent(self, key):
@@ -135,7 +132,7 @@ class UXMapper:
             scrcpywindow.focus()
             auto.hotkey("alt", "c")
         else:
-            wmctrl_xdotool_linux_send_key('c')
+            wmctrl_xdotool_linux_send_key("c")
 
     def key_power(self):
         logging.debug("Passing POWER")
@@ -167,20 +164,17 @@ class UXMapper:
 
     def reorient_portrait(self):
         logging.debug("Passing REORIENT [POTRAIT]")
-        self.adb.shell('settings put system accelerometer_rotation 0',
+        self.adb.shell("settings put system accelerometer_rotation 0",
                        device_id=self.deviceId)
         self.adb.shell("settings put system rotation 1",
                        device_id=self.deviceId)
 
     def reorient_landscape(self):
         logging.debug("Passing REORIENT [LANDSCAPE]")
-        self.adb.shell(
-            'settings put system accelerometer_rotation 0',
-            device_id=self.deviceId
-        )
-        self.adb.shell(
-            "settings put system rotation 1",
-            device_id=self.deviceId)
+        self.adb.shell("settings put system accelerometer_rotation 0",
+                       device_id=self.deviceId)
+        self.adb.shell("settings put system rotation 1",
+                       device_id=self.deviceId)
 
     def expand_notifications(self):
         logging.debug("Passing NOTIF EXPAND")
@@ -196,7 +190,7 @@ class UXMapper:
             scrcpywindow.focus()
             auto.hotkey("alt", "shift", "c")
         else:
-            wmctrl_xdotool_linux_send_key('shift+c')
+            wmctrl_xdotool_linux_send_key("shift+c")
 
     def fullscreen(self):
         if self.has_modules:
@@ -204,4 +198,4 @@ class UXMapper:
             scrcpy_window.focus()
             auto.hotkey("alt", "f")
         else:
-            wmctrl_xdotool_linux_send_key('f')
+            wmctrl_xdotool_linux_send_key("f")

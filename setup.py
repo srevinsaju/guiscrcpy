@@ -43,9 +43,9 @@ elif platform.system() == 'Linux':
     requirements.extend(['psutil', 'cairosvg'])
 
 data_files = [
-        ('share/applications', ['guiscrcpy.desktop']),
-        ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png']),
-    ]
+    ('share/applications', ['guiscrcpy.desktop']),
+    ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png']),
+]
 
 setup(
     name='guiscrcpy',

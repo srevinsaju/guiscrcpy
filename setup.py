@@ -27,52 +27,48 @@ import platform
 
 try:
     this_directory = os.path.abspath(os.path.dirname(__file__))
-    with open(
-        os.path.join(this_directory, 'README.md'),
-        encoding='utf-8'
-    ) as f:
+    with open(os.path.join(this_directory, "README.md"), encoding="utf-8") as f:
         long_description = f.read()
 except FileNotFoundError:
-    long_description = \
-        "Open Source Android Screen Mirroring System by @srevinsaju"
+    long_description = "Open Source Android Screen Mirroring System by @srevinsaju"
 
-requirements = ['PyQt5>=5.14,<5.16', 'pynput', 'qtpy', 'click', 'colorama']
-if platform.system() == 'Windows':
-    requirements.extend(['pywin32', 'psutil'])
-elif platform.system() == 'Linux':
-    requirements.extend(['psutil', 'cairosvg'])
+requirements = ["PyQt5>=5.14,<5.16", "pynput", "qtpy", "click", "colorama"]
+if platform.system() == "Windows":
+    requirements.extend(["pywin32", "psutil"])
+elif platform.system() == "Linux":
+    requirements.extend(["psutil", "cairosvg"])
 
 data_files = [
-    ('share/applications', ['guiscrcpy.desktop']),
-    ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png']),
+    ("share/applications", ["guiscrcpy.desktop"]),
+    ("share/icons/hicolor/scalable/apps", ["appimage/guiscrcpy.png"]),
 ]
 
 setup(
-    name='guiscrcpy',
-    version='v4.7.2.post3.dev',
-    description='An Open Source - Fast - Android Screen Mirroring system.',
+    name="guiscrcpy",
+    version="v4.7.2.post3.dev",
+    description="An Open Source - Fast - Android Screen Mirroring system.",
     long_description=long_description,
-    long_description_content_type='text/markdown',
-    license='GPL v3',
-    author='srevinsaju',
+    long_description_content_type="text/markdown",
+    license="GPL v3",
+    author="srevinsaju",
     author_email="srevin03@gmail.com",
     packages=find_packages(),
     data_files=data_files,
-    extras_require={'pyqt5': 'PyQt5', 'pyside2': 'PySide2'},
+    extras_require={"pyqt5": "PyQt5", "pyside2": "PySide2"},
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
     include_package_data=True,
     install_requires=requirements,
     scripts=["scripts/guiscrcpy"],
-    entry_points={'console_scripts': ['guiscrcpy = guiscrcpy.cli:cli']},  # noqa: E501
+    entry_points={"console_scripts": ["guiscrcpy = guiscrcpy.cli:cli"]},  # noqa: E501
     classifiers=[
-        'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.8',
-        'Operating System :: MacOS :: MacOS X',
-        'Operating System :: Microsoft :: Windows',
-        'Operating System :: POSIX',
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.8",
+        "Operating System :: MacOS :: MacOS X",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: POSIX",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     ],
 )

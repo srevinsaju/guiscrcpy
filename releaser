@@ -144,9 +144,9 @@ data_files = [
     ]
 {DATA_FILE_MANIPULATE}
 setup(
-    name='guiscrcpy',
-    version='{version}',
-    description='An Open Source - Fast - Android Screen Mirroring system.',
+    name="guiscrcpy",
+    version="{version}",
+    description="An Open Source - Fast - Android Screen Mirroring system.",
     long_description=long_description,
     long_description_content_type='text/markdown',
     license='GPL v3',
@@ -180,7 +180,7 @@ VERSION_FILE = \
 {COPYRIGHT}
 """
 
-VERSION = '{version}'
+VERSION = "{version}"
 '''
 
 # Create a new setup.py with all the information raw.

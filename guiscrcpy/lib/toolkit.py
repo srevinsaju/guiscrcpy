@@ -31,7 +31,8 @@ if System.system() == "Windows":
         import pyautogui as auto
         from pygetwindow import getWindowsWithTitle
     except ModuleNotFoundError as e:
-        logging.debug("pygetwindow, pyautogui " "failed with error code {}".format(e))
+        logging.debug("pygetwindow, pyautogui "
+                      "failed with error code {}".format(e))
         auto = None
         getWindowsWithTitle = None
 else:
@@ -45,29 +46,26 @@ def wmctrl_xdotool_linux_send_key(key):
     wmctrl = shutil.which("wmctrl")
     xdotool = shutil.which("xdotool")
     if not wmctrl or not xdotool:
-        print(
-            "E: Could not find {} on PATH. Make sure "
-            "that a compatible package is installed "
-            "on your system for this function"
-        )
+        print("E: Could not find {} on PATH. Make sure "
+              "that a compatible package is installed "
+              "on your system for this function")
         return
-    _proc = subprocess.Popen(
-        shlex.split("wmctrl -x -a scrcpy"), stdout=sys.stdout, stderr=sys.stderr
-    )
+    _proc = subprocess.Popen(shlex.split("wmctrl -x -a scrcpy"),
+                             stdout=sys.stdout,
+                             stderr=sys.stderr)
     if _proc.wait() == 0:
         _xdotool_proc = subprocess.Popen(
-            shlex.split(
-                "xdotool key --clearmodifiers {}+{}".format(
-                    os.getenv("GUISCRCPY_MODIFIER") or "alt", key
-                )
-            ),
+            shlex.split("xdotool key --clearmodifiers {}+{}".format(
+                os.getenv("GUISCRCPY_MODIFIER") or "alt", key)),
             stdout=sys.stdout,
             stderr=sys.stderr,
         )
         if _xdotool_proc.wait() != 0:
-            print("E (xdotool): Failed to send key {} to " "scrcpy window.".format(key))
+            print("E (xdotool): Failed to send key {} to "
+                  "scrcpy window.".format(key))
     else:
-        print("E (wmctrl): Failed to get scrcpy window. " "(Is scrcpy running?)")
+        print("E (wmctrl): Failed to get scrcpy window. "
+              "(Is scrcpy running?)")
 
 
 class UXMapper:
@@ -85,14 +83,12 @@ class UXMapper:
         logging.debug("Calculating Screen Size")
         self.android_dimensions = adb.get_dimensions(device_id=device_id)
         if not self.android_dimensions:
-            print(
-                "E: guiscrcpy has crashed because of a failure in the "
-                "execution of `adb shell wm size`. This might be because "
-                "of an improper connection of adb. Please reconnect your "
-                "device (disconnect from WiFi / Reconnect USB) or try \n\n"
-                "guiscrcpy --killserver\n\nas a command line to restart adb "
-                "server"
-            )
+            print("E: guiscrcpy has crashed because of a failure in the "
+                  "execution of `adb shell wm size`. This might be because "
+                  "of an improper connection of adb. Please reconnect your "
+                  "device (disconnect from WiFi / Reconnect USB) or try \n\n"
+                  "guiscrcpy --killserver\n\nas a command line to restart adb "
+                  "server")
         self.deviceId = device_id
 
         # each device connected is uniquely identified by the tools by
@@ -105,7 +101,7 @@ class UXMapper:
         A method which returns the unique UUID of the the device
         :return: The hexdigest of a salted hash
         """
-        return self.__sha[self.sha_shift : self.sha_shift + 6]
+        return self.__sha[self.sha_shift:self.sha_shift + 6]
 
     def do_swipe(self, x1=10, y1=10, x2=10, y2=10):
         """
@@ -116,9 +112,8 @@ class UXMapper:
         :param y2: y2 coordinate
         :return: Boolean True, in success
         """
-        self.adb.shell_input(
-            "swipe {} {} {} {}".format(x1, y1, x2, y2), device_id=self.deviceId
-        )
+        self.adb.shell_input("swipe {} {} {} {}".format(x1, y1, x2, y2),
+                             device_id=self.deviceId)
         return True
 
     def do_keyevent(self, key):
@@ -127,7 +122,8 @@ class UXMapper:
         :param key: The ADB predefined keycode
         :return:
         """
-        self.adb.shell_input("keyevent {}".format(key), device_id=self.deviceId)
+        self.adb.shell_input("keyevent {}".format(key),
+                             device_id=self.deviceId)
         return True
 
     def copy_devpc(self):
@@ -168,17 +164,17 @@ class UXMapper:
 
     def reorient_portrait(self):
         logging.debug("Passing REORIENT [POTRAIT]")
-        self.adb.shell(
-            "settings put system accelerometer_rotation 0", device_id=self.deviceId
-        )
-        self.adb.shell("settings put system rotation 1", device_id=self.deviceId)
+        self.adb.shell("settings put system accelerometer_rotation 0",
+                       device_id=self.deviceId)
+        self.adb.shell("settings put system rotation 1",
+                       device_id=self.deviceId)
 
     def reorient_landscape(self):
         logging.debug("Passing REORIENT [LANDSCAPE]")
-        self.adb.shell(
-            "settings put system accelerometer_rotation 0", device_id=self.deviceId
-        )
-        self.adb.shell("settings put system rotation 1", device_id=self.deviceId)
+        self.adb.shell("settings put system accelerometer_rotation 0",
+                       device_id=self.deviceId)
+        self.adb.shell("settings put system rotation 1",
+                       device_id=self.deviceId)
 
     def expand_notifications(self):
         logging.debug("Passing NOTIF EXPAND")

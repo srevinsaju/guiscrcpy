@@ -30,8 +30,7 @@ from ..ux import Ui_ToolbarPanel
 
 
 class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
-    def __init__(self, ux_mapper=None, parent=None, frame=False,
-                 always_on_top=True):
+    def __init__(self, ux_mapper=None, parent=None, frame=False, always_on_top=True):
         """
         Side panel toolkit for guiscrcpy main window
         :param ux_mapper:
@@ -60,24 +59,27 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
 
     def init(self):
         if platform.system() != "Linux" or (
-                shutil.which('wmctrl') and
-                shutil.which('xdotool') and
-                platform.system() == "Linux"):
+            shutil.which("wmctrl")
+            and shutil.which("xdotool")
+            and platform.system() == "Linux"
+        ):
             self.clipD2PC.clicked.connect(self.ux.copy_devpc)
             self.clipPC2D.clicked.connect(self.ux.copy_pc2dev)
             self.fullscreenUI.clicked.connect(self.ux.fullscreen)
         else:
             # the tools do not exist on Linux. user has to manually install
             for button, helper in (
-                    (self.clipD2PC, 'Alt + C'),
-                    (self.clipPC2D, 'Alt + Shift + C'),
-                    (self.fullscreenUI, 'Alt + F')):
+                (self.clipD2PC, "Alt + C"),
+                (self.clipPC2D, "Alt + Shift + C"),
+                (self.fullscreenUI, "Alt + F"),
+            ):
                 button.setDisabled(True)
                 button.setToolTip(
                     'This function is disabled because "wmctrl"'
                     ' or "xdotool" is not found on your installation.'
-                    'Keyboard shortcut can be used instead'
-                    ': <b>{}</b>'.format(helper))
+                    "Keyboard shortcut can be used instead"
+                    ": <b>{}</b>".format(helper)
+                )
 
         self.back.clicked.connect(self.ux.key_back)
         self.screenfreeze.clicked.connect(self.quit_window)
@@ -117,14 +119,18 @@ class InterfaceToolkit(QMainWindow, Ui_ToolbarPanel):
             # This method checks if we are the last member of the windows
             # spawned and we ourselves are not a member of ourself by
             # checking the uuid generated on creation
-            if not instance.isHidden() \
-                    and instance.name != "swipe" and instance.uid != \
-                    self.uid:
+            if (
+                not instance.isHidden()
+                and instance.name != "swipe"
+                and instance.uid != self.uid
+            ):
                 self.hide()
                 break
         else:
             for instance in self.parent.child_windows:  # noqa
-                if instance.name == 'swipe' and instance.ux.get_sha() == \
-                        self.ux.get_sha():
+                if (
+                    instance.name == "swipe"
+                    and instance.ux.get_sha() == self.ux.get_sha()
+                ):
                     instance.hide()
             self.hide()

@@ -20,10 +20,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-from setuptools import setup
-from setuptools import find_packages
 import os
 import platform
+
+from setuptools import find_packages, setup
 
 try:
     this_directory = os.path.abspath(os.path.dirname(__file__))

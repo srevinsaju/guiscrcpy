@@ -4,13 +4,13 @@ summary: An opensource GUI for android screen mirroring
 description: |
   A full fledged GUI integration for the award winning open source scrcpy, for 
   Android Screen mirroring
-grade: stable 
-confinement: strict 
+grade: stable
+confinement: strict
 
 base: core18
 
 architectures:
-- build-on: amd64
+  - build-on: amd64
 
 apps:
   scrcpy:
@@ -21,85 +21,83 @@ apps:
       LIBGL_DRIVERS_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri"
       SCRCPY_SERVER_PATH: "$SNAP/usr/local/share/scrcpy/scrcpy-server"
 
-  adb:  
+  adb:
     command: usr/bin/adb
     environment:
       LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/android/"
 
   guiscrcpy:
     command: bin/guiscrcpy
-    environment: 
+    environment:
       PATH: $SNAP/lib:$SNAP/usr/lib:$SNAP/bin:$SNAP/usr/bin:$SNAP/usr/local/bin:$PATH
       GUISCRCPY_SCRCPY: "$SNAP/usr/local/bin/scrcpy"
       GUISCRCPY_ADB: "$SNAP/usr/bin/adb"
       SCRCPY_SERVER_PATH: "$SNAP/usr/local/share/scrcpy/scrcpy-server"
       GUISCRCPY_SNAP: "TRUE"
     command-chain: &command-chain-common
-    - bin/debian-multiarch-triplet-provider-launch
-    - bin/classic-launch
-    - bin/desktop-launch
-    - bin/guiscrcpy
+      - bin/debian-multiarch-triplet-provider-launch
+      - bin/classic-launch
+      - bin/desktop-launch
+      - bin/guiscrcpy
     desktop: share/applications/guiscrcpy.desktop
 
 parts:
-
   debian-multiarch-triplet-provider-launch:
     plugin: nil
     stage-snaps:
-    - debian-multiarch-triplet-provider-launch
+      - debian-multiarch-triplet-provider-launch
 
   classic-launch:
     plugin: nil
     stage-snaps:
-    - classic-launch
+      - classic-launch
 
   # Remote part for support of various desktop technologies
   # Refer: https://github.com/ubuntu/snapcraft-desktop-helpers/blob/master/snapcraft.yaml
   desktop-qt5:
     build-packages:
-    - build-essential
-    - qtbase5-dev
-    - dpkg-dev
+      - build-essential
+      - qtbase5-dev
+      - dpkg-dev
     make-parameters:
-    - FLAVOR=qt5
+      - FLAVOR=qt5
     plugin: make
     source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
     source-subdir: qt
     stage-packages:
-    - libxkbcommon0
-    - ttf-ubuntu-font-family
-    - dmz-cursor-theme
-    - light-themes
-    - adwaita-icon-theme
-    - gnome-themes-standard
-    - shared-mime-info
-    - libqt5gui5
-    - libgdk-pixbuf2.0-0
-    - libqt5svg5
-    - try:
-      - appmenu-qt5
-    - locales-all
-    - xdg-user-dirs
-    - fcitx-frontend-qt5
+      - libxkbcommon0
+      - ttf-ubuntu-font-family
+      - dmz-cursor-theme
+      - light-themes
+      - adwaita-icon-theme
+      - gnome-themes-standard
+      - shared-mime-info
+      - libqt5gui5
+      - libgdk-pixbuf2.0-0
+      - libqt5svg5
+      - try:
+          - appmenu-qt5
+      - locales-all
+      - xdg-user-dirs
+      - fcitx-frontend-qt5
 
   scrcpy-server:
     plugin: nil
-    override-pull:
-      wget https://github.com/Genymobile/scrcpy/releases/download/v1.15.1/scrcpy-server-v1.15.1
+    override-pull: wget https://github.com/Genymobile/scrcpy/releases/download/v1.15.1/scrcpy-server-v1.15.1
     override-build: |
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/
       cp scrcpy-server-v1.15.1 $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/scrcpy-server
   scrcpy:
     source: https://github.com/Genymobile/scrcpy.git
     plugin: meson
-    meson-parameters: 
+    meson-parameters:
       - --buildtype=release
-      - --strip 
+      - --strip
       - -Db_lto=true
       - -Dcompile_server=false
     override-pull: |
-        snapcraftctl pull
-        snapcraftctl set-version $(git describe --tag)      
+      snapcraftctl pull
+      snapcraftctl set-version $(git describe --tag)
     build-packages:
       - make
       - gcc
@@ -119,7 +117,8 @@ parts:
       - adb
 
   guiscrcpy:
-    after: [desktop-qt5, classic-launch, debian-multiarch-triplet-provider-launch]
+    after:
+      [desktop-qt5, classic-launch, debian-multiarch-triplet-provider-launch]
     # See 'snapcraft plugins'
     plugin: python
     python-version: python3
@@ -140,6 +139,5 @@ plugs:
   adb:
     interface: content
     target: $SNAP/usr/bin
-
 # some parts are inherited from https://github.com/sisco311/scrcpy-snap/blob/master/snap/snapcraft.yaml
-# Thanks @sisco311 for the amazing snap!!    
+# Thanks @sisco311 for the amazing snap!!

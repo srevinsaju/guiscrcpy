@@ -16,13 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import sys
 import hashlib
 import logging
 import os
+import shlex
 import shutil
 import subprocess
-import shlex
+import sys
+
 from guiscrcpy.platform.platform import System
 
 if System.system() == "Windows":

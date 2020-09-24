@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
+import platform
 import shutil
 import uuid
-import platform
 
 from qtpy import QtCore
 from qtpy.QtCore import QPoint

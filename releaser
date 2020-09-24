@@ -41,10 +41,11 @@ Categories=Utility;Development;
 StartupWMClass=UGENE
 """
 
-
 DATA_FILES_MANIPULATE = {
-    "setup.py": "",
-    "setup.py-manylinux2014-scrcpy": """
+    "setup.py":
+    "",
+    "setup.py-manylinux2014-scrcpy":
+    """
 
 def get_scrcpy_libs():
     libs = []
@@ -92,14 +93,12 @@ def gen_version():
             git_version = "{}".format(raw_version[0])
         elif len(raw_version) == 2:
             # Release Candidate
-            git_version = "{major}.post{minor}".format(
-                major=raw_version[0], minor=raw_version[1]
-            )
+            git_version = "{major}.post{minor}".format(major=raw_version[0],
+                                                       minor=raw_version[1])
         else:
             # Revision Dev
             git_version = "{major}.post{minor}.dev".format(
-                major=raw_version[0], minor=raw_version[1]
-            )
+                major=raw_version[0], minor=raw_version[1])
     return git_version
 
 
@@ -186,7 +185,7 @@ VERSION = "{version}"
 # this was because GitPython created a lot of problems
 # hardcoding the information before each release, solved the problem
 
-for setup in ("setup.py",):
+for setup in ("setup.py", ):
     with open(setup, "w") as w:
         w.write(
             setupfile.format(
@@ -195,23 +194,20 @@ for setup in ("setup.py",):
                 entry_points=CONSOLE_SCRIPTS,
                 extras=EXTRAS_REQUIRE,
                 DATA_FILE_MANIPULATE=DATA_FILES_MANIPULATE[setup],
-            )
-        )
+            ))
 
 with open("guiscrcpy/version.py", "w") as w:
-    w.write(
-        VERSION_FILE.format(
-            COPYRIGHT=COPYRIGHT,
-            version=v,
-        )
-    )
-
+    w.write(VERSION_FILE.format(
+        COPYRIGHT=COPYRIGHT,
+        version=v,
+    ))
 
 with open("guiscrcpy.desktop", "w") as w:
     w.write(DESKTOP_FILE.format(v=v, icon_path="guiscrcpy"))
 
 with open("snap/gui/guiscrcpy.desktop", "w") as w:
-    w.write(DESKTOP_FILE.format(v=v, icon_path="${SNAP}/meta/gui/guiscrcpy.png"))
+    w.write(
+        DESKTOP_FILE.format(v=v, icon_path="${SNAP}/meta/gui/guiscrcpy.png"))
 
 with open("snap/local/snapcraft.yaml", "r") as r:
     SNAPCRAFT_FILE = r.read()

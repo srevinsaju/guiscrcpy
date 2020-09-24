@@ -27,7 +27,8 @@ from setuptools import setup
 
 try:
     this_directory = os.path.abspath(os.path.dirname(__file__))
-    with open(os.path.join(this_directory, "README.md"), encoding="utf-8") as f:
+    with open(os.path.join(this_directory, "README.md"),
+              encoding="utf-8") as f:
         long_description = f.read()
 except FileNotFoundError:
     long_description = "Open Source Android Screen Mirroring System by @srevinsaju"
@@ -54,13 +55,17 @@ setup(
     author_email="srevin03@gmail.com",
     packages=find_packages(),
     data_files=data_files,
-    extras_require={"pyqt5": "PyQt5", "pyside2": "PySide2"},
+    extras_require={
+        "pyqt5": "PyQt5",
+        "pyside2": "PySide2"
+    },
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
     include_package_data=True,
     install_requires=requirements,
     scripts=["scripts/guiscrcpy"],
-    entry_points={"console_scripts": ["guiscrcpy = guiscrcpy.cli:cli"]},  # noqa: E501
+    entry_points={"console_scripts":
+                  ["guiscrcpy = guiscrcpy.cli:cli"]},  # noqa: E501
     classifiers=[
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3.7",

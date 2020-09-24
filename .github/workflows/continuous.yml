@@ -228,6 +228,10 @@ jobs:
   Windows:
     name: Windows
     runs-on: windows-latest
+    strategy: 
+      matrix:
+        arch: ['x64', 'x86']
+        qt: ['PyQt5', 'PySide2']
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -236,7 +240,14 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: '3.8'
-        
+          architecture: ${{ matrix.arch }}
+
+      - name: Patch PySide2
+        if: matrix.qt == 'PySide2'
+        run: |
+          sed -i 's,PyQt5,PySide2,g' requirements.txt
+          sed -i 's,PyQt5,PySide2,g' setup.py
+
       - name: Install dependencies
         run: |
           pip3 install --upgrade pip
@@ -249,55 +260,19 @@ jobs:
       - name: Create .exe
         run: |
           echo "from guiscrcpy.cli import cli; cli()" > entry.py
-          python -m PyInstaller -n guiscrcpy .\entry.py --onefile -i guiscrcpy\ui\icons\guiscrcpy_logo_SRj_icon.ico
+          python -m PyInstaller -n guiscrcpy-${{ matrix.qt }}-${{ matrix.arch }} .\entry.py --onefile -i guiscrcpy\ui\icons\guiscrcpy_logo_SRj_icon.ico
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
         with:
           # Artifact name
-          name: guiscrcpy-continuous.exe
+          name: guiscrcpy-${{ matrix.qt }}-${{ matrix.arch }}-continuous.exe
           # Directory containing files to upload
-          path: dist/guiscrcpy.exe
-
-
-  Windows-PySide2:
-    name: Windows-PySide2
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-
-      - uses: actions/setup-python@v1
-        with:
-          python-version: '3.8'
-
-      - name: Install dependencies
-        run: |
-          sed -i 's,PyQt5,PySide2,g' requirements.txt
-          sed -i 's,PyQt5,PySide2,g' setup.py
-          pip3 install --upgrade pip
-          pip3 install --upgrade setuptools wheel
-          pip3 install PyInstaller
-          pip3 install . 
-          echo Done
-          
-      - name: Create .exe
-        run: |
-          echo "from guiscrcpy.cli import cli; cli()" > entry.py
-          python -m PyInstaller -n guiscrcpy .\entry.py --onefile -i guiscrcpy\ui\icons\guiscrcpy_logo_SRj_icon.ico
-          mv dist/guiscrcpy.exe dist/guiscrcpy-pyside2.exe
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          # Artifact name
-          name: guiscrcpy-pyside2-continuous.exe
-          # Directory containing files to upload
-          path: dist/guiscrcpy-pyside2.exe
+          path: dist
 
 
   Release:
-    needs: [Windows, AppImage, Wheel, Windows-PySide2, AppImage-Standalone]
+    needs: [Windows, AppImage, Wheel, Windows, AppImage-Standalone]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -306,10 +281,16 @@ jobs:
     steps:
     - uses: actions/download-artifact@v1
       with:
-        name: guiscrcpy-continuous.exe
+        name: guiscrcpy-PyQt5-x86-continuous.exe
     - uses: actions/download-artifact@v1
       with:
-        name: guiscrcpy-pyside2-continuous.exe
+        name: guiscrcpy-PyQt5-x64-continuous.exe
+    - uses: actions/download-artifact@v1
+      with:
+        name: guiscrcpy-PySide2-x86-continuous.exe
+    - uses: actions/download-artifact@v1
+      with:
+        name: guiscrcpy-PySide2-x64-continuous.exe
     - uses: actions/download-artifact@v1
       with:
         name: guiscrcpy-continuous-none-any-py3.whl
@@ -327,11 +308,12 @@ jobs:
         automatic_release_tag: continuous
         title: continuous
         files: |
-          guiscrcpy-continuous.exe
-          guiscrcpy-pyside2-continuous.exe
-          guiscrcpy-PySide2-continuous-x86_64.AppImage
-          guiscrcpy-continuous-x86_64.AppImage
+          guiscrcpy-PyQt5-x86-continuous.exe
+          guiscrcpy-PyQt5-x64-continuous.exe
+          guiscrcpy-PySide2-x86-continuous.exe
+          guiscrcpy-PySide2-x64-continuous.exe
           guiscrcpy-continuous-none-any-py3.whl
+          guiscrcpy-continuous-x86_64.AppImage
           guiscrcpy-min-continuous-x86_64.AppImage
- 
+
         repo_token: ${{ secrets.GITHUB_TOKEN }}

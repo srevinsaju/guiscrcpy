@@ -236,10 +236,10 @@ jobs:
         name: guiscrcpy-continuous-none-any-py3.whl
     - uses: actions/download-artifact@v1
       with:
-        name: guiscrcpy-continuous-x86_64.AppImage
+        name: guiscrcpy-r-continuous-x86_64.AppImage
     - uses: actions/download-artifact@v1
       with:
-        name: guiscrcpy-min-continuous-x86_64.AppImage
+        name: guiscrcpy-m-continuous-x86_64.AppImage
 
     - name: Detect Release type
       if: github.ref == 'refs/heads/master' && startsWith(github.ref, 'refs/tags/v') != true

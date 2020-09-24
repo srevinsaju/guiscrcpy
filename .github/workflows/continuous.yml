@@ -125,17 +125,12 @@ jobs:
           export GUISCRCPY_VERSION="$(cat setup.py | grep 'version=' | grep -P -o '\d\.\d\.\d+').dev"
           export GUISCRCPY_GLIB_VERSION="glibc$(ldd --version | grep 'ldd ' | grep -o ').[0-9].[0-9][0-9]' | grep -o '[0-9].[0-9][0-9]')"
           export GUISCRCPY_MACHINE="$(uname -m)"
-          export GUISCRCPY_TYPE="${{ matrix.type }}"
-          if [ "${{ matrix.type }}" == "m" ]; then
-            export GUISCRCPY_TYPE_EXPANDED="min-"
-          else
-            export GUISCRCPY_TYPE_EXPANDED=""
-          fi
+          export GUISCRCPY_TYPE="r"
           ./appimagetool*.AppImage squashfs-root -n \
             -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-*.$GUISCRCPY_TYPE.*.AppImage.zsync' \
-            guiscrcpy-$GUISCRCPY_TYPE_EXPANDED$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage
+            guiscrcpy-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage
           mkdir dist
-          mv guiscrcpy-$GUISCRCPY_TYPE_EXPANDED$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage* dist/.
+          mv guiscrcpy-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage* dist/.
 
       - name: Install Destop Environment
           echo "adapted from https://github.com/AppImage/appimage.github.io/blob/master/.travis.yml"

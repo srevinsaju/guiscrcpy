@@ -212,7 +212,7 @@ jobs:
 
 
   Release:
-    needs: [Windows, AppImage, Wheel, Windows, AppImage-Standalone]
+    needs: [Windows, AppImage, Wheel, Windows]
     runs-on: ubuntu-latest
     strategy:
       matrix:

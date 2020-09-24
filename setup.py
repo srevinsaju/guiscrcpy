@@ -19,11 +19,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
-
 import os
 import platform
 
-from setuptools import find_packages, setup
+from setuptools import find_packages
+from setuptools import setup
 
 try:
     this_directory = os.path.abspath(os.path.dirname(__file__))

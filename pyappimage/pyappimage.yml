@@ -54,5 +54,3 @@ ignore-binaries:
   - PySide2/qml
   - PySide2/QtNetwork*
   - PySide2/QtQml*
-
-

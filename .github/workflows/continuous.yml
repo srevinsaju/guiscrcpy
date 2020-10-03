@@ -246,14 +246,32 @@ jobs:
       run: |
         echo "::set-env release_tag=continuous"
 
+    - name: PreRelease
+      uses: marvinpinto/action-automatic-releases@latest
+      if: github.ref == 'refs/heads/master' && '!startsWith(github.ref, "refs/tags/v")'
+      with:
+        prerelease: true
+        draft: false
+        automatic_release_tag: continuous
+        title: continuous
+        files: |
+          guiscrcpy-PyQt5-x86-continuous.exe
+          guiscrcpy-PyQt5-x64-continuous.exe
+          guiscrcpy-PySide2-x86-continuous.exe
+          guiscrcpy-PySide2-x64-continuous.exe
+          guiscrcpy-continuous-none-any-py3.whl
+          guiscrcpy-m-continuous-x86_64.AppImage
+          guiscrcpy-r-continuous-x86_64.AppImage
+
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Release
       uses: marvinpinto/action-automatic-releases@latest
-      if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v')
+      if: startsWith(github.ref, "refs/tags/v")
       with:
-        prerelease: "!startsWith(github.ref, 'refs/tags/v')"
-        draft: "startsWith(github.ref, 'refs/tags/v')"
-        automatic_release_tag: "${{ env.release_tag }} || null"
-        title: "${{ env.release_tag }} || null "
+        prerelease: false
+        draft: true
+        automatic_release_tag: true
         files: |
           guiscrcpy-PyQt5-x86-continuous.exe
           guiscrcpy-PyQt5-x64-continuous.exe

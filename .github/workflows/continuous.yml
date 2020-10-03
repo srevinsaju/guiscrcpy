@@ -251,9 +251,9 @@ jobs:
       if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v')
       with:
         prerelease: "!startsWith(github.ref, 'refs/tags/v')"
-        draft: startsWith(github.ref, 'refs/tags/v') 
-        automatic_release_tag: ${{ env.release_tag }} || null
-        title: ${{ env.release_tag }} || null 
+        draft: "startsWith(github.ref, 'refs/tags/v')"
+        automatic_release_tag: "${{ env.release_tag }} || null"
+        title: "${{ env.release_tag }} || null "
         files: |
           guiscrcpy-PyQt5-x86-continuous.exe
           guiscrcpy-PyQt5-x64-continuous.exe

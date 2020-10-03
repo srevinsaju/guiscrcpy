@@ -2,8 +2,7 @@
 import sys
 from os import path
 
-COPYRIGHT = \
-    """
+COPYRIGHT = """
 GUISCRCPY by srevinsaju
 Get it on : https://github.com/srevinsaju/guiscrcpy
 Licensed under GNU Public License
@@ -25,13 +24,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 RAW_VERSION = "4.0"
 
 CONSOLE_SCRIPTS = {
-    'console_scripts': [
-        'guiscrcpy = guiscrcpy.cli:cli',
+    "console_scripts": [
+        "guiscrcpy = guiscrcpy.cli:cli",
     ]
 }
 
-DESKTOP_FILE = \
-"""[Desktop Entry]
+DESKTOP_FILE = """[Desktop Entry]
 Version={v}
 Name=guiscrcpy
 GenericName=guiscrcpy
@@ -43,10 +41,11 @@ Categories=Utility;Development;
 StartupWMClass=UGENE
 """
 
-
 DATA_FILES_MANIPULATE = {
-    "setup.py": "",
-    "setup.py-manylinux2014-scrcpy": """
+    "setup.py":
+    "",
+    "setup.py-manylinux2014-scrcpy":
+    """
 
 def get_scrcpy_libs():
     libs = []
@@ -61,7 +60,7 @@ and os.path.exists("lib"):
         ('lib', get_scrcpy_libs() ),
         ('bin', ['bin/scrcpy', 'bin/adb'])
     ])
-    """
+    """,
 }
 
 EXTRAS_REQUIRE = {"pyqt5": "PyQt5", "pyside2": "PySide2"}
@@ -74,10 +73,11 @@ def gen_version():
     :return:
     """
     import git
+
     repo = git.Repo(search_parent_directories=True)
     ver = repo.git.describe("--tags")
-    raw_version = ver.split('-')
-    if 'release' in sys.argv:
+    raw_version = ver.split("-")
+    if "release" in sys.argv:
         print("Checking out guiscrcpy to release")
         if "releaser" in sys.argv[0] and len(sys.argv) >= 3:
             pass
@@ -93,8 +93,8 @@ def gen_version():
             git_version = "{}".format(raw_version[0])
         elif len(raw_version) == 2:
             # Release Candidate
-            git_version = "{major}.post{minor}".format(
-                major=raw_version[0], minor=raw_version[1])
+            git_version = "{major}.post{minor}".format(major=raw_version[0],
+                                                       minor=raw_version[1])
         else:
             # Revision Dev
             git_version = "{major}.post{minor}.dev".format(
@@ -110,8 +110,7 @@ except Exception as e:
 
 # Attach requirements
 
-setupfile = \
-    '''#!/usr/bin/env python3
+setupfile = '''#!/usr/bin/env python3
 """
 {COPYRIGHT}
 """
@@ -134,7 +133,7 @@ except FileNotFoundError:
 
 requirements = ['PyQt5>=5.14,<5.16', 'pynput', 'qtpy', 'click', 'colorama']
 if platform.system() == 'Windows':
-    requirements.extend(['pywin32', 'psutil'])
+    requirements.extend(['pywin32', 'psutil', 'win32com'])
 elif platform.system() == 'Linux':
     requirements.extend(['psutil', 'cairosvg'])
 
@@ -144,9 +143,9 @@ data_files = [
     ]
 {DATA_FILE_MANIPULATE}
 setup(
-    name='guiscrcpy',
-    version='{version}',
-    description='An Open Source - Fast - Android Screen Mirroring system.',
+    name="guiscrcpy",
+    version="{version}",
+    description="An Open Source - Fast - Android Screen Mirroring system.",
     long_description=long_description,
     long_description_content_type='text/markdown',
     license='GPL v3',
@@ -174,13 +173,12 @@ setup(
 )
 '''
 
-VERSION_FILE = \
-    '''#!/usr/bin/env python3
+VERSION_FILE = '''#!/usr/bin/env python3
 """
 {COPYRIGHT}
 """
 
-VERSION = '{version}'
+VERSION = "{version}"
 '''
 
 # Create a new setup.py with all the information raw.
@@ -188,34 +186,33 @@ VERSION = '{version}'
 # hardcoding the information before each release, solved the problem
 
 for setup in ("setup.py", ):
-    with open(setup, 'w') as w:
-        w.write(setupfile.format(
-            COPYRIGHT=COPYRIGHT,
-            version=v,
-            entry_points=CONSOLE_SCRIPTS,
-            extras=EXTRAS_REQUIRE,
-            DATA_FILE_MANIPULATE=DATA_FILES_MANIPULATE[setup]
-        ))
+    with open(setup, "w") as w:
+        w.write(
+            setupfile.format(
+                COPYRIGHT=COPYRIGHT,
+                version=v,
+                entry_points=CONSOLE_SCRIPTS,
+                extras=EXTRAS_REQUIRE,
+                DATA_FILE_MANIPULATE=DATA_FILES_MANIPULATE[setup],
+            ))
 
-with open("guiscrcpy/version.py", 'w') as w:
+with open("guiscrcpy/version.py", "w") as w:
     w.write(VERSION_FILE.format(
         COPYRIGHT=COPYRIGHT,
         version=v,
     ))
 
+with open("guiscrcpy.desktop", "w") as w:
+    w.write(DESKTOP_FILE.format(v=v, icon_path="guiscrcpy"))
 
-with open('guiscrcpy.desktop', 'w') as w:
-    w.write(DESKTOP_FILE.format(v=v, icon_path='guiscrcpy'))
+with open("snap/gui/guiscrcpy.desktop", "w") as w:
+    w.write(
+        DESKTOP_FILE.format(v=v, icon_path="${SNAP}/meta/gui/guiscrcpy.png"))
 
-with open('snap/gui/guiscrcpy.desktop', 'w') as w:
-    w.write(DESKTOP_FILE.format(
-        v=v, icon_path='${SNAP}/meta/gui/guiscrcpy.png'
-    ))
-
-with open('snap/local/snapcraft.yaml', 'r') as r:
+with open("snap/local/snapcraft.yaml", "r") as r:
     SNAPCRAFT_FILE = r.read()
 
-with open('snap/snapcraft.yaml', 'w') as w:
+with open("snap/snapcraft.yaml", "w") as w:
     w.write("name: guiscrcpy\n")
     w.write("version: {}\n".format(v))
     w.write(SNAPCRAFT_FILE)

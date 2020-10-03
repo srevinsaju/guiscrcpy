@@ -1,5 +1,8 @@
 name: guiscrcpy
 entrypoint: guiscrcpy.cli:cli
+description: |
+  Open Source Android Screen Mirroring GUI for scrcpy
+
 categories:
   - Utility
 updateinformation: gh-releases-zsync|srevinsaju|guiscrcpy|latest|guiscrcpy*.AppImage.zsync
@@ -51,5 +54,3 @@ ignore-binaries:
   - PySide2/qml
   - PySide2/QtNetwork*
   - PySide2/QtQml*
-
-

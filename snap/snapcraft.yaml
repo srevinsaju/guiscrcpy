@@ -1,5 +1,5 @@
 name: guiscrcpy
-version: 4.7.2
+version: v4.7.3
 summary: An opensource GUI for android screen mirroring
 description: |
   A full fledged GUI integration for the award winning open source scrcpy, for 

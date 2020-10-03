@@ -248,7 +248,7 @@ jobs:
 
     - name: PreRelease
       uses: marvinpinto/action-automatic-releases@latest
-      if: github.ref == 'refs/heads/master' && '!startsWith(github.ref, "refs/tags/v")'
+      if: github.ref == 'refs/heads/master' && startsWith(github.ref, 'refs/tags/') != true
       with:
         prerelease: true
         draft: false

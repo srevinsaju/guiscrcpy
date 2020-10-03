@@ -21,6 +21,14 @@ from . import __doc__ as lic
 colorama.init()
 
 
+# srevin: bad snap!
+_sys_argv = list()
+for arg in sys.argv:
+    if not arg.startswith('/snap'):
+        _sys_argv.append(arg)
+sys.argv = _sys_argv
+
+
 def show_version(ctx, param, value):  # noqa:
     """Prints the version of the utility"""
     if not value or ctx.resilient_parsing:

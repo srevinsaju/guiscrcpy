@@ -38,7 +38,7 @@ except FileNotFoundError:
 
 requirements = ['PyQt5>=5.14,<5.16', 'pynput', 'qtpy', 'click', 'colorama']
 if platform.system() == 'Windows':
-    requirements.extend(['pywin32', 'psutil', 'win32com'])
+    requirements.extend(['pywin32', 'psutil'])
 elif platform.system() == 'Linux':
     requirements.extend(['psutil', 'cairosvg'])
 

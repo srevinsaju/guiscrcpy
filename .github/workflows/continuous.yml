@@ -231,8 +231,9 @@ jobs:
       - name: Patch PySide2
         if: matrix.qt == 'PySide2'
         run: |
-          sed -i 's,PyQt5,PySide2,g' requirements.txt
-          sed -i 's,PyQt5,PySide2,g' setup.py
+          brew install gnu-sed
+          gsed -i 's,PyQt5,PySide2,g' requirements.txt
+          gsed -i 's,PyQt5,PySide2,g' setup.py
 
       - name: Install dependencies
         run: |

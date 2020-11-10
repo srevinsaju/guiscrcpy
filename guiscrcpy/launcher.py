@@ -176,12 +176,6 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         except Exception as err:
             log(f"Exception: flaglineedit.text(config[extra]) {err}")
 
-        # set swipe instance, bottom instance and
-        # side instance as enabled by default
-        self.check_swipe_panel.setChecked(True)
-        self.check_bottom_panel.setChecked(True)
-        self.check_side_panel.setChecked(True)
-
         self.quit.clicked.connect(self.quit_window)
         self.dimensionText.setText("DEFAULT")
         config['bitrate'] = int(self.dial.value())

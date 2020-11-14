@@ -20,4 +20,4 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-VERSION = "v4.7.2-42-gc70fe71"
+VERSION = "v4.7.4"

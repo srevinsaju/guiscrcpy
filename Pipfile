@@ -9,12 +9,13 @@ GitPython = "*"
 [packages]
 fonttools = "*"
 psutil = "*"
-pynput = "*"
+pynput = "==1.6.8"
 pystray = "*"
 PyQt5 = "~=5.15"
 qtpy = "*"
 cairosvg = "~=2.4.2"
 click = "*"
+colorama = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"

@@ -36,25 +36,35 @@ final_pos = [0.0, 0.0]
 json_file = 'guiscrcpy.mapper.json'
 
 
+def log(category, message):
+    print("[{}]".format(str(category).upper()), message)
+
+
 class Mapper:
     def __init__(self, device_id, adb, config_path=None):
         self.config = dict()
         self._device_id = device_id
         self.app = None
         self.adb = adb
+        log("mapper", "Waiting for device...")
         self.adb.command('wait-for-any-device')
+        log("mapper", "Device connection established...")
         self.window = None
         self.guiscrcpy_mapper_json = config_path
         self.dimensions = adb.get_dimensions(device_id)
-        if self.check_orientation() == 1:
-            # reverse the detected dimensions.
-            # possibly the device is landscape / not the default
-            # orientation as detected by Android Window Manager
-            self.dimensions = self.dimensions[::-1]
+        log("mapper", "Checking device orientation")
+        try:
+            if self.check_orientation() == 1:
+                # reverse the detected dimensions.
+                # possibly the device is landscape / not the default
+                # orientation as detected by Android Window Manager
+                self.dimensions = self.dimensions[::-1]
+        except subprocess.TimeoutExpired:
+            log("mapper", "Failed to detect orientation. fallback portait")
 
     def check_orientation(self):
         proc = self.adb.shell("dumpsys input")
-        e_code = proc.wait(500)
+        e_code = proc.wait(5)
         if e_code != 0:
             # process failed
             raise AdbRuntimeError(

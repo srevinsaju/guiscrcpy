@@ -20,4 +20,4 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-VERSION = "v4.7.4"
+VERSION = "4.0.x.src.dev"

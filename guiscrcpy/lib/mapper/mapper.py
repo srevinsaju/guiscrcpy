@@ -21,6 +21,7 @@ import json
 import os
 import time
 import uuid
+import subprocess
 
 from qtpy import QtWidgets
 from qtpy.QtCore import QThread

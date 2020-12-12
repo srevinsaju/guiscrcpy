@@ -60,12 +60,13 @@ class Mapper:
                 # possibly the device is landscape / not the default
                 # orientation as detected by Android Window Manager
                 self.dimensions = self.dimensions[::-1]
-        except subprocess.TimeoutExpired:
-            log("mapper", "Failed to detect orientation. fallback portait")
-
     def check_orientation(self):
         proc = self.adb.shell("dumpsys input")
-        e_code = proc.wait(5)
+        try:
+            e_code = proc.wait(5)
+        except subprocess.TimeoutExpired:
+            log("mapper", "Failed to detect orientation instantly. Expect"
+                "invalid orientations.")
         if e_code != 0:
             # process failed
             raise AdbRuntimeError(

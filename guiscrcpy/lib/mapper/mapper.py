@@ -65,6 +65,7 @@ class Mapper:
         try:
             e_code = proc.wait(5)
         except subprocess.TimeoutExpired:
+            e_code = 0
             log("mapper", "Failed to detect orientation instantly. Expect"
                 "invalid orientations.")
         if e_code != 0:

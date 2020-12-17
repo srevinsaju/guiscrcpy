@@ -106,7 +106,7 @@ class AndroidDebugBridge:
                              "Make sure adb is installed accessible "
                              "from the terminal")
 
-    def get_target_android_version(device_id=None):
+    def get_target_android_version(self, device_id=None):
         api = 5
         _proc = self.shell("getprop ro.build.version.release", device_id=device_id)
         _ecode = _proc.wait(10)

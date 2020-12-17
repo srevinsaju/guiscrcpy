@@ -271,7 +271,6 @@ jobs:
       with:
         prerelease: false
         draft: true
-        automatic_release_tag: true
         files: |
           guiscrcpy-PyQt5-x86-continuous.exe
           guiscrcpy-PyQt5-x64-continuous.exe

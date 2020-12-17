@@ -72,7 +72,8 @@ class Mapper:
             # process failed
             raise AdbRuntimeError(
                 'adb failed with {ecode} when trying to '
-                'execute command `adb shell dumpsys input`'.format(ecode=e_code))
+                'execute command '
+                '`adb shell dumpsys input`'.format(ecode=e_code))
         out, err = proc.communicate()
         out, err = out.decode(), err.decode()
         if 'SurfaceOrientation' in out:

@@ -15,9 +15,7 @@ class Bridge:
         else:
             self.path = open_exe_name_dialog(None, self.name)
         if self.path is None:
-            raise FileNotFoundError(
-                f"Could not find '{self.name}' on $PATH."
-            )
+            raise FileNotFoundError(f"Could not find '{self.name}' on $PATH.")
         self.post_init()
 
     def post_init(self):
@@ -25,5 +23,3 @@ class Bridge:
 
     def get_path(self):
         return self.path
-
-

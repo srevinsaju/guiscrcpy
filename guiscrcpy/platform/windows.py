@@ -29,8 +29,7 @@ class Windows:
 
     @staticmethod
     def make_config():
-        path = os.path.expanduser(os.path.join(
-            "~", "AppData", "Local", "guiscrcpy"))
+        path = os.path.expanduser(os.path.join("~", "AppData", "Local", "guiscrcpy"))
         if not os.path.exists(path):
             try:
                 os.makedirs(path)
@@ -43,7 +42,7 @@ class Windows:
 
     @staticmethod
     def system():
-        return 'Windows'
+        return "Windows"
 
     def cfgpath(self):
         return self.make_config()
@@ -53,7 +52,7 @@ class Windows:
 
     @staticmethod
     def paths():
-        return ['bin']
+        return ["bin"]
 
     @staticmethod
     def install_fonts():

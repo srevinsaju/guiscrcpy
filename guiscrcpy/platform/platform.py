@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import logging
 import platform
 
-if platform.system() == 'Windows':
+if platform.system() == "Windows":
     # Windows OS > 7
     from guiscrcpy.platform.windows import Windows as System
 elif platform.system() == "Linux":

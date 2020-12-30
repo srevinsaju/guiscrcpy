@@ -18,9 +18,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import os
+
 # flake8: noqa
 
-__QT_INSTANCE = os.getenv('QT_API', False)
+__QT_INSTANCE = os.getenv("QT_API", False)
 
 if __QT_INSTANCE and __QT_INSTANCE in ("pyside2", "pyqt5"):
     if __QT_INSTANCE == "pyside2":

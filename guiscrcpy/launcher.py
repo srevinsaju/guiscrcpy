@@ -75,6 +75,7 @@ environment = platform.System()
 if environment.system() == "Linux":
     try:
         from cairosvg import svg2png  # noqa:
+
         has_cairo = True
     except Exception as e:
         print("Failed to load cairo:", e)
@@ -90,13 +91,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
     # noinspection PyArgumentList
     def __init__(
-            self,
-            config_manager: InterfaceConfig,
-            adb: AndroidDebugBridge,
-            scrcpy: ScrcpyBridge,
-            force_window_frame: bool = False,
-            panels_not_always_on_top: bool = False,
-            debug_no_scrcpy: bool = False
+        self,
+        config_manager: InterfaceConfig,
+        adb: AndroidDebugBridge,
+        scrcpy: ScrcpyBridge,
+        force_window_frame: bool = False,
+        panels_not_always_on_top: bool = False,
+        debug_no_scrcpy: bool = False,
     ):
         QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
@@ -118,48 +119,50 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.side_instance = None
         self.child_windows = list()
         self.options = ""
-        log("Options received by class are : {} {} {} {} {} ".format(
-            config['bitrate'],
-            config['dimension'],
-            config['swtouches'],
-            config['dispRO'],
-            config['fullscreen'],
-        ))
+        log(
+            "Options received by class are : {} {} {} {} {} ".format(
+                config["bitrate"],
+                config["dimension"],
+                config["swtouches"],
+                config["dispRO"],
+                config["fullscreen"],
+            )
+        )
         # ====================================================================
         # Rotation; read config, update UI
         self.device_rotation.setCurrentIndex(config.get("rotation", 0))
-        self.dial.setValue(int(config['bitrate']))
-        if config['swtouches']:
+        self.dial.setValue(int(config["bitrate"]))
+        if config["swtouches"]:
             self.showTouches.setChecked(True)
         else:
             self.showTouches.setChecked(False)
-        if config['dispRO']:
+        if config["dispRO"]:
             self.displayForceOn.setChecked(True)
         else:
             self.displayForceOn.setChecked(False)
 
         # panels
-        if config['panels'].get('swipe'):
+        if config["panels"].get("swipe"):
             self.check_swipe_panel.setChecked(True)
         else:
             self.check_swipe_panel.setChecked(False)
-        if config['panels'].get('tookit'):
+        if config["panels"].get("tookit"):
             self.check_side_panel.setChecked(True)
         else:
             self.check_side_panel.setChecked(False)
-        if config['panels'].get('bottom'):
+        if config["panels"].get("bottom"):
             self.check_bottom_panel.setChecked(True)
         else:
             self.check_bottom_panel.setChecked(False)
 
         # dimension
-        if config['dimension'] is not None:
+        if config["dimension"] is not None:
             self.dimensionDefaultCheckbox.setChecked(False)
             try:
-                self.dimensionSlider.setValue(config['dimension'])
+                self.dimensionSlider.setValue(config["dimension"])
             except TypeError:
                 self.dimensionDefaultCheckbox.setChecked(True)
-        if config['fullscreen']:
+        if config["fullscreen"]:
             self.fullscreen.setChecked(True)
         else:
             self.fullscreen.setChecked(False)
@@ -171,8 +174,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.display_public_message("SCRCPY SERVER NOT RUNNING")
 
         # CONNECT DIMENSION CHECK BOX TO STATE CHANGE
-        self.dimensionDefaultCheckbox.stateChanged.connect(
-            self.__dimension_change_cb)
+        self.dimensionDefaultCheckbox.stateChanged.connect(self.__dimension_change_cb)
         self.build_label.setText("Build {} by srevinsaju".format(VERSION))
 
         # DIAL CTRL GRP
@@ -183,15 +185,15 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # MAIN EXECUTE ACTION
         self.executeaction.clicked.connect(self.start_act)
         try:
-            if config['extra']:
-                self.flaglineedit.setText(config['extra'])
+            if config["extra"]:
+                self.flaglineedit.setText(config["extra"])
         except Exception as err:
             log(f"Exception: flaglineedit.text(config[extra]) {err}")
 
         self.quit.clicked.connect(self.quit_window)
         self.dimensionText.setText("DEFAULT")
-        config['bitrate'] = int(self.dial.value())
-        self.bitrateText.setText(" " + str(config['bitrate']) + "KB/s")
+        config["bitrate"] = int(self.dial.value())
+        self.bitrateText.setText(" " + str(config["bitrate"]) + "KB/s")
         self.pushButton.setText("RESET")
         self.pushButton.clicked.connect(self.reset)
         self.abtgit.clicked.connect(self.launch_web_github)
@@ -201,11 +203,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.settings_button.clicked.connect(self.settings_mgr)
         # self.devices_view.itemChanged.connect(self.update_rotation_combo_cb)
         self.devices_view.itemClicked.connect(self.update_rotation_combo_cb)
-        self.refreshdevices.clicked.connect(
-            self.scan_devices_update_list_view
-        )
-        self.restart_adb_server.clicked.connect(
-            self.restart_adb_server_guiscrcpy)
+        self.refreshdevices.clicked.connect(self.scan_devices_update_list_view)
+        self.restart_adb_server.clicked.connect(self.restart_adb_server_guiscrcpy)
         self.devices_view.itemClicked.connect(self.more_options_device_view)
         self.devices_view.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.scan_config_devices_update_list_view()
@@ -241,38 +240,46 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         """
         if self.devices_view.currentItem():
             _, device_id = self.current_device_identifier()
-            _rotation = self.config.get('device').get(device_id, dict()).get(
-                'rotation', self.device_rotation.currentIndex())
+            _rotation = (
+                self.config.get("device")
+                .get(device_id, dict())
+                .get("rotation", self.device_rotation.currentIndex())
+            )
         else:
-            _rotation = self.config.get("rotation",
-                                        self.device_rotation.currentIndex())
+            _rotation = self.config.get("rotation", self.device_rotation.currentIndex())
         self.device_rotation.setCurrentIndex(_rotation)
 
     def settings_mgr(self):
         from guiscrcpy.ux.settings import InterfaceSettings
+
         self.sm = InterfaceSettings(self)
         self.sm.init()
         self.sm.show()
 
     def network_mgr(self):
         from guiscrcpy.ux.network import InterfaceNetwork
+
         self.nm = InterfaceNetwork(self.adb)
         self.nm.init()
         self.nm.show()
 
     def bootstrap_mapper(self):
-        mapper_config_path = os.path.join(self.config_manager.get_cfgpath(),
-                                          "guiscrcpy.mapper.json")
+        mapper_config_path = os.path.join(
+            self.config_manager.get_cfgpath(), "guiscrcpy.mapper.json"
+        )
         if os.path.exists(mapper_config_path):
             from guiscrcpy.lib.mapper.mapper import MapperAsync
+
             _, identifier = self.current_device_identifier()
-            self.mp = MapperAsync(self, device_id=identifier,
-                                  config_path=mapper_config_path,
-                                  adb=self.adb, initialize=False)
-            self.mp.start()
-            self.private_message_box_adb.setText(
-                "guiscrcpy-mapper has started"
+            self.mp = MapperAsync(
+                self,
+                device_id=identifier,
+                config_path=mapper_config_path,
+                adb=self.adb,
+                initialize=False,
             )
+            self.mp.start()
+            self.private_message_box_adb.setText("guiscrcpy-mapper has started")
         else:
             message_box = QMessageBox()
             message_box.setText(
@@ -287,15 +294,16 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             user_message_box_response = message_box.exec()
             values_devices_list = self.scan_devices_update_list_view()
             self.check_devices_status_and_select_first_if_only_one(
-                values_devices_list=values_devices_list)
+                values_devices_list=values_devices_list
+            )
             # TODO: allow enabling mapper from inside
             if user_message_box_response == QMessageBox.Yes:
-                self.private_message_box_adb.setText(
-                    "Initializing mapper...")
-                print("Make sure your phone is connected and display is "
-                      "switched on")
-                print("Reset mapper if you missed any "
-                      "steps by 'guiscrcpy --mapper-reset'")
+                self.private_message_box_adb.setText("Initializing mapper...")
+                print("Make sure your phone is connected and display is " "switched on")
+                print(
+                    "Reset mapper if you missed any "
+                    "steps by 'guiscrcpy --mapper-reset'"
+                )
                 print()
                 print(
                     "If at first you don't succeed... "
@@ -305,15 +313,16 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 _, identifier = self.current_device_identifier()
                 executable = get_self()
                 from .lib.utils import shellify as sx
+
                 subprocess.Popen(
-                    sx('{} mapper'.format(executable)),
+                    sx("{} mapper".format(executable)),
                     stdout=sys.stdout,
                     stdin=sys.stdin,
                     stderr=sys.stderr,
-                    cwd=os.getcwd())
+                    cwd=os.getcwd(),
+                )
                 print("Mapper started")
-                self.private_message_box_adb.setText(
-                    "Mapper initialized")
+                self.private_message_box_adb.setText("Mapper initialized")
 
     def launch_usb_audio(self):
         android_version = self.adb.get_target_android_version()
@@ -382,7 +391,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         """
         try:
             _, identifier = self.current_device_identifier()
-            popped_device = self.config['device'].pop(identifier)
+            popped_device = self.config["device"].pop(identifier)
             self.refresh_devices()
             self.config_manager.update_config(self.config)
             self.config_manager.write_file()
@@ -391,7 +400,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             return False
 
     def more_options_device_view(self, button):
-        if 'Disconnect' in button.text():
+        if "Disconnect" in button.text():
             menu = QMenu("Menu", self)
             menu.addAction("Pair / Ping", self.ping_paired_device)
             menu.addAction("Attempt TCPIP on device", self.tcpip_paired_device)
@@ -402,16 +411,16 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             menu.addAction("Attempt reconnection", self.ping_paired_device)
             menu.addAction("Refresh", self.refresh_devices)
         _, identifier = self.current_device_identifier()
-        if platform.System.system() == "Linux" and identifier.count('.') >= 3:
+        if platform.System.system() == "Linux" and identifier.count(".") >= 3:
             menu.addAction(
                 "Add Desktop Shortcut to this device",
-                self.create_desktop_shortcut_linux_os
+                self.create_desktop_shortcut_linux_os,
             )
         menu.exec_(
             self.devices_view.mapToGlobal(
                 QPoint(
                     self.devices_view.visualItemRect(button).x() + 22,
-                    self.devices_view.visualItemRect(button).y() + 22
+                    self.devices_view.visualItemRect(button).y() + 22,
                 )
             )
         )
@@ -424,34 +433,34 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # just a check before anything further happens because of an
         # unrelated OS
         if environment.system() != "Linux":
-            log("Tried to run create_desktop_shortcut_linux_os on an "
-                "unsupported OS.")
+            log(
+                "Tried to run create_desktop_shortcut_linux_os on an " "unsupported OS."
+            )
             return False
 
         # get device specific configuration
         model, identifier = self.current_device_identifier()
         picture_file_path = self.config_manager.get_cfgpath()
-        __sha_shift = self.config.get('sha_shift', 5)
-        sha = hashlib.sha256(
-            str(identifier).encode()
-        ).hexdigest()[__sha_shift:__sha_shift + 6]
+        __sha_shift = self.config.get("sha_shift", 5)
+        sha = hashlib.sha256(str(identifier).encode()).hexdigest()[
+            __sha_shift : __sha_shift + 6
+        ]
         log(f"Creating desktop shortcut sha: {sha}")
-        path_to_image = os.path.join(picture_file_path, identifier + '.png')
+        path_to_image = os.path.join(picture_file_path, identifier + ".png")
         if has_cairo:
             svg2png(
                 bytestring=desktop_device_shortcut_svg().format(f"#{sha}"),
-                write_to=path_to_image
+                write_to=path_to_image,
             )
         else:
-            print("Trying to use Plain SVG as renderer"
-                  " instead of cairo")
-            with open(path_to_image, 'w') as fp:
+            print("Trying to use Plain SVG as renderer" " instead of cairo")
+            with open(path_to_image, "w") as fp:
                 svg_str = desktop_device_shortcut_svg().format(f"#{sha}")
                 fp.write(svg_str)
 
         # go through all args; break when we find guiscrcpy
         for args_i in range(len(sys.argv)):
-            if 'guiscrcpy' in sys.argv[args_i]:
+            if "guiscrcpy" in sys.argv[args_i]:
                 aend = args_i + 1
                 break
         else:
@@ -463,31 +472,31 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # experimental support for AppImages / snaps
         # I am not sure; if it would work indeed
         for i in sys_args_desktop:
-            if i.endswith('.py'):
+            if i.endswith(".py"):
                 needs_python = True
                 break
         else:
             needs_python = False
         if needs_python:
-            sys_args_desktop = ['python3'] + sys_args_desktop
+            sys_args_desktop = ["python3"] + sys_args_desktop
 
         # convert the list into a string
-        sys_args_desktop = ' '.join(sys_args_desktop)
-        auto_connect_run_command = \
-            "{executable} --connect={ip} " \
+        sys_args_desktop = " ".join(sys_args_desktop)
+        auto_connect_run_command = (
+            "{executable} --connect={ip} "
             "--start --start-scrcpy-device-id={ip}".format(
-                executable=sys_args_desktop,
-                ip=identifier
+                executable=sys_args_desktop, ip=identifier
             )
+        )
 
         # create the desktop file using linux's desktop file gen method
         path_to_desktop_file = platform.System().create_desktop(
             desktop_file=GUISCRCPY_DEVICE.format(
                 identifier=model,
                 command=auto_connect_run_command,
-                icon_path=path_to_image
+                icon_path=path_to_image,
             ),
-            desktop_file_name=f'{model}.guiscrcpy.desktop'
+            desktop_file_name=f"{model}.guiscrcpy.desktop",
         )
 
         # announce it to developers / users
@@ -498,41 +507,38 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
     def is_connection_success_handler(self, output: Popen, ip=None):
         out, err = output.communicate()
-        if 'failed' in out.decode() or 'failed' in err.decode():
+        if "failed" in out.decode() or "failed" in err.decode():
             self.display_public_message(
                 "Failed to connect to {}. See the logs for more "
                 "information".format(ip)
             )
             print("adb:", out.decode(), err.decode())
         else:
-            self.display_public_message(
-                "Connection command completed successfully"
-            )
+            self.display_public_message("Connection command completed successfully")
 
     def ping_paired_device(self, device_id=None):
         # update the configuration file first
         if not device_id:
             _, identifier = self.current_device_identifier()
-            if identifier.count('.') == 3:
+            if identifier.count(".") == 3:
                 wifi_device = True
             else:
                 wifi_device = False
             try:
-                self.config['device'][identifier]['wifi'] = wifi_device
+                self.config["device"][identifier]["wifi"] = wifi_device
             except KeyError:
-                log(f"Failed writing the configuration "
-                    f"'wifi' key to {identifier}")
+                log(f"Failed writing the configuration " f"'wifi' key to {identifier}")
 
             if wifi_device:
                 ip = self.current_device_identifier()[1]
-                output = self.adb.command('connect {}'.format(ip))
+                output = self.adb.command("connect {}".format(ip))
                 self.is_connection_success_handler(output, ip=ip)
             else:
-                self.adb.command('reconnect offline')
+                self.adb.command("reconnect offline")
             # As we have attempted to connect; refresh the panel
             self.refresh_devices()
         else:
-            output = self.adb.command('connect {}'.format(device_id))
+            output = self.adb.command("connect {}".format(device_id))
             self.is_connection_success_handler(output, ip=device_id)
 
     def tcpip_paired_device(self):
@@ -543,15 +549,12 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         __exit_code = self.adb.tcpip(identifier=identifier)
         if __exit_code != 0:
             self.display_public_message(
-                "TCP/IP failed on device. "
-                "Please reconnect USB and try again"
+                "TCP/IP failed on device. " "Please reconnect USB and try again"
             )
         else:
-            self.display_public_message(
-                "TCP/IP completed successfully."
-            )
+            self.display_public_message("TCP/IP completed successfully.")
             time.sleep(0.1)  # wait for everything to get settled
-            if identifier.count('.') >= 3:
+            if identifier.count(".") >= 3:
                 self.ping_paired_device(device_id=identifier)
             else:
                 self.ping_paired_device()
@@ -559,14 +562,16 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
     def current_device_identifier(self, need_status=False):
         if self.devices_view.currentItem():
             if need_status:
-                return \
-                    self.devices_view.currentItem().text().split()[0], \
-                    self.devices_view.currentItem().text().split()[1], \
-                    self.devices_view.currentItem().text().split()[2]
+                return (
+                    self.devices_view.currentItem().text().split()[0],
+                    self.devices_view.currentItem().text().split()[1],
+                    self.devices_view.currentItem().text().split()[2],
+                )
             else:
-                return \
-                    self.devices_view.currentItem().text().split()[0], \
-                    self.devices_view.currentItem().text().split()[1]
+                return (
+                    self.devices_view.currentItem().text().split()[0],
+                    self.devices_view.currentItem().text().split()[1],
+                )
         else:
             raise ValueError("No item is selected in QListView")
 
@@ -576,31 +581,31 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         :return:
         """
         self.devices_view.clear()
-        paired_devices = self.config['device']
+        paired_devices = self.config["device"]
         for i in paired_devices:
-            if paired_devices[i].get('wifi'):
-                icon = ':/icons/icons/portrait_mobile_disconnect.svg'
+            if paired_devices[i].get("wifi"):
+                icon = ":/icons/icons/portrait_mobile_disconnect.svg"
                 devices_view_list_item = QListWidgetItem(
                     QIcon(icon),
                     "{device}\n{mode}\n{status}".format(
-                        device=paired_devices[i].get('model'),
+                        device=paired_devices[i].get("model"),
                         mode=i,
-                        status='Disconnected'
-                    )
+                        status="Disconnected",
+                    ),
                 )
-                __sha_shift = self.config.get('sha_shift', 5)
-                __sha = hashlib.sha256(
-                    str(i).encode()).hexdigest()[__sha_shift:__sha_shift + 6]
+                __sha_shift = self.config.get("sha_shift", 5)
+                __sha = hashlib.sha256(str(i).encode()).hexdigest()[
+                    __sha_shift : __sha_shift + 6
+                ]
                 devices_view_list_item.setToolTip(
                     "<span style='color: #{color}'>Device</snap>: <b>{d}</b>\n"
                     "Status: {s}".format(
                         d=i,
-                        s="Disconnected. Right click 'ping' to attempt "
-                          "reconnect",
-                        color=__sha
+                        s="Disconnected. Right click 'ping' to attempt " "reconnect",
+                        color=__sha,
                     )
                 )
-                devices_view_list_item.setFont(QFont('Noto Sans', 8))
+                devices_view_list_item.setFont(QFont("Noto Sans", 8))
                 self.devices_view.addItem(devices_view_list_item)
         return paired_devices
 
@@ -618,45 +623,44 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         __devices = self.adb.devices_detailed()
         log(__devices)
         for i in __devices:
-            device_is_wifi = \
-                i['identifier'].count('.') >= 3 and (':' in i['identifier'])
+            device_is_wifi = i["identifier"].count(".") >= 3 and (
+                ":" in i["identifier"]
+            )
 
-            if i['identifier'] not in self.config['device'].keys():
+            if i["identifier"] not in self.config["device"].keys():
                 device_paired_and_exists = False
-                self.config['device'][i['identifier']] = {
-                    'rotation': 0
-                }
+                self.config["device"][i["identifier"]] = {"rotation": 0}
             else:
                 device_paired_and_exists = True
 
             if device_is_wifi:
-                _icon_suffix = '_wifi'
+                _icon_suffix = "_wifi"
             else:
-                _icon_suffix = '_usb'
+                _icon_suffix = "_usb"
 
-            icon = ':/icons/icons/portrait_mobile_white{}.svg'.format(
-                _icon_suffix
-            )
+            icon = ":/icons/icons/portrait_mobile_white{}.svg".format(_icon_suffix)
 
-            if i['status'] == 'offline':
-                icon = ':/icons/icons/portrait_mobile_error.svg'
-            elif i['status'] == 'unauthorized':
-                icon = ':/icons/icons/portrait_mobile_warning.svg'
+            if i["status"] == "offline":
+                icon = ":/icons/icons/portrait_mobile_error.svg"
+            elif i["status"] == "unauthorized":
+                icon = ":/icons/icons/portrait_mobile_warning.svg"
 
-            if i['status'] == 'no_permission':
+            if i["status"] == "no_permission":
                 log("pairfilter: 5")
                 # https://stackoverflow.com/questions/
                 # 53887322/adb-devices-no-permissions-user-in-
                 # plugdev-group-are-your-udev-rules-wrong
-                udev_error = "Error connecting to device. Your udev rules are"\
-                    " incorrect. See https://stackoverflow.com/questions"\
-                    "/53887322/adb-devices-no-permissions-user-in-plugdev-"\
+                udev_error = (
+                    "Error connecting to device. Your udev rules are"
+                    " incorrect. See https://stackoverflow.com/questions"
+                    "/53887322/adb-devices-no-permissions-user-in-plugdev-"
                     "group-are-your-udev-rules-wrong"
+                )
                 self.display_public_message(udev_error)
                 print(udev_error)
                 return []
             # Check if device is unauthorized
-            elif i['status'] == "unauthorized":
+            elif i["status"] == "unauthorized":
                 log("unauthorized device detected: Click Allow on your device")
                 log("pairfilter: 4")
                 # The device is connected; and might/might't paired in the past
@@ -673,8 +677,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 # Remove other devices with the same id and offline and
                 # unauthorized
                 self.remove_device_device_view(
-                    i['identifier'],
-                    statuses=['offline', 'unauthorized']
+                    i["identifier"], statuses=["offline", "unauthorized"]
                 )
                 # Unauthorized device cannot be considered as a paired device
                 devices_view_list_item = QListWidgetItem()
@@ -686,7 +689,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                     devices_view_list_item = QListWidgetItem()
                 else:
                     for paired_device in paired_devices:
-                        if paired_device.text().split()[0] == i['model']:
+                        if paired_device.text().split()[0] == i["model"]:
                             log("pairfilter: 1")
                             paired = True
                             devices_view_list_item = paired_device
@@ -698,16 +701,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                             # identifier and remove them; based on this same
                             # assumption
                             self.remove_device_device_view(
-                                i['identifier'],
-                                statuses=['offline', 'unauthorized']
+                                i["identifier"], statuses=["offline", "unauthorized"]
                             )
                             break
-                        elif paired_device.text().split()[1] ==\
-                                i['identifier']:
+                        elif paired_device.text().split()[1] == i["identifier"]:
                             log("pairfilter: 2")
                             self.remove_device_device_view(
-                                i['identifier'],
-                                statuses=['offline', 'unauthorized']
+                                i["identifier"], statuses=["offline", "unauthorized"]
                             )
                             devices_view_list_item = QListWidgetItem()
                             paired = False
@@ -721,15 +721,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
             devices_view_list_item.setText(
                 "{device}\n{mode}\n{status}".format(
-                    device=i['model'],
-                    mode=i['identifier'],
-                    status=i['status']
+                    device=i["model"], mode=i["identifier"], status=i["status"]
                 )
             )
-            __sha_shift = self.config.get('sha_shift', 5)
-            __sha = hashlib.sha256(
-                str(i['identifier']).encode()
-            ).hexdigest()[__sha_shift:__sha_shift + 6]
+            __sha_shift = self.config.get("sha_shift", 5)
+            __sha = hashlib.sha256(str(i["identifier"]).encode()).hexdigest()[
+                __sha_shift : __sha_shift + 6
+            ]
             devices_view_list_item.setToolTip(
                 "Device: "
                 "<span style='color: #{inv_color};background-color: #{color}'>"
@@ -740,18 +738,18 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 "Status: {s}\n<br>"
                 "Transport ID: {t}\n<br>"
                 "Paired: {p}".format(
-                    d=i['identifier'],
-                    m=i['model'],
-                    a=i['product'],
-                    s=i['status'],
-                    t=i['transport_id'],
+                    d=i["identifier"],
+                    m=i["model"],
+                    a=i["product"],
+                    s=i["status"],
+                    t=i["transport_id"],
                     p=paired,
                     color=__sha,
-                    inv_color=str(hex(0xFFFFFF - int(__sha, 16))[2:])
+                    inv_color=str(hex(0xFFFFFF - int(__sha, 16))[2:]),
                 )
             )
 
-            devices_view_list_item.setFont(QFont('Noto Sans', 8))
+            devices_view_list_item.setFont(QFont("Noto Sans", 8))
             log(f"Pairing status: {device_paired_and_exists}")
             if device_paired_and_exists and device_is_wifi:
                 # we need to only neglect wifi devices
@@ -765,7 +763,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.devices_view.addItem(devices_view_list_item)
         return __devices
 
-    def remove_device_device_view(self, identifier: str = '', statuses=()):
+    def remove_device_device_view(self, identifier: str = "", statuses=()):
         """
         Removes all QListWidgetItems from the device_view for all matching
         identifier
@@ -776,36 +774,33 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         for index in range(self.devices_view.count() - 1, -1, -1):
             for status in statuses:
                 if self.devices_view.item(index):
-                    if str(identifier) in self.devices_view.item(index).text()\
-                            and \
-                            str(status) in \
-                            self.devices_view.item(index).text():
+                    if (
+                        str(identifier) in self.devices_view.item(index).text()
+                        and str(status) in self.devices_view.item(index).text()
+                    ):
                         self.devices_view.takeItem(index)
         return
 
     def __dimension_change_cb(self):
         if self.dimensionDefaultCheckbox.isChecked():
             self.dimensionSlider.setEnabled(False)
-            self.config['dimension'] = None
+            self.config["dimension"] = None
             self.dimensionText.setInputMask("")
             self.dimensionText.setText("DEFAULT")
         else:
             self.dimensionSlider.setEnabled(True)
-            self.config['dimension'] = int(self.dimensionSlider.value())
-            self.dimensionText.setText(
-                " " + str(self.config['dimension']) + "px")
-            self.dimensionSlider.sliderMoved.connect(
-                self.__slider_change_cb)
-            self.dimensionSlider.sliderReleased.connect(
-                self.__slider_change_cb)
+            self.config["dimension"] = int(self.dimensionSlider.value())
+            self.dimensionText.setText(" " + str(self.config["dimension"]) + "px")
+            self.dimensionSlider.sliderMoved.connect(self.__slider_change_cb)
+            self.dimensionSlider.sliderReleased.connect(self.__slider_change_cb)
 
     def __slider_change_cb(self):
-        self.config['dimension'] = int(self.dimensionSlider.value())
-        self.dimensionText.setText(str(self.config['dimension']) + "px")
+        self.config["dimension"] = int(self.dimensionSlider.value())
+        self.dimensionText.setText(str(self.config["dimension"]) + "px")
 
     def __dial_change_cb(self):
-        self.config['bitrate'] = int(self.dial.value())
-        self.bitrateText.setText(str(self.config['bitrate']) + "KB/s")
+        self.config["bitrate"] = int(self.dial.value())
+        self.bitrateText.setText(str(self.config["bitrate"]) + "KB/s")
 
     def progress(self, val):
         self.progressBar.setValue(val)
@@ -816,7 +811,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
     @staticmethod
     def is_device_unusable(status):
-        if any(('unauth' in status, 'offline' in status)):
+        if any(("unauth" in status, "offline" in status)):
             return True
         else:
             return False
@@ -827,12 +822,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         )
 
     def __reset_message_box_stylesheet(self):
-        stylesheet = \
-            "background-color: qlineargradient(" \
-            "spread:pad, x1:0, y1:0, x2:1, y2:1, " \
-            "stop:0 rgba(0, 255, 255, 255), " \
-            "stop:1 rgba(0, 255, 152, 255)); " \
+        stylesheet = (
+            "background-color: qlineargradient("
+            "spread:pad, x1:0, y1:0, x2:1, y2:1, "
+            "stop:0 rgba(0, 255, 255, 255), "
+            "stop:1 rgba(0, 255, 152, 255)); "
             "border-radius: 10px;"
+        )
         self.private_message_box_adb.setStyleSheet(stylesheet)
 
     def __select_first_device(self):
@@ -848,8 +844,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         """
         self.private_message_box_adb.setText(message)
 
-    def check_devices_status_and_select_first_if_only_one(
-            self, values_devices_list):
+    def check_devices_status_and_select_first_if_only_one(self, values_devices_list):
         """
         Checks the devices in the Grid View, and then checks if any device
         is available or offline accordingly display the error message. If
@@ -866,8 +861,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             # Could not detect any device
             self.display_public_message("Could not find any devices")
             return 0
-        elif self.devices_view.currentIndex() is None and \
-                len(values_devices_list) != 1:
+        elif self.devices_view.currentIndex() is None and len(values_devices_list) != 1:
             # No device is selected and more than one device found
             self.display_public_message("Please select a device below.")
             return 0
@@ -886,8 +880,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 # get the status and identifier of the device;
                 # return if device is not in a connectable state
                 try:
-                    _, device_id, _stat = \
-                        self.current_device_identifier(need_status=True)
+                    _, device_id, _stat = self.current_device_identifier(
+                        need_status=True
+                    )
                     if self.is_device_unusable(_stat):
                         self.show_device_status_failure(_stat)
                         return 0
@@ -902,8 +897,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 self.display_public_message("Please select a device below.")
                 return 0
             else:
-                _, device_id, _stat = self.current_device_identifier(
-                    need_status=True)
+                _, device_id, _stat = self.current_device_identifier(need_status=True)
                 if self.is_device_unusable(_stat):
                     self.show_device_status_failure(_stat)
                     return 0
@@ -934,8 +928,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # ====================================================================
         # 3: Check devices
         values_devices_list = self.scan_devices_update_list_view()
-        _e = self.check_devices_status_and_select_first_if_only_one(
-            values_devices_list)
+        _e = self.check_devices_status_and_select_first_if_only_one(values_devices_list)
         if _e is None or isinstance(_e, int):
             return _e
         device_id, more_devices, _stat = _e
@@ -947,17 +940,17 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         if self.dimensionDefaultCheckbox.isChecked():
             self.dimensionSlider.setEnabled(False)
             self.dimensionText.setText("DEFAULT")
-            self.config['dimension'] = None
+            self.config["dimension"] = None
         else:
             self.dimensionSlider.setEnabled(True)
-            self.config['dimension'] = int(self.dimensionSlider.value())
-            self.dimensionSlider.setValue(self.config['dimension'])
-            self.dimensionText.setText(str(self.config['dimension']) + "px")
+            self.config["dimension"] = int(self.dimensionSlider.value())
+            self.dimensionSlider.setValue(self.config["dimension"])
+            self.dimensionText.setText(str(self.config["dimension"]) + "px")
         # edit configuration files to update dimension key
-        if self.config['dimension'] is None:
+        if self.config["dimension"] is None:
             self.options = " "
-        elif self.config['dimension'] is not None:
-            self.options = " -m " + str(self.config['dimension'])
+        elif self.config["dimension"] is not None:
+            self.options = " -m " + str(self.config["dimension"])
         else:
             self.options = ""
         progress = self.progress(progress)
@@ -968,18 +961,18 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             self.options += " --always-on-top"
         if self.fullscreen.isChecked():
             self.options += " -f"
-            self.config['fullscreen'] = True
+            self.config["fullscreen"] = True
         else:
-            self.config['fullscreen'] = False
+            self.config["fullscreen"] = False
         progress = self.progress(progress)
 
         # ====================================================================
         # 6: Check if show touches / recording are on
         if self.showTouches.isChecked():
             self.options += " --show-touches"
-            self.config['swtouches'] = True
+            self.config["swtouches"] = True
         else:
-            self.config['swtouches'] = False
+            self.config["swtouches"] = False
         progress = self.progress(progress)
 
         # ====================================================================
@@ -992,23 +985,25 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # 8: Check if the display is forced to be on
         if self.displayForceOn.isChecked():
             self.options += " -S"
-            self.config['dispRO'] = True
+            self.config["dispRO"] = True
         else:
-            self.config['dispRO'] = False
+            self.config["dispRO"] = False
         progress = self.progress(progress)
 
         # ====================================================================
         # 9: Parse bitrate
         # Bitrate is parsed, by editing the bitrate mask
-        if self.bitrateText.text().split()[1][0] in ['K', 'M', 'T']:
+        if self.bitrateText.text().split()[1][0] in ["K", "M", "T"]:
             bitrate_multiplier = str(self.bitrateText.text().split()[1][0])
         elif self.bitrateText.text().split()[1][0] == "B":
             bitrate_multiplier = "B"
         else:
             # do not proceed. Invalid file size multiplier
-            multiplier_error = f"Invalid file size multiplier \
-            '{str(self.bitrateText.text().split()[1][0])}'. " \
-                                               f"Please use only K, M, T only"
+            multiplier_error = (
+                f"Invalid file size multiplier \
+            '{str(self.bitrateText.text().split()[1][0])}'. "
+                f"Please use only K, M, T only"
+            )
             print(multiplier_error)
             self.display_public_message(multiplier_error)
             return False
@@ -1017,7 +1012,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         else:
             bitrate_integer = 8000
         self.options += " -b {}{}".format(bitrate_integer, bitrate_multiplier)
-        self.config['bitrate'] = bitrate_integer
+        self.config["bitrate"] = bitrate_integer
         progress = self.progress(progress)
 
         # ====================================================================
@@ -1027,83 +1022,88 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.progressBar.setValue(50)
         log("Flags passed to scrcpy engine : " + self.options)
         self.progressBar.setValue(60)
-        self.config['extra'] = self.flaglineedit.text()
+        self.config["extra"] = self.flaglineedit.text()
         progress = self.progress(progress)
 
         # ====================================================================
         # 11: Initialize User Experience Mapper
         ux = UXMapper(
-            adb=self.adb,
-            device_id=device_id,
-            sha_shift=self.config.get('sha_shift', 5)
+            adb=self.adb, device_id=device_id, sha_shift=self.config.get("sha_shift", 5)
         )
         progress = self.progress(progress)
-        always_on_top = \
-            self.config.get('panels_always_on_top', False) or \
-            not self.panels_not_always_on_top
+        always_on_top = (
+            self.config.get("panels_always_on_top", False)
+            or not self.panels_not_always_on_top
+        )
         # ====================================================================
         # 12: Init side_panel if necessary
         if self.check_side_panel.isChecked():
-            self.config['panels']['toolkit'] = True
+            self.config["panels"]["toolkit"] = True
             side_instance = InterfaceToolkit(
                 parent=self,
                 ux_mapper=ux,
                 frame=self.force_window_frame,
-                always_on_top=always_on_top
+                always_on_top=always_on_top,
             )
             for instance in self.child_windows:
-                if instance.ux.get_sha() == side_instance.ux.get_sha() and \
-                        instance.name == side_instance.name and \
-                        not instance.isHidden():
+                if (
+                    instance.ux.get_sha() == side_instance.ux.get_sha()
+                    and instance.name == side_instance.name
+                    and not instance.isHidden()
+                ):
                     break
             else:
                 side_instance.init()
                 self.child_windows.append(side_instance)
         else:
-            self.config['panels']['toolkit'] = False
+            self.config["panels"]["toolkit"] = False
         progress = self.progress(progress)
 
         # ====================================================================
         # 13: Init bottom_panel if necessary
         if self.check_bottom_panel.isChecked():
-            self.config['panels']['bottom'] = True
+            self.config["panels"]["bottom"] = True
             panel_instance = Panel(
                 parent=self,
                 ux_mapper=ux,
                 frame=self.force_window_frame,
-                always_on_top=always_on_top
+                always_on_top=always_on_top,
             )
             for instance in self.child_windows:
-                if instance.ux.get_sha() == panel_instance.ux.get_sha() and \
-                        instance.name == panel_instance.name and \
-                        not instance.isHidden():
+                if (
+                    instance.ux.get_sha() == panel_instance.ux.get_sha()
+                    and instance.name == panel_instance.name
+                    and not instance.isHidden()
+                ):
                     break
             else:
                 panel_instance.init()
                 self.child_windows.append(panel_instance)
         else:
-            self.config['panels']['bottom'] = False
+            self.config["panels"]["bottom"] = False
         progress = self.progress(progress)
 
         # ====================================================================
         # 14: Init swipe panel if necessary
         if self.check_swipe_panel.isChecked():
-            self.config['panels']['swipe'] = True
+            self.config["panels"]["swipe"] = True
             swipe_instance = SwipeUX(
                 ux_wrapper=ux,
                 frame=self.force_window_frame,
-                always_on_top=always_on_top
+                always_on_top=always_on_top,
             )  # Load swipe UI
             for instance in self.child_windows:
-                if instance.ux.get_sha() == swipe_instance.ux.get_sha() and \
-                        instance.name == swipe_instance.name and \
-                        not instance.isHidden():
+                if (
+                    instance.ux.get_sha() == swipe_instance.ux.get_sha()
+                    and instance.name == swipe_instance.name
+                    and not instance.isHidden()
+                ):
                     break
             else:
                 swipe_instance.init()
                 self.child_windows.append(swipe_instance)
         else:
-            self.config['panels']['swipe'] = False
+            self.config["panels"]["swipe"] = False
         progress = self.progress(progress)
 
         # ====================================================================
@@ -1125,26 +1125,23 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             rotation_parameter = "--rotation"
         if rotation_index != -1:
             self.options += " {} {}".format(rotation_parameter, rotation_index)
-            self.config['device'][identifier]['rotation'] = \
-                rotation_index + 1
+            self.config["device"][identifier]["rotation"] = rotation_index + 1
         else:
-            self.config['device'][identifier]['rotation'] = 0
+            self.config["device"][identifier]["rotation"] = 0
 
         # ====================================================================
         # 18: Update device specific configuration
-        if identifier.count('.') >= 3 and identifier[-1].isdigit():
-            self.config['device'][identifier]['wifi'] = True
-            self.config['device'][identifier]['model'] = model
+        if identifier.count(".") >= 3 and identifier[-1].isdigit():
+            self.config["device"][identifier]["wifi"] = True
+            self.config["device"][identifier]["model"] = model
 
         # ====================================================================
         # 16: Parse scrcpy arguments
         if self.cmx is not None:
-            self.config['cmx'] = ' '.join(map(str, self.cmx))
+            self.config["cmx"] = " ".join(map(str, self.cmx))
 
         arguments_scrcpy = "{} {} {}".format(
-            self.options,
-            self.config['extra'],
-            self.config['cmx']
+            self.options, self.config["extra"], self.config["cmx"]
         )
         progress = self.progress(progress)
 
@@ -1159,8 +1156,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # tell end users that the color of the device is this
         self.display_public_message(
-            f"Device {device_id} is connected; (color id matches "
-            f"toolkit color)"
+            f"Device {device_id} is connected; (color id matches " f"toolkit color)"
         )
         log("Device connection completed successfully.")
         log("Private message box updated successfully")
@@ -1171,8 +1167,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         if not self.debug__no_scrcpy:
             # for debugging purposes, its important to not start scrcpy
             # every time
-            self.scrcpy.start(arguments_scrcpy, stdout=sys.stdout,
-                              stderr=sys.stderr)
+            self.scrcpy.start(arguments_scrcpy, stdout=sys.stdout, stderr=sys.stderr)
         progress = self.progress(progress)
 
         # ====================================================================
@@ -1192,41 +1187,41 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
 
 def set_scrcpy_server_path(config):
-    scrcpy_server_path_env = os.getenv('SCRCPY_SERVER_PATH', None)
+    scrcpy_server_path_env = os.getenv("SCRCPY_SERVER_PATH", None)
     if scrcpy_server_path_env:
         if not os.path.exists(scrcpy_server_path_env):
-            server_path = open_exe_name_dialog(None, 'scrcpy-server')
+            server_path = open_exe_name_dialog(None, "scrcpy-server")
             if server_path is None:
-                raise ScrcpyServerNotFoundError(
-                    "User did not select scrcpy server")
-            config['scrcpy-server'] = server_path
-            os.environ['SCRCPY_SERVER_PATH'] = server_path
+                raise ScrcpyServerNotFoundError("User did not select scrcpy server")
+            config["scrcpy-server"] = server_path
+            os.environ["SCRCPY_SERVER_PATH"] = server_path
     elif (
-        (scrcpy_server_path_env is None) and (
-            (isinstance(config.get('scrcpy-server'), str) and
-             not os.path.exists(config.get('scrcpy-server'))) or
-            config.get('scrcpy-server') is None)
-    ) and (
-        platform.System().system() == 'Windows'
-    ):
-        server_path = open_exe_name_dialog(None, 'scrcpy-server')
+        (scrcpy_server_path_env is None)
+        and (
+            (
+                isinstance(config.get("scrcpy-server"), str)
+                and not os.path.exists(config.get("scrcpy-server"))
+            )
+            or config.get("scrcpy-server") is None
+        )
+    ) and (platform.System().system() == "Windows"):
+        server_path = open_exe_name_dialog(None, "scrcpy-server")
         if server_path is None:
-            raise ScrcpyServerNotFoundError(
-                "User did not select scrcpy server")
-        config['scrcpy-server'] = server_path
-        os.environ['SCRCPY_SERVER_PATH'] = server_path
+            raise ScrcpyServerNotFoundError("User did not select scrcpy server")
+        config["scrcpy-server"] = server_path
+        os.environ["SCRCPY_SERVER_PATH"] = server_path
     elif platform.System().system() == "Windows":
-        os.environ['SCRCPY_SERVER_PATH'] = config['scrcpy-server']
+        os.environ["SCRCPY_SERVER_PATH"] = config["scrcpy-server"]
     return config
 
 
 def bootstrap(
-        app: QtWidgets.QApplication,
-        config_manager: InterfaceConfig,
-        theme: str = "Breeze",
-        aot: bool = True,
-        debug_no_scrcpy: bool = False,
-        hide_wm_frame: bool = True
+    app: QtWidgets.QApplication,
+    config_manager: InterfaceConfig,
+    theme: str = "Breeze",
+    aot: bool = True,
+    debug_no_scrcpy: bool = False,
+    hide_wm_frame: bool = True,
 ):
     """
     Launch the guiscrcpy window
@@ -1237,9 +1232,7 @@ def bootstrap(
     # load fonts
     font_database = QFontDatabase()
     for font in FONTS:
-        s = font_database.addApplicationFont(':/font/fonts/{ttf}'.format(
-            ttf=font
-        ))
+        s = font_database.addApplicationFont(":/font/fonts/{ttf}".format(ttf=font))
         if s == -1:  # loading the font failed
             # https://doc.qt.io/qt-5/qfontdatabase.html
             print(fc("{y}Failed to load {ttf} font.{rst}", ttf=font))
@@ -1247,7 +1240,7 @@ def bootstrap(
     # set theme
     app.setStyle(theme)
     # apply stylesheet
-    if theme == 'Breeze':
+    if theme == "Breeze":
         # The Qdarkstylesheet is based on Breeze, lets load them on default
         app.setStyleSheet(dark_stylesheet())
 
@@ -1262,16 +1255,17 @@ def bootstrap(
     # SCRCPY_SERVER_PATH
     config_manager.update_config(set_scrcpy_server_path(config))
     config_manager.write_file()
-    adb = AndroidDebugBridge(config_manager.get_config().get('adb'))
-    scrcpy = ScrcpyBridge(config_manager.get_config().get('scrcpy'))
-    config_manager['adb'] = adb.get_path()
-    config_manager['scrcpy'] = scrcpy.get_path()
+    adb = AndroidDebugBridge(config_manager.get_config().get("adb"))
+    scrcpy = ScrcpyBridge(config_manager.get_config().get("scrcpy"))
+    config_manager["adb"] = adb.get_path()
+    config_manager["scrcpy"] = scrcpy.get_path()
     guiscrcpy = InterfaceGuiscrcpy(
         config_manager=config_manager,
         adb=adb,
         scrcpy=scrcpy,
         force_window_frame=not hide_wm_frame,
-        panels_not_always_on_top=not aot, debug_no_scrcpy=debug_no_scrcpy
+        panels_not_always_on_top=not aot,
+        debug_no_scrcpy=debug_no_scrcpy,
     )
     guiscrcpy.show()
     app.processEvents()

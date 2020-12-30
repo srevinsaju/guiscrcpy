@@ -1,4 +1,3 @@
-
 class ScrcpyNotFoundError(FileNotFoundError):
     pass
 

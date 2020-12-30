@@ -30,8 +30,15 @@ class MapperUI(QtWidgets.QWidget):
     configuration an button
     mapping
     """
-    def __init__(self, core, screenshot_path, dimensions,
-                 fixed_pos=[0.0, 0.0], final_pos=[0.0, 0.0]):
+
+    def __init__(
+        self,
+        core,
+        screenshot_path,
+        dimensions,
+        fixed_pos=[0.0, 0.0],
+        final_pos=[0.0, 0.0],
+    ):
         self.fixed_pos = fixed_pos
         self.final_pos = final_pos
         self.core = core
@@ -50,17 +57,16 @@ class MapperUI(QtWidgets.QWidget):
         self.widget.setGeometry(QtCore.QRect(0, 0, 351, 34))
         self.widget.setObjectName("widget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget)
-        self.horizontalLayout.setSizeConstraint(
-            QtWidgets.QLayout.SetMaximumSize)
+        self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetMaximumSize)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.lineEdit = QtWidgets.QLineEdit(self.widget)
         size_policy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed
+        )
         size_policy.setHorizontalStretch(0)
         size_policy.setVerticalStretch(0)
-        size_policy.setHeightForWidth(
-            self.lineEdit.sizePolicy().hasHeightForWidth())
+        size_policy.setHeightForWidth(self.lineEdit.sizePolicy().hasHeightForWidth())
         self.lineEdit.setSizePolicy(size_policy)
         self.lineEdit.setMinimumSize(QtCore.QSize(25, 25))
         self.lineEdit.setMaximumSize(QtCore.QSize(25, 16777215))
@@ -101,13 +107,9 @@ class MapperUI(QtWidgets.QWidget):
         """
         self.pixmap = QtGui.QPixmap(screenshot_path)
         self.label.resize(
-            int(0.5 * self.pixmap.width()),
-            int(0.5 * self.pixmap.height())
+            int(0.5 * self.pixmap.width()), int(0.5 * self.pixmap.height())
         )
-        self.resize(
-            int(0.5 * self.pixmap.width()),
-            int(0.5 * self.pixmap.height())
-        )
+        self.resize(int(0.5 * self.pixmap.width()), int(0.5 * self.pixmap.height()))
 
         self.show()
         self.resize(self.label.size())
@@ -117,8 +119,7 @@ class MapperUI(QtWidgets.QWidget):
             int(0.5 * self.pixmap.width()), int(0.5 * self.pixmap.height())
         )
         self.setMaximumSize(
-            int(0.5 * self.pixmap.width()),
-            int(0.5 * self.pixmap.height())
+            int(0.5 * self.pixmap.width()), int(0.5 * self.pixmap.height())
         )
         self.label.installEventFilter(self)
         layout = QtWidgets.QVBoxLayout(self)
@@ -126,8 +127,7 @@ class MapperUI(QtWidgets.QWidget):
         self.pushButton.setText("OK")
         self.label0.setWordWrap(True)
         self.label0.setText(
-            "Click the point, and enter char in textbox and "
-            "press OK to continue."
+            "Click the point, and enter char in textbox and " "press OK to continue."
         )
 
     def register_key(self):
@@ -136,8 +136,10 @@ class MapperUI(QtWidgets.QWidget):
         fixx = relx * int(self.dimensions[0])
         fixy = rely * int(self.dimensions[1])
         char = self.lineEdit.text()[:1]
-        print("Successfully registered {ch} "
-              "with position  ({x}, {y})".format(ch=char, x=fixx, y=fixy))
+        print(
+            "Successfully registered {ch} "
+            "with position  ({x}, {y})".format(ch=char, x=fixx, y=fixy)
+        )
         self.core.add_position(char, (fixx, fixy))
         self.label0.setText(
             "SUCCESS! "
@@ -148,8 +150,7 @@ class MapperUI(QtWidgets.QWidget):
     def eventFilter(self, source, event):
         if source is self.label and event.type() == QtCore.QEvent.Resize:
             self.label.setPixmap(
-                self.pixmap.scaled(self.label.size(),
-                                   QtCore.Qt.KeepAspectRatio)
+                self.pixmap.scaled(self.label.size(), QtCore.Qt.KeepAspectRatio)
             )
         return super(MapperUI, self).eventFilter(source, event)
 
@@ -160,7 +161,8 @@ class MapperUI(QtWidgets.QWidget):
             self.fixed_pos[1] = int(event.pos().y())
             print(self.last_found_point, "LAST")
             self.last_found_point = self.label.mapFromParent(
-                event.pos())  # this is working fine now
+                event.pos()
+            )  # this is working fine now
             # self.label.setPixmap(QPixmap.fromImage(self.image))
 
     def mouseMoveEvent(self, event):
@@ -170,7 +172,8 @@ class MapperUI(QtWidgets.QWidget):
             # painter.drawLine(
             # self.label.mapFromParent(event.pos()),self.last_found_point)
             self.last_found_point = self.label.mapFromParent(
-                event.pos())  # this is working fine now
+                event.pos()
+            )  # this is working fine now
             print(self.last_found_point, "MOVE")
             self.fixed_pos[0] = int(event.pos().x())
             self.fixed_pos[1] = int(event.pos().y())
@@ -184,17 +187,15 @@ class MapperUI(QtWidgets.QWidget):
     def closeEvent(self, event):
         # do stuff
         message_box = QMessageBox()
-        message_box.setText(
-            "Save changes and exit?"
-        )
-        vals = ["{} → {}".format(
-            x, self.core.config[x]) for x in self.core.config]
+        message_box.setText("Save changes and exit?")
+        vals = ["{} → {}".format(x, self.core.config[x]) for x in self.core.config]
         message_box.setInformativeText(
             "Mapper has unsaved mappings: {val}. Do you want to save the "
-            "current mappings?".format(val=', '.join(vals))
+            "current mappings?".format(val=", ".join(vals))
         )
         message_box.setStandardButtons(
-            QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+            QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel
+        )
         user_message_box_response = message_box.exec()
         if user_message_box_response == QMessageBox.Yes:
             print("Registration process completed.")

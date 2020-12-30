@@ -15,10 +15,7 @@ class USBAudioBridge(AudioBridge):
         else:
             command = "{usbaudio} --serial {device_id}"
         subprocess.Popen(
-            _(command.format(
-                usbaudio=self.get_path(),
-                device_id=device_id
-            )),
+            _(command.format(usbaudio=self.get_path(), device_id=device_id)),
             stdout=sys.stdout,
-            stderr=sys.stderr
+            stderr=sys.stderr,
         )

@@ -48,10 +48,11 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
         :return:
         """
         self.nm_connect.pressed.connect(self.connect)
-        if self.os.system() == 'Windows':
+        if self.os.system() == "Windows":
             # FIXME: Port scanning is not working on Windows at the moment.
             self.nm_det.setText(
-                "Enter the IP address in the text box and press connect")
+                "Enter the IP address in the text box and press connect"
+            )
             self.nm_refresh.setEnabled(False)
         else:
             self.nm_refresh.pressed.connect(self.refresh)
@@ -59,7 +60,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
         self.tcpip.pressed.connect(self.tcpip_launch)
 
     def tcpip_launch(self):
-        self.adb.command('-d tcpip 5555')
+        self.adb.command("-d tcpip 5555")
         self.nm_det.setText(
             "Now disconnect your device, and enter the IP address, and connect"
         )
@@ -71,45 +72,47 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
         except AttributeError:
             # The IP Address in the ListView has precedence over the IP address
             # in the text box
-            if not self.lineEdit.text().strip().isspace() or len(
-                    self.lineEdit.text().strip()) != 0:
-                if ':' in self.lineEdit.text():
-                    self.nm_det.setText("Please provide the port in the "
-                                        "'port' text box")
+            if (
+                not self.lineEdit.text().strip().isspace()
+                or len(self.lineEdit.text().strip()) != 0
+            ):
+                if ":" in self.lineEdit.text():
+                    self.nm_det.setText(
+                        "Please provide the port in the " "'port' text box"
+                    )
                     return
-                if self.lineEdit.text().count('.') == 3:
+                if self.lineEdit.text().count(".") == 3:
                     ip = self.lineEdit.text().strip().lower()
                 else:
                     self.nm_det.setText("Invalid IP address in text box")
                     return
             else:
-                if self.os.system() == 'Windows':
-                    self.nm_det.setText(
-                        "Please enter an IP address in the text box")
+                if self.os.system() == "Windows":
+                    self.nm_det.setText("Please enter an IP address in the text box")
                 else:
                     self.nm_det.setText(
-                        "Please enter an IP address in the text box. / "
-                        "Click refresh")
+                        "Please enter an IP address in the text box. / " "Click refresh"
+                    )
                 return
 
-        sp = self.adb.command('connect {}:5555'.format(ip))
+        sp = self.adb.command("connect {}:5555".format(ip))
         count = 0
         while True:
             count += 1
             readout = sp.stdout.readline().decode()
-            if 'failed' in readout:
+            if "failed" in readout:
                 self.nm_det.setText(
-                    'Device failed to get connected (is it an Android dev?')
+                    "Device failed to get connected (is it an Android dev?"
+                )
                 return
-            if 'connected' in readout:
+            if "connected" in readout:
                 print(readout)
                 break
             if count > 30:
-                self.nm_det.setText('Device connect failed: Timeout')
+                self.nm_det.setText("Device connect failed: Timeout")
             else:
                 time.sleep(1)
-        self.nm_det.setText(
-            "Connected to IP:{}:{}".format(ip, self.spinBox.value()))
+        self.nm_det.setText("Connected to IP:{}:{}".format(ip, self.spinBox.value()))
 
     def refresh(self):
         self.listView.clear()

@@ -32,18 +32,17 @@ class InterfaceSettings(QMainWindow, Ui_SettingsWindow):
         self.parent = parent
         self.commands = []
         self.checkboxes = {
-            self.a1: [[None], '--always-on-top', 0],
-            self.a2: [[self.a2c1, self.a2c2], '--crop {}:{}', 1],
-            self.a3: [[self.a3e1], '--max-fps {}'],
-            self.a4: [[None], '--prefer-text'],
-            self.a5: [[self.a5c1], '--push-target {}'],
-            self.a6: [[self.a6c1], '--record {}'],
-            self.a8: [[self.a8c1], '--serial {}'],
-            self.a9: [[None], '--window-borderless'],
-            self.b0: [[self.b0c1], '--window-title {}'],
-            self.b1: [[self.b1c1, self.b1c1], '--window-x {} --window-y {}'],
-            self.b2: [[self.b2c1, self.b2c2],
-                      '--window-width {} --window-height {}'],
+            self.a1: [[None], "--always-on-top", 0],
+            self.a2: [[self.a2c1, self.a2c2], "--crop {}:{}", 1],
+            self.a3: [[self.a3e1], "--max-fps {}"],
+            self.a4: [[None], "--prefer-text"],
+            self.a5: [[self.a5c1], "--push-target {}"],
+            self.a6: [[self.a6c1], "--record {}"],
+            self.a8: [[self.a8c1], "--serial {}"],
+            self.a9: [[None], "--window-borderless"],
+            self.b0: [[self.b0c1], "--window-title {}"],
+            self.b1: [[self.b1c1, self.b1c1], "--window-x {} --window-y {}"],
+            self.b2: [[self.b2c1, self.b2c2], "--window-width {} --window-height {}"],
         }
 
     def init(self):
@@ -54,9 +53,9 @@ class InterfaceSettings(QMainWindow, Ui_SettingsWindow):
     def file_chooser(self):
         dialog = QFileDialog()
         dialog.setFilter(dialog.filter() | QtCore.QDir.Hidden)
-        dialog.setDefaultSuffix('mp4')
+        dialog.setDefaultSuffix("mp4")
         dialog.setAcceptMode(QFileDialog.AcceptSave)
-        dialog.setNameFilters(['H.264 (*.mp4)', 'MKV (*.mkv)'])
+        dialog.setNameFilters(["H.264 (*.mp4)", "MKV (*.mkv)"])
         if dialog.exec_() == QDialog.Accepted:
             self.a6c1.setText(dialog.selectedFiles()[0])
 

@@ -32,25 +32,25 @@ from ..platform.platform import System
 environment = System()
 
 COLORS = {
-    'g': Fore.GREEN,
-    'rst': Fore.RESET,
-    'y': Fore.YELLOW,
-    'r': Fore.RED,
-    'b': Fore.BLUE,
-    'B': Fore.LIGHTBLUE_EX,
-    'x': Fore.LIGHTBLACK_EX
+    "g": Fore.GREEN,
+    "rst": Fore.RESET,
+    "y": Fore.YELLOW,
+    "r": Fore.RED,
+    "b": Fore.BLUE,
+    "B": Fore.LIGHTBLUE_EX,
+    "x": Fore.LIGHTBLACK_EX,
 }
 
 
 def log(*args, **kwargs):
-    if os.getenv('GUISCRCPY_DEBUG', False):
+    if os.getenv("GUISCRCPY_DEBUG", False):
         print(*args, **kwargs)
     else:
         logging.debug(str(args))
 
 
 def shellify(args):
-    if environment.system() == 'Windows':
+    if environment.system() == "Windows":
         return args
     else:
         return shlex.split(args)
@@ -63,7 +63,7 @@ def decode_process(process):
     try:
         output = process.stdout.readlines()
         for i in range(len(output)):
-            output[i] = output[i].decode('utf-8')
+            output[i] = output[i].decode("utf-8")
     except NameError:
         logging.error("No stdout in process.")
         output = ""
@@ -77,13 +77,12 @@ def check_existence(paths, filename="", directory=True, path=False):
             if directory and os.path.isdir(j):
                 return [j]
             else:
-                if environment.system() == 'Windows':
-                    append = '.exe'
+                if environment.system() == "Windows":
+                    append = ".exe"
                 else:
-                    append = ''
+                    append = ""
 
-                if (isinstance(filename, list)) or \
-                        (isinstance(filename, tuple)):
+                if (isinstance(filename, list)) or (isinstance(filename, tuple)):
                     for exe in filename:
                         if os.path.exists(os.path.join(j, exe + append)):
                             return [os.path.join(j, exe + append)]
@@ -95,11 +94,12 @@ def check_existence(paths, filename="", directory=True, path=False):
             logging.debug("{} doesn't exist".format(i))
 
     if path:
-        new_paths = os.getenv('PATH').split(os.pathsep)
+        new_paths = os.getenv("PATH").split(os.pathsep)
         found_path = check_existence(
-            new_paths, filename=filename, directory=directory, path=False)
+            new_paths, filename=filename, directory=directory, path=False
+        )
         if found_path:
-            return found_path + ['path']
+            return found_path + ["path"]
         else:
             return False
     else:
@@ -112,26 +112,26 @@ def get_self():
     :return:
     :rtype:
     """
-    if os.getenv('APPIMAGE'):
+    if os.getenv("APPIMAGE"):
         # Running from AppImage
-        return os.getenv('APPIMAGE')
-    elif getattr(sys, 'frozen', False):
+        return os.getenv("APPIMAGE")
+    elif getattr(sys, "frozen", False):
         # running in precompiled bundle
         return sys.executable
-    elif shutil.which('guiscrcpy'):
+    elif shutil.which("guiscrcpy"):
         # guiscrcpy is added to PATH
-        return shutil.which('guiscrcpy')
-    elif any([os.path.exists(os.path.join(x, 'guiscrcpy'))
-              for x in sys.path]) and \
-            any([sys.executable.endswith(py) for py in
-                 ['python', 'python3']]):
+        return shutil.which("guiscrcpy")
+    elif any([os.path.exists(os.path.join(x, "guiscrcpy")) for x in sys.path]) and any(
+        [sys.executable.endswith(py) for py in ["python", "python3"]]
+    ):
         # guiscrcpy is installed as a pip package, but not added to PATH
-        return '{py} -m guiscrcpy'.format(py=sys.executable)
-    elif os.getenv('SNAP'):
+        return "{py} -m guiscrcpy".format(py=sys.executable)
+    elif os.getenv("SNAP"):
         # running from SNAP
-        return '/snap/bin/guiscrcpy'
-    raise RuntimeError("Could not detect if guiscrcpy was run from "
-                       "snap, appimage or python wheel")
+        return "/snap/bin/guiscrcpy"
+    raise RuntimeError(
+        "Could not detect if guiscrcpy was run from " "snap, appimage or python wheel"
+    )
 
 
 def format_colors(string, **kwargs):
@@ -148,12 +148,15 @@ def show_message_box(text, info_text="", buttons=QMessageBox.Ok):
     """
     message_box = QMessageBox()
     try:
-        message_box.setIconPixmap(QPixmap(
-            ":/res/ui/guiscrcpy_logo.png").scaledToHeight(100))
+        message_box.setIconPixmap(
+            QPixmap(":/res/ui/guiscrcpy_logo.png").scaledToHeight(100)
+        )
     except Exception as e:
-        print("WARN: {e}: loading guiscrcpy "
-              "message box pixmap failed. "
-              "Ignoring".format(e=e))
+        print(
+            "WARN: {e}: loading guiscrcpy "
+            "message box pixmap failed. "
+            "Ignoring".format(e=e)
+        )
     message_box.setText("<b>{}</b>".format(text))
     message_box.setTextFormat(QtCore.Qt.RichText)
     message_box.setInformativeText(info_text)

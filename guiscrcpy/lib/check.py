@@ -33,8 +33,9 @@ def _get_dimension_raw_noexcept(path, device_id=None):
     if device_id:
         shell_adb = Popen(
             _("{} -s {} shell wm size".format(path, device_id)),
-            stdout=PIPE, stderr=PIPE)
+            stdout=PIPE,
+            stderr=PIPE,
+        )
     else:
-        shell_adb = Popen(_("{} shell wm size".format(path)),
-                          stdout=PIPE, stderr=PIPE)
+        shell_adb = Popen(_("{} shell wm size".format(path)), stdout=PIPE, stderr=PIPE)
     return shell_adb

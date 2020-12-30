@@ -1,7 +1,7 @@
 #!/usr/bin/env/python\n
 # flake8: noqa
 def desktop_device_shortcut_svg():
-    a="""<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    a = """<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"

@@ -9,11 +9,11 @@ class ScrcpyBridge(Bridge):
     name = "scrcpy"
 
     def post_init(self):
-        if os.getenv('SCRCPY_LDD'):
-            if os.getenv('LD_LIBRARY_PATH'):
-                os.environ['LD_LIBRARY_PATH'] += os.getenv('SCRCPY_LDD')
+        if os.getenv("SCRCPY_LDD"):
+            if os.getenv("LD_LIBRARY_PATH"):
+                os.environ["LD_LIBRARY_PATH"] += os.getenv("SCRCPY_LDD")
             else:
-                os.environ['LD_LIBRARY_PATH'] = os.getenv('SCRCPY_LDD')
+                os.environ["LD_LIBRARY_PATH"] = os.getenv("SCRCPY_LDD")
 
     def start(self, args, stdout=PIPE, stderr=PIPE):
         proc = Popen(
@@ -22,5 +22,3 @@ class ScrcpyBridge(Bridge):
             stderr=stderr,
         )
         return proc
-
-

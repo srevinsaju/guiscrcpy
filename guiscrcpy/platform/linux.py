@@ -22,8 +22,7 @@ import os
 
 from guiscrcpy.version import VERSION
 
-desktop = \
-    """
+desktop = """
 [Desktop Entry]
 Version={v}
 Name=guiscrcpy
@@ -46,26 +45,22 @@ class Linux:
 
     @staticmethod
     def make_config():
-        if os.getenv('XDG_CONFIG_HOME') is None:
+        if os.getenv("XDG_CONFIG_HOME") is None:
             path = os.path.expanduser("~/.config/guiscrcpy/")
         else:
-            path = os.getenv('XDG_CONFIG_HOME').split(":")[0] + "/guiscrcpy"
+            path = os.getenv("XDG_CONFIG_HOME").split(":")[0] + "/guiscrcpy"
         if not os.path.exists(path):
             try:
                 os.makedirs(path)
             except Exception as e:
                 logging.error(
                     "Error creating configuration filename in dir {path}. "
-                    "Error code:{e}"
-                    .format(
-                        path=path,
-                        e=e
-                    ))
+                    "Error code:{e}".format(path=path, e=e)
+                )
         return path
 
     @staticmethod
-    def create_desktop(desktop_file=None,
-                       desktop_file_name='guiscrcpy.desktop'):
+    def create_desktop(desktop_file=None, desktop_file_name="guiscrcpy.desktop"):
         """
         Create Desktop filename for Linux in ~/.local level
         :return:
@@ -76,26 +71,23 @@ class Linux:
             desk = desktop.format(
                 v=VERSION,
                 icon_path=os.path.join(
-                    os.path.abspath(
-                        os.path.dirname(
-                            os.path.dirname(__file__)
-                        )
-                    ),
-                    'ui', 'ui', 'guiscrcpy_logo.png'
-                )
+                    os.path.abspath(os.path.dirname(os.path.dirname(__file__))),
+                    "ui",
+                    "ui",
+                    "guiscrcpy_logo.png",
+                ),
             )
-        if os.getenv('XDG_DESKTOP_DIR'):
-            desktop_dir = os.getenv('XDG_DESKTOP_DIR')
+        if os.getenv("XDG_DESKTOP_DIR"):
+            desktop_dir = os.getenv("XDG_DESKTOP_DIR")
         else:
-            if os.path.exists(os.path.expanduser('~/Desktop')):
-                desktop_dir = os.path.expanduser('~/Desktop')
-            elif os.path.exists(os.path.expanduser('~/desktop')):
-                desktop_dir = os.path.expanduser('~/desktop')
+            if os.path.exists(os.path.expanduser("~/Desktop")):
+                desktop_dir = os.path.expanduser("~/Desktop")
+            elif os.path.exists(os.path.expanduser("~/desktop")):
+                desktop_dir = os.path.expanduser("~/desktop")
             else:
                 desktop_dir = False
         if desktop_dir:
-            with open(os.path.join(desktop_dir, desktop_file_name),
-                      'w') as w:
+            with open(os.path.join(desktop_dir, desktop_file_name), "w") as w:
                 w.write(desk)
             return desktop_dir
         else:
@@ -108,11 +100,11 @@ class Linux:
 
     @staticmethod
     def system():
-        return 'Linux'
+        return "Linux"
 
     def increment(self):
         pass
 
     @staticmethod
     def paths():
-        return ['bin', '/usr/bin', '~/.local/bin', '~/bin', '/usr/local/bin']
+        return ["bin", "/usr/bin", "~/.local/bin", "~/bin", "/usr/local/bin"]

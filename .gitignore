@@ -27,3 +27,4 @@ guiscrcpy.AppDir.BUILD/
 guiscrcpy.AppDir/
 scrcpy-squashfs-root/
 squashfs-root/
+/deb_dist/

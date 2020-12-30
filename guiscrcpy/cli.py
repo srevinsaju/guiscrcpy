@@ -5,13 +5,16 @@ import traceback
 
 import click
 import colorama
+from click import Context
 from qtpy.QtWidgets import QApplication
 from qtpy import QtCore, QtWidgets
 
 from .lib.utils import format_colors as fc, show_message_box
 from .launcher import bootstrap
-from .lib.check import AndroidDebugBridge, ScrcpyNotFoundError, \
-    AdbNotFoundError, ScrcpyServerNotFoundError
+from .lib.bridge.exceptions import ScrcpyNotFoundError
+from .lib.bridge.exceptions import AdbNotFoundError
+from .lib.bridge.exceptions import ScrcpyServerNotFoundError
+from .lib.bridge import AndroidDebugBridge
 from .lib.config import InterfaceConfig, InvalidConfigurationError
 from .version import VERSION
 from . import __doc__ as lic
@@ -86,14 +89,19 @@ def show_license(ctx, param, value):  # noqa:
               default=True,
               help="Show window manager border frame.")
 @click.option('--debug-disable-scrcpy',
-              'debug__disable_scrcpy',
+              'debug_disable_scrcpy',
               default=False, is_flag=True,
               help="Do not launch scrcpy even when 'Start Scrcpy' is pressed")
 @click.option('-A', '--always-on-top/--disable-always-on-top', 'aot',
               default=True, help="Forces the panels to be always of top")
-def cli(ctx, hide_wm_frame=True, aot=True, theme='Breeze',
-        debug__disable_scrcpy=False):
-    """ guiscrcpy: Graphical user interface for scrcpy"""
+def cli(
+        ctx: Context,
+        hide_wm_frame: bool = True,
+        aot: bool = True,
+        theme: str = 'Breeze',
+        debug_disable_scrcpy: bool = False
+):
+    """guiscrcpy: Graphical user interface for scrcpy"""
     print(fc("\n{b}guiscrcpy {v}{rst}", v=VERSION))
     print(fc("by @srevinsaju"))
     print(fc("{x}https://github.com/srevinsaju/guiscrcpy{rst}\n\n"))
@@ -110,14 +118,14 @@ def cli(ctx, hide_wm_frame=True, aot=True, theme='Breeze',
         QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
         # init core
         app = QtWidgets.QApplication(sys.argv)
-        cfgmgr = InterfaceConfig()
+        config_manager = InterfaceConfig()
         bootstrap(
-            app,
-            cfgmgr,
+            app=app,
+            config_manager=config_manager,
             theme=theme,
             aot=aot,
             hide_wm_frame=hide_wm_frame,
-            debug__no_scrcpy=debug__disable_scrcpy)
+            debug_no_scrcpy=debug_disable_scrcpy)
     except ScrcpyNotFoundError:
         _msg_box = show_message_box(
             text="Scrcpy not found",
@@ -192,10 +200,10 @@ def cli(ctx, hide_wm_frame=True, aot=True, theme='Breeze',
               help="Reset guiscrcpy's mapper configuration file")
 def mapper(device_id=None, reset=False):
     """Run the guiscrcpy mapper"""
-    cfgmgr = InterfaceConfig()
-    config = cfgmgr.get_config()
+    config_manager = InterfaceConfig()
+    config = config_manager.get_config()
     mapper_cfg_path = os.path.join(
-        cfgmgr.get_cfgpath(), 'guiscrcpy.mapper.json'
+        config_manager.get_cfgpath(), 'guiscrcpy.mapper.json'
     )
     if reset:
         # A ternary version of removing a file if it exists
@@ -229,10 +237,10 @@ def mapper(device_id=None, reset=False):
 
     from guiscrcpy.lib.mapper.mapper import Mapper
     # Initialize the mapper if it is called.
-    adb = AndroidDebugBridge(path=cfgmgr.get_config().get('adb'))
+    adb = AndroidDebugBridge(path=config_manager.get_config().get('adb'))
     mp = Mapper(mapper_device_id, adb=adb, config_path=mapper_cfg_path)
     if not os.path.exists(
-            os.path.join(cfgmgr.get_cfgpath(), 'guiscrcpy.mapper.json')):
+            os.path.join(config_manager.get_cfgpath(), 'guiscrcpy.mapper.json')):
         print("guiscrcpy.mapper.json does not exist. ")
         print("Initializing Mapper Configuration for the first time use.")
         mp.initialize(initialize_qt=True)
@@ -252,8 +260,8 @@ def mapper(device_id=None, reset=False):
 @click.argument('args', nargs=-1)
 def adb_cli(args):
     """Create an interface with the Android Debugging bridge"""
-    cfgmgr = InterfaceConfig()
-    config = cfgmgr.get_config()
+    config_manager = InterfaceConfig()
+    config = config_manager.get_config()
     if os.getenv('GUISCRCPY_ADB'):
         adb_path = os.getenv('GUISCRCPY_ADB')
     else:
@@ -267,8 +275,8 @@ def adb_cli(args):
 @click.argument('args', nargs=-1)
 def scrcpy(args):
     """Create an interface with scrcpy"""
-    cfgmgr = InterfaceConfig()
-    config = cfgmgr.get_config()
+    config_manager = InterfaceConfig()
+    config = config_manager.get_config()
     if os.getenv('GUISCRCPY_SCRCPY'):
         scrcpy_path = os.getenv('GUISCRCPY_SCRCPY')
     else:
@@ -283,13 +291,13 @@ def scrcpy(args):
               help="Reset the configuration files")
 def _config(reset=False):
     """View / Edit the configuration file"""
-    cfgmgr = InterfaceConfig(load=False)
+    config_manager = InterfaceConfig(load=False)
     if reset:
-        cfgmgr.reset_config()
+        config_manager.reset_config()
         click.echo("Configuration file resetted successfully.")
         sys.exit(0)
-    cfgmgr.load_config()
-    print(cfgmgr)
+    config_manager.load_config()
+    print(config_manager)
 
 
 @cli.command()

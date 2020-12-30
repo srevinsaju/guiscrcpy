@@ -45,6 +45,10 @@ from qtpy.QtCore import QModelIndex, QPoint
 from qtpy.QtGui import QPixmap, QIcon, QFont, QFontDatabase
 from qtpy.QtWidgets import QMainWindow, QListWidgetItem, QMenu
 from qtpy.QtWidgets import QMessageBox
+
+from .lib.bridge.audio.sndcpy import SndcpyBridge
+from .lib.bridge.audio.usbaudio import USBAudioBridge
+from .lib.config import InterfaceConfig
 from .lib.utils import format_colors as fc
 from .constants import FONTS
 from .install.finder import open_exe_name_dialog
@@ -60,8 +64,9 @@ from .ux.panel import Panel
 from .ux.swipe import SwipeUX
 from .ux.toolkit import InterfaceToolkit
 from .version import VERSION
-from .lib.check import AndroidDebugBridge, ScrcpyBridge, \
-    ScrcpyServerNotFoundError
+from .lib.bridge import AndroidDebugBridge, ScrcpyBridge
+from .lib.bridge.exceptions import ScrcpyServerNotFoundError
+
 
 environment = platform.System()
 
@@ -84,19 +89,26 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
     """
 
     # noinspection PyArgumentList
-    def __init__(self, cfgmgr, adb, scrcpy, force_window_frame=False,
-                 panels_not_always_on_top=False, debug__no_scrcpy=False):
+    def __init__(
+            self,
+            config_manager: InterfaceConfig,
+            adb: AndroidDebugBridge,
+            scrcpy: ScrcpyBridge,
+            force_window_frame: bool = False,
+            panels_not_always_on_top: bool = False,
+            debug_no_scrcpy: bool = False
+    ):
         QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
         self._adb = adb
         self._scrcpy = scrcpy
-        self.cfgmgr = cfgmgr
-        config = self.cfgmgr.get_config()
+        self.config_manager = config_manager
+        config = self.config_manager.get_config()
         self._config = config
         self.panels_not_always_on_top = panels_not_always_on_top
         self.force_window_frame = force_window_frame
-        self.debug__no_scrcpy = debug__no_scrcpy
+        self.debug__no_scrcpy = debug_no_scrcpy
         self.cmx = None
         self.sm = None
         self.mp = None
@@ -200,15 +212,15 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.refresh_devices()
 
     @property
-    def adb(self):
+    def adb(self) -> AndroidDebugBridge:
         return self._adb
 
     @property
-    def scrcpy(self):
+    def scrcpy(self) -> ScrcpyBridge:
         return self._scrcpy
 
     @property
-    def config(self):
+    def config(self) -> dict:
         return self._config
 
     def restart_adb_server_guiscrcpy(self):
@@ -249,7 +261,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.nm.show()
 
     def bootstrap_mapper(self):
-        mapper_config_path = os.path.join(self.cfgmgr.get_cfgpath(),
+        mapper_config_path = os.path.join(self.config_manager.get_cfgpath(),
                                           "guiscrcpy.mapper.json")
         if os.path.exists(mapper_config_path):
             from guiscrcpy.lib.mapper.mapper import MapperAsync
@@ -303,15 +315,15 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 self.private_message_box_adb.setText(
                     "Mapper initialized")
 
-    @staticmethod
-    def launch_usb_audio():
-        for path in environment.paths():
-            if os.path.exists(os.path.join(path, 'usbaudio')):
-                path_to_usbaudio = os.path.join(path, 'usbaudio')
-                break
+    def launch_usb_audio(self):
+        android_version = self.adb.get_target_android_version()
+        if android_version == 10:
+            audio_bridge = SndcpyBridge()
         else:
-            return
-        Popen(path_to_usbaudio, stdout=PIPE, stderr=PIPE)
+            audio_bridge = USBAudioBridge()
+
+        # FIXME: provide the right device id
+        audio_bridge.run(device_id=None)
 
     @staticmethod
     def launch_web_github():
@@ -338,7 +350,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         Remove configuration files; Reset the mapper and guiscrcpy.json
         :return:
         """
-        self.cfgmgr.reset_config()
+        self.config_manager.reset_config()
         log("CONFIGURATION FILE REMOVED SUCCESSFULLY")
         log("RESTART")
         message_box = QMessageBox().window()
@@ -372,8 +384,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             _, identifier = self.current_device_identifier()
             popped_device = self.config['device'].pop(identifier)
             self.refresh_devices()
-            self.cfgmgr.update_config(self.config)
-            self.cfgmgr.write_file()
+            self.config_manager.update_config(self.config)
+            self.config_manager.write_file()
             return popped_device
         except KeyError:
             return False
@@ -404,10 +416,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             )
         )
 
-    def create_desktop_shortcut_linux_os(self):
+    def create_desktop_shortcut_linux_os(self) -> bool:
         """
         Creates a desktop shortcut for Linux OS
-        :return:
+        :return: bool
         """
         # just a check before anything further happens because of an
         # unrelated OS
@@ -418,7 +430,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # get device specific configuration
         model, identifier = self.current_device_identifier()
-        picture_file_path = self.cfgmgr.get_cfgpath()
+        picture_file_path = self.config_manager.get_cfgpath()
         __sha_shift = self.config.get('sha_shift', 5)
         sha = hashlib.sha256(
             str(identifier).encode()
@@ -482,6 +494,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         log(f"Path to desktop file : {path_to_desktop_file}")
         print("Desktop file generated successfully")
         self.display_public_message("Desktop file has been created")
+        return True
 
     def is_connection_success_handler(self, output: Popen, ip=None):
         out, err = output.communicate()
@@ -1171,8 +1184,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
 
         # ====================================================================
         # 22: Update configuration
-        self.cfgmgr.update_config(self.config)
-        self.cfgmgr.write_file()
+        self.config_manager.update_config(self.config)
+        self.config_manager.write_file()
         progress = self.progress(progress)
 
         return self.progress(progress)
@@ -1207,13 +1220,19 @@ def set_scrcpy_server_path(config):
     return config
 
 
-def bootstrap(app, cfgmgr, theme='Breeze', aot=True, debug__no_scrcpy=False,
-              hide_wm_frame=True):
+def bootstrap(
+        app: QtWidgets.QApplication,
+        config_manager: InterfaceConfig,
+        theme: str = "Breeze",
+        aot: bool = True,
+        debug_no_scrcpy: bool = False,
+        hide_wm_frame: bool = True
+):
     """
     Launch the guiscrcpy window
     :return:
     """
-    config = cfgmgr.get_config()
+    config = config_manager.get_config()
 
     # load fonts
     font_database = QFontDatabase()
@@ -1241,16 +1260,18 @@ def bootstrap(app, cfgmgr, theme='Breeze', aot=True, debug__no_scrcpy=False,
 
     # on windows, users are likely not to add the scrcpy-server to the
     # SCRCPY_SERVER_PATH
-    cfgmgr.update_config(set_scrcpy_server_path(config))
-    cfgmgr.write_file()
-    adb = AndroidDebugBridge(cfgmgr.get_config().get('adb'))
-    scrcpy = ScrcpyBridge(cfgmgr.get_config().get('scrcpy'))
-    cfgmgr['adb'] = adb.get_path()
-    cfgmgr['scrcpy'] = scrcpy.get_path()
+    config_manager.update_config(set_scrcpy_server_path(config))
+    config_manager.write_file()
+    adb = AndroidDebugBridge(config_manager.get_config().get('adb'))
+    scrcpy = ScrcpyBridge(config_manager.get_config().get('scrcpy'))
+    config_manager['adb'] = adb.get_path()
+    config_manager['scrcpy'] = scrcpy.get_path()
     guiscrcpy = InterfaceGuiscrcpy(
-        cfgmgr=cfgmgr, adb=adb, scrcpy=scrcpy,
+        config_manager=config_manager,
+        adb=adb,
+        scrcpy=scrcpy,
         force_window_frame=not hide_wm_frame,
-        panels_not_always_on_top=not aot, debug__no_scrcpy=debug__no_scrcpy
+        panels_not_always_on_top=not aot, debug_no_scrcpy=debug_no_scrcpy
     )
     guiscrcpy.show()
     app.processEvents()

@@ -34,7 +34,7 @@ from guiscrcpy.lib.mapper.ux import MapperUI
 fixed_pos = [0.0, 0.0]
 final_pos = [0.0, 0.0]
 
-json_file = 'guiscrcpy.mapper.json'
+json_file = "guiscrcpy.mapper.json"
 
 
 def log(category, message):
@@ -48,7 +48,7 @@ class Mapper:
         self.app = None
         self.adb = adb
         log("mapper", "Waiting for device...")
-        self.adb.command('wait-for-any-device')
+        self.adb.command("wait-for-any-device")
         log("mapper", "Device connection established...")
         self.window = None
         self.guiscrcpy_mapper_json = config_path
@@ -66,17 +66,21 @@ class Mapper:
             e_code = proc.wait(5)
         except subprocess.TimeoutExpired:
             e_code = 0
-            log("mapper", "Failed to detect orientation instantly. Expect"
-                "invalid orientations.")
+            log(
+                "mapper",
+                "Failed to detect orientation instantly. Expect"
+                "invalid orientations.",
+            )
         if e_code != 0:
             # process failed
             raise AdbRuntimeError(
-                'adb failed with {ecode} when trying to '
-                'execute command '
-                '`adb shell dumpsys input`'.format(ecode=e_code))
+                "adb failed with {ecode} when trying to "
+                "execute command "
+                "`adb shell dumpsys input`".format(ecode=e_code)
+            )
         out, err = proc.communicate()
         out, err = out.decode(), err.decode()
-        if 'SurfaceOrientation' in out:
+        if "SurfaceOrientation" in out:
             # SurfaceOrientation gives the idea if the device is
             # landscape or portait. SurfaceOrientation: 1 mentions that
             # the mobile is oriented in the landscape orientation
@@ -89,12 +93,12 @@ class Mapper:
                 print("Detected Landscape orientation...")
                 return 1
             else:
-                print("Failed to detect orientation from device. "
-                      "Fallback to 0")
+                print("Failed to detect orientation from device. " "Fallback to 0")
                 return 0
         else:
-            print("Failed to detect Orientation. SurfaceOrientation"
-                  " key was not found")
+            print(
+                "Failed to detect Orientation. SurfaceOrientation" " key was not found"
+            )
             return 0
 
     def set_device_id(self, device_id):
@@ -124,32 +128,29 @@ class Mapper:
         print("Please wait. A full definition screenshot is being captured")
 
         adb_screencap_process = self.adb.command(
-            'shell screencap -p /sdcard/{uid}.png'.format(
-                uid=uid
-            ),
-            device_id=self._device_id
+            "shell screencap -p /sdcard/{uid}.png".format(uid=uid),
+            device_id=self._device_id,
         )
         adb_screencap_process_ecode = adb_screencap_process.wait(500)
         if adb_screencap_process_ecode != 0:
             print("Screenshot failed. Exiting")
-            print(adb_screencap_process.stdout.read().decode('utf-8'))
+            print(adb_screencap_process.stdout.read().decode("utf-8"))
             return
         # sleep for two seconds so that the image is processed
         time.sleep(2)
 
         # pull screenshot from android using `adb pull`
         adb_pull_process = self.adb.command(
-            'pull /sdcard/{uid}.png {dest}'.format(
-                uid=uid,
-                dest=os.path.dirname(self.guiscrcpy_mapper_json)
+            "pull /sdcard/{uid}.png {dest}".format(
+                uid=uid, dest=os.path.dirname(self.guiscrcpy_mapper_json)
             ),
-            device_id=self._device_id
+            device_id=self._device_id,
         )
         adb_pull_process_ecode = adb_pull_process.wait(500)
 
         if adb_pull_process_ecode != 0:
             print("Screenshot pull failed. Exiting")
-            print(adb_pull_process.stdout.read().decode('utf-8'))
+            print(adb_pull_process.stdout.read().decode("utf-8"))
             return
 
         # sleep for 1 second to get capture time
@@ -157,13 +158,16 @@ class Mapper:
 
         # remove data from user sdcard
         self.adb.command(
-            "shell rm /sdcard/{uid}.png".format(uid=uid),
-            device_id=self._device_id
+            "shell rm /sdcard/{uid}.png".format(uid=uid), device_id=self._device_id
         )
-        print("[LOG] Screenshot captured. Saved to {cfgpath}".format(
-            cfgpath=os.path.dirname(self.guiscrcpy_mapper_json)))
-        return os.path.join(os.path.dirname(self.guiscrcpy_mapper_json),
-                            '{uid}.png'.format(uid=uid))
+        print(
+            "[LOG] Screenshot captured. Saved to {cfgpath}".format(
+                cfgpath=os.path.dirname(self.guiscrcpy_mapper_json)
+            )
+        )
+        return os.path.join(
+            os.path.dirname(self.guiscrcpy_mapper_json), "{uid}.png".format(uid=uid)
+        )
 
     # The following functions handle key events on the mapper
     def on_key_press(self, key):
@@ -172,10 +176,10 @@ class Mapper:
                 print("[KEY] Hotkey command executing")
                 position_to_tap = self.config.get(key.char)
                 c = self.adb.command(
-                    'shell input tap {} {}'.format(*position_to_tap),
-                    device_id=self.get_device_id()
+                    "shell input tap {} {}".format(*position_to_tap),
+                    device_id=self.get_device_id(),
                 )
-                print(c.stdout.read().decode('utf-8'))
+                print(c.stdout.read().decode("utf-8"))
                 print("[KEY][COMPLETE]")
 
         except AttributeError:
@@ -194,10 +198,7 @@ class Mapper:
         :return:
         :rtype:
         """
-        print(
-            "[SERVER] LISTENING VALUES:"
-            "Your keys are being listened by server. "
-        )
+        print("[SERVER] LISTENING VALUES:" "Your keys are being listened by server. ")
         try:
             with keyboard.Listener(on_press=self.on_key_press) as listener:
                 listener.join()
@@ -208,11 +209,11 @@ class Mapper:
     def read_configuration(self):
         if not os.path.exists(self.guiscrcpy_mapper_json):
             self.create_configuration()
-        with open(self.guiscrcpy_mapper_json, 'r', encoding='utf-8') as f:
+        with open(self.guiscrcpy_mapper_json, "r", encoding="utf-8") as f:
             self.config.update(json.load(f))
 
     def create_configuration(self):
-        with open(self.guiscrcpy_mapper_json, 'w') as w:
+        with open(self.guiscrcpy_mapper_json, "w") as w:
             json.dump(self.config, w)
         print("Wrote configuration file.")
 
@@ -228,7 +229,7 @@ class Mapper:
         """
         print("Setting up guiscrcpy-mapper for the first time use...")
         print("Intializing GUI window")
-        if __name__ == '__main__' or initialize_qt:
+        if __name__ == "__main__" or initialize_qt:
             print("Creating QtCore window Application instance")
             self.app = QtWidgets.QApplication([])
         self.window = MapperUI(
@@ -236,15 +237,14 @@ class Mapper:
             self.get_screenshot(),
             self.dimensions,
             fixed_pos=fixed_pos,
-            final_pos=final_pos
+            final_pos=final_pos,
         )
         self.app.processEvents()
         self.app.exec_()
 
 
 class MapperAsync(QThread):
-    def __init__(self, parent, device_id, adb, initialize=True,
-                 config_path=None):
+    def __init__(self, parent, device_id, adb, initialize=True, config_path=None):
         QThread.__init__(self, parent)
         self.parent = parent
         self.adb = adb
@@ -253,8 +253,7 @@ class MapperAsync(QThread):
         self._config_path = config_path
 
     def run(self):
-        mp = Mapper(self.device_id, adb=self.adb,
-                    config_path=self._config_path)
+        mp = Mapper(self.device_id, adb=self.adb, config_path=self._config_path)
         if self.initialize:
             mp.initialize(initialize_qt=False)
         else:

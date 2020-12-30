@@ -5,7 +5,6 @@ import time
 
 
 class NetworkManager:
-
     @staticmethod
     def get_my_ip():
         """
@@ -27,8 +26,8 @@ class NetworkManager:
         ip_list = list()
 
         # get my IP and compose a base like 192.168.1.xxx
-        ip_parts = self.get_my_ip().split('.')
-        base_ip = ip_parts[0] + '.' + ip_parts[1] + '.' + ip_parts[2] + '.'
+        ip_parts = self.get_my_ip().split(".")
+        base_ip = ip_parts[0] + "." + ip_parts[1] + "." + ip_parts[2] + "."
 
         max_threads = 50
 
@@ -62,8 +61,8 @@ class NetworkManager:
         return ip_list
 
 
-if __name__ == '__main__':
-    print('Mapping...')
+if __name__ == "__main__":
+    print("Mapping...")
     nm = NetworkManager()
     lst = nm.map_network()
     print(lst)

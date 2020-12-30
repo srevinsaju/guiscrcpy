@@ -28,8 +28,7 @@ from guiscrcpy.ux import Ui_HorizontalPanel
 
 class Panel(QMainWindow, Ui_HorizontalPanel):
     # there was a Dialog in the bracket
-    def __init__(self, parent=None, ux_mapper=None, frame=False,
-                 always_on_top=True):
+    def __init__(self, parent=None, ux_mapper=None, frame=False, always_on_top=True):
         """
         The bottom panel subwindow class for guiscrcpy
         :param parent: The caller of the function
@@ -91,14 +90,18 @@ class Panel(QMainWindow, Ui_HorizontalPanel):
             # This method checks if we are the last member of the windows
             # spawned and we ourselves are not a member of ourself by
             # checking the uuid generated on creation
-            if not instance.isHidden() \
-                    and instance.name != "swipe" and instance.uid != \
-                    self.uid:
+            if (
+                not instance.isHidden()
+                and instance.name != "swipe"
+                and instance.uid != self.uid
+            ):
                 self.hide()
                 break
         else:
             for instance in self.parent.child_windows:  # noqa
-                if instance.name == 'swipe' and instance.ux.get_sha() == \
-                        self.ux.get_sha():
+                if (
+                    instance.name == "swipe"
+                    and instance.ux.get_sha() == self.ux.get_sha()
+                ):
                     instance.hide()
             self.hide()

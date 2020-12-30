@@ -1,5 +1,4 @@
-GUISCRCPY_DEVICE = \
-    """[Desktop Entry]
+GUISCRCPY_DEVICE = """[Desktop Entry]
 Name={identifier}
 GenericName=guiscrcpy
 Comment=Open Source Android Screen Mirroring System

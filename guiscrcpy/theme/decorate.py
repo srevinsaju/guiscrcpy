@@ -23,21 +23,22 @@ from guiscrcpy.theme.termcolor import ColorTerms
 class Header:
     def __init__(self, commit):
         print(
-            ColorTerms.UNDERLINE +
-            "                                  " +
-            ColorTerms.ENDC)
+            ColorTerms.UNDERLINE
+            + "                                  "
+            + ColorTerms.ENDC
+        )
         print()
         print("guiscrcpy")
         print("by srevinsaju")
         print(ColorTerms.OKBLUE + commit + ColorTerms.ENDC)
         print(
-            ColorTerms.OKBLUE +
-            "Licensed under GNU GPL v3 (c) 2020  " +
-            ColorTerms.ENDC)
+            ColorTerms.OKBLUE + "Licensed under GNU GPL v3 (c) 2020  " + ColorTerms.ENDC
+        )
         print(
-            ColorTerms.UNDERLINE +
-            "                                  " +
-            ColorTerms.ENDC)
+            ColorTerms.UNDERLINE
+            + "                                  "
+            + ColorTerms.ENDC
+        )
         print(ColorTerms.OKBLUE + "" + ColorTerms.ENDC)
 
         print()

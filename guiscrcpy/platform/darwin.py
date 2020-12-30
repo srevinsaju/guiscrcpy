@@ -24,8 +24,7 @@ import os
 class Darwin:
     def __init__(self):
         logging.error(
-            "MacOS is untested. "
-            "guiscrcpy is trying to use Linux config on Mac"
+            "MacOS is untested. " "guiscrcpy is trying to use Linux config on Mac"
         )
 
     def cfgpath(self):
@@ -33,33 +32,30 @@ class Darwin:
 
     @staticmethod
     def make_config():
-        if os.getenv('XDG_CONFIG_HOME') is None:
+        if os.getenv("XDG_CONFIG_HOME") is None:
             path = os.path.expanduser("~/.config/guiscrcpy/")
         else:
-            path = os.getenv('XDG_CONFIG_HOME').split(":")[0] + "/guiscrcpy"
+            path = os.getenv("XDG_CONFIG_HOME").split(":")[0] + "/guiscrcpy"
         if not os.path.exists(path):
             try:
                 os.makedirs(path)
             except Exception as e:
                 logging.error(
                     "Error creating configuration filename in dir {path}. "
-                    "Error code:{e}"
-                    .format(
-                        path=path,
-                        e=e
-                    ))
+                    "Error code:{e}".format(path=path, e=e)
+                )
         return path
 
     @staticmethod
     def system():
-        return 'Darwin'
+        return "Darwin"
 
     def increment(self):
         pass
 
     @staticmethod
     def paths():
-        return ['bin', '/usr/bin', '~/.local/bin', '~/bin', '/usr/local/bin']
+        return ["bin", "/usr/bin", "~/.local/bin", "~/bin", "/usr/local/bin"]
 
     @staticmethod
     def install_fonts():

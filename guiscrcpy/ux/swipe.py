@@ -106,8 +106,7 @@ class SwipeUX(QMainWindow):
         self.lol.setText("")
         self.lol.setObjectName("lol")
         self.lol.setStyleSheet(
-            f"background-color: #{hexdigest};"
-            f"border-radius: 12px; "
+            f"background-color: #{hexdigest};" f"border-radius: 12px; "
         )
         self.swirt = QtWidgets.QPushButton(self.centralwidget)
         self.swirt.setGeometry(QtCore.QRect(40, 20, 30, 30))

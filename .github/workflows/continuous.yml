@@ -6,15 +6,12 @@ on:
 jobs:
   Wheel:
     runs-on: ubuntu-18.04
-    strategy:
-      matrix:
-        version: ['3.8']
     steps:
     - uses: actions/checkout@v2
 
     - uses: actions/setup-python@v1
       with:
-        python-version: ${{ matrix.version }}
+        python-version: 3.x
 
     - name: Build wheel
       run: |
@@ -179,7 +176,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: '3.8'
+          python-version: '3.x'
           architecture: ${{ matrix.arch }}
 
       - name: Patch PySide2
@@ -211,8 +208,55 @@ jobs:
           path: dist
 
 
+  MacOS:
+    name: MacOS
+    runs-on: macos-latest
+    strategy: 
+      matrix:
+        arch: ['x64']
+        qt: ['PySide2']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+          architecture: ${{ matrix.arch }}
+
+      - name: Patch PySide2
+        if: matrix.qt == 'PySide2'
+        run: |
+          brew install gnu-sed
+          gsed -i 's,PyQt5,PySide2,g' requirements.txt
+          gsed -i 's,PyQt5,PySide2,g' setup.py
+
+      - name: Install dependencies
+        run: |
+          pip3 install --upgrade pip
+          pip3 install --upgrade setuptools wheel
+          pip3 install PyInstaller
+          pip3 install -r requirements.txt
+          pip3 install . 
+          echo Done
+          
+      - name: Create .exe
+        run: |
+          echo "from guiscrcpy.cli import cli; cli()" > entry.py
+          python -m PyInstaller -n guiscrcpy-${{ matrix.qt }}-${{ matrix.arch }} ./entry.py --onefile -i guiscrcpy/ui/icons/guiscrcpy_logo_SRj_icon.ico --osx-bundle-identifier 'io.github.srevinsaju.guiscrcpy' --windowed
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          # Artifact name
+          name: guiscrcpy-${{ matrix.qt }}-${{ matrix.arch }}-continuous.app
+          # Directory containing files to upload
+          path: dist
+
+
   Release:
-    needs: [Windows, AppImage, Wheel, Windows]
+    needs: [Windows, AppImage, Wheel, MacOS]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -231,6 +275,9 @@ jobs:
     - uses: actions/download-artifact@v1
       with:
         name: guiscrcpy-PySide2-x64-continuous.exe
+    - uses: actions/download-artifact@v1
+      with:
+        name: guiscrcpy-PySide2-x64-continuous.app
     - uses: actions/download-artifact@v1
       with:
         name: guiscrcpy-continuous-none-any-py3.whl
@@ -259,6 +306,7 @@ jobs:
           guiscrcpy-PyQt5-x64-continuous.exe
           guiscrcpy-PySide2-x86-continuous.exe
           guiscrcpy-PySide2-x64-continuous.exe
+          guiscrcpy-PySide2-x64-continuous.app
           guiscrcpy-continuous-none-any-py3.whl
           guiscrcpy-m-continuous-x86_64.AppImage
           guiscrcpy-r-continuous-x86_64.AppImage
@@ -276,6 +324,7 @@ jobs:
           guiscrcpy-PyQt5-x64-continuous.exe
           guiscrcpy-PySide2-x86-continuous.exe
           guiscrcpy-PySide2-x64-continuous.exe
+          guiscrcpy-PySide2-x64-continuous.app
           guiscrcpy-continuous-none-any-py3.whl
           guiscrcpy-m-continuous-x86_64.AppImage
           guiscrcpy-r-continuous-x86_64.AppImage

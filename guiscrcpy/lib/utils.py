@@ -165,13 +165,16 @@ def show_message_box(text, info_text="", buttons=QMessageBox.Ok):
     return message_box
 
 
-def open_process(command, stdin=None, stdout=None, stderr=None, cwd=None):
-    # warning: CREATE_NO_WINDOW is added in Python 3.7
-    return Popen(
-        command,
-        stdin=stdin,
-        stdout=stdout,
-        stderr=stderr,
-        cwd=cwd,
-        creationflags=CREATE_NO_WINDOW,
-    )
+def open_process(*args, **kwargs):
+    if (
+        environment.system() == "Windows"
+        and sys.version_info.major >= 3
+        and sys.version_info.minor >= 7
+    ):
+        return Popen(
+            *args,
+            **kwargs,
+            creationflags=CREATE_NO_WINDOW,
+        )
+    else:
+        return Popen(*args, **kwargs)

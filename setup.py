@@ -62,6 +62,9 @@ setup(
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
     include_package_data=True,
+    package_data={
+        "guiscrcpy": ["ui/icons/guiscrcpy_logo_SRj_icon.ico"]
+    },
     install_requires=requirements,
     scripts=["scripts/guiscrcpy"],
     entry_points={'console_scripts': ['guiscrcpy = guiscrcpy.cli:cli']},  # noqa: E501

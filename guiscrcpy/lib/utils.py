@@ -22,13 +22,13 @@ import os
 import shlex
 import shutil
 import sys
+import subprocess
 
 from qtpy.QtGui import QPixmap
 from colorama import Fore
 from qtpy import QtCore
 from qtpy.QtWidgets import QMessageBox
 from ..platform.platform import System
-from subprocess import Popen, CREATE_NO_WINDOW
 
 environment = System()
 
@@ -171,10 +171,10 @@ def open_process(*args, **kwargs):
         and sys.version_info.major >= 3
         and sys.version_info.minor >= 7
     ):
-        return Popen(
+        return subprocess.Popen(
             *args,
             **kwargs,
-            creationflags=CREATE_NO_WINDOW,
+            creationflags=subprocess.CREATE_NO_WINDOW,
         )
     else:
-        return Popen(*args, **kwargs)
+        return subprocess.Popen(*args, **kwargs)

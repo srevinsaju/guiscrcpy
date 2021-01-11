@@ -28,7 +28,7 @@ from colorama import Fore
 from qtpy import QtCore
 from qtpy.QtWidgets import QMessageBox
 from ..platform.platform import System
-from subprocess import Popen
+from subprocess import Popen, CREATE_NO_WINDOW
 
 environment = System()
 
@@ -165,9 +165,11 @@ def show_message_box(text, info_text="", buttons=QMessageBox.Ok):
     return message_box
 
 def open_process(command, stdin=None, stdout=None, stderr=None):
+    # warning: CREATE_NO_WINDOW is added in Python 3.7
     return Popen(
         command,
         stdin=stdin,
         stdout=stdout,
         stderr=stderr,
+        creationflags=CREATE_NO_WINDOW
     )

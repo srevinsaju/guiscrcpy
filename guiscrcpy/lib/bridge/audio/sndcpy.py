@@ -3,7 +3,7 @@ import subprocess
 import time
 
 from .base import AudioBridge
-from ...utils import shellify as _, show_message_box
+from ...utils import shellify as _, show_message_box, open_process
 
 
 class SndcpyBridge(AudioBridge):
@@ -14,7 +14,7 @@ class SndcpyBridge(AudioBridge):
             command = "{sndcpy}"
         else:
             command = "{sndcpy} {device_id}"
-        _proc = subprocess.Popen(
+        _proc = open_process(
             _(command.format(sndcpy=self.get_path(), device_id=device_id)),
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,

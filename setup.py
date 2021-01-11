@@ -46,6 +46,7 @@ data_files = [
         ('share/applications', ['guiscrcpy.desktop']),
         ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png']),
     ]
+guiscrcpy_main = 'guiscrcpy.cli:cli'
 
 setup(
     name="guiscrcpy",
@@ -62,9 +63,15 @@ setup(
     url="https://srevinsaju.github.io/guiscrcpy",
     download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
     include_package_data=True,
+    package_data={
+        "guiscrcpy": ["ui/icons/guiscrcpy_logo_SRj_icon.ico"]
+    },
     install_requires=requirements,
     scripts=["scripts/guiscrcpy"],
-    entry_points={'console_scripts': ['guiscrcpy = guiscrcpy.cli:cli']},  # noqa: E501
+    entry_points={
+        'console_scripts': ['guiscrcpy = ' + guiscrcpy_main],
+        'gui_scripts': ['guiscrcpy-noconsole = ' + guiscrcpy_main]
+    },  # noqa: E501
     classifiers=[
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.7',

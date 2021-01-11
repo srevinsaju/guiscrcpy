@@ -22,6 +22,7 @@ import os
 import shlex
 import shutil
 import sys
+import subprocess
 
 from qtpy.QtGui import QPixmap
 from colorama import Fore
@@ -162,3 +163,18 @@ def show_message_box(text, info_text="", buttons=QMessageBox.Ok):
     message_box.setInformativeText(info_text)
     message_box.setStandardButtons(buttons)
     return message_box
+
+
+def open_process(*args, **kwargs):
+    if (
+        environment.system() == "Windows"
+        and sys.version_info.major >= 3
+        and sys.version_info.minor >= 7
+    ):
+        return subprocess.Popen(
+            *args,
+            **kwargs,
+            creationflags=subprocess.CREATE_NO_WINDOW,
+        )
+    else:
+        return subprocess.Popen(*args, **kwargs)

@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from subprocess import Popen, PIPE
+from subprocess import PIPE
 
-from ..lib.utils import shellify as _
+from ..lib.utils import shellify as _, open_process
 
 
 def get(ls, idx, default=""):
@@ -31,11 +31,13 @@ def get(ls, idx, default=""):
 
 def _get_dimension_raw_noexcept(path, device_id=None):
     if device_id:
-        shell_adb = Popen(
+        shell_adb = open_process(
             _("{} -s {} shell wm size".format(path, device_id)),
             stdout=PIPE,
             stderr=PIPE,
         )
     else:
-        shell_adb = Popen(_("{} shell wm size".format(path)), stdout=PIPE, stderr=PIPE)
+        shell_adb = open_process(
+            _("{} shell wm size".format(path)), stdout=PIPE, stderr=PIPE
+        )
     return shell_adb

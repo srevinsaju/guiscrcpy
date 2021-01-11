@@ -92,7 +92,7 @@ def make_shortcut():
         dest = os.path.join(folder, "guiscrcpy.lnk")
 
         wscript = _WSHELL.CreateShortCut(dest)
-        wscript.Targetpath = "guiscrcpy.exe"
+        wscript.Targetpath = "guiscrcpy-noconsole.exe"
         wscript.WorkingDirectory = userfolders.home
         wscript.WindowStyle = 0
         wscript.Description = "An Open Source Android Screen Mirroring System"

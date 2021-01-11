@@ -46,6 +46,7 @@ data_files = [
         ('share/applications', ['guiscrcpy.desktop']),
         ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png']),
     ]
+guiscrcpy_main = 'guiscrcpy.cli:cli'
 
 setup(
     name="guiscrcpy",
@@ -67,7 +68,10 @@ setup(
     },
     install_requires=requirements,
     scripts=["scripts/guiscrcpy"],
-    entry_points={'console_scripts': ['guiscrcpy = guiscrcpy.cli:cli']},  # noqa: E501
+    entry_points={
+        'console_scripts': ['guiscrcpy = ' + guiscrcpy_main],
+        'gui_scripts': ['guiscrcpy-noconsole = ' + guiscrcpy_main]
+    },  # noqa: E501
     classifiers=[
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.7',

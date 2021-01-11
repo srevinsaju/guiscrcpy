@@ -28,6 +28,7 @@ from colorama import Fore
 from qtpy import QtCore
 from qtpy.QtWidgets import QMessageBox
 from ..platform.platform import System
+from subprocess import Popen
 
 environment = System()
 
@@ -162,3 +163,11 @@ def show_message_box(text, info_text="", buttons=QMessageBox.Ok):
     message_box.setInformativeText(info_text)
     message_box.setStandardButtons(buttons)
     return message_box
+
+def open_process(command, stdin=None, stdout=None, stderr=None):
+    return Popen(
+        command,
+        stdin=stdin,
+        stdout=stdout,
+        stderr=stderr,
+    )

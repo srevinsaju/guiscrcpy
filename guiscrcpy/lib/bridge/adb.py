@@ -1,10 +1,10 @@
 import logging
 import sys
-from subprocess import Popen, PIPE, TimeoutExpired, call
+from subprocess import PIPE, TimeoutExpired, call
 
 from .base import Bridge
 from ..check import _get_dimension_raw_noexcept, get
-from ..utils import decode_process, _
+from ..utils import decode_process, open_process, _
 
 
 class AndroidDebugBridge(Bridge):
@@ -21,13 +21,13 @@ class AndroidDebugBridge(Bridge):
     def shell_input(self, command, device_id=None):
         path = self.path
         if device_id:
-            Popen(
+            open_process(
                 _("{} -s {} shell input {}".format(path, device_id, command)),
                 stdout=PIPE,
                 stderr=PIPE,
             )
         else:
-            Popen(
+            open_process(
                 _("{} shell input {}".format(path, command)),
                 stdout=PIPE,
                 stderr=PIPE,
@@ -77,26 +77,26 @@ class AndroidDebugBridge(Bridge):
 
     def shell(self, command, device_id=None):
         if device_id:
-            po = Popen(
+            po = open_process(
                 _("{} -s {} shell {}".format(self.path, device_id, command)),
                 stdout=PIPE,
                 stderr=PIPE,
             )
         else:
-            po = Popen(
+            po = open_process(
                 _("{} shell {}".format(self.path, command)), stdout=PIPE, stderr=PIPE
             )
         return po
 
     def command(self, command, device_id=None):
         if device_id:
-            adb_shell_output = Popen(
+            adb_shell_output = open_process(
                 _("{} -s {} {}".format(self.path, device_id, command)),
                 stdout=PIPE,
                 stderr=PIPE,
             )
         else:
-            adb_shell_output = Popen(
+            adb_shell_output = open_process(
                 _("{} {}".format(self.path, command)), stdout=PIPE, stderr=PIPE
             )
         return adb_shell_output
@@ -114,7 +114,7 @@ class AndroidDebugBridge(Bridge):
         return exit_code
 
     def devices(self):
-        proc = Popen(_(self.path + " devices"), stdout=PIPE)
+        proc = open_process(_(self.path + " devices"), stdout=PIPE)
         output = [[y.strip() for y in x.split("\t")] for x in decode_process(proc)[1:]][
             :-1
         ]
@@ -123,7 +123,7 @@ class AndroidDebugBridge(Bridge):
         return output
 
     def devices_detailed(self):
-        proc = Popen(_(self.path + " devices -l"), stdout=PIPE)
+        proc = open_process(_(self.path + " devices -l"), stdout=PIPE)
         output = [[y.strip() for y in x.split()] for x in decode_process(proc)[1:]][:-1]
         devices_found = []
         for device in output:

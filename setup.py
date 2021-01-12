@@ -50,7 +50,7 @@ guiscrcpy_main = 'guiscrcpy.cli:cli'
 
 setup(
     name="guiscrcpy",
-    version="v4.8.0",
+    version="v4.8.0.post1",
     description="An Open Source - Fast - Android Screen Mirroring system.",
     long_description=long_description,
     long_description_content_type='text/markdown',

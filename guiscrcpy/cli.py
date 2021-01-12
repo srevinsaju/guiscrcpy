@@ -137,6 +137,14 @@ def cli(
         if platform.system() == "Windows":
             import ctypes
 
+            # why this code?
+            # In Windows 7 or later, the taskbar is not for "Application" but for "Application User Model/AppUserModel"
+            # pythonw.exe application is host process, it means all application run by pythonw.exe will use same AppUserModel as pythonw.exe
+            # So that applications runs by pythonw.exe will use same taskbar
+            # To avoid this we must set AppUserModel id explicity
+            # see this
+            # https://stackoverflow.com/a/1552105/9986755
+            # thttp://msdn.microsoft.com/en-us/library/dd378459%28VS.85%29.aspx#host
             appid = "srevinsaju.guiscrcpy"
             ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
 

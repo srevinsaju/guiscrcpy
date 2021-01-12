@@ -133,6 +133,13 @@ def cli(
         # it will log the traceback to the terminal
         # but it would not be visible to users without CLI interface
         # enable High DPI scaling
+
+        if platform.system() == "Windows":
+            import ctypes
+
+            appid = "srevinsaju.guiscrcpy"
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
+
         QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
         # use HIGH DPI icons
         QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)

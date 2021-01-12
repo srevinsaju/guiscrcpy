@@ -136,6 +136,7 @@ def cli(
 
         if platform.system() == "Windows":
             import ctypes
+
             # https://stackoverflow.com/a/1552105/9986755
             appid = "srevinsaju.guiscrcpy"
             ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)

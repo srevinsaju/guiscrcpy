@@ -3,7 +3,7 @@
 guiscrcpy places a configuration file called `guiscrcpy.json` in 
 
 ## Windows
-`C:\Users\<username>\AppData\guiscrcpy\guiscrcpy.json`
+`C:\Users\<username>\AppData\Local\guiscrcpy\guiscrcpy.json`
 
 ## Linux
 `$XDG_CONFIG_HOME/guiscrcpy/guiscrcpy.json` Environment Variable, which, if not defined defaults

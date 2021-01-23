@@ -193,7 +193,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.quit.clicked.connect(self.quit_window)
         self.dimensionText.setText("DEFAULT")
         config["bitrate"] = int(self.dial.value())
-        self.bitrateText.setText(" " + str(config["bitrate"]) + "KB/s")
+        self.bitrateText.setText(str(config["bitrate"]) + "KB/s")
         self.pushButton.setText("RESET")
         self.pushButton.clicked.connect(self.reset)
         self.abtgit.clicked.connect(self.launch_web_github)

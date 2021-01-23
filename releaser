@@ -23,12 +23,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 RAW_VERSION = "4.0"
 
-CONSOLE_SCRIPTS = {
-    "console_scripts": [
-        "guiscrcpy = guiscrcpy.cli:cli",
-    ]
-}
-
 DESKTOP_FILE = """[Desktop Entry]
 Version={v}
 Name=guiscrcpy
@@ -41,27 +35,6 @@ Categories=Utility;Development;
 StartupWMClass=UGENE
 """
 
-DATA_FILES_MANIPULATE = {
-    "setup.py":
-    "",
-    "setup.py-manylinux2014-scrcpy":
-    """
-
-def get_scrcpy_libs():
-    libs = []
-    ls = os.listdir('lib')
-    for i in ls:
-        libs.append('lib/{}'.format(i))
-    return libs
-
-if os.path.exists("bin/scrcpy") and os.path.exists("bin/adb") \
-and os.path.exists("lib"):
-    data_files.extend([
-        ('lib', get_scrcpy_libs() ),
-        ('bin', ['bin/scrcpy', 'bin/adb'])
-    ])
-    """,
-}
 
 EXTRAS_REQUIRE = {"pyqt5": "PyQt5", "pyside2": "PySide2"}
 
@@ -110,72 +83,6 @@ except Exception as e:
 
 # Attach requirements
 
-setupfile = '''#!/usr/bin/env python3
-"""
-{COPYRIGHT}
-"""
-
-from setuptools import setup
-from setuptools import find_packages
-import os
-import platform
-
-try:
-    this_directory = os.path.abspath(os.path.dirname(__file__))
-    with open(
-        os.path.join(this_directory, 'README.md'),
-        encoding='utf-8'
-    ) as f:
-        long_description = f.read()
-except FileNotFoundError:
-    long_description = \\
-        "Open Source Android Screen Mirroring System by @srevinsaju"
-
-requirements = ['PyQt5>=5.14,<5.16', 'pynput', 'qtpy', 'click', 'colorama']
-if platform.system() == 'Windows':
-    requirements.extend(['pywin32', 'psutil'])
-elif platform.system() == 'Linux':
-    requirements.extend(['psutil', 'cairosvg'])
-
-data_files = [
-        ('share/applications', ['guiscrcpy.desktop']),
-        ('share/icons/hicolor/scalable/apps', ['appimage/guiscrcpy.png']),
-    ]
-{DATA_FILE_MANIPULATE}
-setup(
-    name="guiscrcpy",
-    version="{version}",
-    description="An Open Source - Fast - Android Screen Mirroring system.",
-    long_description=long_description,
-    long_description_content_type='text/markdown',
-    license='GPL v3',
-    author='srevinsaju',
-    author_email="srevin03@gmail.com",
-    packages=find_packages(),
-    data_files=data_files,
-    extras_require={extras},
-    url="https://srevinsaju.github.io/guiscrcpy",
-    download_url="https://github.com/srevinsaju/guiscrcpy/archive/master.zip",
-    include_package_data=True,
-    install_requires=requirements,
-    scripts=["scripts/guiscrcpy"],
-    entry_points={
-        'console_scripts': ['guiscrcpy = ' + guiscrcpy_main],
-        'gui_scripts': ['guiscrcpy-noconsole = ' + guiscrcpy_main]
-    },  # noqa: E501
-    classifiers=[
-        'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.8',
-        'Operating System :: MacOS :: MacOS X',
-        'Operating System :: Microsoft :: Windows',
-        'Operating System :: POSIX',
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'
-    ],
-)
-'''
-
 VERSION_FILE = '''#!/usr/bin/env python3
 """
 {COPYRIGHT}
@@ -184,20 +91,6 @@ VERSION_FILE = '''#!/usr/bin/env python3
 VERSION = "{version}"
 '''
 
-# Create a new setup.py with all the information raw.
-# this was because GitPython created a lot of problems
-# hardcoding the information before each release, solved the problem
-
-for setup in ("setup.py", ):
-    with open(setup, "w") as w:
-        w.write(
-            setupfile.format(
-                COPYRIGHT=COPYRIGHT,
-                version=v,
-                entry_points=CONSOLE_SCRIPTS,
-                extras=EXTRAS_REQUIRE,
-                DATA_FILE_MANIPULATE=DATA_FILES_MANIPULATE[setup],
-            ))
 
 with open("guiscrcpy/version.py", "w") as w:
     w.write(VERSION_FILE.format(

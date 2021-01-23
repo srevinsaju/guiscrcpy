@@ -159,7 +159,10 @@ setup(
     include_package_data=True,
     install_requires=requirements,
     scripts=["scripts/guiscrcpy"],
-    entry_points={entry_points},  # noqa: E501
+    entry_points={
+        'console_scripts': ['guiscrcpy = ' + guiscrcpy_main],
+        'gui_scripts': ['guiscrcpy-noconsole = ' + guiscrcpy_main]
+    },  # noqa: E501
     classifiers=[
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.7',

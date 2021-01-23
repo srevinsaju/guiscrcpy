@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
-
+from guiscrcpy.version import VERSION
 from setuptools import setup
 from setuptools import find_packages
 import os
@@ -50,7 +50,7 @@ guiscrcpy_main = 'guiscrcpy.cli:cli'
 
 setup(
     name="guiscrcpy",
-    version="v4.8.0.post1",
+    version=VERSION,
     description="An Open Source - Fast - Android Screen Mirroring system.",
     long_description=long_description,
     long_description_content_type='text/markdown',

@@ -1,3 +1,7 @@
+.chglog/
+CHANGELOG.md
+*.db
+*.patch
 __pycache__
 *.pyo
 *.pyc

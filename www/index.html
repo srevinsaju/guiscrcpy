@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>guiscrcpy | Open Source Android Screen Mirroring</title>
+    <meta name="description" content="guiscrcpy, an open source android screen mirroring system built on python, based on the award winning scrcpy, by rom1v and Genymobile">
+    <meta name="keywords" content="Srevin Saju, Open Source, AppImage, guiscrcpy, android, screen, mirroring, client, fast, adb">
+    <meta name="author" content="Srevin Saju">
+
+    <!-- OG -->
+    <meta property="og:title" content="guiscrcpy" />
+    <meta property="og:url" content="https://guiscrcpy.srevinsaju.me" />
+    <meta property="og:image" content="https://srevinsaju.me/img/ss-logo-small.png" />
+    <meta property="og:description" content="guiscrcpy | an open source android screen mirroring system built on python, based on the award winning scrcpy, by rom1v and Genymobile" />
+    <meta property="og:site_name" content="srevinsaju" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://kit.fontawesome.com/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/termynal.css">
+    <link rel="stylesheet" href="/css/bulma/bulma-switch.min.css">
+    <script src="https://kit.fontawesome.com/52ec62d041.js" crossorigin="anonymous" async></script>
+
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#main">
+          <img src="/img/ss-logo-small.png" height="28" alt="Srevin Saju Logo">
+        </a>
+
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="ssNavBarTop"
+        onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="ssNavBarTop" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="#main">
+            Home
+          </a>
+          <a class="navbar-item" href="#projects">
+            Projects
+          </a>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link" href="#"  onclick="return false;">
+              More
+            </a>
+
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="#about">
+                About
+              </a>
+              <a class="navbar-item" href="#contact">
+                Contact
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item" href="https://github.com/srevinsaju/zap/issues">
+                Report an issue
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="field" style="margin: 0.5em;">
+              <input id="themeSwitch" type="checkbox" name="switchRoundedDefault" class="switch is-rounded">
+              <label for="themeSwitch">
+                <i class="fa fa-sun"></i><span class="sr-only">Light Mode</span>
+              </label>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HOME SECTION -->
+    <section id="main" class="section" >
+      <div class="ss-aboutbox">
+        <div class="ss-aboutbox-content">
+          <img src="https://raw.githubusercontent.com/srevinsaju/guiscrcpy/master/guiscrcpy/ui/ui/guiscrcpy_logo.png" style="height: 9em;">
+          <h1 class="title" style="font-size: 6em; line-height: 0.5em;">guiscrcpy </h1>
+          <h2 class="subtitle">
+            The fastest ⚡️ <br>
+            open source <br>
+            Android Screen Mirroring 📱<br>
+            GUI 💻</h2>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FEATURE SECTION -->
+    <section id="main" class="section">
+      <div class="ss-aboutbox">
+        <div class="ss-aboutbox-content">
+          <h1 class="title">
+            Yet another Android Mirroring Software? 🤔
+          </h1>
+          <img src="https://github.com/srevinsaju/guiscrcpy/raw/master/screen39.jpg" alt="Image showing a demonstration of guiscrcpy">
+          <p class="subtitle">
+            <strong>guiscrcpy</strong> provides a stable, user friendly graphical user interface 
+            for the fastest Android screen mirroring software, <strong>scrcpy</strong>! 
+            guiscrcpy makes it amazingly easy to use scrcpy
+            right from your desktop, one click away!
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- INSTALL SECTION -->
+    <section id="main" class="section" >
+      <div class="ss-aboutbox">
+        <div class="ss-aboutbox-content">
+          <h1 class="title">Get it now! 🚀</h1>
+          <p class="subtitle">
+            guiscrcpy is available as precompiled binaries for almost all popular platforms, 
+            Windows (.exe), AppImages for Linux, and for macOS
+          </p>
+          <a class="button" href="https://github.com/srevinsaju/guiscrcpy/releases/latest"><i class="fa fa-download"></i><span class="sr-only"> Download</span>  Stable Release</a>
+          <a class="button" href="https://github.com/srevinsaju/guiscrcpy/releases/tag/continuous"><i class="fa fa-download"></i><span class="sr-only"> Download</span>  Beta Release</a>
+        </div>
+
+
+      </div>
+    </section>
+
+    <!-- FSF SECTION -->
+    <section id="main" class="section" >
+      <div class="ss-aboutbox">
+        <div class="ss-aboutbox-content">
+          <h1 class="title">Free as in Freedom</h1>
+          <h2 class="subtitle">Customizable. Open Source.</h1>
+          <p class="subtitle">
+            guiscrcpy is an GPL-3.0 Licensed Open source software.
+            You can get the complete source code at
+            <a href="https://github.com/srevinsaju/guiscrcpy">
+            <i class="fa fa-github"></i>  GitHub</a>. Feel free to
+            open an issue or create a pull request. Contributions are welcome!
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="./js/termynal.js" data-termynal-container="#termynal"></script>
+    <script src="./js/clipboard.js"></script>
+    <!-- <script src="./js/index.js" defer></script> -->
+    <script>
+      function onClickAnnounce() {
+        new ClipboardJS('#copyToClipboardButton').text("Copied!")
+      }
+
+      function darkTheme() {
+        $(":root").get(0).style.setProperty("--foreground-color", "#ffffff");
+        $(":root").get(0).style.setProperty("--foreground-color-2", "#fafafa");
+        $(":root").get(0).style.setProperty("--background-color", " #121212");
+        $(":root").get(0).style.setProperty("--background-color-2", " #000000");
+        $("label[for='themeSwitch']").html('<i class="fa fa-moon"></i><span class="sr-only">Dark Mode</span>')
+        $('#themeSwitch').prop('checked', true);
+        $("#bulma").attr("src","/img/made-with-bulma--white.png");
+        $(":root").get(0).style.setProperty("--cth", "0");
+      }
+
+      function lightTheme() {
+        $(":root").get(0).style.setProperty("--foreground-color", "#000");
+        $(":root").get(0).style.setProperty("--foreground-color-2", "#121212");
+        $(":root").get(0).style.setProperty("--background-color", " #fafafa");
+        $(":root").get(0).style.setProperty("--background-color-2", " #ffffff");
+        $("label[for='themeSwitch']").html('<i class="fa fa-sun"></i><span class="sr-only">Light Mode</span>')
+        $('#themeSwitch').prop('checked', false);
+        $("#bulma").attr("src","/img/made-with-bulma--black.png");
+        $(":root").get(0).style.setProperty("--cth", "255");
+      }
+
+      $(document).ready(function(){
+        const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if ( userPrefersDark ) {
+            darkTheme();
+        }
+
+        $('#themeSwitch').change(function() {
+          if (this.checked) {
+            darkTheme();
+          } else {
+            lightTheme();
+          };
+        });
+
+      });
+    </script>
+
+  </body>
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        &copy; <strong>Srevin Saju</strong> 2020.
+        <br>
+        This website is licensed under a <a href="http://creativecommons.org/licenses/by-nc-nd/4.0" target="_blank" rel="noreferrer">
+          Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+        </a>
+        <br>
+        <a href="https://bulma.io">
+          <img id="bulma" src="/img/made-with-bulma--black.png" alt="Made with Proudly built with Bulma" width="128" height="24" style="margin-bottom: 0;">
+        </a>
+        <br>
+        Icons provided by <a href="https://fontawesome.com/" target="_blank" rel="noreferrer">FontAwesome</a> and <a href="https://vedico-org.github.io/" target="_blank" rel="noreferrer">Vedico</a>
+        <br>
+
+      </p>
+      <a href="http://creativecommons.org/licenses/by-nc-nd/4.0" target="_blank" rel="noreferrer"><img src="img/by-nc-nd.svg" alt="CC-BY-NC-ND"></a>
+
+    </div>
+  </footer>
+
+</html>

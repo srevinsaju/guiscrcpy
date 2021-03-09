@@ -6,7 +6,7 @@
 
 [![Updates](https://pyup.io/repos/github/srevinsaju/guiscrcpy/shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)[![Python 3](https://pyup.io/repos/github/srevinsaju/guiscrcpy/python-3-shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/guiscrcpy?style=flat-square)![PyPI](https://img.shields.io/pypi/v/guiscrcpy?style=flat-square)![PyPI - Wheel](https://img.shields.io/pypi/wheel/guiscrcpy?style=flat-square)![PyPI - Downloads](https://img.shields.io/pypi/dm/guiscrcpy?color=dark%20green&logo=PYPI&logoColor=Green&style=flat-square)](https://pypi.org/project/guiscrcpy)
 
-[![Get guiscrcpy AppImage](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.srevinsaju.me%2Fget-appimage%2Fguiscrcpy%2Fshields.json)](https://www.srevinsaju.me/get-appimage/guiscrcpy/)
+[![Get guiscrcpy AppImage](https://img.shields.io/endpoint?url=https%3A%2F%2Fg.srevinsaju.me%2Fget-appimage%2Fguiscrcpy%2Fshields.json)](https://www.srevinsaju.me/get-appimage/guiscrcpy/)
 
 [![AUR version](https://img.shields.io/aur/version/guiscrcpy?label=Arch%20Linux%20Package&style=flat-square)](https://aur.archlinux.org/packages/guiscrcpy)
 [![guiscrcpy](https://snapcraft.io//guiscrcpy/badge.svg)](https://snapcraft.io/guiscrcpy)
@@ -24,8 +24,6 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/srevinsaju?style=social)](https://twitter.com/srevinsaju)
 
 [![GitHub followers](https://img.shields.io/github/followers/srevinsaju?label=srevin%20Saju&style=social)](https://github.com/srevinsaju)
-
-[![Become a Patron](docs/img/guiscrcpy_branding.png)](https://www.patreon.com/srevinsaju?fan_landing=true)
 
 ![image of guiscrcpy](screen39.jpg)
 

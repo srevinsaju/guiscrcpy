@@ -59,7 +59,6 @@ These are the common methods of installation. To see more interesting ways, chec
 ## Further reading
 
 Thanks to users around the world, 
-guiscrcpy is one of the trending apps this month. 
 You may like to see some articles written by well wishers:
 
 * [Mirror your Android screen on your computer with Guiscrcpy - opensource.com](https://opensource.com/article/19/9/mirror-android-screen-guiscrcpy)
@@ -72,7 +71,7 @@ You may like to see some articles written by well wishers:
 ## Acknowledgements
 
 Special thanks to [Jetbrains](https://www.jetbrains.com/?from=guiscrcpy) for sponsoring `guiscrcpy` with
-a professional PyCharm IDE; It works fantastic!!3
+a professional PyCharm IDE; It works fantastic!
 
 [![jetbrains](docs/img/jetbrains.svg)](https://www.jetbrains.com/?from=guiscrcpy)
 
@@ -109,10 +108,6 @@ Support this project with your organization. Your logo will show up here with a 
 ## License
 
 ```
-GUISCRCPY by srevinsaju
-Get it on : https://github.com/srevinsaju/guiscrcpy
-Licensed under GNU Public License
-
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -132,7 +127,6 @@ Creative Commons 3.0 Unported. The original SVG black work
 by Dave Gandy has been re-oriented, flipped or color-changed.
 The rest of Terms and Conditions put forward by
 CC-3.0:Unported has been feverently followed by the developer.
-Icons have been adapted in all the three windows.
 
 Icons pack obtained from www.flaticon.com
 All rights reserved.
@@ -141,5 +135,5 @@ All rights reserved.
 
 ---------------------
 
-Copyright &copy; [Srevin Saju](https://github.com/srevinsaju) 2019 - 2020
+Copyright &copy; 2019 - 2021 [Srevin Saju](https://github.com/srevinsaju) and `guiscrcpy` contributors.
 

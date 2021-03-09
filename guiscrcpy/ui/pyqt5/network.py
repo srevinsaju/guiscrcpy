@@ -45,7 +45,7 @@ class Ui_NetworkUI(object):
         self.spinBox.setFont(font)
         self.spinBox.setToolTipDuration(2)
         self.spinBox.setMinimum(1000)
-        self.spinBox.setMaximum(9999)
+        self.spinBox.setMaximum(99999)
         self.spinBox.setProperty("value", 5555)
         self.spinBox.setObjectName("spinBox")
         self.gridLayout.addWidget(self.spinBox, 4, 0, 1, 1)

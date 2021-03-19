@@ -1,18 +1,21 @@
 from qtpy.QtWidgets import QFileDialog
+from qtpy.QtCore import QDir
 
 
 def open_exe_name_dialog(parent, appname):
     options = QFileDialog.Options()
-    options |= QFileDialog.DontUseNativeDialog
-    file_name, _ = QFileDialog.getOpenFileName(
-        parent,
-        "{} could not be found. Please locate it manually".format(appname),
-        "",
-        "Valid {} executable (*);;".format(appname),
-        options=options,
+    options |= QDir.AllEntries
+    options |= QDir.Hidden
+
+    file_dialog = QFileDialog()
+    file_dialog.setFilter(QDir.AllEntries | QDir.Hidden)
+    file_dialog.setFileMode(QFileDialog.ExistingFile)
+    file_dialog.setWindowTitle(
+        f"{appname} could not be found. Please locate in" "manually"
     )
-    if file_name:
-        print(file_name)
-        return file_name
+    if file_dialog.exec():
+        file_name = file_dialog.selectedFiles()
+        print(file_name[0])
+        return file_name[0]
     else:
         print("No file is selected. guiscrcpy is likely to fail")

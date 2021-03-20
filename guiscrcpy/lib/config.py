@@ -1,6 +1,5 @@
 """
-GUISCRCPY by srevinsaju
-Get it on : https://github.com/srevinsaju/guiscrcpy
+guiscrcpy
 Licensed under GNU Public License
 
 This program is free software: you can redistribute it and/or modify
@@ -36,6 +35,7 @@ class InterfaceConfig:
         self.cfgpath = self.os.cfgpath()
         self.paths = self.os.paths()
         self.config = {
+            "version": 1,
             "paths": self.paths,
             "scrcpy": None,
             "adb": None,

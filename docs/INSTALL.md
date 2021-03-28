@@ -41,7 +41,7 @@ Few points to consider:
 
 <br>
 
-## AppImages ![AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/AppImage/badge.svg) [![Get guiscrcpy AppImage](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.srevinsaju.me%2Fget-appimage%2Fguiscrcpy%2Fshields.json)](https://www.srevinsaju.me/get-appimage/guiscrcpy/)
+## AppImages ![AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/AppImage/badge.svg) [![Get guiscrcpy AppImage](https://img.shields.io/endpoint?url=https%3A%2F%2Fg.srev.in%2Fget-appimage%2Fguiscrcpy%2Fshields.json)](https://g.srev.in/get-appimage/guiscrcpy/)
 
 AppImages are distributed on the AppImage catalog and on the releases page. To get seamless updates and desktop integration, install the AppImage
 with [Zap AppImage Package Manager](https://github.com/srevinsaju/zap), and then just run

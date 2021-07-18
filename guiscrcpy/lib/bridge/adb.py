@@ -15,7 +15,11 @@ class AndroidDebugBridge(Bridge):
         _proc = self.shell("getprop ro.build.version.release", device_id=device_id)
         _ecode = _proc.wait(10)
         if not _ecode:
-            api = int(_proc.stdout.read().decode())
+            # handle cases like 8.1.0
+            # (https://github.com/srevinsaju/guiscrcpy/issues/248)
+            # which is although, not a standard, but we can safely handle
+            # the edge cases
+            api = int(_proc.stdout.read().decode().strip().split(".")[0])
         return api
 
     def shell_input(self, command, device_id=None):

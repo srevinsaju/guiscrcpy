@@ -21,6 +21,10 @@ environment:
   ADB: ${APPDIR}/scrcpy/usr/bin/adb
   GUISCRCPY_APPIMAGE: True
 
+hidden-import:
+  - pynput.keyboard._xorg
+  - pynput.mouse._xorg
+
 ignore-binaries:
   - libstdc++*
   - libfontconfig*

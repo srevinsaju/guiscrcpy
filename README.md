@@ -1,31 +1,41 @@
-<img src=https://raw.githubusercontent.com/srevinsaju/guiscrcpy/master/guiscrcpy/ui/ui/guiscrcpy_logo.png width=25%>
+<p align="center">
+    <img src="https://raw.githubusercontent.com/srevinsaju/guiscrcpy/master/guiscrcpy/ui/ui/guiscrcpy_logo.png" alt="guiscrcpy logo" width=128 height=128>
 
-# guiscrcpy
+<h2 align="center">📱 guiscrcpy</h2>
 
-[![Financial Contributors on Open Collective](https://opencollective.com/guiscrcpy/all/badge.svg?label=financial+contributors)](https://opencollective.com/guiscrcpy) ![Linux](https://github.com/srevinsaju/guiscrcpy/workflows/Linux/badge.svg)![Windows](https://github.com/srevinsaju/guiscrcpy/workflows/Windows/badge.svg)![Mac OS](https://github.com/srevinsaju/guiscrcpy/workflows/Mac%20OS/badge.svg)
+  <p align="center">
+    A simple, pluggable, graphical user interface for the fastest Android screen mirroring software, <a href="https://github.com/Genymobile/scrcpy">scrcpy</a>
+    <br>
+    <a href="https://github.com/srevinsaju/zap/issues/new">Report bug</a>
+    ·
+    <a href="https://github.com/srevinsaju/zap/issues/new">Request feature</a>
+  </p>
+</p>
 
-[![Updates](https://pyup.io/repos/github/srevinsaju/guiscrcpy/shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)[![Python 3](https://pyup.io/repos/github/srevinsaju/guiscrcpy/python-3-shield.svg)](https://pyup.io/repos/github/srevinsaju/guiscrcpy/)[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/guiscrcpy?style=flat-square)![PyPI](https://img.shields.io/pypi/v/guiscrcpy?style=flat-square)![PyPI - Wheel](https://img.shields.io/pypi/wheel/guiscrcpy?style=flat-square)![PyPI - Downloads](https://img.shields.io/pypi/dm/guiscrcpy?color=dark%20green&logo=PYPI&logoColor=Green&style=flat-square)](https://pypi.org/project/guiscrcpy)
+<div align="center">
 
-[![Get guiscrcpy AppImage](https://img.shields.io/endpoint?url=https%3A%2F%2Fg.srev.in%2Fget-appimage%2Fguiscrcpy%2Fshields.json)](https://g.srev.in/get-appimage/guiscrcpy/)
 
+
+[![Financial Contributors on Open Collective](https://opencollective.com/guiscrcpy/all/badge.svg?label=financial+contributors)](https://opencollective.com/guiscrcpy) ![Linux](https://github.com/srevinsaju/guiscrcpy/workflows/Linux/badge.svg)![Windows](https://github.com/srevinsaju/guiscrcpy/workflows/Windows/badge.svg)![Mac OS](https://github.com/srevinsaju/guiscrcpy/workflows/Mac%20OS/badge.svg) 
+[![Get guiscrcpy AppImage](https://img.shields.io/endpoint?url=https%3A%2F%2Fg.srev.in%2Fget-appimage%2Fguiscrcpy%2Fshields.json)](https://g.srev.in/get-appimage/guiscrcpy/) 
 [![AUR version](https://img.shields.io/aur/version/guiscrcpy?label=Arch%20Linux%20Package&style=flat-square)](https://aur.archlinux.org/packages/guiscrcpy)
 [![guiscrcpy](https://snapcraft.io//guiscrcpy/badge.svg)](https://snapcraft.io/guiscrcpy)
 [![GitHub All Releases](https://img.shields.io/github/downloads/srevinsaju/guiscrcpy/total?style=flat-square)](https://github.com/srevinsaju/guiscrcpy/releases)
-[![Matrix Chat](https://img.shields.io/badge/chat-%5Bmatrix%5D-green)](https://matrix.to/#/#guiscrcpy:matrix.org)
+[![Matrix Chat](https://img.shields.io/badge/chat-%5Bmatrix%5D-green)](https://matrix.to/#/#guiscrcpy:matrix.org) 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) 
+[![GitHub followers](https://img.shields.io/github/followers/srevinsaju?label=Follow%20me&style=social)](https://github.com/srevinsaju) [![GitHub stars](https://img.shields.io/github/stars/srevinsaju/guiscrcpy?style=social)](https://github.com/srevinsaju/guiscrcpy/stargazers) 
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/srevinsaju/guiscrcpy?color=red&label=pre-release&logo=github&sort=semver&style=flat-square) ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/srevinsaju/guiscrcpy/latest?color=green&sort=semver&style=flat-square) 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/dacb6698a7d5410790e088235018f332)](https://www.codacy.com/gh/srevinsaju/guiscrcpy/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=srevinsaju/guiscrcpy&amp;utm_campaign=Badge_Grade) [![Maintainability](https://api.codeclimate.com/v1/badges/c8db380280c4fce44e8b/maintainability)](https://codeclimate.com/github/srevinsaju/guiscrcpy/maintainability)
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+![image of guiscrcpy](screen39.jpg)
+</div>
 
 ----------
 
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/srevinsaju/guiscrcpy?color=red&label=pre-release&logo=github&sort=semver&style=flat-square) ![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/srevinsaju/guiscrcpy/latest?color=green&sort=semver&style=flat-square)[![Codacy Badge](https://api.codacy.com/project/badge/Grade/59c0214b5f2140e0be7af62f14ebdc42)](https://www.codacy.com/manual/srevinsaju/guiscrcpy?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=srevinsaju/guiscrcpy&amp;utm_campaign=Badge_Grade)
 
 ------------
 
-[![Twitter Follow](https://img.shields.io/twitter/follow/srevinsaju?style=social)](https://twitter.com/srevinsaju)
-
-[![GitHub followers](https://img.shields.io/github/followers/srevinsaju?label=srevin%20Saju&style=social)](https://github.com/srevinsaju)
-
-![image of guiscrcpy](screen39.jpg)
 
 ![Live example of guiscrcpy](https://raw.githubusercontent.com/guiscrcpy/guiscrcpy.github.io/master/img/guiscrcpy.gif)
 

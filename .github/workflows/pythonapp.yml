@@ -24,24 +24,22 @@ jobs:
         python-version: 3.x
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip wheel
-        pip install -r requirements.txt
-        pip3 install black
+        python -m pip install --upgrade poetry
+        poetry install
 
     - name: Lint with flake8
       run: |
-        black --check guiscrcpy --exclude guiscrcpy/ui
-        pip install flake8
+        poetry run black --check guiscrcpy --exclude guiscrcpy/ui
         
     - name: Test setup.py
       run: |
-        pip3 install .
+        poetry build
 
     - name: Install Destop Environment
       run: |
         echo "adapted from https://github.com/AppImage/appimage.github.io/blob/master/.travis.yml"
         sudo apt-get update
-        sudo apt-get -qq -y install imagemagick libasound2-dev pulseaudio-utils alsa-utils alsa-oss libjack0 desktop-file-utils xmlstarlet xterm xvfb icewm x11-utils x11-apps netpbm xdotool libgl1-mesa-dri libgl1-mesa-dev mesa-utils libosmesa6 libsdl1.2-dev fonts-wqy-microhei libfile-mimeinfo-perl libx11-xcb1 libxcb-xkb1 libxcb-* libxcb-render-util0 libxkbcommon-x11-0 libxkbcommon0 scrcpy> /dev/null  # appstream # TODO: Cache me!
+        sudo apt-get -qq -y install imagemagick libasound2-dev pulseaudio-utils alsa-utils alsa-oss libjack0 desktop-file-utils xmlstarlet xterm xvfb icewm x11-utils x11-apps netpbm xdotool libgl1-mesa-dri libgl1-mesa-dev mesa-utils libosmesa6 libsdl1.2-dev fonts-wqy-microhei libfile-mimeinfo-perl libx11-xcb1 libxcb-xkb1 libxcb-* libxcb-render-util0 libxkbcommon-x11-0 libxkbcommon0 scrcpy > /dev/null  # appstream # TODO: Cache me!
         mkdir $HOME/.icewm/
         echo "ShowTaskBar = 0" > $HOME/.icewm/preferences
         echo "TaskBarAutoHide = 1" > $HOME/.icewm/preferences

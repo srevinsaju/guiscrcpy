@@ -24,8 +24,10 @@ jobs:
         python-version: 3.x
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade poetry
+        python -m pip install --upgrade poetry wheel
         poetry install
+        poetry build
+        pip3 install dist/*.whl
 
     - name: Lint with flake8
       run: |

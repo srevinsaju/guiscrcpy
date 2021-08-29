@@ -37,24 +37,16 @@ jobs:
     strategy:
       matrix:
         type: ['r', 'm']
-        container: ['ubuntu:18.04', 'ubuntu:16.04'] # r: full or m: minimal
-        exclude:
-          - type: 'r'
-            container: 'ubuntu:16.04'
-          - type: 'm'
-            container: 'ubuntu:18.04'
-    container:
-      image: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      
-      - name: Install dependencies
+      - name: Build
         run: |
           sed -i 's,qtpy,PySide2,g' **/*.py
-          docker build -t guiscrcpy-pyappimage-build -f scripts/ci/pyappimage/Dockerfile
-          docker run -v $(pwd):/usr/src guiscrcpy-pyappimage-build
+          docker build -t guiscrcpy-appimage-build -f scripts/ci/pyappimage/Dockerfile .
+          docker run --rm -v $(pwd):/usr/src guiscrcpy-appimage-build
+          ls -al 
 
       - name: Create Standalone scrcpy
         if: matrix.type == 'm'
@@ -258,11 +250,6 @@ jobs:
     - uses: actions/download-artifact@v1
       with:
         name: guiscrcpy-m-continuous-x86_64.AppImage
-
-    - name: Detect Release type
-      if: github.ref == 'refs/heads/master' && startsWith(github.ref, 'refs/tags/v') != true
-      run: |
-        echo "::set-env release_tag=continuous"
 
     - name: PreRelease
       uses: marvinpinto/action-automatic-releases@latest

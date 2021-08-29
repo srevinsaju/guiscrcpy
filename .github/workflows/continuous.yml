@@ -49,41 +49,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Setup up User
-        run: |
-          apt update
-          apt install -y sudo
-          echo "github ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-          useradd -m github
-          usermod -aG sudo github
-          su - github
       
       - name: Install dependencies
         run: |
-          sudo apt -y install git
-          sudo apt -y install wget curl jq
-          sudo apt install -y software-properties-common
-          sudo add-apt-repository ppa:deadsnakes/ppa
-          sudo apt update
-          sudo apt install python3.8 python3.8-dev python3.8-venv -y
-          wget https://bootstrap.pypa.io/get-pip.py
-          python3.8 get-pip.py
-          mv `which python3.8` `which python3`
-          sudo apt install -y libtool libcairo-dev
-          sudo apt -y install libxcb-xinerama0
-          sudo apt -y install build-essential
-          git clone https://github.com/srevinsaju/pyappimage --depth=1 pyapim
-          cd pyapim
-          python3 -m pip install -r requirements.txt
-          python3 -m pip install .
-          cd ..
-          echo "$(git describe --tags --always --match '*[0-9]*')"
-          sed -i 's,qtpy,PySide2,g' ./**/*.py
           sed -i 's,qtpy,PySide2,g' **/*.py
-          sed -i 's,PyQt5,PySide2,g' *.py
-          python3 -m pyappimage.cli build
-          ls -a 
-
+          docker build -t guiscrcpy-pyappimage-build -f scripts/ci/pyappimage/Dockerfile
+          docker run -v $(pwd):/usr/src guiscrcpy-pyappimage-build
 
       - name: Create Standalone scrcpy
         if: matrix.type == 'm'

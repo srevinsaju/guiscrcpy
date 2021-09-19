@@ -1,5 +1,0 @@
-PyQt5~=5.15
-pynput==1.6.8
-cairosvg~=2.4
-QtPy~=1.9
-psutil~=5.7

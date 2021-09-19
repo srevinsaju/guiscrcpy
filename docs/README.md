@@ -28,7 +28,7 @@
 
 [![Become a Patron]( img/guiscrcpy_branding.png)](https://www.patreon.com/srevinsaju?fan_landing=true)
 
-![image of guiscrcpy](screen39.jpg)
+![image of guiscrcpy](./img/screenshot.jpg)
 
 ![Live example of guiscrcpy](https://raw.githubusercontent.com/guiscrcpy/guiscrcpy.github.io/master/img/guiscrcpy.gif)
 

@@ -28,7 +28,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/dacb6698a7d5410790e088235018f332)](https://www.codacy.com/gh/srevinsaju/guiscrcpy/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=srevinsaju/guiscrcpy&amp;utm_campaign=Badge_Grade) [![Maintainability](https://api.codeclimate.com/v1/badges/c8db380280c4fce44e8b/maintainability)](https://codeclimate.com/github/srevinsaju/guiscrcpy/maintainability)
 
 
-![image of guiscrcpy](screen39.jpg)
+![image of guiscrcpy](docs/img/screenshot.jpg)
 </div>
 
 ----------

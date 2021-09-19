@@ -5,7 +5,7 @@ on:
 
 jobs:
   Wheel:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
 
@@ -15,15 +15,14 @@ jobs:
 
     - name: Build wheel
       run: |
-        python -m pip install wheel twine
-        python setup.py bdist_wheel
-        export VERSION=$(ls dist)
+        python -m pip install wheel poetry
+        poetry build
         
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
-        name: guiscrcpy-continuous-none-any-py3.whl
-        path: dist/${{ env.VERSION }}
+        name: guiscrcpy-python
+        path: dist/
 
     - name: Publish distribution 📦 to Test PyPI
       if: startsWith(github.ref, 'refs/tags/v')
@@ -37,97 +36,37 @@ jobs:
     strategy:
       matrix:
         type: ['r', 'm']
-        container: ['ubuntu:18.04', 'ubuntu:16.04'] # r: full or m: minimal
-        exclude:
-          - type: 'r'
-            container: 'ubuntu:16.04'
-          - type: 'm'
-            container: 'ubuntu:18.04'
-    container:
-      image: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Setup up User
+      - name: Fetch all tags
+        run: git fetch --tags --force
+      - name: Build
         run: |
-          apt update
-          apt install -y sudo
-          echo "github ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-          useradd -m github
-          usermod -aG sudo github
-          su - github
-      
-      - name: Install dependencies
-        run: |
-          sudo apt -y install git
-          sudo apt -y install wget curl jq
-          sudo apt install -y software-properties-common
-          sudo add-apt-repository ppa:deadsnakes/ppa
-          sudo apt update
-          sudo apt install python3.8 python3.8-dev python3.8-venv -y
-          wget https://bootstrap.pypa.io/get-pip.py
-          python3.8 get-pip.py
-          mv `which python3.8` `which python3`
-          sudo apt install -y libtool libcairo-dev
-          sudo apt -y install libxcb-xinerama0
-          sudo apt -y install build-essential
-          git clone https://github.com/srevinsaju/pyappimage --depth=1 pyapim
-          cd pyapim
-          python3 -m pip install -r requirements.txt
-          python3 -m pip install .
-          cd ..
-          echo "$(git describe --tags --always --match '*[0-9]*')"
-          sed -i 's,qtpy,PySide2,g' ./**/*.py
-          sed -i 's,qtpy,PySide2,g' **/*.py
-          sed -i 's,PyQt5,PySide2,g' *.py
-          python3 -m pyappimage.cli build
-          ls -a 
+          # force usage of PySide2 to prevent having surprises with pyinstaller.
+          sed -i 's/qtpy/PySide2/g' **/*.py
+          docker build -t guiscrcpy-appimage-build -f scripts/ci/pyappimage/Dockerfile .
+          docker run --rm -v $(pwd):/usr/src guiscrcpy-appimage-build
+          ls -al 
 
-
-      - name: Create Standalone scrcpy
+      - name: Create guiscrcpy
         if: matrix.type == 'm'
         run: |
-          export APPIMAGE_EXTRACT_AND_RUN=1
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
-          chmod +x appimagetool-x86_64.AppImage
-          cp pyappimage/AppRun.standalone.sh guiscrcpy.AppDir/AppRun
-          chmod +x guiscrcpy.AppDir/AppRun
-          mv guiscrcpy.AppDir squashfs-root
-          export GUISCRCPY_VERSION="$(cat setup.py | grep 'version=' | grep -P -o '\d\.\d\.\d+').dev"
+          export GUISCRCPY_VERSION="$(git describe --tags --always --match 'v*.*').dev"
           export GUISCRCPY_GLIB_VERSION="glibc$(ldd --version | grep 'ldd ' | grep -o ').[0-9].[0-9][0-9]' | grep -o '[0-9].[0-9][0-9]')"
           export GUISCRCPY_MACHINE="$(uname -m)"
           export GUISCRCPY_TYPE="m"
-          ./appimagetool*.AppImage squashfs-root -n \
-            -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-*.$GUISCRCPY_TYPE.*.AppImage.zsync' \
-            guiscrcpy-min-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage
-          mkdir dist
-          mv guiscrcpy-min-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage* dist/.
-
+          ./scripts/build-appimage.sh
 
       - name: Bundle scrcpy
         if: matrix.type == 'r'
         run: |
-          export APPIMAGE_EXTRACT_AND_RUN=1
-          wget -c $(curl -sL https://api.github.com/repos/srevinsaju/scrcpy-appimage/releases/latest | jq -r '.assets[].browser_download_url')
-          chmod +x scrcpy*.AppImage
-          ./scrcpy*.AppImage --appimage-extract  
-          mv squashfs-root scrcpy
-          mkdir squashfs-root
-          mv scrcpy squashfs-root/.
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
-          chmod +x appimagetool-x86_64.AppImage
-          ARCH=x86_64 ./appimagetool*.AppImage -n guiscrcpy.AppDir
-          ./guiscrcpy*.AppImage --appimage-extract
           export GUISCRCPY_VERSION="$(cat setup.py | grep 'version=' | grep -P -o '\d\.\d\.\d+').dev"
           export GUISCRCPY_GLIB_VERSION="glibc$(ldd --version | grep 'ldd ' | grep -o ').[0-9].[0-9][0-9]' | grep -o '[0-9].[0-9][0-9]')"
           export GUISCRCPY_MACHINE="$(uname -m)"
           export GUISCRCPY_TYPE="r"
-          ./appimagetool*.AppImage squashfs-root -n \
-            -u 'gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-*.$GUISCRCPY_TYPE.*.AppImage.zsync' \
-            guiscrcpy-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage
-          mkdir dist
-          mv guiscrcpy-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage* dist/.
+          ./scripts/build-appimage.sh
 
       - name: Install Destop Environment
         run: |
@@ -150,16 +89,15 @@ jobs:
           export LC_ALL=C.UTF-8
           export LANG=C.UTF-8
           export APPIMAGE_EXTRACT_AND_RUN=1
-          chmod +x scripts/display-ci.sh
           echo "echo Dummy scrcpy" | sudo tee -a /usr/bin/scrcpy
           sudo chmod +x /usr/bin/scrcpy
-          /usr/bin/xvfb-run --auto-servernum ./scripts/display-ci.sh "$(realpath dist/*.AppImage)"
+          /usr/bin/xvfb-run --auto-servernum ./scripts/display-ci.sh "$(realpath _build/*.AppImage)"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
         with:
           name: guiscrcpy-${{ matrix.type }}-continuous-x86_64.AppImage
-          path: 'dist/'
+          path: '_build'
 
 
   Windows:
@@ -179,21 +117,15 @@ jobs:
           python-version: '3.x'
           architecture: ${{ matrix.arch }}
 
-      - name: Patch PySide2
-        if: matrix.qt == 'PySide2'
-        run: |
-          sed -i 's,PyQt5,PySide2,g' requirements.txt
-          sed -i 's,PyQt5,PySide2,g' setup.py
-
       - name: Install dependencies
+        shell: bash
         run: |
-          pip3 install --upgrade pip
-          pip3 install --upgrade setuptools wheel
-          pip3 install PyInstaller
-          pip3 install -r requirements.txt
-          pip3 install . 
-          echo Done
-          
+          pip3 install --upgrade pip wheel
+          pip3 install --upgrade poetry PyInstaller ${{ matrix.qt }}
+          poetry install -E ${{ matrix.qt }}
+          poetry build
+          pip3 install dist/*.whl
+
       - name: Create .exe
         run: |
           echo "from guiscrcpy.cli import cli; cli()" > entry.py
@@ -225,21 +157,13 @@ jobs:
           python-version: '3.x'
           architecture: ${{ matrix.arch }}
 
-      - name: Patch PySide2
-        if: matrix.qt == 'PySide2'
-        run: |
-          brew install gnu-sed
-          gsed -i 's,PyQt5,PySide2,g' requirements.txt
-          gsed -i 's,PyQt5,PySide2,g' setup.py
 
       - name: Install dependencies
         run: |
-          pip3 install --upgrade pip
-          pip3 install --upgrade setuptools wheel
-          pip3 install PyInstaller
-          pip3 install -r requirements.txt
-          pip3 install . 
-          echo Done
+          pip3 install --upgrade pip wheel
+          pip3 install --upgrade poetry PyInstaller ${{ matrix.qt }}
+          poetry build
+          pip3 install dist/*.whl
           
       - name: Create .exe
         run: |
@@ -258,75 +182,14 @@ jobs:
   Release:
     needs: [Windows, AppImage, Wheel, MacOS]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        version: [3.8]
 
     steps:
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-PyQt5-x86-continuous.exe
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-PyQt5-x64-continuous.exe
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-PySide2-x86-continuous.exe
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-PySide2-x64-continuous.exe
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-PySide2-x64-continuous.app
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-continuous-none-any-py3.whl
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-r-continuous-x86_64.AppImage
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-m-continuous-x86_64.AppImage
+    - uses: actions/download-artifact@v2
 
-    - name: Detect Release type
-      if: github.ref == 'refs/heads/master' && startsWith(github.ref, 'refs/tags/v') != true
+    - name: Create release and upload artifacts
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CHANGELOG_TYPE: conventional
       run: |
-        echo "::set-env release_tag=continuous"
-
-    - name: PreRelease
-      uses: marvinpinto/action-automatic-releases@latest
-      if: github.ref == 'refs/heads/master' && startsWith(github.ref, 'refs/tags/') != true
-      with:
-        prerelease: true
-        draft: false
-        automatic_release_tag: continuous
-        title: continuous
-        files: |
-          guiscrcpy-PyQt5-x86-continuous.exe
-          guiscrcpy-PyQt5-x64-continuous.exe
-          guiscrcpy-PySide2-x86-continuous.exe
-          guiscrcpy-PySide2-x64-continuous.exe
-          guiscrcpy-PySide2-x64-continuous.app
-          guiscrcpy-continuous-none-any-py3.whl
-          guiscrcpy-m-continuous-x86_64.AppImage
-          guiscrcpy-r-continuous-x86_64.AppImage
-
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Release
-      uses: marvinpinto/action-automatic-releases@latest
-      if: startsWith(github.ref, 'refs/tags/v')
-      with:
-        prerelease: false
-        draft: true
-        files: |
-          guiscrcpy-PyQt5-x86-continuous.exe
-          guiscrcpy-PyQt5-x64-continuous.exe
-          guiscrcpy-PySide2-x86-continuous.exe
-          guiscrcpy-PySide2-x64-continuous.exe
-          guiscrcpy-PySide2-x64-continuous.app
-          guiscrcpy-continuous-none-any-py3.whl
-          guiscrcpy-m-continuous-x86_64.AppImage
-          guiscrcpy-r-continuous-x86_64.AppImage
-
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        wget -q https://github.com/srevinsaju/pyuploadtool/releases/download/continuous/pyuploadtool-x86_64.AppImage && chmod +x pyuploadtool-x86_64.AppImage
+        ./pyuploadtool-x86_64.AppImage */guiscrcpy*.*

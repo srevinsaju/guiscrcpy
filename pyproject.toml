@@ -17,6 +17,7 @@ colorama = "^0.4.4"
 click = "^8.0.1"
 QtPy = "^1.9.0"
 PyQt5 = {version = "^5.15.4", optional = true}
+PyInstaller = {version = "*", optional = true}
 PySide2 = {version = "^5.15.2", optional = true}
 CairoSVG = {version = "^2.5.2", optional = true}
 
@@ -26,6 +27,7 @@ black = "^21.7b0"
 [tool.poetry.extras]
 pyqt5 = ["pyqt5"]
 pyside2 = ["pyside2"]
+pyinstaller = ["pyinstaller"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

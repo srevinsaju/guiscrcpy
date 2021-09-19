@@ -5,7 +5,7 @@ on:
 
 jobs:
   Wheel:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
 
@@ -122,19 +122,10 @@ jobs:
         run: |
           pip3 install --upgrade pip wheel
           pip3 install --upgrade poetry PyInstaller ${{ matrix.qt }}
-          poetry install -E ${{ matrix.qt.lowercase }}
+          poetry install -E ${{ matrix.qt }}
           poetry build
           pip3 install dist/*.whl
 
-      - name: Install dependencies
-        run: |
-          pip3 install --upgrade pip
-          pip3 install --upgrade setuptools wheel
-          pip3 install PyInstaller
-          pip3 install -r requirements.txt
-          pip3 install . 
-          echo Done
-          
       - name: Create .exe
         run: |
           echo "from guiscrcpy.cli import cli; cli()" > entry.py
@@ -166,21 +157,13 @@ jobs:
           python-version: '3.x'
           architecture: ${{ matrix.arch }}
 
-      - name: Patch PySide2
-        if: matrix.qt == 'PySide2'
-        run: |
-          brew install gnu-sed
-          gsed -i 's,PyQt5,PySide2,g' requirements.txt
-          gsed -i 's,PyQt5,PySide2,g' setup.py
 
       - name: Install dependencies
         run: |
-          pip3 install --upgrade pip
-          pip3 install --upgrade setuptools wheel
-          pip3 install PyInstaller
-          pip3 install -r requirements.txt
-          pip3 install . 
-          echo Done
+          pip3 install --upgrade pip wheel
+          pip3 install --upgrade poetry PyInstaller ${{ matrix.qt }}
+          poetry build
+          pip3 install dist/*.whl
           
       - name: Create .exe
         run: |
@@ -199,70 +182,14 @@ jobs:
   Release:
     needs: [Windows, AppImage, Wheel, MacOS]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        version: [3.8]
 
     steps:
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-PyQt5-x86-continuous.exe
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-PyQt5-x64-continuous.exe
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-PySide2-x86-continuous.exe
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-PySide2-x64-continuous.exe
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-PySide2-x64-continuous.app
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-continuous-none-any-py3.whl
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-r-continuous-x86_64.AppImage
-    - uses: actions/download-artifact@v1
-      with:
-        name: guiscrcpy-m-continuous-x86_64.AppImage
+    - uses: actions/download-artifact@v2
 
-    - name: PreRelease
-      uses: marvinpinto/action-automatic-releases@latest
-      if: github.ref == 'refs/heads/master' && startsWith(github.ref, 'refs/tags/') != true
-      with:
-        prerelease: true
-        draft: false
-        automatic_release_tag: continuous
-        title: continuous
-        files: |
-          guiscrcpy-PyQt5-x86-continuous.exe
-          guiscrcpy-PyQt5-x64-continuous.exe
-          guiscrcpy-PySide2-x86-continuous.exe
-          guiscrcpy-PySide2-x64-continuous.exe
-          guiscrcpy-PySide2-x64-continuous.app
-          guiscrcpy-continuous-none-any-py3.whl
-          guiscrcpy-m-continuous-x86_64.AppImage
-          guiscrcpy-r-continuous-x86_64.AppImage
-
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Release
-      uses: marvinpinto/action-automatic-releases@latest
-      if: startsWith(github.ref, 'refs/tags/v')
-      with:
-        prerelease: false
-        draft: true
-        files: |
-          guiscrcpy-PyQt5-x86-continuous.exe
-          guiscrcpy-PyQt5-x64-continuous.exe
-          guiscrcpy-PySide2-x86-continuous.exe
-          guiscrcpy-PySide2-x64-continuous.exe
-          guiscrcpy-PySide2-x64-continuous.app
-          guiscrcpy-continuous-none-any-py3.whl
-          guiscrcpy-m-continuous-x86_64.AppImage
-          guiscrcpy-r-continuous-x86_64.AppImage
-
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create release and upload artifacts
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CHANGELOG_TYPE: conventional
+      run: |
+        wget -q https://github.com/srevinsaju/pyuploadtool/releases/download/continuous/pyuploadtool-x86_64.AppImage && chmod +x pyuploadtool-x86_64.AppImage
+        ./pyuploadtool-x86_64.AppImage */guiscrcpy*.*

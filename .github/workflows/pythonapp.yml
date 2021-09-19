@@ -33,7 +33,7 @@ jobs:
       run: |
         poetry run black --check guiscrcpy --exclude guiscrcpy/ui
         
-    - name: Test setup.py
+    - name: Build
       run: |
         poetry build
 

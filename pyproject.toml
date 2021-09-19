@@ -25,9 +25,9 @@ CairoSVG = {version = "^2.5.2", optional = true}
 black = "^21.7b0"
 
 [tool.poetry.extras]
-pyqt5 = ["pyqt5"]
-pyside2 = ["pyside2"]
-pyinstaller = ["pyinstaller"]
+PyQt5 = ["pyqt5"]
+PySide2 = ["pyside2"]
+PyInstaller = ["pyinstaller"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

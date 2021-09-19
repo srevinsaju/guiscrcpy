@@ -40,10 +40,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Fetch all tags
+        run: git fetch --tags --force
       - name: Build
         run: |
-          git fetch --tags --force
-          sed -i 's,qtpy,PySide2,g' **/*.py
+          # force usage of PySide2 to prevent having surprises with pyinstaller.
+          sed -i 's/qtpy/PySide2/g' **/*.py
           docker build -t guiscrcpy-appimage-build -f scripts/ci/pyappimage/Dockerfile .
           docker run --rm -v $(pwd):/usr/src guiscrcpy-appimage-build
           ls -al 

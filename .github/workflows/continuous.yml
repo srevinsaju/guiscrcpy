@@ -191,5 +191,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CHANGELOG_TYPE: conventional
       run: |
+        ls -alHR
         wget -q https://github.com/srevinsaju/pyuploadtool/releases/download/continuous/pyuploadtool-x86_64.AppImage && chmod +x pyuploadtool-x86_64.AppImage
-        ./pyuploadtool-x86_64.AppImage */guiscrcpy*.*
+        ./pyuploadtool-x86_64.AppImage */*/guiscrcpy*.*

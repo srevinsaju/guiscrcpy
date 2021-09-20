@@ -199,6 +199,6 @@ jobs:
           guiscrcpy-PySide2-x64-continuous.app/guiscrcpy-PySide2-x64 \
           guiscrcpy-PySide2-x64-continuous.exe/guiscrcpy-PySide2-x64.exe \
           guiscrcpy-PySide2-x86-continuous.exe/guiscrcpy-PySide2-x86.exe \
-          guiscrcpy-m-continuous-x86_64.AppImage/guiscrcpy-min-v4.10.0-31-g8b0d3e0.dev.m.glibc2.31-x86_64.AppImage \
+          guiscrcpy-m-continuous-x86_64.AppImage/guiscrcpy*x86_64.AppImage \
           guiscrcpy-python/guiscrcpy*.* \
-          guiscrcpy-r-continuous-x86_64.AppImage/guiscrcpy-min-.dev.r.glibc2.31-x86_64.AppImage
+          guiscrcpy-r-continuous-x86_64.AppImage/guiscrcpy*.AppImage

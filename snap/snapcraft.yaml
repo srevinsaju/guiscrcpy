@@ -1,5 +1,5 @@
 name: guiscrcpy
-version: v4.10.0
+version: v4.11.0
 summary: An opensource GUI for android screen mirroring
 description: |
   A full fledged GUI integration for the award winning open source scrcpy, for 
@@ -82,43 +82,9 @@ parts:
     - xdg-user-dirs
     - fcitx-frontend-qt5
 
-  scrcpy-server:
-    plugin: nil
-    override-pull:
-      wget https://github.com/Genymobile/scrcpy/releases/download/v1.17/scrcpy-server-v1.17
-    override-build: |
-      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/
-      cp scrcpy-server-v1.17 $SNAPCRAFT_PART_INSTALL/usr/local/share/scrcpy/scrcpy-server
-  scrcpy:
-    source: https://github.com/Genymobile/scrcpy.git
-    plugin: meson
-    meson-parameters: 
-      - --buildtype=release
-      - --strip 
-      - -Db_lto=true
-      - -Dcompile_server=false
-    override-pull: |
-        snapcraftctl pull
-        snapcraftctl set-version $(git describe --tag)      
-    build-packages:
-      - make
-      - gcc
-      - pkg-config
-      - meson
-      - ninja-build
-      - libavcodec-dev
-      - libavformat-dev
-      - libavutil-dev
-      - libsdl2-dev
-      - wget
-    stage-packages:
-      - ffmpeg
-      - libsdl2-2.0-0
-      - libslang2
-      - libglu1-mesa
-      - adb
-
   guiscrcpy:
+    stage-snaps:
+      - scrcpy
     after: [desktop-qt5, classic-launch, debian-multiarch-triplet-provider-launch]
     # See 'snapcraft plugins'
     plugin: python
@@ -133,7 +99,6 @@ plugs:
   unity7:
   wayland:
   opengl:
-  home:
   process-control:
   network-bind:
   network:

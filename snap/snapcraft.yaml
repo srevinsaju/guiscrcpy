@@ -7,7 +7,7 @@ description: |
 grade: stable 
 confinement: strict 
 
-base: core18
+base: core20
 
 architectures:
 - build-on: amd64
@@ -53,40 +53,20 @@ parts:
     stage-snaps:
     - classic-launch
 
-  # Remote part for support of various desktop technologies
-  # Refer: https://github.com/ubuntu/snapcraft-desktop-helpers/blob/master/snapcraft.yaml
-  desktop-qt5:
-    build-packages:
-    - build-essential
-    - qtbase5-dev
-    - dpkg-dev
-    make-parameters:
-    - FLAVOR=qt5
-    plugin: make
-    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
-    source-subdir: qt
-    stage-packages:
-    - libxkbcommon0
-    - ttf-ubuntu-font-family
-    - dmz-cursor-theme
-    - light-themes
-    - adwaita-icon-theme
-    - gnome-themes-standard
-    - shared-mime-info
-    - libqt5gui5
-    - libgdk-pixbuf2.0-0
-    - libqt5svg5
-    - try:
-      - appmenu-qt5
-    - locales-all
-    - xdg-user-dirs
-    - fcitx-frontend-qt5
-
   guiscrcpy:
     stage-snaps:
       - scrcpy
-    after: [desktop-qt5, classic-launch, debian-multiarch-triplet-provider-launch]
+    stage-packages:
+      - freeglut3
+    after: [classic-launch, debian-multiarch-triplet-provider-launch]
     # See 'snapcraft plugins'
+    build-packages:
+      - python3-build
+    override-build: |
+      python -m build .
+      tar -xvf dist/*.tar.gz setup.py
+      rm -rf dist
+      snapcraftctl build
     plugin: python
     python-version: python3
     source: .

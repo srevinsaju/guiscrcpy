@@ -4,6 +4,22 @@ on:
   - push
 
 jobs:
+  Snap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install snapcraft
+        run: |
+          sudo snap install --classic snapcraft
+          snapcraft --destructive-mode
+
+      - name: Publish to Snap Store
+        run: |
+          echo "${{ secrets.SNAP_DEPLOY_TOKEN }}" > token.txt
+          # if: github.ref == 'refs/heads/master'
+          snapcraft upload --release=edge *.snap
+
   Wheel:
     runs-on: ubuntu-latest
     steps:

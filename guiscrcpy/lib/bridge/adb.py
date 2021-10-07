@@ -11,11 +11,19 @@ class AndroidDebugBridge(Bridge):
     name = "adb"
 
     def get_target_android_version(self, device_id=None):
-        # Uses device API level to identify different android versions instead of Android version
-        # as they can break in scenarios where version names are like 8.1.0
+        _api = -1
+
+        # This function uses device API level to identify different android versions instead of
+        # Android version as they can break in scenarios where version names are like 8.1.0
         # Fixes: https://github.com/srevinsaju/guiscrcpy/issues/248
         _proc = self.shell("getprop ro.build.version.sdk", device_id=device_id)
-        api = int(_proc.stdout.read())
+        _ecode = _proc.wait()
+
+        if _ecode == 0:
+            api = int(_proc.stdout.read())
+        else:
+            raise RuntimeError("adb did not respond to getprop ro.build.version.sdk")
+
         return api
 
     def shell_input(self, command, device_id=None):

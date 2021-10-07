@@ -327,7 +327,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
     def launch_usb_audio(self):
         android_api_level = self.adb.get_target_android_version()
 
-        print("Detected API level: " + str(android_api_level))
+        if android_api_level == -1:
+            return
+
+        print("Detected device API level: " + str(android_api_level))
 
         if android_api_level >= 29:
             print("Using Sndcpy as audio bridge")

@@ -129,7 +129,7 @@ jobs:
       - name: Create .exe
         run: |
           echo "from guiscrcpy.cli import cli; cli()" > entry.py
-          python -m PyInstaller -n guiscrcpy-${{ matrix.qt }}-${{ matrix.arch }} .\entry.py --onefile -i guiscrcpy\ui\icons\guiscrcpy_logo_SRj_icon.ico
+          python -m PyInstaller -n guiscrcpy-${{ matrix.qt }}-${{ matrix.arch }} .\entry.py --onefile -i guiscrcpy\ui\icons\guiscrcpy_logo_SRj_icon.ico --hidden-import pywin32
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0

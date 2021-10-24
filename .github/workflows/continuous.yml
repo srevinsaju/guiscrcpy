@@ -120,8 +120,8 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: |
-          pip3 install --upgrade pip wheel
-          pip3 install --upgrade poetry PyInstaller ${{ matrix.qt }}
+          pip3 install --upgrade pip wheel --user
+          pip3 install --upgrade --user poetry PyInstaller ${{ matrix.qt }}
           poetry install -E ${{ matrix.qt }}
           poetry build
           pip3 install dist/*.whl

@@ -68,7 +68,6 @@ parts:
       rm -rf dist
       snapcraftctl build
     plugin: python
-    python-version: python3
     source: .
 
 plugs:

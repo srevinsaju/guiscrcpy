@@ -27,7 +27,7 @@ jobs:
 
     - uses: actions/setup-python@v1
       with:
-        python-version: 3.x
+        python-version: 3.9
 
     - name: Build wheel
       run: |
@@ -130,7 +130,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: '3.x'
+          python-version: 3.9
           architecture: ${{ matrix.arch }}
 
       - name: Install dependencies
@@ -170,7 +170,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: '3.x'
+          python-version: 3.9
           architecture: ${{ matrix.arch }}
 
 

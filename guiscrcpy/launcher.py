@@ -325,10 +325,18 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 self.private_message_box_adb.setText("Mapper initialized")
 
     def launch_usb_audio(self):
-        android_version = self.adb.get_target_android_version()
-        if android_version == 10:
+        android_api_level = self.adb.get_target_android_version()
+
+        if android_api_level == -1:
+            return
+
+        print("Detected device API level: " + str(android_api_level))
+
+        if android_api_level >= 29:
+            print("Using Sndcpy as audio bridge")
             audio_bridge = SndcpyBridge()
         else:
+            print("Using USBAudio as audio bridge")
             audio_bridge = USBAudioBridge()
 
         # FIXME: provide the right device id

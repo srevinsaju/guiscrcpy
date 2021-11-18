@@ -49,8 +49,31 @@ pip3 install .
 
 Use `--user` parameter if necessary.
 
+### M1 specific build instructions
 
+Macs with Apple Silicon chips need to follow these steps to build. Watch [this video](https://youtu.be/JsqV5QJQ0Y4) for aid.
 
+- Install `scrcpy` from [homebrew](https://brew.sh) and `poetry` from [python-poetry](https://python-poetry.org/docs/#osx--linux--bashonwindows-install-instructions).
+
+- Delete `python@3.9` dependency that comes along with scrcpy because `qtpy` and `pyside2` conflict with it. As long as you have any other python version in your `PATH`, it won't affect other dependencies.
+    ```
+    brew uninstall --ignore-dependencies python@3.9
+    ```
+
+- Clone the repository.
+
+- `cd` into the directory with a Rosetta2 emulated terminal.
+
+- Download `guiscrcpy` dependencies.
+    ```
+    poetry install -E PySide2
+    ```
+
+- Launch `guiscrcpy`:
+    ```
+    poetry run guiscrcpy
+    ```
+    
 ## v3.5+
 
 A typical build (v**3.5**+) has a sequence of commands as:

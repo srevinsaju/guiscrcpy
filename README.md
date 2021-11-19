@@ -6,9 +6,9 @@
   <p align="center">
     A simple, pluggable, graphical user interface for the fastest Android screen mirroring software, <a href="https://github.com/Genymobile/scrcpy">scrcpy</a>
     <br>
-    <a href="https://github.com/srevinsaju/zap/issues/new">Report bug</a>
+    <a href="https://github.com/srevinsaju/guiscrcpy/issues/new">Report bug</a>
     ·
-    <a href="https://github.com/srevinsaju/zap/issues/new">Request feature</a>
+    <a href="https://github.com/srevinsaju/guiscrcpy/issues/new">Request feature</a>
   </p>
 </p>
 

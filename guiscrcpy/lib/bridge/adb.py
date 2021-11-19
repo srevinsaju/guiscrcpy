@@ -11,7 +11,7 @@ class AndroidDebugBridge(Bridge):
     name = "adb"
 
     def get_target_android_version(self, device_id=None):
-        _api = -1
+        api = -1
 
         # This function uses device API level to identify different android versions instead of
         # Android version as they can break in scenarios where version names are like 8.1.0

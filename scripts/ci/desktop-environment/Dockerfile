@@ -1,4 +1,4 @@
-FROM python:buster
+FROM python:3.9-buster
 
 # adapted from https://github.com/AppImage/appimage.github.io/blob/master/.travis.yml
 

@@ -9,6 +9,7 @@
       <p>A user friendly, open source android screen mirroring client built on top of scrcpy
         </p>
     </description>
+    <content_rating type="oars-1.1"/>
     <launchable type="desktop-id">guiscrcpy.desktop</launchable>
     <screenshots>
         <screenshot type="default">

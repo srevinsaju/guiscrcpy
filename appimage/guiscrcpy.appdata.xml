@@ -21,4 +21,14 @@
     <provides>
         <binary>python{{ python-version }}</binary>
     </provides>
+    <releases>
+        <release version="4.11.2" date="2021-11-22">
+            <description>
+                <p>Bug fixes for Android Device detection</p>
+            </description>
+
+            <url>https://github.com/srevinsaju/guiscrcpy/releases/tag/v4.11.2</url>
+        </release>
+    </releases>
+
 </component>

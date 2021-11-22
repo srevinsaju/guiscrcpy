@@ -6,10 +6,15 @@
     <project_license>GPL3+</project_license>
     <summary>Android Screen Mirroring Software</summary>
     <description>
-        <p> The open source android screen mirroring system built for the award winning scrcpy 
+        <p> The open source android screen mirroring system built for scrcpy 
         </p>
     </description>
     <launchable type="desktop-id">guiscrcpy.desktop</launchable>
+    <screenshots>
+        <screenshot type="default">
+            <image>https://raw.githubusercontent.com/srevinsaju/guiscrcpy/main/docs/img/screenshot.jpg</image>
+        </screenshot>
+    </screenshots>
     <url type="homepage">https://github.com/srevinsaju/guiscrcpy</url>
     <provides>
         <binary>python{{ python-version }}</binary>

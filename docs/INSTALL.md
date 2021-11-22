@@ -68,7 +68,7 @@ Download the AppImage either from the releases, or from by clicking the `Status`
 AppImages are more supported than snaps. Snaps are containerised. So it is likely that guiscrcpy might not work as a snap.
 
 ```bash
-wget https://github.com/srevinsaju/guiscrcpy/releases/v4.11.0/download/guiscrcpy-*.AppImage
+wget https://github.com/srevinsaju/guiscrcpy/releases/v4.11.1/download/guiscrcpy-*.AppImage
 chmod +x guiscrcpy-*.AppImage
 
 # one time execution

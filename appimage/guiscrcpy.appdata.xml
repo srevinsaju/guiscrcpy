@@ -5,7 +5,6 @@
     <metadata_license>MIT</metadata_license>
     <project_license>GPL-3.0+</project_license>
     <summary>Android Screen Mirroring Software</summary>
-    <content_rating></content_rating>
     <description>
       <p>A user friendly, open source android screen mirroring client built on top of scrcpy
         </p>

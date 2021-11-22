@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-	<id>guiscrcpy</id>
+	<id>in.srev.guiscrcpy</id>
 	<name>guiscrcpy</name>
     <metadata_license>MIT</metadata_license>
-    <project_license>GPL3+</project_license>
+    <project_license>GPL-3.0+</project_license>
     <summary>Android Screen Mirroring Software</summary>
+    <content_rating></content_rating>
     <description>
-        <p> The open source android screen mirroring system built for scrcpy 
+      <p>A user friendly, open source android screen mirroring client built on top of scrcpy
         </p>
     </description>
     <launchable type="desktop-id">guiscrcpy.desktop</launchable>
     <screenshots>
         <screenshot type="default">
-            <image>https://raw.githubusercontent.com/srevinsaju/guiscrcpy/main/docs/img/screenshot.jpg</image>
+          <image>https://raw.githubusercontent.com/srevinsaju/guiscrcpy/main/docs/img/screenshot.jpg</image>
+          <caption>Screenshot showing a demo of guiscrcpy's functionality</caption>
         </screenshot>
     </screenshots>
     <url type="homepage">https://github.com/srevinsaju/guiscrcpy</url>

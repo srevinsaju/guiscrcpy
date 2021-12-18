@@ -8,7 +8,7 @@ wget -q https://github.com/AppImage/AppImageKit/releases/download/continuous/app
 
 
 if [[ "$GUISCRCPY_TYPE" == "r" ]]; then
-  SCRCPY_APPIMAGE_DOWNLOAD_URL="$(curl -sL https://api.github.com/repos/srevinsaju/scrcpy-appimage/releases | jq -r '.[0].assets[].browser_download_url' | grep -v 'zsync')"
+  SCRCPY_APPIMAGE_DOWNLOAD_URL="$(curl -sL https://api.github.com/repos/srevinsaju/scrcpy-appimage/releases | jq -r '.[0].assets[].browser_download_url' | grep -v 'zsync' | tail -n 1 )"
   export SCRCPY_APPIMAGE_DOWNLOAD_URL
 
   wget -q "$SCRCPY_APPIMAGE_DOWNLOAD_URL"

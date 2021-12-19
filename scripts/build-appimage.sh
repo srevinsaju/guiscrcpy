@@ -22,6 +22,10 @@ fi
 
 mkdir _build
 
+# remove an unwanted scrcpy library thats conflicting with host 
+# https://github.com/project-slippi/Ishiiruka/issues/323#issuecomment-977415376
+rm -rf guiscrcpy.AppDir/scrcpy/usr/lib/libgmodule*
+
 ./appimagetool-x86_64.AppImage guiscrcpy.AppDir -n \
   -u "gh-releases-zsync|srevinsaju|guiscrcpy|continuous|guiscrcpy-*.$GUISCRCPY_TYPE.*.AppImage.zsync" \
   "_build/guiscrcpy-$GUISCRCPY_VERSION.$GUISCRCPY_TYPE.$GUISCRCPY_GLIB_VERSION-$GUISCRCPY_MACHINE.AppImage"

@@ -811,7 +811,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.bitrateText.setText(str(self.config["bitrate"]) + "KB/s")
 
     def progress(self, val):
-        self.progressBar.setValue(val)
+        self.progressBar.setValue(int(val))
         if (val + 4) >= 100:
             return 100
         else:

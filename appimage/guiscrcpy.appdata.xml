@@ -22,6 +22,14 @@
         <binary>python{{ python-version }}</binary>
     </provides>
     <releases>
+        <release version="4.11.3" date="2021-12-20">
+          <description>
+            <p>Fixes for Python 3.10 compatibility</p>
+            <p>Fixed AppImage scrcpy build </p>
+          </description>
+          <url>https://github.com/srevinsaju/guiscrcpy/releases/tag/v4.11.3</url>
+        </release>
+
         <release version="4.11.2" date="2021-11-22">
             <description>
                 <p>Bug fixes for Android Device detection</p>

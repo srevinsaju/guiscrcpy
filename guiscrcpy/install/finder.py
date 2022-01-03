@@ -3,10 +3,6 @@ from qtpy.QtCore import QDir
 
 
 def open_exe_name_dialog(parent, appname):
-    options = QFileDialog.Options()
-    options |= QDir.AllEntries
-    options |= QDir.Hidden
-
     file_dialog = QFileDialog()
     file_dialog.setFilter(QDir.AllEntries | QDir.Hidden)
     file_dialog.setFileMode(QFileDialog.ExistingFile)

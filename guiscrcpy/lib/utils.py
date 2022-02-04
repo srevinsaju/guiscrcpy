@@ -156,7 +156,6 @@ def show_message_box(text, info_text="", buttons=QMessageBox.Ok):
     return message_box
 
 
-
 process_logger = make_logger("process")
 
 
@@ -170,4 +169,3 @@ def open_process(*args, **kwargs):
     proc = subprocess.Popen(*args, **kwargs)
     process_logger.debug("Invoking process: {}".format(proc.args))
     return proc
-

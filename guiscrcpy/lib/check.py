@@ -38,7 +38,6 @@ def _get_dimension_raw_noexcept(path, device_id=None):
         )
     else:
         shell_adb = open_process(
-            [path, "shell", "wm", "size"],
-            stdout=PIPE, stderr=PIPE
+            [path, "shell", "wm", "size"], stdout=PIPE, stderr=PIPE
         )
     return shell_adb

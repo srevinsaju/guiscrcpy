@@ -30,7 +30,11 @@ class AndroidDebugBridge(Bridge):
         return api
 
     def shell_input(self, command, device_id=None):
-        cmd = [self.path, "-s", device_id, "shell", "input", command] if device_id else [self.path, "shell", "input", command]
+        cmd = (
+            [self.path, "-s", device_id, "shell", "input", command]
+            if device_id
+            else [self.path, "shell", "input", command]
+        )
         open_process(cmd, stdout=PIPE, stderr=PIPE)
 
     def kill_adb_server(self):
@@ -47,7 +51,9 @@ class AndroidDebugBridge(Bridge):
                 )
                 return False
         except TimeoutExpired:
-            self.logger.warning("adb falied; timeout exceeded 10s, killing and respawining adb")
+            self.logger.warning(
+                "adb falied; timeout exceeded 10s, killing and respawining adb"
+            )
             self.kill_adb_server()
             if isinstance(device_id, str) and device_id.count(".") >= 3:
                 self.command(self.path, "connect {}".format(device_id))
@@ -85,7 +91,7 @@ class AndroidDebugBridge(Bridge):
         else:
             po = open_process(
                 [self.path, "shell", command],
-                stdout=PIPE, 
+                stdout=PIPE,
                 stderr=PIPE,
             )
         return po

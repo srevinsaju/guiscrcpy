@@ -142,7 +142,11 @@ class Mapper:
 
         # pull screenshot from android using `adb pull`
         adb_pull_process = self.adb.command(
-            ["pull", f"/sdcard/{uid}.png", "{dest}".format(dest=os.path.dirname(self.guiscrcpy_mapper_json))],
+            [
+                "pull",
+                f"/sdcard/{uid}.png",
+                "{dest}".format(dest=os.path.dirname(self.guiscrcpy_mapper_json)),
+            ],
             device_id=self._device_id,
         )
         adb_pull_process_ecode = adb_pull_process.wait(500)
@@ -156,7 +160,9 @@ class Mapper:
         time.sleep(1)
 
         # remove data from user sdcard
-        self.adb.command(["shell", "rm", f"/sdcard/{uid}.png"], device_id=self._device_id)
+        self.adb.command(
+            ["shell", "rm", f"/sdcard/{uid}.png"], device_id=self._device_id
+        )
         print(
             "[LOG] Screenshot captured. Saved to {cfgpath}".format(
                 cfgpath=os.path.dirname(self.guiscrcpy_mapper_json)

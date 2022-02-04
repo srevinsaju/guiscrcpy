@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import time
+from ..logging import make_logger
 
 from qtpy.QtWidgets import QMainWindow
 
@@ -27,6 +28,7 @@ from . import Ui_NetworkUI
 
 
 class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
+    logger = make_logger("network")
     """
     Network manager UI UX Kit for guiscrcpy
     Scans the open IP Addresses connected on the system,
@@ -60,7 +62,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
         self.tcpip.pressed.connect(self.tcpip_launch)
 
     def tcpip_launch(self):
-        self.adb.command("-d tcpip 5555")
+        self.adb.command(["-d", "tcpip", "5555"])
         self.nm_det.setText(
             "Now disconnect your device, and enter the IP address, and connect"
         )
@@ -95,7 +97,7 @@ class InterfaceNetwork(QMainWindow, Ui_NetworkUI):
                     )
                 return
 
-        sp = self.adb.command("connect {}:5555".format(ip))
+        sp = self.adb.command(["connect", "{}:{}".format(ip, self.spinBox.value())])
         count = 0
         while True:
             count += 1

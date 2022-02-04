@@ -70,9 +70,7 @@ from .lib.bridge import AndroidDebugBridge, ScrcpyBridge
 from .lib.bridge.exceptions import ScrcpyServerNotFoundError
 from .logging import make_logger
 
-logging.
 root_logger = make_logger("root")
-
 
 
 environment = platform.System()
@@ -91,7 +89,7 @@ if environment.system() == "Linux":
 
 
 class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
-    
+
     """
     Main class for guiscrcpy object.
     All the processes to spawn to scrcpy are handled here
@@ -301,7 +299,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             # TODO: allow enabling mapper from inside
             if user_message_box_response == QMessageBox.Yes:
                 self.private_message_box_adb.setText("Initializing mapper...")
-                self.logger.warning("Make sure your phone is connected and display is " "switched on")
+                self.logger.warning(
+                    "Make sure your phone is connected and display is " "switched on"
+                )
                 self.logger.warning(
                     "Reset mapper if you missed any "
                     "steps by 'guiscrcpy --mapper-reset'"
@@ -534,7 +534,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             try:
                 self.config["device"][identifier]["wifi"] = wifi_device
             except KeyError:
-                self.logger.warning(f"Failed writing the configuration " f"'wifi' key to {identifier}")
+                self.logger.warning(
+                    f"Failed writing the configuration " f"'wifi' key to {identifier}"
+                )
 
             if wifi_device:
                 ip = self.current_device_identifier()[1]
@@ -653,7 +655,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 icon = ":/icons/icons/portrait_mobile_warning.svg"
 
             if i["status"] == "no_permission":
-                self.logger.warning("No permission to connect to {}".format(i["identifier"]))
+                self.logger.warning(
+                    "No permission to connect to {}".format(i["identifier"])
+                )
                 # https://stackoverflow.com/questions/
                 # 53887322/adb-devices-no-permissions-user-in-
                 # plugdev-group-are-your-udev-rules-wrong
@@ -668,7 +672,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 return []
             # Check if device is unauthorized
             elif i["status"] == "unauthorized":
-                self.logger.warning("unauthorized device detected: Click Allow on your device")
+                self.logger.warning(
+                    "unauthorized device detected: Click Allow on your device"
+                )
                 # The device is connected; and might/might't paired in the past
                 # And is connected to the same IP address
                 # It is possibly a bug with the connection;
@@ -696,7 +702,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 else:
                     for paired_device in paired_devices:
                         if paired_device.text().split()[0] == i["model"]:
-                            self.logger.info("Paired device detected {}".format(i["identifier"]))
+                            self.logger.info(
+                                "Paired device detected {}".format(i["identifier"])
+                            )
                             paired = True
                             devices_view_list_item = paired_device
                             # as we have found a paired device
@@ -711,7 +719,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                             )
                             break
                         elif paired_device.text().split()[1] == i["identifier"]:
-                            self.logger.info("Device detected, but unpaired {}".format(i["identifier"]))
+                            self.logger.info(
+                                "Device detected, but unpaired {}".format(
+                                    i["identifier"]
+                                )
+                            )
                             self.remove_device_device_view(
                                 i["identifier"], statuses=["offline", "unauthorized"]
                             )
@@ -873,7 +885,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             return 0
         else:
             # Device selected
-            self.logger.debug("Device list: {} (len({}))".format(values_devices_list, len(values_devices_list)))
+            self.logger.debug(
+                "Device list: {} (len({}))".format(
+                    values_devices_list, len(values_devices_list)
+                )
+            )
             if len(values_devices_list) == 1:
                 # found only one device
                 # ======================================================
@@ -1272,7 +1288,7 @@ def bootstrap(
         force_window_frame=not hide_wm_frame,
         panels_not_always_on_top=not aot,
         debug_no_scrcpy=debug_no_scrcpy,
-        logger=root_logger
+        logger=root_logger,
     )
     guiscrcpy.show()
     app.processEvents()

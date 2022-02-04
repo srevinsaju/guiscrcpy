@@ -10,24 +10,25 @@ license = "GPLv3"
 
 
 [tool.poetry.dependencies]
-python = ">=3.7,<3.10"
+python = ">=3.7,<3.11"
 psutil = "^5.8.0"
 pynput = "1.6.8"
 colorama = "^0.4.4"
 click = "^8.0.1"
-QtPy = "^1.9.0"
-PyQt5 = {version = "^5.15.4", optional = true}
+QtPy = "^2.0.0"
+PyQt6 = {version = "^6.2.3", optional = true}
 PyInstaller = {version = "*", optional = true}
 pywin32 = {version = "302", markers = "platform_system == 'Windows'" }
-PySide2 = {version = "^5.15.2", optional = true}
+PySide6 = {version = "^6.2.1", optional = true}
 CairoSVG = {version = "^2.5.2", optional = true}
+coloredlogs = "^15.0.1"
 
 [tool.poetry.dev-dependencies]
 black = "^21.7b0"
 
 [tool.poetry.extras]
-PyQt5 = ["pyqt5"]
-PySide2 = ["pyside2"]
+PyQt6 = ["pyqt6"]
+PySide6 = ["pyside6"]
 PyInstaller = ["pyinstaller"]
 
 [build-system]

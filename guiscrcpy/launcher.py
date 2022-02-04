@@ -73,6 +73,8 @@ from .logging import make_logger
 logging.
 root_logger = make_logger("root")
 
+
+
 environment = platform.System()
 
 # ============================================================================
@@ -89,6 +91,7 @@ if environment.system() == "Linux":
 
 
 class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
+    
     """
     Main class for guiscrcpy object.
     All the processes to spawn to scrcpy are handled here
@@ -309,9 +312,10 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 )
                 _, identifier = self.current_device_identifier()
                 executable = get_self()
+                from .lib.utils import open_process
 
                 open_process(
-                    sx("{} mapper".format(executable)),
+                    [executable, "mapper"],
                     stdout=sys.stdout,
                     stdin=sys.stdin,
                     stderr=sys.stderr,

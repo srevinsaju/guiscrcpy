@@ -51,16 +51,6 @@ def log(*args, **kwargs):
         logging.debug(str(args))
 
 
-def shellify(args):
-    if environment.system() == "Windows":
-        return args
-    else:
-        return shlex.split(args)
-
-
-_ = shellify
-
-
 def decode_process(process):
     try:
         output = process.stdout.readlines()
@@ -166,17 +156,18 @@ def show_message_box(text, info_text="", buttons=QMessageBox.Ok):
     return message_box
 
 
+
 process_logger = make_logger("process")
+
+
 def open_process(*args, **kwargs):
     if (
         environment.system() == "Windows"
         and sys.version_info.major >= 3
         and sys.version_info.minor >= 7
     ):
-        return subprocess.Popen(
-            *args,
-            **kwargs,
-            creationflags=subprocess.CREATE_NO_WINDOW,
-        )
-    else:
-        return subprocess.Popen(*args, **kwargs)
+        kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+    proc = subprocess.Popen(*args, **kwargs)
+    process_logger.debug("Invoking process: {}".format(proc.args))
+    return proc
+

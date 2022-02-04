@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from subprocess import PIPE
 
-from ..lib.utils import shellify as _, open_process
+from ..lib.utils import open_process
 
 
 def get(ls, idx, default=""):
@@ -32,12 +32,13 @@ def get(ls, idx, default=""):
 def _get_dimension_raw_noexcept(path, device_id=None):
     if device_id:
         shell_adb = open_process(
-            _("{} -s {} shell wm size".format(path, device_id)),
+            [path, "-s", device_id, "shell", "wm", "size"],
             stdout=PIPE,
             stderr=PIPE,
         )
     else:
         shell_adb = open_process(
-            _("{} shell wm size".format(path)), stdout=PIPE, stderr=PIPE
+            [path, "shell", "wm", "size"],
+            stdout=PIPE, stderr=PIPE
         )
     return shell_adb

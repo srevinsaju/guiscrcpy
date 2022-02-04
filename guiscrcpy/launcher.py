@@ -32,6 +32,8 @@ All rights reserved.
 """
 
 import hashlib
+from logging import Logger
+import logging
 import os
 import subprocess
 import sys
@@ -66,7 +68,10 @@ from .ux.toolkit import InterfaceToolkit
 from .version import VERSION
 from .lib.bridge import AndroidDebugBridge, ScrcpyBridge
 from .lib.bridge.exceptions import ScrcpyServerNotFoundError
+from .logging import make_logger
 
+logging.
+root_logger = make_logger("root")
 
 environment = platform.System()
 
@@ -78,8 +83,8 @@ if environment.system() == "Linux":
 
         has_cairo = True
     except Exception as e:
-        print("Failed to load cairo:", e)
-        print("Some features are likely to be disabled")
+        root_logger.warning(f"Failed to load cairo: {e}")
+        root_logger.warning("Some features are likely to be disabled")
         has_cairo = False
 
 
@@ -98,7 +103,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         force_window_frame: bool = False,
         panels_not_always_on_top: bool = False,
         debug_no_scrcpy: bool = False,
+        logger: Logger = None,
     ):
+        self.logger = logger
         QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
@@ -119,15 +126,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.side_instance = None
         self.child_windows = list()
         self.options = ""
-        log(
-            "Options received by class are : {} {} {} {} {} ".format(
-                config["bitrate"],
-                config["dimension"],
-                config["swtouches"],
-                config["dispRO"],
-                config["fullscreen"],
-            )
-        )
+        self.logger.debug("Received configuration parameters: {}".format(config))
         # ====================================================================
         # Rotation; read config, update UI
         self.device_rotation.setCurrentIndex(config.get("rotation", 0))
@@ -167,11 +166,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         else:
             self.fullscreen.setChecked(False)
         if is_running("scrcpy"):
-            log("SCRCPY RUNNING")
-            self.display_public_message("SCRCPY SERVER RUNNING")
+            self.logger.debug("Detected active instance of scrcpy")
+            self.display_public_message("scrcpy server running")
         else:
-            log("SCRCPY SERVER IS INACTIVE")
-            self.display_public_message("SCRCPY SERVER NOT RUNNING")
+            self.logger.debug("Detected that scrcpy is not running")
+            self.display_public_message("scrcpy server is inactive")
 
         # CONNECT DIMENSION CHECK BOX TO STATE CHANGE
         self.dimensionDefaultCheckbox.stateChanged.connect(self.__dimension_change_cb)
@@ -188,7 +187,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             if config["extra"]:
                 self.flaglineedit.setText(config["extra"])
         except Exception as err:
-            log(f"Exception: flaglineedit.text(config[extra]) {err}")
+            self.logger.warning(f"Exception: flaglineedit.text(config[extra]) {err}")
 
         self.quit.clicked.connect(self.quit_window)
         self.dimensionText.setText("DEFAULT")
@@ -299,20 +298,17 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             # TODO: allow enabling mapper from inside
             if user_message_box_response == QMessageBox.Yes:
                 self.private_message_box_adb.setText("Initializing mapper...")
-                print("Make sure your phone is connected and display is " "switched on")
-                print(
+                self.logger.warning("Make sure your phone is connected and display is " "switched on")
+                self.logger.warning(
                     "Reset mapper if you missed any "
                     "steps by 'guiscrcpy --mapper-reset'"
                 )
-                print()
-                print(
+                self.logger.warning(
                     "If at first you don't succeed... "
                     "reset, reset and reset again! :D"
                 )
-                print()
                 _, identifier = self.current_device_identifier()
                 executable = get_self()
-                from .lib.utils import shellify as sx, open_process
 
                 open_process(
                     sx("{} mapper".format(executable)),
@@ -321,7 +317,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                     stderr=sys.stderr,
                     cwd=os.getcwd(),
                 )
-                print("Mapper started")
+                root_logger.info("Mapper started")
                 self.private_message_box_adb.setText("Mapper initialized")
 
     def launch_usb_audio(self):
@@ -330,13 +326,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         if android_api_level == -1:
             return
 
-        print("Detected device API level: " + str(android_api_level))
+        root_logger.info("Detected device API level: " + str(android_api_level))
 
         if android_api_level >= 29:
-            print("Using Sndcpy as audio bridge")
+            root_logger.info("Using Sndcpy as audio bridge")
             audio_bridge = SndcpyBridge()
         else:
-            print("Using USBAudio as audio bridge")
+            root_logger.info("Using USBAudio as audio bridge")
             audio_bridge = USBAudioBridge()
 
         # FIXME: provide the right device id
@@ -368,8 +364,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         :return:
         """
         self.config_manager.reset_config()
-        log("CONFIGURATION FILE REMOVED SUCCESSFULLY")
-        log("RESTART")
+        self.logger.info("Configuration file removed and reset")
         message_box = QMessageBox().window()
         message_box.about(
             self.pushButton,
@@ -441,7 +436,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # just a check before anything further happens because of an
         # unrelated OS
         if environment.system() != "Linux":
-            log(
+            root_logger.warn(
                 "Tried to run create_desktop_shortcut_linux_os on an " "unsupported OS."
             )
             return False
@@ -453,7 +448,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         sha = hashlib.sha256(str(identifier).encode()).hexdigest()[
             __sha_shift : __sha_shift + 6
         ]
-        log(f"Creating desktop shortcut sha: {sha}")
+        root_logger.debug(f"Creating desktop shortcut sha: {sha}")
         path_to_image = os.path.join(picture_file_path, identifier + ".png")
         if has_cairo:
             svg2png(
@@ -461,7 +456,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 write_to=path_to_image,
             )
         else:
-            print("Trying to use Plain SVG as renderer" " instead of cairo")
+            root_logger.warn("Trying to use Plain SVG as renderer" " instead of cairo")
             with open(path_to_image, "w") as fp:
                 svg_str = desktop_device_shortcut_svg().format(f"#{sha}")
                 fp.write(svg_str)
@@ -508,8 +503,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         )
 
         # announce it to developers / users
-        log(f"Path to desktop file : {path_to_desktop_file}")
-        print("Desktop file generated successfully")
+        self.logger.debug(f"Path to desktop file : {path_to_desktop_file}")
+        self.logger.info("Desktop file generated successfully")
         self.display_public_message("Desktop file has been created")
         return True
 
@@ -520,7 +515,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 "Failed to connect to {}. See the logs for more "
                 "information".format(ip)
             )
-            print("adb:", out.decode(), err.decode())
+            self.logger.debug("adb:", out.decode(), err.decode())
         else:
             self.display_public_message("Connection command completed successfully")
 
@@ -535,18 +530,18 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             try:
                 self.config["device"][identifier]["wifi"] = wifi_device
             except KeyError:
-                log(f"Failed writing the configuration " f"'wifi' key to {identifier}")
+                self.logger.warning(f"Failed writing the configuration " f"'wifi' key to {identifier}")
 
             if wifi_device:
                 ip = self.current_device_identifier()[1]
-                output = self.adb.command("connect {}".format(ip))
+                output = self.adb.command(["connect", ip])
                 self.is_connection_success_handler(output, ip=ip)
             else:
-                self.adb.command("reconnect offline")
+                self.adb.command(["reconnect", "offline"])
             # As we have attempted to connect; refresh the panel
             self.refresh_devices()
         else:
-            output = self.adb.command("connect {}".format(device_id))
+            output = self.adb.command(["connect", device_id])
             self.is_connection_success_handler(output, ip=device_id)
 
     def tcpip_paired_device(self):
@@ -629,7 +624,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             paired_devices.append(self.devices_view.item(index))
 
         __devices = self.adb.devices_detailed()
-        log(__devices)
+        self.logger.info(f"Available devices {__devices}")
         for i in __devices:
             device_is_wifi = i["identifier"].count(".") >= 3 and (
                 ":" in i["identifier"]
@@ -654,7 +649,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 icon = ":/icons/icons/portrait_mobile_warning.svg"
 
             if i["status"] == "no_permission":
-                log("pairfilter: 5")
+                self.logger.warning("No permission to connect to {}".format(i["identifier"]))
                 # https://stackoverflow.com/questions/
                 # 53887322/adb-devices-no-permissions-user-in-
                 # plugdev-group-are-your-udev-rules-wrong
@@ -665,12 +660,11 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                     "group-are-your-udev-rules-wrong"
                 )
                 self.display_public_message(udev_error)
-                print(udev_error)
+                self.logger.warning(udev_error)
                 return []
             # Check if device is unauthorized
             elif i["status"] == "unauthorized":
-                log("unauthorized device detected: Click Allow on your device")
-                log("pairfilter: 4")
+                self.logger.warning("unauthorized device detected: Click Allow on your device")
                 # The device is connected; and might/might't paired in the past
                 # And is connected to the same IP address
                 # It is possibly a bug with the connection;
@@ -698,7 +692,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 else:
                     for paired_device in paired_devices:
                         if paired_device.text().split()[0] == i["model"]:
-                            log("pairfilter: 1")
+                            self.logger.info("Paired device detected {}".format(i["identifier"]))
                             paired = True
                             devices_view_list_item = paired_device
                             # as we have found a paired device
@@ -713,7 +707,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                             )
                             break
                         elif paired_device.text().split()[1] == i["identifier"]:
-                            log("pairfilter: 2")
+                            self.logger.info("Device detected, but unpaired {}".format(i["identifier"]))
                             self.remove_device_device_view(
                                 i["identifier"], statuses=["offline", "unauthorized"]
                             )
@@ -721,7 +715,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                             paired = False
                             break
                     else:
-                        log("pairfilter: 3")
+                        self.logger.debug("Couldn't find any device")
                         paired = False
                         devices_view_list_item = QListWidgetItem()
 
@@ -758,7 +752,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             )
 
             devices_view_list_item.setFont(QFont("Noto Sans", 8))
-            log(f"Pairing status: {device_paired_and_exists}")
+            self.logger.debug(f"Pairing status: {device_paired_and_exists}")
             if device_paired_and_exists and device_is_wifi:
                 # we need to only neglect wifi devices
                 # paired usb device need to still show in the display
@@ -875,7 +869,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             return 0
         else:
             # Device selected
-            log("DEVICE LIST", len(values_devices_list), values_devices_list)
+            self.logger.debug("Device list: {} (len({}))".format(values_devices_list, len(values_devices_list)))
             if len(values_devices_list) == 1:
                 # found only one device
                 # ======================================================
@@ -909,7 +903,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
                 if self.is_device_unusable(_stat):
                     self.show_device_status_failure(_stat)
                     return 0
-                log("Device_id = {}".format(device_id))
+                self.logger.info("Device_id: {}".format(device_id))
                 more_devices = True
         return device_id, more_devices, _stat
 
@@ -1012,7 +1006,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             '{str(self.bitrateText.text().split()[1][0])}'. "
                 f"Please use only K, M, T only"
             )
-            print(multiplier_error)
+            self.logger.warning(multiplier_error)
             self.display_public_message(multiplier_error)
             return False
         if self.bitrateText.text().split()[0].isdigit():
@@ -1026,9 +1020,9 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # ====================================================================
         # 10: Make user aware that there were no problems in connection
         # or in the data provided by the user
-        log("CONNECTION ESTABLISHED")
+        self.logger.info("Connection established")
         self.progressBar.setValue(50)
-        log("Flags passed to scrcpy engine : " + self.options)
+        self.logger.debug("Flags passed to scrcpy engine : " + self.options)
         self.progressBar.setValue(60)
         self.config["extra"] = self.flaglineedit.text()
         progress = self.progress(progress)
@@ -1166,8 +1160,8 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         self.display_public_message(
             f"Device {device_id} is connected; (color id matches " f"toolkit color)"
         )
-        log("Device connection completed successfully.")
-        log("Private message box updated successfully")
+        self.logger.debug("Device connection completed successfully.")
+        self.logger.debug("Private message box updated successfully")
         progress = self.progress(progress)
 
         # ====================================================================
@@ -1182,7 +1176,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         # 20: Calculate time
         final_time = time.time()
         eta = final_time - initial_time
-        print("scrcpy launched in {:.2f}s".format(eta))
+        self.logger.info("scrcpy launched in {:.2f}s".format(eta))
         progress = self.progress(progress)
 
         # ====================================================================
@@ -1243,7 +1237,7 @@ def bootstrap(
         s = font_database.addApplicationFont(":/font/fonts/{ttf}".format(ttf=font))
         if s == -1:  # loading the font failed
             # https://doc.qt.io/qt-5/qfontdatabase.html
-            print(fc("{y}Failed to load {ttf} font.{rst}", ttf=font))
+            root_logger.warning(fc("{y}Failed to load {ttf} font.{rst}", ttf=font))
 
     # set theme
     app.setStyle(theme)
@@ -1274,6 +1268,7 @@ def bootstrap(
         force_window_frame=not hide_wm_frame,
         panels_not_always_on_top=not aot,
         debug_no_scrcpy=debug_no_scrcpy,
+        logger=root_logger
     )
     guiscrcpy.show()
     app.processEvents()

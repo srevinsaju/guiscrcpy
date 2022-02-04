@@ -23,6 +23,7 @@ import shlex
 import shutil
 import sys
 import subprocess
+from ...logging import make_logger
 
 from qtpy.QtGui import QPixmap
 from colorama import Fore
@@ -165,6 +166,7 @@ def show_message_box(text, info_text="", buttons=QMessageBox.Ok):
     return message_box
 
 
+process_logger = make_logger("process")
 def open_process(*args, **kwargs):
     if (
         environment.system() == "Windows"

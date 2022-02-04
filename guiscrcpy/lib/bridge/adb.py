@@ -5,9 +5,11 @@ from subprocess import PIPE, TimeoutExpired, call
 from .base import Bridge
 from ..check import _get_dimension_raw_noexcept, get
 from ..utils import decode_process, open_process, _
+from ...logging import make_logger
 
 
 class AndroidDebugBridge(Bridge):
+    logger = make_logger("adb")
     name = "adb"
 
     def get_target_android_version(self, device_id=None):
@@ -48,22 +50,22 @@ class AndroidDebugBridge(Bridge):
         shell_adb = _get_dimension_raw_noexcept(path=self.path, device_id=device_id)
         try:
             if shell_adb.wait(timeout=3) != 0:
-                print(
-                    "E: Command 'adb shell wm size' exited with {}".format(
-                        shell_adb.returncode
+                self.logger.warning(
+                    "Command '{}' exited with '{}'".format(
+                        shell_adb.args, shell_adb.returncode
                     )
                 )
                 return False
         except TimeoutExpired:
-            print("E: adb falied; timeout exceeded 10s, killing and " "respawining adb")
+            self.logger.warning("adb falied; timeout exceeded 10s, killing and respawining adb")
             self.kill_adb_server()
             if isinstance(device_id, str) and device_id.count(".") >= 3:
                 self.command(self.path, "connect {}".format(device_id))
             shell_adb = _get_dimension_raw_noexcept(path=self.path, device_id=device_id)
             if shell_adb.wait(timeout=8) != 0:
-                print(
-                    "E: Command 'adb shell wm size' exited with {}".format(
-                        shell_adb.returncode
+                self.logger.warning(
+                    "Command '{}' exited with '{}'".format(
+                        shell_adb.args, shell_adb.returncode
                     )
                 )
                 return False
@@ -86,7 +88,6 @@ class AndroidDebugBridge(Bridge):
     def shell(self, command, device_id=None):
         if device_id:
             po = open_process(
-                _("{} -s {} shell {}".format(self.path, device_id, command)),
                 stdout=PIPE,
                 stderr=PIPE,
             )

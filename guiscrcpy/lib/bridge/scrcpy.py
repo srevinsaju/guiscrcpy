@@ -2,7 +2,7 @@ import os
 from subprocess import PIPE
 
 from .base import Bridge
-from ...lib.utils import shellify as _, open_process
+from ...lib.utils import open_process
 
 
 class ScrcpyBridge(Bridge):
@@ -17,7 +17,7 @@ class ScrcpyBridge(Bridge):
 
     def start(self, args, stdout=PIPE, stderr=PIPE):
         proc = open_process(
-            _("{} {}".format(self.path, args)),
+            [self.path, args],
             stdout=stdout,
             stderr=stderr,
         )

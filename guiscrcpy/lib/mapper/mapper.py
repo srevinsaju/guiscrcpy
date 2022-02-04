@@ -48,7 +48,7 @@ class Mapper:
         self.app = None
         self.adb = adb
         log("mapper", "Waiting for device...")
-        self.adb.command("wait-for-any-device")
+        self.adb.command(["wait-for-any-device"])
         log("mapper", "Device connection established...")
         self.window = None
         self.guiscrcpy_mapper_json = config_path
@@ -127,8 +127,9 @@ class Mapper:
         # capture screenshot using `adb screencap`
         print("Please wait. A full definition screenshot is being captured")
 
+        # revise: is sdcard a good place to store files
         adb_screencap_process = self.adb.command(
-            "shell screencap -p /sdcard/{uid}.png".format(uid=uid),
+            ["shell", "screencap", "-p", "/sdcard/{uid}.png".format(uid=uid)],
             device_id=self._device_id,
         )
         adb_screencap_process_ecode = adb_screencap_process.wait(500)
@@ -141,9 +142,7 @@ class Mapper:
 
         # pull screenshot from android using `adb pull`
         adb_pull_process = self.adb.command(
-            "pull /sdcard/{uid}.png {dest}".format(
-                uid=uid, dest=os.path.dirname(self.guiscrcpy_mapper_json)
-            ),
+            ["pull", f"/sdcard/{uid}.png", "{dest}".format(dest=os.path.dirname(self.guiscrcpy_mapper_json))],
             device_id=self._device_id,
         )
         adb_pull_process_ecode = adb_pull_process.wait(500)
@@ -157,9 +156,7 @@ class Mapper:
         time.sleep(1)
 
         # remove data from user sdcard
-        self.adb.command(
-            "shell rm /sdcard/{uid}.png".format(uid=uid), device_id=self._device_id
-        )
+        self.adb.command(["shell", "rm", f"/sdcard/{uid}.png"], device_id=self._device_id)
         print(
             "[LOG] Screenshot captured. Saved to {cfgpath}".format(
                 cfgpath=os.path.dirname(self.guiscrcpy_mapper_json)
@@ -176,7 +173,7 @@ class Mapper:
                 print("[KEY] Hotkey command executing")
                 position_to_tap = self.config.get(key.char)
                 c = self.adb.command(
-                    "shell input tap {} {}".format(*position_to_tap),
+                    ["shell", "input", "tap", *[str(x) for x in position_to_tap]],
                     device_id=self.get_device_id(),
                 )
                 print(c.stdout.read().decode("utf-8"))

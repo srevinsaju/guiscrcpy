@@ -21,29 +21,9 @@ import os
 
 # flake8: noqa
 
-__QT_INSTANCE = os.getenv("QT_API", False)
-
-if __QT_INSTANCE and __QT_INSTANCE in ("pyside2", "pyqt5"):
-    if __QT_INSTANCE == "pyside2":
-        use_pyqt5 = False
-    else:
-        use_pyqt5 = True
-else:
-    # either QT_API is not defined or defined for an older version of PyQt5
-    # just use PyQt5 as default
-    use_pyqt5 = True
-
-if use_pyqt5:
-    from guiscrcpy.ui.pyqt5.main import Ui_MainWindow  # noqa: F401
-    from guiscrcpy.ui.pyqt5.network import Ui_NetworkUI  # noqa: F401
-    from guiscrcpy.ui.pyqt5.panel import Ui_HorizontalPanel  # noqa: F401
-    from guiscrcpy.ui.pyqt5.settings import Ui_MainWindow as Ui_SettingsWindow
-    from guiscrcpy.ui.pyqt5.downloader import Ui_Initializer  # noqa: F401
-    from guiscrcpy.ui.pyqt5.toolkit import Ui_ToolbarPanel  # noqa: F401
-else:
-    from guiscrcpy.ui.pyside2.main import Ui_MainWindow  # noqa: F401
-    from guiscrcpy.ui.pyside2.network import Ui_NetworkUI  # noqa: F401
-    from guiscrcpy.ui.pyside2.panel import Ui_HorizontalPanel  # noqa: F401
-    from guiscrcpy.ui.pyside2.settings import Ui_MainWindow as Ui_SettingsWindow
-    from guiscrcpy.ui.pyside2.downloader import Ui_Initializer  # noqa: F401
-    from guiscrcpy.ui.pyside2.toolkit import Ui_ToolbarPanel  # noqa: F401
+from guiscrcpy.ui.pyside.main import Ui_MainWindow  # noqa: F401
+from guiscrcpy.ui.pyside.network import Ui_NetworkUI  # noqa: F401
+from guiscrcpy.ui.pyside.panel import Ui_HorizontalPanel  # noqa: F401
+from guiscrcpy.ui.pyside.settings import Ui_MainWindow as Ui_SettingsWindow
+from guiscrcpy.ui.pyside.downloader import Ui_Initializer  # noqa: F401
+from guiscrcpy.ui.pyside.toolkit import Ui_ToolbarPanel  # noqa: F401

@@ -105,7 +105,7 @@ jobs:
     runs-on: windows-latest
     strategy: 
       matrix:
-        arch: ['x64', 'x86']
+        arch: ['x64']
         qt: ['PySide6']
     steps:
       - name: Checkout

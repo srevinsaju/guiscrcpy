@@ -23,7 +23,7 @@ import shlex
 import shutil
 import sys
 import subprocess
-from ...logging import make_logger
+from ..logging import make_logger
 
 from qtpy.QtGui import QPixmap
 from colorama import Fore

@@ -5,8 +5,6 @@ import coloredlogs
 
 
 def setup_logging():
-    ch = logging.StreamHandler()
-
     loglevel = logging.INFO
     force_colors = False
 

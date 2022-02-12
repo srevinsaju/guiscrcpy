@@ -33,7 +33,6 @@ All rights reserved.
 
 import hashlib
 from logging import Logger
-import logging
 import os
 import subprocess
 import sys

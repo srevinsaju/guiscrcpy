@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "guiscrcpy"
-version = "4.11.3"
+version = "4.12.0"
 description = "A simple, pluggable, graphical user interface for the fastest Android screen mirroring software"
 authors = ["Srevin Saju <srevinsaju@sugarlabs.org>"]
 license = "GPLv3"

@@ -196,7 +196,6 @@ jobs:
         ./pyuploadtool-x86_64.AppImage \
           guiscrcpy-PySide6-x64-continuous.app/guiscrcpy-PySide6-x64 \
           guiscrcpy-PySide6-x64-continuous.exe/guiscrcpy-PySide6-x64.exe \
-          guiscrcpy-PySide6-x86-continuous.exe/guiscrcpy-PySide6-x86.exe \
           guiscrcpy-m-continuous-x86_64.AppImage/guiscrcpy*x86_64.AppImage \
           guiscrcpy-python/guiscrcpy*.* \
           guiscrcpy-r-continuous-x86_64.AppImage/guiscrcpy*.AppImage

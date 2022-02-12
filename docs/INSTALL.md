@@ -1,45 +1,5 @@
 # Installation
 
-## PyPI wheels ![PyPI](https://img.shields.io/pypi/v/guiscrcpy?color=green&logo=python&logoColor=white)
-
-Installing from [PyPi](https://pypi.org/project/guiscrcpy/) is the most supported, fastest and compatible package across all platforms and operating systems. The list of compatible and tested platforms are:
-
-* Windows 8, 8.1, 10 (64-bit)
-* `manylinux2014` 
-* macOS Catalina 10.15
-
-The restriction of `manylinux2014` are because of the wheels for `PyQt5` are mostly `manylinux2014`. The `PyQt5==5.14` gives `manylinux1` wheels also. It can be preferably downgraded on respective linux distributions for compatibility. The minimum required version of `PyQt5` required to run `guiscrcpy` is `5.14`, if not used, it might create user specific errors like `AttributeErrors` while parsing the User Interface files.
-
-### Installation
-
-##### Stable Release
-
-```bash
-pip3 install -U guiscrcpy
-```
-
-##### Development Release
-
-```bash
-pip3 install https://github.com/srevinsaju/guiscrcpy/archive/master.zip
-```
-
-> **NOTE**: Development (`master` / `beta-*`) are expected to be highly unstable. If you would like to contribute to development by reporting issues before the next release, you consider using the above option.
-
-Few points to consider:
-
-* `pip` install might not work if you do not have `pip` installed on you system. On Windows, if the downloaded version of `python` is from the [python.org](https://python.org), it should not be an issue. However, if you install `python` from another source, (eg: Ubuntu `apt` repositories, or Alpine Python docker images), you would have to install pip. Check out [this](https://google.com/search?q=How+to+install+pip) for more information.
-
-* If your `pip` version is below 20.0, then you are likely to expect a failure in the command with an `EnvironmentError` / `PermissionDenied` Error. This is because `pip` tries to install packages to global level, (aka `/usr/` on Linux). To fix that, you may either [upgrade pip](https://google.com/search?q=How+to+upgrade+pip) or use the `--user` flag as such:
-
-  ```bash
-  pip3 install guiscrcpy --user
-  ```
-
-* `guiscrcpy` requires Python `v3.6` or above. Installing on an older version of python is likely to fail. Python 2 is not supported in any previous releases also. Support for Python 3.5 can be attained by manual patching the `f-strings` and patching the requirements with an apt version of `PyQt5`.
-
-
-<br>
 
 ## AppImages ![AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/AppImage/badge.svg) [![Get guiscrcpy AppImage](https://img.shields.io/endpoint?url=https%3A%2F%2Fg.srev.in%2Fget-appimage%2Fguiscrcpy%2Fshields.json)](https://g.srev.in/get-appimage/guiscrcpy/)
 
@@ -97,7 +57,17 @@ The bug was found on ubuntu. Tested on Ubuntu 20.10, 20.04 (GNOME). Most linux d
 
 [![Get Appimage](https://raw.githubusercontent.com/srevinsaju/get-appimage/master/static/badges/get-appimage-branding-blue.png)](https://srevinsaju.github.io/get-appimage/guiscrcpy)
 
+
 <br>
+
+## Flatpak 
+
+```bash 
+flatpak install flathub in.srev.guiscrcpy
+```
+
+<br>
+
 
 ## Snap Store [![guiscrcpy](https://snapcraft.io//guiscrcpy/badge.svg)](https://snapcraft.io/guiscrcpy) [![guiscrcpy](https://snapcraft.io//guiscrcpy/trending.svg?name=0)](https://snapcraft.io/guiscrcpy)
 

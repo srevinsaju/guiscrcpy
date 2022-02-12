@@ -1,16 +1,13 @@
 # Build
 
-`guiscrcpy` is delivered to users by building from source. It is not relatively complicated because, most of the build functions are handled by Python’s `setuptools` and `make`. 
+```bash
 
-To understand how the build works, it is important to understand the components of `guiscrcpy`
+git clone https://github.com/srevinsaju/guiscrcpy 
+cd guiscrcpy 
+poetry install
+poetry run python3 -m guiscrcpy 
+```
 
-* External dependencies (`PyQt5`, `psutil`, ...)
-* User Interface files
-* Source Code
-
-The order of the build is important for the successful build and deploy of `guiscrcpy` to your system, which is given above. 
-
-<br>
 
 ## v3.8+
 

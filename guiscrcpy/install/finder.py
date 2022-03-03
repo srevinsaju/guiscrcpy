@@ -7,7 +7,7 @@ def open_exe_name_dialog(parent, appname):
     file_dialog.setFilter(QDir.AllEntries | QDir.Hidden)
     file_dialog.setFileMode(QFileDialog.ExistingFile)
     file_dialog.setWindowTitle(
-        f"{appname} could not be found. Please locate in" "manually"
+        f"{appname} could not be found. Please locate it manually"
     )
     if file_dialog.exec():
         file_name = file_dialog.selectedFiles()

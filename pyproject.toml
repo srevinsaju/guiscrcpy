@@ -15,20 +15,20 @@ psutil = "^5.8.0"
 pynput = "1.6.8"
 colorama = "^0.4.4"
 click = "^8.0.1"
-QtPy = "^2.0.0"
-PyQt6 = {version = "^6.2.3", optional = true}
 PyInstaller = {version = "*", optional = true}
 pywin32 = {version = "302", markers = "platform_system == 'Windows'" }
-PySide6 = {version = "^6.2.1", optional = true}
+PySide6 = {version = "^6", optional = true}
+PyQt6 = {version = "^6", optional = true}
 CairoSVG = {version = "^2.5.2", optional = true}
 coloredlogs = "^15.0.1"
+QtPy = "^2.0.1"
 
 [tool.poetry.dev-dependencies]
 black = "^21.7b0"
 
 [tool.poetry.extras]
-PyQt6 = ["pyqt6"]
-PySide6 = ["pyside6"]
+PyQt6 = ["PyQt6"]
+PySide6 = ["PySide6"]
 PyInstaller = ["pyinstaller"]
 
 [build-system]

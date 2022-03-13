@@ -104,9 +104,9 @@ class AndroidDebugBridge(Bridge):
 
     def tcpip(self, port=5555, identifier=""):
         if identifier:
-            command = [self.path, "-s", identifier, "-d", "tcpip", port]
+            command = [self.path, "-s", identifier, "-d", "tcpip", f"{port}"]
         else:
-            command = [self.path, "-d", "tcpip", port]
+            command = [self.path, "-d", "tcpip", f"{port}"]
         exit_code = call(command, stdout=sys.stdout, stderr=sys.stdout)
         return exit_code
 

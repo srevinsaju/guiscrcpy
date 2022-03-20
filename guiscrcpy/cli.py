@@ -42,16 +42,12 @@ def show_version(ctx, param, value):  # noqa:
     if os.getenv("APPDIR"):
         click.echo("AppDir: {}".format(os.getenv("APPDIR")))
     import inspect
-    from PyQt5 import Qt
 
     _pyqt5_version = [
         "%s = %s" % (k, v)
         for k, v in vars(Qt).items()
         if k.lower().find("version") >= 0 and not inspect.isbuiltin(v)
     ]
-    print()
-    print("== PyQt5 Version ==")
-    print("\n".join(sorted(_pyqt5_version)))
     print()
     if platform.system() == "Linux":
         print("== CairoSVG version ==")
@@ -89,7 +85,7 @@ def show_license(ctx, param, value):  # noqa:
     "--theme",
     "theme",
     default="Breeze",
-    help="Set the default theme (based on PyQt5 "
+    help="Set the default theme (based on PyQt "
     "themes - Fusion, Breeze, Windows) "
     "(stored in configuration, override by --theme-no-cfg)",
 )

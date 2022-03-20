@@ -159,7 +159,7 @@ pyreadline3 = {version = "*", markers = "sys_platform == \"win32\" and python_ve
 
 [[package]]
 name = "importlib-metadata"
-version = "4.11.2"
+version = "4.11.3"
 description = "Read metadata from Python packages"
 category = "main"
 optional = false
@@ -176,7 +176,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 
 [[package]]
 name = "macholib"
-version = "1.15.2"
+version = "1.16"
 description = "Mach-O header analysis and editing"
 category = "main"
 optional = true
@@ -264,7 +264,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "pyinstaller"
-version = "4.9"
+version = "4.10"
 description = "PyInstaller bundles a Python application and all its dependencies into a single package."
 category = "main"
 optional = true
@@ -305,7 +305,7 @@ six = "*"
 
 [[package]]
 name = "pyobjc-core"
-version = "8.3"
+version = "8.4.1"
 description = "Python<->ObjC Interoperability Module"
 category = "main"
 optional = false
@@ -313,26 +313,26 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "pyobjc-framework-cocoa"
-version = "8.3"
+version = "8.4.1"
 description = "Wrappers for the Cocoa frameworks on macOS"
 category = "main"
 optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-pyobjc-core = ">=8.3"
+pyobjc-core = ">=8.4.1"
 
 [[package]]
 name = "pyobjc-framework-quartz"
-version = "8.3"
+version = "8.4.1"
 description = "Wrappers for the Quartz frameworks on macOS"
 category = "main"
 optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-pyobjc-core = ">=8.3"
-pyobjc-framework-Cocoa = ">=8.3"
+pyobjc-core = ">=8.4.1"
+pyobjc-framework-Cocoa = ">=8.4.1"
 
 [[package]]
 name = "pyparsing"
@@ -622,12 +622,12 @@ humanfriendly = [
     {file = "humanfriendly-10.0.tar.gz", hash = "sha256:6b0b831ce8f15f7300721aa49829fc4e83921a9a301cc7f606be6686a2288ddc"},
 ]
 importlib-metadata = [
-    {file = "importlib_metadata-4.11.2-py3-none-any.whl", hash = "sha256:d16e8c1deb60de41b8e8ed21c1a7b947b0bc62fab7e1d470bcdf331cea2e6735"},
-    {file = "importlib_metadata-4.11.2.tar.gz", hash = "sha256:b36ffa925fe3139b2f6ff11d6925ffd4fa7bc47870165e3ac260ac7b4f91e6ac"},
+    {file = "importlib_metadata-4.11.3-py3-none-any.whl", hash = "sha256:1208431ca90a8cca1a6b8af391bb53c1a2db74e5d1cef6ddced95d4b2062edc6"},
+    {file = "importlib_metadata-4.11.3.tar.gz", hash = "sha256:ea4c597ebf37142f827b8f39299579e31685c31d3a438b59f469406afd0f2539"},
 ]
 macholib = [
-    {file = "macholib-1.15.2-py2.py3-none-any.whl", hash = "sha256:885613dd02d3e26dbd2b541eb4cc4ce611b841f827c0958ab98656e478b9e6f6"},
-    {file = "macholib-1.15.2.tar.gz", hash = "sha256:1542c41da3600509f91c165cb897e7e54c0e74008bd8da5da7ebbee519d593d2"},
+    {file = "macholib-1.16-py2.py3-none-any.whl", hash = "sha256:5a0742b587e6e57bfade1ab90651d4877185bf66fd4a176a488116de36878229"},
+    {file = "macholib-1.16.tar.gz", hash = "sha256:001bf281279b986a66d7821790d734e61150d52f40c080899df8fefae056e9f7"},
 ]
 mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
@@ -719,17 +719,17 @@ pycparser = [
     {file = "pycparser-2.21.tar.gz", hash = "sha256:e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206"},
 ]
 pyinstaller = [
-    {file = "pyinstaller-4.9-py3-none-macosx_10_13_universal2.whl", hash = "sha256:e2f165cea4470ce8a8349112cd78f48a61413805adc17792a91997a11cfe1d80"},
-    {file = "pyinstaller-4.9-py3-none-manylinux2014_aarch64.whl", hash = "sha256:24035eb9fffa2e3e288b4c1c9710043819efc7203cae5c8c573bec16f4a8e98f"},
-    {file = "pyinstaller-4.9-py3-none-manylinux2014_i686.whl", hash = "sha256:a0b988cfc197d40e3d773b3aa1c7d3e918fc0933b4c15ec3fc5d156f222d82cb"},
-    {file = "pyinstaller-4.9-py3-none-manylinux2014_ppc64le.whl", hash = "sha256:62c97cbbdbee30974d607eb1de9afb081eb3adba787c203b00438e21027b829b"},
-    {file = "pyinstaller-4.9-py3-none-manylinux2014_s390x.whl", hash = "sha256:7f46ab11ec986e4c525b93251063144e12d432a132dbc0070e3030e34c76537a"},
-    {file = "pyinstaller-4.9-py3-none-manylinux2014_x86_64.whl", hash = "sha256:b5f1a94150315ea75bf3501be6c8476d65a7209580bb662da06dbdbc4454f375"},
-    {file = "pyinstaller-4.9-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:ebeb87cdbadb2b4e8f991ffd9945ebd4fb3a7303180e63682c3e1ce01b3fdd22"},
-    {file = "pyinstaller-4.9-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:59372b950d176fdc5ecea29719a8ab3f194b73a15b7f9875ac2a1de9a3daf5ed"},
-    {file = "pyinstaller-4.9-py3-none-win32.whl", hash = "sha256:ec3ca331d565ffca1b6470c5aaf798885a03708c3d0b15c1b19009126f84c1d4"},
-    {file = "pyinstaller-4.9-py3-none-win_amd64.whl", hash = "sha256:bec57b3b2b6178907255557ec0fc4b5ce5a0474013414cdadea853205c74ed26"},
-    {file = "pyinstaller-4.9.tar.gz", hash = "sha256:75a180a658871bc41f9cf94b6f90ffa54e98f5d6a7cdb02d7530f0360afe24f9"},
+    {file = "pyinstaller-4.10-py3-none-macosx_10_13_universal2.whl", hash = "sha256:15557cd1a79d182967f0a5040750e6902e13ebd6cab41e3ed84d7b28a306357b"},
+    {file = "pyinstaller-4.10-py3-none-manylinux2014_aarch64.whl", hash = "sha256:f2166ff2cd95eefb0d377ae8d1071f186fa25edd410ede65b376162d5ec41909"},
+    {file = "pyinstaller-4.10-py3-none-manylinux2014_i686.whl", hash = "sha256:7d94518ba1f8e9a8577345312276891ad7d6cd9785e453e9951b35647e2c7078"},
+    {file = "pyinstaller-4.10-py3-none-manylinux2014_ppc64le.whl", hash = "sha256:70c71e827f4b34602cbc7a0947a067b662c1cbdc4db51832e13b97cca3c54dd7"},
+    {file = "pyinstaller-4.10-py3-none-manylinux2014_s390x.whl", hash = "sha256:05c21117b84199272ebd355b556af4714f6e79245e1c435d6f16653786d7d17e"},
+    {file = "pyinstaller-4.10-py3-none-manylinux2014_x86_64.whl", hash = "sha256:714c4dcc319a41416744d1e30c6317405dfaed80d2adc45f8bfa70dc7367e664"},
+    {file = "pyinstaller-4.10-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:581620bdcd32f01e89b13231256b807bb090e7eadf40c81c864ec402afa4758a"},
+    {file = "pyinstaller-4.10-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:d4f79c0a774451f12baca4e476376418f011fa3039dde8fd172ea2aa8ff67bad"},
+    {file = "pyinstaller-4.10-py3-none-win32.whl", hash = "sha256:cfed0b3a43e73550a43a094610328109564710b9514afa093ef7199d072cae87"},
+    {file = "pyinstaller-4.10-py3-none-win_amd64.whl", hash = "sha256:0dcaf6557cdb2da763c46e06e95a94a7634ab03fb09d91bc77988b01ee05c907"},
+    {file = "pyinstaller-4.10.tar.gz", hash = "sha256:7749c868d2e2dc84df7d6f65437226183c8a366f3a99bb2737785625c3a3cca1"},
 ]
 pyinstaller-hooks-contrib = [
     {file = "pyinstaller-hooks-contrib-2022.2.tar.gz", hash = "sha256:ab1d14fe053016fff7b0c6aea51d980bac6d02114b04063b46ef7dac70c70e1e"},
@@ -741,30 +741,31 @@ pynput = [
     {file = "pynput-1.6.8.tar.gz", hash = "sha256:68c1863d6a1520b44b6a915e866cbfa1b8d127aef9289f25183c93e28ee5049a"},
 ]
 pyobjc-core = [
-    {file = "pyobjc-core-8.3.tar.gz", hash = "sha256:9b7688188e28761ac7655cf3a2fa9942927e16d3a5a81cc8d726b0bcb3b4f283"},
-    {file = "pyobjc_core-8.3-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:cfebdc2763a46f99043aae09e5076fb0e10ff4102099712ec358704ef1ba62c5"},
-    {file = "pyobjc_core-8.3-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:3cc529b1ca996dd4ec7433b06694c8edf8655dfc5a0b11b4462b38d0721014a4"},
-    {file = "pyobjc_core-8.3-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:46fcb04fef29ff436b6b5de44e90c6f1454934dda5c1879f1b3e4945d5bc6d13"},
-    {file = "pyobjc_core-8.3-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:35f246735fcba9b32a9a5dadbc81e0d64758182873744b5949ca8105bafb2323"},
-    {file = "pyobjc_core-8.3-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:52981d4ae9ad6dff04cf415b21701f43b02a8686df47f6b6a13807c5ba957ac0"},
+    {file = "pyobjc-core-8.4.1.tar.gz", hash = "sha256:df98669e957adb33566d9ef46773a5ac876a81afe8849c282d6a80448e35dd74"},
+    {file = "pyobjc_core-8.4.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:9a89cac910fbd64728fe7ec0c7a3a7cf20959bc1d7e2f41db4d7800556e47745"},
+    {file = "pyobjc_core-8.4.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:2cf1d4348cb99fcba04fa38199a46e35263b2fe7bb66e6dfbd4f19bc2602998d"},
+    {file = "pyobjc_core-8.4.1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:a130324b25c0f5f4cfe30b6a28b8e70865d6e1eee158caababb603906ef431d2"},
+    {file = "pyobjc_core-8.4.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:c31195d1a8f00da99abf79643f902d09c709dbbe9c9b6feb6b585303c57d720c"},
+    {file = "pyobjc_core-8.4.1-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:e7fd2aefb53a96a8f688c8bb36c6ebd5446250a7251bfa6b688a045e05afc60b"},
+    {file = "pyobjc_core-8.4.1-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:b3191173ce268e23c84d84f036fc94c3a8749a6726fc7fe73baf27dbac14f7d0"},
 ]
 pyobjc-framework-cocoa = [
-    {file = "pyobjc-framework-Cocoa-8.3.tar.gz", hash = "sha256:5003e780d9bfc2984b1415d9ee9ad07625f6abd2191964d153c6d331d81284fe"},
-    {file = "pyobjc_framework_Cocoa-8.3-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:13251b47fbbe5321e6d1159f07158a598f2cdccc32e01985695702b96d092913"},
-    {file = "pyobjc_framework_Cocoa-8.3-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:97c6c8247d2136c869ee96a7d8b3c314c8f1424452d4708ef4016516d6d4ab8a"},
-    {file = "pyobjc_framework_Cocoa-8.3-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:042f00e981104a59affff2d74cf989248ada22f20122241522c4e48fe06ab96c"},
-    {file = "pyobjc_framework_Cocoa-8.3-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:87a16e7d16e74f9df35f8a01e025114f52bbf16acac6851971c233de7c36dd0e"},
-    {file = "pyobjc_framework_Cocoa-8.3-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:7fec7732d93f5e7ea41bda64dd288e39087e5dea7add3d02f2bd156e0b2bd029"},
-    {file = "pyobjc_framework_Cocoa-8.3-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:729206d414a0b8e15f3afccd96b07d5beafdd0ac587f942186444aa39b55d6ff"},
+    {file = "pyobjc-framework-Cocoa-8.4.1.tar.gz", hash = "sha256:dc596bac0f5d424f67944e95b2d0d7c94a07c4166359d7b4a4d4ae4f8e112822"},
+    {file = "pyobjc_framework_Cocoa-8.4.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:cfbe038a0108ae1b45f8f7067af70af5811b8352d2dc3d86a7bcb4484ff5d56e"},
+    {file = "pyobjc_framework_Cocoa-8.4.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:118225562064d991bafb41d0913899d6b3d723984d1888cb7181e4dba63b22c2"},
+    {file = "pyobjc_framework_Cocoa-8.4.1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:d117a1eb24fd317e9f63792ac6a8703ed899de5d42e8a861c7bf885625668c31"},
+    {file = "pyobjc_framework_Cocoa-8.4.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:3af8577acbd6b980d3b9270ec99bc0164f66ef8397351a72fcdee527f23c1a34"},
+    {file = "pyobjc_framework_Cocoa-8.4.1-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:91fdc964acb4dee4d37ae81fb603d48397739dbbfcc1eadbe0cdafaa8144b6e6"},
+    {file = "pyobjc_framework_Cocoa-8.4.1-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:197dd28668e786b55d7d4139afd85c285f780564ebbccc166e84a24be31de34f"},
 ]
 pyobjc-framework-quartz = [
-    {file = "pyobjc-framework-Quartz-8.3.tar.gz", hash = "sha256:e8dd5ec9c59c4037be71612c8aaa239fa6248e8478eb1c182ec60baaf5549ae9"},
-    {file = "pyobjc_framework_Quartz-8.3-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:ebcf1f8b9e4e60de4f675e3df198900ac860022a2677b85cf8252bec9faed6d9"},
-    {file = "pyobjc_framework_Quartz-8.3-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:b62b7cfdc13095c35852157e32398cd6057af8b5a3b6d5ed9cec5575708adbb4"},
-    {file = "pyobjc_framework_Quartz-8.3-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:a24e8eee53d6fc5f06149076bd05ebf294b70fb235284564e6ab00719c4e325a"},
-    {file = "pyobjc_framework_Quartz-8.3-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:01c4c546f9398d3019c82916181448fbbc5a3b12cc1f9140f7c590e4750a8065"},
-    {file = "pyobjc_framework_Quartz-8.3-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:95a43e4635dd37693eb626a7e40ea73fb550ae68a8deb22076501ca7d3b919c9"},
-    {file = "pyobjc_framework_Quartz-8.3-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:7c9800477bdcf52402e5d6c882b1256895056166ae7bdfaa2a30bc1c4a948216"},
+    {file = "pyobjc-framework-Quartz-8.4.1.tar.gz", hash = "sha256:f8acebf0b526f0687e79ea6946e8f2528ced4ef02d0ed3fbf7116124b2749e52"},
+    {file = "pyobjc_framework_Quartz-8.4.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:a82d9eab3b2a6fca46602465f731815026d06e4fd0ba65b5b5211f1a0472b861"},
+    {file = "pyobjc_framework_Quartz-8.4.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:1bd0a506385141b81330464b6e2537a7056cdca56deb98222b6926a04f72a3e6"},
+    {file = "pyobjc_framework_Quartz-8.4.1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:64cc616386b7a387dce53d3adb8c12a8461c2720861ab36aeeb53768cd0ba7e4"},
+    {file = "pyobjc_framework_Quartz-8.4.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:a2dff998c4d1286998390f58a3131b99bdc9dbf5c3d881562b33f168098bbe2e"},
+    {file = "pyobjc_framework_Quartz-8.4.1-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:a98c58e1b265d5b413f5ecc6ec186b9e305fb6e37909d8b4b97fd681176f5f1c"},
+    {file = "pyobjc_framework_Quartz-8.4.1-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:39f55426ef883cbe12a53969f90886f71e2a94513c98cf3730efdf404cdc5c83"},
 ]
 pyparsing = [
     {file = "pyparsing-3.0.7-py3-none-any.whl", hash = "sha256:a6c06a88f252e6c322f65faf8f418b16213b51bdfaece0524c1c1bc30c63c484"},

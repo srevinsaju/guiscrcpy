@@ -1161,9 +1161,13 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
         if self.cmx is not None:
             self.config["cmx"] = " ".join(map(str, self.cmx))
 
-        arguments_scrcpy = "{} {} {}".format(
-            self.options, self.config["extra"], self.config["cmx"]
-        )
+        arguments_scrcpy = [
+            i
+            for i in "{} {} {}".format(
+                self.options, self.config["extra"], self.config["cmx"]
+            ).split()
+            if i != ""
+        ]
         progress = self.progress(progress)
 
         # ====================================================================

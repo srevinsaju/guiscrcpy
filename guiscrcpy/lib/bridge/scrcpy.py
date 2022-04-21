@@ -17,7 +17,7 @@ class ScrcpyBridge(Bridge):
 
     def start(self, args, stdout=PIPE, stderr=PIPE):
         proc = open_process(
-            [self.path, args],
+            [self.path] + args,
             stdout=stdout,
             stderr=stderr,
         )

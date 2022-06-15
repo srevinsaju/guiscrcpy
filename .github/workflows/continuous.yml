@@ -44,8 +44,8 @@ jobs:
         run: git fetch --tags --force
       - name: Build
         run: |
-          # force usage of PySide6 to prevent having surprises with pyinstaller.
-          sed -i 's/qtpy/PySide6/g' **/*.py
+          # force usage of PySide2 to prevent having surprises with pyinstaller.
+          sed -i 's/qtpy/PySide2/g' **/*.py
           docker build -t guiscrcpy-appimage-build -f scripts/ci/pyappimage/Dockerfile .
           docker run --rm -v $(pwd):/usr/src guiscrcpy-appimage-build
           ls -al 
@@ -105,8 +105,8 @@ jobs:
     runs-on: windows-latest
     strategy: 
       matrix:
-        arch: ['x64']
-        qt: ['PySide6']
+        arch: ['x64', 'x86']
+        qt: ['PyQt5', 'PySide2']
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -146,7 +146,7 @@ jobs:
     strategy: 
       matrix:
         arch: ['x64']
-        qt: ['PySide6']
+        qt: ['PySide2']
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -194,8 +194,11 @@ jobs:
         ls -alHR
         wget -q https://github.com/srevinsaju/pyuploadtool/releases/download/continuous/pyuploadtool-x86_64.AppImage && chmod +x pyuploadtool-x86_64.AppImage
         ./pyuploadtool-x86_64.AppImage \
-          guiscrcpy-PySide6-x64-continuous.app/guiscrcpy-PySide6-x64 \
-          guiscrcpy-PySide6-x64-continuous.exe/guiscrcpy-PySide6-x64.exe \
+          guiscrcpy-PyQt5-x64-continuous.exe/guiscrcpy-PyQt5-x64.exe \
+          guiscrcpy-PyQt5-x86-continuous.exe/guiscrcpy-PyQt5-x86.exe \
+          guiscrcpy-PySide2-x64-continuous.app/guiscrcpy-PySide2-x64 \
+          guiscrcpy-PySide2-x64-continuous.exe/guiscrcpy-PySide2-x64.exe \
+          guiscrcpy-PySide2-x86-continuous.exe/guiscrcpy-PySide2-x86.exe \
           guiscrcpy-m-continuous-x86_64.AppImage/guiscrcpy*x86_64.AppImage \
           guiscrcpy-python/guiscrcpy*.* \
           guiscrcpy-r-continuous-x86_64.AppImage/guiscrcpy*.AppImage

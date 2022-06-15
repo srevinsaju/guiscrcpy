@@ -17,7 +17,7 @@ colorama = "^0.4.4"
 click = "^8.0.1"
 PyInstaller = {version = "*", optional = true}
 pywin32 = {version = "302", markers = "platform_system == 'Windows'" }
-PySide6 = {version = "^6", optional = true}
+PySide6 = "6.3.0"
 PyQt6 = "6.3.0"
 CairoSVG = {version = "^2.5.2", optional = true}
 coloredlogs = "^15.0.1"

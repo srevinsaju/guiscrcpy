@@ -21,9 +21,9 @@ import os
 
 # flake8: noqa
 
-from guiscrcpy.ui.pyside.main import Ui_MainWindow  # noqa: F401
-from guiscrcpy.ui.pyside.network import Ui_NetworkUI  # noqa: F401
-from guiscrcpy.ui.pyside.panel import Ui_HorizontalPanel  # noqa: F401
-from guiscrcpy.ui.pyside.settings import Ui_MainWindow as Ui_SettingsWindow
-from guiscrcpy.ui.pyside.downloader import Ui_Initializer  # noqa: F401
-from guiscrcpy.ui.pyside.toolkit import Ui_ToolbarPanel  # noqa: F401
+from guiscrcpy.ui.pyside2.main import Ui_MainWindow  # noqa: F401
+from guiscrcpy.ui.pyside2.network import Ui_NetworkUI  # noqa: F401
+from guiscrcpy.ui.pyside2.panel import Ui_HorizontalPanel  # noqa: F401
+from guiscrcpy.ui.pyside2.settings import Ui_MainWindow as Ui_SettingsWindow
+from guiscrcpy.ui.pyside2.downloader import Ui_Initializer  # noqa: F401
+from guiscrcpy.ui.pyside2.toolkit import Ui_ToolbarPanel  # noqa: F401

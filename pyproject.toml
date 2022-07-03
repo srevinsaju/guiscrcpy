@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "guiscrcpy"
-version = "4.12.1"
+version = "2022.6.1"
 description = "A simple, pluggable, graphical user interface for the fastest Android screen mirroring software"
 authors = ["Srevin Saju <srevinsaju@sugarlabs.org>"]
 license = "GPLv3"
@@ -10,25 +10,27 @@ license = "GPLv3"
 
 
 [tool.poetry.dependencies]
-python = ">=3.7,<3.11"
+python = ">=3.7,<3.10"
 psutil = "^5.8.0"
 pynput = "1.6.8"
 colorama = "^0.4.4"
 click = "^8.0.1"
+QtPy = "^1.9.0"
+PyQt5 = {version = "^5.15.4", optional = true}
 PyInstaller = {version = "*", optional = true}
 pywin32 = {version = "302", markers = "platform_system == 'Windows'" }
-PySide6 = {version = "^6", optional = true}
-PyQt6 = {version = "^6", optional = true}
+PySide2 = {version = "^5.15.2", optional = true}
 CairoSVG = {version = "^2.5.2", optional = true}
 coloredlogs = "^15.0.1"
-QtPy = "^2.0.1"
+black = "22.3.0"
 
 [tool.poetry.dev-dependencies]
-black = "^21.7b0"
+black = "^22.3.0"
+
 
 [tool.poetry.extras]
-PyQt6 = ["PyQt6"]
-PySide6 = ["PySide6"]
+PyQt5 = ["pyqt5"]
+PySide2 = ["pyside2"]
 PyInstaller = ["pyinstaller"]
 
 [build-system]

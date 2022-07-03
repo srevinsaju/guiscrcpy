@@ -25,7 +25,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade poetry wheel
-        poetry install -E PySide6
+        poetry install -E PySide2
         poetry build
         pip3 install dist/*.whl
 

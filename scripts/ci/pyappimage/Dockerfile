@@ -7,7 +7,7 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 RUN python3 -m pip install wheel
-RUN python3 -m pip install 'PySide6>=6.2.3'
+RUN python3 -m pip install 'PySide2>=5.13.2'
 
 WORKDIR /usr/src
 CMD python3 -m pyappimage.cli build

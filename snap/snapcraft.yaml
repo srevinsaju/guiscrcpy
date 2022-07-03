@@ -90,6 +90,8 @@ parts:
     plugin: python
     python-version: python3
     source: .
+    stage: 
+      - lib64/*
 
 plugs:
   adb-support:

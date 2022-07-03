@@ -22,9 +22,11 @@ pywin32 = {version = "302", markers = "platform_system == 'Windows'" }
 PySide2 = {version = "^5.15.2", optional = true}
 CairoSVG = {version = "^2.5.2", optional = true}
 coloredlogs = "^15.0.1"
+black = "22.3.0"
 
 [tool.poetry.dev-dependencies]
-black = "^21.7b0"
+black = "^22.3.0"
+
 
 [tool.poetry.extras]
 PyQt5 = ["pyqt5"]

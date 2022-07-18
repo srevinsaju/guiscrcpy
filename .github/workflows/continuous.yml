@@ -4,6 +4,31 @@ on:
   - push
 
 jobs:
+  Snap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install snapcraft
+        run: |
+          sudo snap install --classic snapcraft
+          snapcraft --destructive-mode
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: guiscrcpy-snap
+          path: 'guiscrcpy_*.snap'
+
+
+      - name: Publish to Snap Store
+        run: |
+          echo "${{ secrets.SNAP_DEPLOY_TOKEN }}" > token.txt
+          mkdir -p ~/.snapcraft
+          cat token.txt | base64 --decode --ignore-garbage > ~/.snapcraft/snapcraft.cfg
+          # if: github.ref == 'refs/heads/master'
+          snapcraft upload --release=edge *.snap
+
   Wheel:
     runs-on: ubuntu-latest
     steps:

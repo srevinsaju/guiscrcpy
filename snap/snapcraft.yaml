@@ -7,7 +7,7 @@ description: |
 grade: stable 
 confinement: strict 
 
-base: core18
+base: core20
 
 architectures:
 - build-on: amd64
@@ -37,9 +37,7 @@ apps:
     command-chain: &command-chain-common
     - bin/debian-multiarch-triplet-provider-launch
     - bin/classic-launch
-    - bin/desktop-launch
     - bin/guiscrcpy
-    desktop: share/applications/guiscrcpy.desktop
 
 parts:
 
@@ -53,42 +51,48 @@ parts:
     stage-snaps:
     - classic-launch
 
-  # Remote part for support of various desktop technologies
-  # Refer: https://github.com/ubuntu/snapcraft-desktop-helpers/blob/master/snapcraft.yaml
-  desktop-qt5:
-    build-packages:
-    - build-essential
-    - qtbase5-dev
-    - dpkg-dev
-    make-parameters:
-    - FLAVOR=qt5
-    plugin: make
-    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
-    source-subdir: qt
-    stage-packages:
-    - libxkbcommon0
-    - ttf-ubuntu-font-family
-    - dmz-cursor-theme
-    - light-themes
-    - adwaita-icon-theme
-    - gnome-themes-standard
-    - shared-mime-info
-    - libqt5gui5
-    - libgdk-pixbuf2.0-0
-    - libqt5svg5
-    - try:
-      - appmenu-qt5
-    - locales-all
-    - xdg-user-dirs
-    - fcitx-frontend-qt5
-
   guiscrcpy:
     stage-snaps:
       - scrcpy
-    after: [desktop-qt5, classic-launch, debian-multiarch-triplet-provider-launch]
+    stage-packages:
+      - freeglut3
+    after: [classic-launch, debian-multiarch-triplet-provider-launch]
     # See 'snapcraft plugins'
+    build-packages:
+      - python3-pip
+    override-build: |
+      python -m venv $SNAPCRAFT_PART_INSTALL
+      source $SNAPCRAFT_PART_INSTALL/bin/activate
+      pip install poetry
+      python -m poetry install -E PySide2 --no-dev
+      ls -al $SNAPCRAFT_PART_INSTALL
+      find "${SNAPCRAFT_PART_INSTALL}" -type f -executable -print0 | xargs -0 \
+                sed -i "1 s|^#\\!${SNAPCRAFT_PYTHON_VENV_INTERP_PATH}.*$|#\\!/usr/bin/env ${SNAPCRAFT_PYTHON_INTERPRETER}|"
+
+      determine_link_target() {
+        opts_state="$(set +o +x | grep xtrace)"
+        interp_dir="$(dirname "${SNAPCRAFT_PYTHON_VENV_INTERP_PATH}")"
+        # Determine python based on PATH, then resolve it, e.g:
+        # (1) /home/ubuntu/.venv/snapcraft/bin/python3 -> /usr/bin/python3.8
+        # (2) /usr/bin/python3 -> /usr/bin/python3.8
+        # (3) /root/stage/python3 -> /root/stage/python3.8
+        # (4) /root/parts/<part>/install/usr/bin/python3 -> /root/parts/<part>/install/usr/bin/python3.8
+        python_path="$(which "${SNAPCRAFT_PYTHON_INTERPRETER}")"
+        python_path="$(readlink -e "${python_path}")"
+        for dir in "${SNAPCRAFT_PART_INSTALL}" "${SNAPCRAFT_STAGE}"; do
+        if  echo "${python_path}" | grep -q "${dir}"; then
+          python_path="$(realpath --strip --relative-to="${interp_dir}" \\
+                 "${python_path}")"
+          break
+        fi
+        done
+        echo "${python_path}"
+        eval "${opts_state}"
+      }
+      python_path="$(determine_link_target)"
+      ln -sf "${python_path}" "${SNAPCRAFT_PYTHON_VENV_INTERP_PATH}"
+
     plugin: python
-    python-version: python3
     source: .
     stage: 
       - lib64/*

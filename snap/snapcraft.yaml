@@ -84,8 +84,6 @@ parts:
     - fcitx-frontend-qt5
 
   guiscrcpy:
-    stage-snaps:
-      - scrcpy
     after: [desktop-qt5, classic-launch, debian-multiarch-triplet-provider-launch]
     # See 'snapcraft plugins'
     plugin: python
@@ -93,6 +91,11 @@ parts:
     source: .
     stage: 
       - lib64/*
+
+  scrcpy:
+    plugin: nil
+    stage-snaps:
+      - scrcpy 
 
 plugs:
   adb-support:

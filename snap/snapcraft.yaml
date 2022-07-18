@@ -96,6 +96,10 @@ parts:
     plugin: nil
     stage-snaps:
       - scrcpy 
+    stage:
+      - lib/x86_64-linux-gnu/*
+      - usr/share/doc/*
+      - usr/lib/x86_64-linux-gnu/*
 
 plugs:
   adb-support:

@@ -20,10 +20,34 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os
 
 # flake8: noqa
+has_pyside2 = False
+has_pyqt5 = False
 
-from guiscrcpy.ui.pyside2.main import Ui_MainWindow  # noqa: F401
-from guiscrcpy.ui.pyside2.network import Ui_NetworkUI  # noqa: F401
-from guiscrcpy.ui.pyside2.panel import Ui_HorizontalPanel  # noqa: F401
-from guiscrcpy.ui.pyside2.settings import Ui_MainWindow as Ui_SettingsWindow
-from guiscrcpy.ui.pyside2.downloader import Ui_Initializer  # noqa: F401
-from guiscrcpy.ui.pyside2.toolkit import Ui_ToolbarPanel  # noqa: F401
+try:
+    import PySide2
+
+    has_pyside2 = True
+except ModuleNotFoundError:
+    try:
+        import PyQt5
+
+        has_pyqt5 = True
+    except ModuleNotFoundError:
+        raise ModuleNotFoundError(
+            "Did not find either 'PyQt5' or 'PySide2' installations"
+        )
+
+if has_pyside2:
+    from guiscrcpy.ui.pyside2.main import Ui_MainWindow  # noqa: F401
+    from guiscrcpy.ui.pyside2.network import Ui_NetworkUI  # noqa: F401
+    from guiscrcpy.ui.pyside2.panel import Ui_HorizontalPanel  # noqa: F401
+    from guiscrcpy.ui.pyside2.settings import Ui_MainWindow as Ui_SettingsWindow
+    from guiscrcpy.ui.pyside2.downloader import Ui_Initializer  # noqa: F401
+    from guiscrcpy.ui.pyside2.toolkit import Ui_ToolbarPanel  # noqa: F401
+elif has_pyqt5:
+    from guiscrcpy.ui.pyqt5.main import Ui_MainWindow  # noqa: F401
+    from guiscrcpy.ui.pyqt5.network import Ui_NetworkUI  # noqa: F401
+    from guiscrcpy.ui.pyqt5.panel import Ui_HorizontalPanel  # noqa: F401
+    from guiscrcpy.ui.pyqt5.settings import Ui_MainWindow as Ui_SettingsWindow
+    from guiscrcpy.ui.pyqt5.downloader import Ui_Initializer  # noqa: F401
+    from guiscrcpy.ui.pyqt5.toolkit import Ui_ToolbarPanel  # noqa: F401

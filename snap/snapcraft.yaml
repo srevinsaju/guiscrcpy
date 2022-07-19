@@ -93,9 +93,9 @@ parts:
       - lib64/*
     
     override-stage: |
+      snapcraftctl stage
       python3 -m pip install --user build
       python3 -m build --wheel --no-isolation
-      snapcraftctl stage
       PYTHONUSERBASE=$SNAPCRAFT_STAGE python3 -m pip install --user -I dist/*.whl
 
   scrcpy:

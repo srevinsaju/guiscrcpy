@@ -91,11 +91,19 @@ parts:
     source: .
     stage: 
       - lib64/*
+    
+    override-stage: |
+      pip3 install --user build
+      python -m build --wheel --no-isolation
+      snapcraftctl stage
+      PYTHONUSERBASE=$SNAPCRAFT_STAGE python3 -m pip install --user -I dist/*.whl
 
   scrcpy:
     plugin: nil
     stage-snaps:
-      - scrcpy 
+      - scrcpy
+    stage-packages:
+      - freeglut3
     stage:
       - -lib/x86_64-linux-gnu/libcom_err.so.2.1
       - -usr/lib/x86_64-linux-gnu/libsensors.so.4.4.0

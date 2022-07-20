@@ -77,8 +77,7 @@ parts:
     - libgdk-pixbuf2.0-0
     - libqt5svg5
     - libgtk2.0-0
-    - try:
-      - appmenu-qt5
+    - appmenu-qt5
     - locales-all
     - xdg-user-dirs
     - fcitx-frontend-qt5

@@ -86,7 +86,6 @@ parts:
     after: [desktop-qt5, classic-launch, debian-multiarch-triplet-provider-launch]
     # See 'snapcraft plugins'
     plugin: python
-    python-version: python3
     source: .
     stage: 
       - lib64/*

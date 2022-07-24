@@ -75,6 +75,9 @@ parts:
       - lib64/*
     python-packages:
       - build
+    override-stage: |
+      snapcraftctl stage 
+      ls -al $CRAFT_STAGE
 
   scrcpy:
     plugin: nil

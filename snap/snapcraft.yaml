@@ -67,7 +67,6 @@ parts:
     source-subdir: qt
     stage-packages:
     - libxkbcommon0
-    - ttf-ubuntu-font-family
     - dmz-cursor-theme
     - light-themes
     - adwaita-icon-theme

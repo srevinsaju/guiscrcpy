@@ -65,21 +65,6 @@ parts:
     plugin: make
     source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
     source-subdir: qt
-    stage-packages:
-    - libxkbcommon0
-    - dmz-cursor-theme
-    - light-themes
-    - adwaita-icon-theme
-    - gnome-themes-standard
-    - shared-mime-info
-    - libqt5gui5
-    - libgdk-pixbuf2.0-0
-    - libqt5svg5
-    - libgtk2.0-0
-    - appmenu-qt5
-    - locales-all
-    - xdg-user-dirs
-    - fcitx-frontend-qt5
 
   guiscrcpy:
     after: [desktop-qt5, classic-launch, debian-multiarch-triplet-provider-launch]

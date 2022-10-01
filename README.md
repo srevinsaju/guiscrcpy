@@ -45,7 +45,7 @@ guiscrcpy is a multiplatform, ready-to-use GUI layer for Android to PC screen mi
 
 ## Installation
 
-These are the common methods of installation. To see more interesting ways, checkout [Installation wiki](docs/INSTALL.md) page for more information, and to find a compatible installtion method for your device and device architecture
+These are the common methods of installation. To see more interesting ways, checkout [Installation wiki](docs/INSTALL.md) page for more information, and to find a compatible installation method for your device and device architecture
 
 | Package Type  | Platforms                                                    | Status                                                       | Command / Link                |
 | ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------------------- |
@@ -69,7 +69,7 @@ These are the common methods of installation. To see more interesting ways, chec
 ## Further reading
 
 Thanks to users around the world, 
-You may like to see some articles written by well wishers:
+you may like to see some articles written by well wishers:
 
 * [Mirror your Android screen on your computer with Guiscrcpy - opensource.com](https://opensource.com/article/19/9/mirror-android-screen-guiscrcpy)
 * [Helper GUI For scrcpy, The Android Desktop Display And Remote Control Tool - linuxuprising.com](https://www.linuxuprising.com/2019/09/helper-gui-for-scrcpy-android-desktop.html)

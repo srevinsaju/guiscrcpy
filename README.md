@@ -46,14 +46,15 @@ guiscrcpy is a multiplatform, ready-to-use GUI layer for Android to PC screen mi
 ## Installation
 
 These are the common methods of installation. To see more interesting ways, checkout [Installation wiki](docs/INSTALL.md) page for more information, and to find a compatible installtion method for your device and device architecture
+>NOTE: Out of the two links for downloading AppImage, the `.m` one does not include the scrcpy binary. The one with `.r` includes the scrcpy binary.
 
 | Package Type  | Platforms                                                    | Status                                                       | Command / Link                |
 | ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------------------- |
 | Flatpak       | <img src="https://guiscrcpy.github.io/img/linux.png" height=15px> | [![guiscrcpy](https://img.shields.io/badge/flatpak-in.srev.guiscrcpy-green)](https://flathub.org/apps/details/in.srev.guiscrcpy) | `flatpak install flathub in.srev.guiscrcpy` |
 | Snap Store    | <img src="https://guiscrcpy.github.io/img/linux.png" height=15px><img src="https://guiscrcpy.github.io/img/darwin.jpeg" height=15px style="border-radius: 50%"> | [![guiscrcpy](https://snapcraft.io//guiscrcpy/badge.svg)](https://snapcraft.io/guiscrcpy) | `sudo snap install guiscrcpy` |
 | AUR*          | <img src="https://raw.githubusercontent.com/guiscrcpy/guiscrcpy.github.io/master/img/archlinux.png" height=15px> | [![AUR version](https://img.shields.io/aur/version/guiscrcpy?label=Arch%20Linux%20Package&style=flat-square)](https://aur.archlinux.org/packages/guiscrcpy) | `yay -S guiscrcpy`            |
-| Windows (exe) | <img src="https://guiscrcpy.github.io/img/windows.png" height=15px> | [![Windows Executable](https://github.com/srevinsaju/guiscrcpy/workflows/Windows%20Executable/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=+event%3Apush++is%3Asuccess+branch%3Amaster+workflow%3A%22Windows+Executable%22) | [Download `.exe`](https://github.com/srevinsaju/guiscrcpy/releases/tag/v4.11.3)   |
-| AppImage      | <img src="https://guiscrcpy.github.io/img/linux.png" height=15px> | [![AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/AppImage/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=event%3Apush+branch%3Amaster+is%3Asuccess+workflow%3AAppImage+) | [Download `.AppImage`](https://github.com/srevinsaju/guiscrcpy/releases/tag/v4.11.3) |
+| Windows (exe) | <img src="https://guiscrcpy.github.io/img/windows.png" height=15px> | [![Windows Executable](https://github.com/srevinsaju/guiscrcpy/workflows/Windows%20Executable/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=+event%3Apush++is%3Asuccess+branch%3Amaster+workflow%3A%22Windows+Executable%22) | [Download `.exe`](https://github.com/srevinsaju/guiscrcpy/releases/tag/v2022.7.1)   |
+| AppImage      | <img src="https://guiscrcpy.github.io/img/linux.png" height=15px> | [![AppImage](https://github.com/srevinsaju/guiscrcpy/workflows/AppImage/badge.svg)](https://github.com/srevinsaju/guiscrcpy/actions?query=event%3Apush+branch%3Amaster+is%3Asuccess+workflow%3AAppImage+) | [Download `.AppImage`](https://github.com/srevinsaju/guiscrcpy/releases/tag/v2022.7.1) |
 
 <br>
 

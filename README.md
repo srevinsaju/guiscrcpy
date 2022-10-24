@@ -46,7 +46,9 @@ guiscrcpy is a multiplatform, ready-to-use GUI layer for Android to PC screen mi
 ## Installation
 
 These are the common methods of installation. To see more interesting ways, checkout [Installation wiki](docs/INSTALL.md) page for more information, and to find a compatible installtion method for your device and device architecture
->NOTE: Out of the two links for downloading AppImage, the `.m` one does not include the scrcpy binary. The one with `.r` includes the scrcpy binary.
+
+>NOTE: Out of the two links for downloading AppImage, the `.m` one does not include the scrcpy binary. The one with `.r` includes the scrcpy binary. See https://github.com/srevinsaju/guiscrcpy/discussions/341 for more information on the release builds.
+
 
 | Package Type  | Platforms                                                    | Status                                                       | Command / Link                |
 | ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------------------- |

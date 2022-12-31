@@ -148,5 +148,5 @@ All rights reserved.
 
 ---------------------
 
-Copyright &copy; 2019 - 2022 [Srevin Saju](https://github.com/srevinsaju) and `guiscrcpy` contributors.
+Copyright &copy; 2019 - 2023 [Srevin Saju](https://github.com/srevinsaju) and `guiscrcpy` contributors.
 

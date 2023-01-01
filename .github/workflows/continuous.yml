@@ -192,6 +192,7 @@ jobs:
         CHANGELOG_TYPE: conventional
       run: |
         ls -alHR
+        export APPIMAGE_EXTRACT_AND_RUN=1
         wget -q https://github.com/srevinsaju/pyuploadtool/releases/download/continuous/pyuploadtool-x86_64.AppImage && chmod +x pyuploadtool-x86_64.AppImage
         ./pyuploadtool-x86_64.AppImage \
           guiscrcpy-PyQt5-x64-continuous.exe/guiscrcpy-PyQt5-x64.exe \

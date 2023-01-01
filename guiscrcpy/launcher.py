@@ -1177,7 +1177,7 @@ class InterfaceGuiscrcpy(QMainWindow, Ui_MainWindow):
             # scrcpy will fail if more than one device is found
             # its important to pass the device serial id, if more than one
             # device is found
-            arguments_scrcpy = f"-s {device_id} {arguments_scrcpy}"
+            arguments_scrcpy = ["-s", device_id] + arguments_scrcpy
 
         # tell end users that the color of the device is this
         self.display_public_message(

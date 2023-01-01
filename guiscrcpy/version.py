@@ -20,4 +20,4 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-VERSION = "v2022.7.1"
+VERSION = "v2023.1.1"

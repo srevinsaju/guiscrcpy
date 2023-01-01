@@ -27,7 +27,10 @@ class Ui_MainWindow(object):
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
-        MainWindow.setSizePolicy(sizePolicy)
+        try:
+            MainWindow.setSizePolicy(sizePolicy)
+        except TypeError:
+            MainWindow.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         MainWindow.setMinimumSize(QSize(500, 420))
         font = QFont()
         font.setFamily(u"Titillium Web")

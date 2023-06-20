@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=guiscrcpy
 Exec=guiscrcpy
+Comment[en_US]=Screen mirroring application for Android
+Comment[de_DE]=Anwendung für Android Screen Mirroring
 Type=Application
 Icon=guiscrcpy
 Terminal=false

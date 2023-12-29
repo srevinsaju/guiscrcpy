@@ -5,18 +5,16 @@
 
   <p align="center">
     A simple, pluggable, graphical user interface for the fastest Android screen mirroring software, <a href="https://github.com/Genymobile/scrcpy">scrcpy</a>
-    <br>
-    <a href="https://github.com/srevinsaju/guiscrcpy/issues/new">Report bug</a>
-    ·
-    <a href="https://github.com/srevinsaju/guiscrcpy/issues/new">Request feature</a>
   </p>
 </p>
+
+
+> [!WARNING]  
+> This repository is archived. Please see [#348](https://github.com/srevinsaju/guiscrcpy/348) for more information.
 
 <div align="center">
 
 
-
-[![Financial Contributors on Open Collective](https://opencollective.com/guiscrcpy/all/badge.svg?label=financial+contributors)](https://opencollective.com/guiscrcpy) ![Linux](https://github.com/srevinsaju/guiscrcpy/workflows/Linux/badge.svg)![Windows](https://github.com/srevinsaju/guiscrcpy/workflows/Windows/badge.svg)![Mac OS](https://github.com/srevinsaju/guiscrcpy/workflows/Mac%20OS/badge.svg) 
 [![Get guiscrcpy AppImage](https://img.shields.io/endpoint?url=https%3A%2F%2Fg.srev.in%2Fget-appimage%2Fguiscrcpy%2Fshields.json)](https://g.srev.in/get-appimage/guiscrcpy/) 
 [![AUR version](https://img.shields.io/aur/version/guiscrcpy?label=Arch%20Linux%20Package&style=flat-square)](https://aur.archlinux.org/packages/guiscrcpy)
 [![guiscrcpy](https://snapcraft.io//guiscrcpy/badge.svg)](https://snapcraft.io/guiscrcpy)
@@ -31,10 +29,6 @@
 ![image of guiscrcpy](docs/img/screenshot.jpg)
 </div>
 
-----------
-
-
-------------
 
 
 ![Live example of guiscrcpy](https://raw.githubusercontent.com/guiscrcpy/guiscrcpy.github.io/master/img/guiscrcpy.gif)
@@ -81,12 +75,6 @@ you may like to see some articles written by well wishers:
 * [guiscrcpy = OpenCollective](https://opencollective.com/guiscrcpy)
 
 
-## Acknowledgements
-
-Special thanks to [Jetbrains](https://www.jetbrains.com/?from=guiscrcpy) for sponsoring `guiscrcpy` with
-a professional PyCharm IDE; It works fantastic!
-
-[![jetbrains](docs/img/jetbrains.svg)](https://www.jetbrains.com/?from=guiscrcpy)
 
 ## Contributors
 
@@ -97,26 +85,11 @@ This project exists thanks to all the people who contribute. [[Contribute](CONTR
 
 ### Financial Contributors
 
-Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/guiscrcpy/contribute)]
+Thanks to everyone who supported `guiscrcpy`! It definitely meant a lot. 
 
 #### Individuals
 
 <a href="https://opencollective.com/guiscrcpy"><img src="https://opencollective.com/guiscrcpy/individuals.svg?width=890"></a>
-
-#### Organizations
-
-Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/guiscrcpy/contribute)]
-
-<a href="https://opencollective.com/guiscrcpy/organization/0/website"><img src="https://opencollective.com/guiscrcpy/organization/0/avatar.svg"></a>
-<a href="https://opencollective.com/guiscrcpy/organization/1/website"><img src="https://opencollective.com/guiscrcpy/organization/1/avatar.svg"></a>
-<a href="https://opencollective.com/guiscrcpy/organization/2/website"><img src="https://opencollective.com/guiscrcpy/organization/2/avatar.svg"></a>
-<a href="https://opencollective.com/guiscrcpy/organization/3/website"><img src="https://opencollective.com/guiscrcpy/organization/3/avatar.svg"></a>
-<a href="https://opencollective.com/guiscrcpy/organization/4/website"><img src="https://opencollective.com/guiscrcpy/organization/4/avatar.svg"></a>
-<a href="https://opencollective.com/guiscrcpy/organization/5/website"><img src="https://opencollective.com/guiscrcpy/organization/5/avatar.svg"></a>
-<a href="https://opencollective.com/guiscrcpy/organization/6/website"><img src="https://opencollective.com/guiscrcpy/organization/6/avatar.svg"></a>
-<a href="https://opencollective.com/guiscrcpy/organization/7/website"><img src="https://opencollective.com/guiscrcpy/organization/7/avatar.svg"></a>
-<a href="https://opencollective.com/guiscrcpy/organization/8/website"><img src="https://opencollective.com/guiscrcpy/organization/8/avatar.svg"></a>
-<a href="https://opencollective.com/guiscrcpy/organization/9/website"><img src="https://opencollective.com/guiscrcpy/organization/9/avatar.svg"></a>
 
 ## License
 
